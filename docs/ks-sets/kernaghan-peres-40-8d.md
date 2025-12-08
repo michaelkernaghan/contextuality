@@ -28,51 +28,13 @@ The set demonstrates that increasing dimension does not necessarily require prop
 
 ---
 
-## Construction
+## Structure
 
-The 40 rays live in $\mathbb{C}^8$, the Hilbert space of a three-qubit system. The construction exploits the structure of the **Pauli group** on three qubits and the **Mermin square/star** type arguments.
+The 40 rays live in $\mathbb{C}^8$, the Hilbert space of a three-qubit system. The construction exploits the structure of the **Pauli group** on three qubits and **Mermin square/star** type arguments.
 
-The explicit vector coordinates are provided in: [`data/kernaghan-peres-40-8d-vectors.csv`](../data/kernaghan-peres-40-8d-vectors.csv)
+The vectors can be understood as joint eigenstates of commuting sets of Pauli operators on three qubits (e.g., $X \otimes X \otimes X$, $Z \otimes Z \otimes I$, etc.). Each commuting set defines an orthonormal basis of common eigenstates, and the 40 rays are selected from these with specific overlap properties.
 
-### Construction Approach
-
-The vectors can be understood as joint eigenstates of commuting sets of Pauli operators on three qubits. For example:
-
-- Operators like $X \otimes X \otimes X$, $Z \otimes Z \otimes I$, $I \otimes Z \otimes Z$, etc.
-- Each commuting set of operators defines an orthonormal basis of common eigenstates
-- The 40 rays are selected from these eigenstates with specific overlap properties
-
-### Sample Vectors
-
-| Label | Vector (unnormalized, 8 components) |
-|-------|-------------------------------------|
-| v1 | (placeholder) |
-| v2 | (placeholder) |
-| v3 | (placeholder) |
-| ... | ... |
-| v40 | (placeholder) |
-
-!!! note "Vector Data"
-    Complete coordinates will be added to the CSV file. The vectors typically have entries from $\{0, \pm 1, \pm i\}/\sqrt{2}$ or similar simple forms due to their Pauli-eigenstate origin.
-
----
-
-## Orthogonality Structure
-
-The 40 rays are organized into orthonormal bases (complete sets of 8 mutually orthogonal rays). The number of bases and their overlap pattern creates the KS contradiction.
-
-### Basis Structure
-
-- **Number of bases**: The rays form a specific number of complete 8-ray bases
-- **Ray reuse**: Each ray appears in multiple bases
-- **Critical overlaps**: The pattern of shared rays between bases prevents consistent value assignment
-
-Example bases (placeholders):
-
-- **B1**: {v1, v2, v3, v4, v5, v6, v7, v8}
-- **B2**: {v9, v10, v11, v12, v13, v14, v15, v16}
-- **B3**: {v1, v9, v17, v18, v19, v20, v21, v22}
-- ...
+The rays are organized into orthonormal bases (complete sets of 8 mutually orthogonal rays). Each ray appears in multiple bases—this overlap pattern creates the KS contradiction.
 
 !!! info "Hypergraph Representation"
     The hypergraph for this set has:
@@ -81,6 +43,9 @@ Example bases (placeholders):
     - **Hyperedges of size 8** (one per orthonormal basis)
 
     The KS property is equivalent to the impossibility of 0-1 coloring the vertices such that each hyperedge has exactly one vertex colored 1.
+
+!!! tip "Vector Coordinates"
+    For explicit vector coordinates and the complete basis structure, see the original paper: M. Kernaghan and A. Peres, "Kochen–Specker theorem for eight-dimensional space," *Phys. Lett. A* **198**, 1 (1995).
 
 ---
 

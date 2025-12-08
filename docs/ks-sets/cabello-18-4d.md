@@ -28,54 +28,11 @@ Whether 18 is the absolute minimum for 4D remains an open question, but extensiv
 
 ---
 
-## Construction
+## Structure
 
 The 18 rays live in $\mathbb{C}^4$, the Hilbert space of a two-qubit system. The construction was derived from Kernaghan's 20-vector set by careful analysis of which rays were essential for the KS contradiction.
 
-The explicit vector coordinates are provided in: [`data/cabello-18-4d-vectors.csv`](../data/cabello-18-4d-vectors.csv)
-
-### Refinement from Kernaghan 20
-
-Cabello, Estebaranz, and García-Alcaine observed that in Kernaghan's 20-vector construction, two rays could be removed without destroying the KS property. The remaining 18 rays still form enough overlapping bases to prevent any consistent noncontextual value assignment.
-
-### Sample Vectors
-
-| Label | Vector (unnormalized) |
-|-------|----------------------|
-| v1 | (placeholder) |
-| v2 | (placeholder) |
-| v3 | (placeholder) |
-| v4 | (placeholder) |
-| ... | ... |
-| v18 | (placeholder) |
-
-!!! note "Vector Data"
-    Complete coordinates will be added to the CSV file. The vectors typically have simple integer or algebraic entries.
-
----
-
-## Orthogonality Structure
-
-The 18 rays are arranged into **9 orthonormal bases** (complete sets of 4 mutually orthogonal rays).
-
-### Key Structural Properties
-
-- **Rays per basis**: 4 (dimension of the space)
-- **Number of bases**: 9
-- **Average ray multiplicity**: Each ray appears in exactly 2 bases (on average)
-- **Critical overlaps**: The sharing pattern between bases creates the KS obstruction
-
-### Bases
-
-- **B1**: {v1, v2, v3, v4}
-- **B2**: {v5, v6, v7, v8}
-- **B3**: {v1, v5, v9, v10}
-- **B4**: (placeholder)
-- **B5**: (placeholder)
-- **B6**: (placeholder)
-- **B7**: (placeholder)
-- **B8**: (placeholder)
-- **B9**: (placeholder)
+Cabello, Estebaranz, and García-Alcaine observed that two rays could be removed from Kernaghan's construction without destroying the KS property. The remaining 18 rays are arranged into **9 orthonormal bases** (complete sets of 4 mutually orthogonal rays), with each ray appearing in multiple bases—this overlap pattern prevents any consistent noncontextual value assignment.
 
 !!! info "Hypergraph Representation"
     The hypergraph for this set has:
@@ -84,6 +41,9 @@ The 18 rays are arranged into **9 orthonormal bases** (complete sets of 4 mutual
     - **9 hyperedges** of size 4 (bases)
 
     The KS property requires that no 0-1 coloring exists with exactly one "1" per hyperedge. This is a hypergraph coloring problem, and the Cabello 18 hypergraph is provably non-colorable.
+
+!!! tip "Vector Coordinates"
+    For explicit vector coordinates and the complete basis structure, see the original paper: A. Cabello, J. M. Estebaranz, and G. García-Alcaine, "Bell–Kochen–Specker theorem: A proof with 18 vectors," *Phys. Lett. A* **212**, 183 (1996).
 
 ---
 

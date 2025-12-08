@@ -28,43 +28,9 @@ Key features:
 
 ---
 
-## Construction
+## Structure
 
-The 20 rays of this KS set live in $\mathbb{C}^4$, the Hilbert space of a two-qubit system. Each ray is specified by a 4-component vector (up to normalization and overall phase).
-
-The explicit vector coordinates are provided in the data file: [`data/kernaghan-20-4d-vectors.csv`](../data/kernaghan-20-4d-vectors.csv)
-
-### Sample Vectors
-
-| Label | Vector (unnormalized) |
-|-------|----------------------|
-| v1 | (placeholder) |
-| v2 | (placeholder) |
-| v3 | (placeholder) |
-| v4 | (placeholder) |
-| ... | ... |
-| v20 | (placeholder) |
-
-!!! note "Vector Data"
-    The complete vector coordinates will be added to the CSV file. Vectors are typically expressed with integer or simple algebraic entries for computational convenience.
-
----
-
-## Orthogonality Structure
-
-The 20 rays are arranged into **11 orthonormal bases** (complete sets of 4 mutually orthogonal rays). Each ray appears in multiple bases—this overlap structure is what makes a noncontextual value assignment impossible.
-
-### Bases
-
-The orthonormal bases can be written as:
-
-- **B1**: {v1, v2, v3, v4}
-- **B2**: {v5, v6, v7, v8}
-- **B3**: {v1, v5, v9, v10}
-- **B4**: (placeholder)
-- **B5**: (placeholder)
-- ...
-- **B11**: (placeholder)
+The 20 rays live in $\mathbb{C}^4$, the Hilbert space of a two-qubit system. They are arranged into **11 orthonormal bases** (complete sets of 4 mutually orthogonal rays). Each ray appears in multiple bases—this overlap structure is what makes a noncontextual value assignment impossible.
 
 !!! info "Hypergraph Representation"
     This structure can be viewed as a **hypergraph**:
@@ -73,6 +39,9 @@ The orthonormal bases can be written as:
     - **Hyperedges** = the 11 orthonormal bases (each hyperedge connects 4 vertices)
 
     The KS property corresponds to the non-colorability of this hypergraph under the constraint that exactly one vertex per hyperedge is colored "1" and the rest "0".
+
+!!! tip "Vector Coordinates"
+    For explicit vector coordinates and the complete basis structure, see the original paper: M. Kernaghan, "Bell–Kochen–Specker theorem for 20 vectors," *J. Phys. A: Math. Gen.* **27**, L829 (1994).
 
 ---
 
