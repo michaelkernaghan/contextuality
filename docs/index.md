@@ -46,7 +46,3 @@ Contextuality is now understood to be a key **resource for quantum computation**
 ### Reference
 
 - **[Bibliography](bibliography.md)** — Key papers and resources on KS sets and contextuality
-
----
-
-*This site is a living document. Vector data, proofs, and additional KS set constructions will be added over time.*
