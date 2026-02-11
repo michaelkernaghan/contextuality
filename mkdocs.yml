@@ -37,9 +37,12 @@ extra_javascript:
 nav:
   - Home: index.md
   - KS Sets:
+      - Peres 33 (3D): ks-sets/peres-33-3d.md
+      - Conway–Kochen 31 (3D): ks-sets/conway-kochen-31-3d.md
       - Kernaghan 20 (4D): ks-sets/kernaghan-20-4d.md
       - Kernaghan–Peres 40 (8D): ks-sets/kernaghan-peres-40-8d.md
       - Cabello 18 (4D): ks-sets/cabello-18-4d.md
+      - KS Coloring Test Program: ks-sets/peres-ks-test-program.md
   - History of Contextuality:
       - Introduction: history/index.md
       - Early Quantum Theory (1900–1930): history/early-quantum.md

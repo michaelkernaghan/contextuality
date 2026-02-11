@@ -3,7 +3,18 @@
     "allow": [
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(tailscale status:*)",
+      "Bash(ping:*)",
+      "Bash(nslookup:*)",
+      "Bash(net stop Tailscale)",
+      "Bash(net start Tailscale)",
+      "Bash(ssh:*)",
+      "Bash(dir D:\\)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(scp:*)",
+      "Bash(tar:*)"
     ],
     "deny": [],
     "ask": []
