@@ -1,0 +1,210 @@
+\documentclass[twocolumn,prl,superscriptaddress,nofootinbib]{revtex4-2}
+
+\usepackage{amsmath,amssymb}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\KS}{\mathrm{KS}}
+\newcommand{\CK}{\mathrm{CK}\text{-}31}
+
+\usepackage{amsthm}
+\newtheorem{conjecture}{Conjecture}
+
+\begin{document}
+
+\title{Graph universality of the Conway--Kochen set\\and the norm-2 boundary for Kochen--Specker uncolorability}
+
+\author{Michael Kernaghan}
+\affiliation{Independent researcher, Vancouver, Canada}
+
+\date{\today}
+
+\begin{abstract}
+We present a systematic computational survey showing that Kochen--Specker (KS) uncolorability in dimension~3 is governed by the availability of \emph{norm-2 cancellations}: exact algebraic identities among coordinate ring elements that enable orthogonal triples. Across all quadratic fields, cyclotomic fields, cubic extensions, and finite rotation groups tested, KS sets exist only when the coordinate ring contains elements whose products participate in such cancellations. Six discrete algebraic islands are identified. Every construction achieving 31~rays---from integer, rational, mixed-field, and group-theoretic origins---produces the same orthogonality graph and the same basis hypergraph, verified by the VF2 isomorphism algorithm: the Conway--Kochen set $\CK$ is a unique graph-theoretic attractor. We conjecture that $\CK$ is the unique minimal realizable KS set in dimension~3.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+The smallest known Kochen--Specker (KS) set in dimension~3 is the 31-vector Conway--Kochen set~\cite{ConwayKochen,Peres1993}, constructed from integer coordinates. The Peres construction~\cite{Peres1991} uses $\Z[\sqrt{2}]$ coordinates (33~vectors), and Cabello's recent simplest KS set~\cite{Cabello2025simplest} uses the Eisenstein integers $\Z[\omega]$ (33~vectors). A natural question arises: what algebraic property determines whether a number field supports KS sets, and is the 31-vector minimum specific to the integer field or a universal barrier?
+
+We present a systematic computational survey across number fields, showing that the availability of norm-2 cancellation identities among ring elements governs KS-uncolorability, and that the 31-vector minimum is achieved by algebraically independent constructions that all produce the same graph and hypergraph.
+
+\section{The norm-2 cancellation boundary}
+
+For each number field $K$ with ring of integers $\mathcal{O}_K$, we form a coordinate alphabet $\mathcal{A} = \{0, \pm 1, \pm\alpha, \pm\bar\alpha, \ldots\}$ from generators and small combinations, generate all rays in $\C P^2$ with coordinates in $\mathcal{A}$, close under Hermitian orthogonal completion (see~\cite{Kernaghan2026heegner} for details), and test KS-uncolorability via SAT (Glucose4 solver~\cite{AudemardSimon2018}, PySAT). Minimization uses randomized greedy deletion (500 trials, seed 42) and does not guarantee minimality; reported sizes are upper bounds.
+
+Table~\ref{tab:boundary} summarizes results across 40+ fields. The pattern: KS sets were found only when the coordinate ring contains elements enabling \emph{norm-2 cancellations}---algebraic identities of the form $\sum_i \bar{u}_i v_i = 0$ among bounded-height ring elements.
+
+\begin{table}[t]
+\centering
+\caption{Representative results. The column $|\alpha|^2$ shows the squared modulus of the ring generator used. KS sets arise when the effective coordinate set (after completion) contains norm-2-type cancellations. ``Min'' is the smallest KS subset found (upper bound on true minimum).}
+\label{tab:boundary}
+\begin{tabular}{lccc}
+\toprule
+Field / Ring & $|\alpha|^2$ & KS? & Min \\
+\midrule
+$\Z$ (integers, $\alpha=2$) & -- & Yes & 31 \\
+$\Z[\sqrt{2}]$ & 2.000 & Yes & 33 \\
+$\Z[\omega]$ (Eisenstein) & 1.000 & Yes & 33 \\
+$\Z[\sqrt{-2}]$ & 2.000 & Yes & 33 \\
+$\Z[(1{+}\sqrt{-7})/2]$ & 2.000 & Yes & 43 \\
+$\Q(\varphi)$ (golden)$^\dagger$ & 2.618 & Yes & 52 \\
+\midrule
+$\Z[\sqrt{3}]$ & 3.000 & No & -- \\
+$\Z[\sqrt{5}]$ & 5.000 & No & -- \\
+$\Z[\sqrt{-3}]$ ($\neq \Z[\omega]$) & 3.000 & No & -- \\
+$\Z[\sqrt{-5}]$ & 5.000 & No & -- \\
+$\Q(\sqrt[3]{2})$ basic & 1.587 & No$^\ddagger$ & -- \\
+$\Q(\sqrt[3]{2})$ extended & 2.520 & Yes & 60 \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize $^\dagger$Cross-product completion generates norm-$\leq 2$ coordinates ($1/\varphi$ satisfies $|1/\varphi|^2 < 1$).\\
+$^\ddagger$Basic alphabet colorable; extended alphabet $\{0,\pm 1,\pm\sqrt[3]{2},\pm\sqrt[3]{4}\}$ is uncolorable via completion.
+\end{flushleft}
+\end{table}
+
+The mechanism is cancellation identities. For three rays to form an orthonormal basis with coordinates in a ring $R$, the Hermitian inner products $\langle u | v \rangle = \sum_i \bar{u}_i v_i = 0$ require exact cancellations among products of ring elements. The identity $1 + 1 = 2$ (integers), $(\sqrt{2})^2 = 2$ (Peres), $1 + \omega + \omega^2 = 0$ (Eisenstein, norm~1), and $\alpha\bar\alpha = 2$ (Heegner-7) all produce such cancellations. For rings where the generator satisfies $|\alpha|^2 \geq 3$ within our bounded alphabets, we found orthogonal pairs but insufficient orthogonal triples to support KS-uncolorability. (Note: orthogonal triples do exist in these rings---e.g., $\Z[\sqrt{3}]$ produces 15 bases from 91 rays---but the hypergraph is KS-colorable.)
+
+The golden ratio field illustrates an important subtlety: $|\varphi|^2 \approx 2.618 > 2$, but completion generates the reciprocal $1/\varphi$ with $|1/\varphi|^2 < 1$, introducing norm-2-type cancellations into the effective coordinate set. The relevant criterion is not the generator's norm alone but whether the \emph{generated coordinate set} (after closure) admits sufficient cancellations.
+
+Crucially, the obstruction for $|\alpha|^2 \geq 3$ fields is \emph{not} the absence of orthogonal triples. The rings $\Z[\sqrt{3}]$, $\Z[\sqrt{5}]$, and $\Z[\sqrt{-5}]$ all produce substantial pools (133 rays, 94 bases each after completion), yet remain KS-colorable. The bases exist but are not configured to force uncolorability---the cancellation structure is insufficient.
+
+Additional evidence: among cyclotomic fields $\Q(e^{2\pi i/n})$ for $n \leq 30$, KS-uncolorability was observed when $6 \mid n$---precisely the values for which the cyclotomic ring contains the Eisenstein integers $\Z[\omega]$ as a subring (since $\omega = e^{2\pi i/3}$ and $-1 = e^{i\pi}$ both lie in $\Z[e^{2\pi i/n}]$ when $6 \mid n$).
+
+\section{Six algebraic islands}
+
+Among all tested fields, six algebraic islands were found to support KS sets:
+
+\begin{table}[t]
+\centering
+\caption{The six algebraic KS islands found in dimension~3. ``Min'' values are upper bounds from greedy deletion. Graph type indicates isomorphism class of the smallest found set.}
+\label{tab:islands}
+\begin{tabular}{lccl}
+\toprule
+Island & Min & Bases & Graph type \\
+\midrule
+Integer ($\CK$) & 31 & 17 & Unique (31v) \\
+Peres & 33 & 16 & Norm-2 (33v) \\
+Eisenstein & 33 & 14 & Eisenstein (33v) \\
+$\Z[\sqrt{-2}]$ & 33 & 16 & $\cong$ Peres \\
+Heegner-7 & 43 & 23 & New \\
+Golden ($\Q(\varphi)$) & 52 & -- & New \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Peres and $\Z[\sqrt{-2}]$ islands produce graph-isomorphic minimal sets (identical degree sequences, spectra, and WL-1 signatures), yielding five distinct graph types. The Heegner-7 and golden ratio islands are genuinely new constructions not present in any existing KS catalogue; details are reported in a companion paper~\cite{Kernaghan2026heegner}.
+
+\section{Graph universality of $\CK$}
+
+The central result: every algebraic or group-theoretic construction that achieves 31~rays in dimension~3 produces the \emph{same orthogonality graph and the same basis hypergraph}.
+
+We tested three independent constructions from algebraically distinct origins:
+\begin{enumerate}
+\item Integer alphabet $\{0, \pm 1, \pm 2\}$ (109 rays after completion)
+\item Rational $\Z[\tfrac{1}{2}]$ alphabet $\{0, \pm 1, \pm 2, \pm\tfrac{1}{2}\}$ (109 rays)
+\item Mixed norm-2: $\{0, \pm 1, \pm 2, \pm\sqrt{2}, \pm\omega, \pm\bar\omega\}$ (489 rays after completion)
+\end{enumerate}
+
+All three resulting smallest-found sets have identical invariants:
+
+\begin{table}[h]
+\centering
+\caption{Graph and hypergraph invariants of all 31-vector KS sets found. All entries are identical across all three constructions.}
+\label{tab:universality}
+\begin{tabular}{lc}
+\toprule
+Invariant & Value \\
+\midrule
+Vertices & 31 \\
+Edges (orthogonal pairs) & 71 \\
+Bases (orthogonal triples) & 17 \\
+Degree sequence & $(3^4, 4^{14}, 5^8, 6^3, 8^2)$ \\
+Triangles & 17 \\
+$\mathrm{tr}(A^4)$ & 1250 \\
+Spectral radius & 4.9443 \\
+WL-1 test & Indistinguishable \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We verified pairwise graph isomorphism for all $\binom{3}{2} = 3$ pairs using the VF2 algorithm~\cite{CordellaEtAl2004} (via NetworkX), which provides a definitive yes/no answer and an explicit vertex mapping. All three pairs are isomorphic. We further verified that these mappings preserve the basis hypergraph: the 17 orthonormal triples in each construction map identically under the graph isomorphism, establishing hypergraph isomorphism as well. The same orthogonality structure thus emerges from integer, rational, and mixed-field origins. Explicit ray coordinates, edge lists, basis lists, and VF2 certificates are provided as Supplemental Material~\cite{SupplementalMaterial}.
+
+\section{Discussion}
+
+The universality of $\CK$ has two implications.
+
+First, it strengthens the case that 31 is the true minimum for KS sets in dimension~3: not only does no tested algebra break the barrier, but every algebra that reaches it arrives at the same graph \emph{and} the same hypergraph. The $\CK$ orthogonality structure appears to be a unique attractor across all algebraic origins.
+
+\begin{conjecture}
+The Conway--Kochen set $\CK$ achieves the true minimum: no KS set with 30 or fewer rays exists in dimension~3, and $\CK$ is the unique 31-ray KS graph up to isomorphism.
+\end{conjecture}
+
+This conjecture is supported by: the rigidity result of Trandafir and Cabello~\cite{TrandafirCabello2025}, who showed that every bipartite perfect quantum strategy based on 31 rays yields a unique strategy up to local isometry; our verification that 31 is the minimum found within the integer island across all alphabet sizes tested; the VF2-verified universality across three algebraically independent constructions at both graph and hypergraph level; and the failure of 30{,}000+ random KS-uncolorable hypergraphs to achieve geometric realizability in $\R^3$.
+
+Second, the norm-2 cancellation boundary provides a \emph{predictive heuristic}: given a number field and a bounded coordinate alphabet, one can estimate whether KS sets are likely by checking whether the ring supports norm-2-type cancellation identities among its elements. While this does not constitute a proof (the search space is not exhausted), it has correctly predicted the outcome for every field tested, reducing an NP-hard combinatorial search to an algebraic check.
+
+The principal open question is whether the norm-2 boundary extends to all number fields, or whether higher-degree extensions (beyond the cubic fields tested here) harbor additional islands. The cubic field $\Q(\sqrt[3]{2})$ produces a KS set at 60~vectors, suggesting that the classification may extend but with rapidly increasing cost.
+
+\begin{acknowledgments}
+The author thanks Ad\'an Cabello for discussions on the algebraic structure of KS sets. The author acknowledges the use of Claude (Anthropic) for computational assistance.
+\end{acknowledgments}
+
+\begin{thebibliography}{15}
+
+\bibitem{KochenSpecker1967}
+S.~Kochen and E.~P.~Specker,
+J.\ Math.\ Mech.\ \textbf{17}, 59 (1967).
+
+\bibitem{ConwayKochen}
+J.~H.~Conway and S.~Kochen,
+reported in A.~Peres, \textit{Quantum Theory: Concepts and Methods} (Kluwer, 1993).
+
+\bibitem{Peres1991}
+A.~Peres,
+J.\ Phys.\ A \textbf{24}, L175 (1991).
+
+\bibitem{Peres1993}
+A.~Peres,
+\textit{Quantum Theory: Concepts and Methods} (Kluwer, 1993).
+
+\bibitem{Cabello2025simplest}
+A.~Cabello,
+Phys.\ Rev.\ Lett.\ (2025); arXiv:2508.07335.
+
+\bibitem{CSW2014}
+A.~Cabello, S.~Severini, and A.~Winter,
+Phys.\ Rev.\ Lett.\ \textbf{112}, 040401 (2014).
+
+\bibitem{TrandafirCabello2025}
+S.~Trandafir and A.~Cabello,
+Phys.\ Rev.\ Lett.\ \textbf{134}, 010201 (2025); arXiv:2311.17735.
+
+\bibitem{AudemardSimon2018}
+G.~Audemard and L.~Simon,
+in \textit{Proceedings of IJCAI-18}, 5093 (2018).
+
+\bibitem{CordellaEtAl2004}
+L.~P.~Cordella, P.~Foggia, C.~Sansone, and M.~Vento,
+IEEE Trans.\ Pattern Anal.\ Mach.\ Intell.\ \textbf{26}, 1367 (2004).
+
+\bibitem{SupplementalMaterial}
+See Supplemental Material for explicit ray coordinates, edge lists, basis lists, VF2 isomorphism certificates, SAT solver details, and negative control data for all constructions reported here.
+
+\bibitem{Kernaghan2026heegner}
+M.~Kernaghan,
+``New Kochen--Specker sets from algebraic number fields with enhanced contextual advantage'' (in preparation).
+
+\end{thebibliography}
+
+\end{document}

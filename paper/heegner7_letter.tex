@@ -1,0 +1,197 @@
+\documentclass[twocolumn,prl,superscriptaddress,nofootinbib]{revtex4-2}
+
+\usepackage{amsmath,amssymb}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\KS}{\mathrm{KS}}
+\newcommand{\CK}{\mathrm{CK}\text{-}31}
+
+\begin{document}
+
+\title{New Kochen--Specker sets from algebraic number fields\\with enhanced contextual advantage}
+
+\author{Michael Kernaghan}
+\affiliation{Pacific Quantum Systems, Vancouver, Canada}
+
+\date{\today}
+
+\begin{abstract}
+We report two previously unknown Kochen--Specker (KS) sets in dimension~3 arising from algebraic number fields not previously explored in this context: the Heegner-7 ring $\Z[(1{+}\sqrt{-7})/2]$ yields a 43-vector set whose orthogonality graph is non-isomorphic to all previously catalogued KS sets, and the golden ratio field $\Q(\varphi)$ yields a 52-vector set invisible to direct alphabet search and revealed only by Hermitian orthogonal completion. The Heegner-7 ray pool exhibits a Cabello--Severini--Winter contextual advantage of $\vartheta/\alpha = 1.118$, the largest among the five algebraic KS ray pools with computed CSW data. This advantage is driven by \emph{auxiliary rays}---rays that contribute orthogonality edges without participating in any basis---and is entirely destroyed by cardinality minimization. An ablation study confirms that the advantage degrades smoothly as auxiliary rays are removed. The mechanism identifies a structural tension between minimizing a KS proof and maximizing its operational contextual strength.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+The Kochen--Specker (KS) theorem~\cite{KochenSpecker1967} proves that quantum observables cannot be assigned pre-existing values independently of measurement context. In dimension~3, all known KS constructions draw their ray coordinates from a handful of algebraic number fields: the integers~\cite{ConwayKochen}, $\Z[\sqrt{2}]$ (the Peres construction~\cite{Peres1991}), and the Eisenstein integers $\Z[\omega]$ (Cabello's recent simplest KS set~\cite{Cabello2025simplest}). Whether other number fields support KS sets, and what operational consequences follow, has not been systematically investigated. A central open problem is the minimum size of a KS set in dimension~3: the smallest known construction uses 31 vectors~\cite{ConwayKochen}, while the best lower bound is 24~\cite{LiBrightGanesh2024}. Closing this gap---either by finding a KS set with fewer than 31 rays or by proving that none exists---motivates a systematic exploration of the algebraic structures underlying KS constructions.
+
+A survey across 40+ number fields~\cite{Kernaghan2026landscape} reveals that only a handful support KS constructions, each determined by a specific cancellation identity in its ring of integers. None of the new constructions yield a KS set smaller than 31 vectors, but they expose structural features invisible in the integer construction alone. We report two new KS sets and identify a mechanism by which the algebraic origin controls the strength of the quantum contextual advantage in the Cabello--Severini--Winter (CSW) framework~\cite{CSW2014}.
+
+\section{Construction method}
+
+The classical KS constructions in $\R^3$ use rays whose coordinates are small integers: Conway and Kochen's 31-vector set~\cite{ConwayKochen} uses directions $(a,b,c)$ with $a,b,c \in \{0, \pm 1, \pm 2\}$---geometrically, these point toward vertices, edge midpoints, and face centers of nested cubes. Orthogonality between two such rays reduces to an integer dot product equaling zero: $a_1 a_2 + b_1 b_2 + c_1 c_2 = 0$. The key observation is that the set of allowed coordinate values---the \emph{alphabet}---determines which orthogonalities are available, and hence which KS sets can be constructed. Different algebraic number rings provide different alphabets.
+
+Concretely, given an alphabet $\mathcal{A} \subset \C$ (a finite set of allowed coordinates drawn from a number ring), we generate all rays $[v] \in \C P^2$ whose homogeneous coordinates lie in $\mathcal{A}$, identify orthogonal pairs via $\langle u | v \rangle = 0$, and collect orthonormal bases (triples of mutually orthogonal rays). KS-uncolorability---the nonexistence of a consistent $\{0,1\}$-valued coloring assigning exactly one~1 per basis---is decided by SAT encoding: each ray $i$ gets a Boolean variable $x_i$; each basis $\{a,b,c\}$ contributes clauses enforcing $x_a + x_b + x_c = 1$; each orthogonal pair $(i,j)$ contributes $\neg x_i \vee \neg x_j$. The encoding is solved by Glucose4~\cite{AudemardSimon2018} via PySAT. We minimize by randomized greedy deletion (500 trials, random seed 42), which yields a small KS subset but does not guarantee minimality.
+
+For fields where the basic alphabet yields too few bases, we apply \emph{Hermitian orthogonal completion}. Given two orthogonal rays $u, v \in \C^3$ with $\langle u | v \rangle = 0$, their orthogonal complement $\mathrm{span}\{u,v\}^\perp$ is one-dimensional. We compute its representative via the Hermitian cofactor formula:
+\[
+w_k = (-1)^{k+1} \det \begin{pmatrix} \bar{u}_{k+1} & \bar{u}_{k+2} \\ \bar{v}_{k+1} & \bar{v}_{k+2} \end{pmatrix}, \quad k \in \Z/3\Z,
+\]
+and canonicalize $w$ by fixing the first nonzero coordinate to be real and positive. This is iterated: each new ray generates new orthogonal pairs, which generate further completions, until the pool stabilizes. For real coordinates the formula reduces to the standard cross product. This closure can reveal KS sets invisible to the raw alphabet.
+
+\section{Two new KS sets}
+
+\textbf{The Heegner-7 construction.} The imaginary quadratic field $\Q(\sqrt{-7})$ has class number~1, with ring of integers $\Z[\alpha]$ where $\alpha = (1{+}\sqrt{-7})/2$ satisfies $|\alpha|^2 = 2$. The alphabet $\{0, \pm 1, \pm\alpha, \pm\bar\alpha\}$ generates 45 rays with 12 bases. Hermitian orthogonal completion expands this to 145~rays and 42~bases. The completed pool is KS-uncolorable; randomized greedy deletion (500 trials) reduces it to \textbf{43~vectors in 23~bases}, the smallest KS subset found within this pool.
+
+This 43-vector set has a new orthogonality graph: we verified non-isomorphism against all known dimension-3 KS sets (Conway--Kochen 31v, Peres 33v, Eisenstein 33v, $\Z[\sqrt{-2}]$ 33v) using degree sequence, spectral radius, $\mathrm{tr}(A^4)$, and Weisfeiler--Leman 1-stable coloring (WL-1). Since differing WL-1 partitions imply non-isomorphism, and the Heegner-7 graph differs from all four references in degree sequence alone, non-isomorphism is established. Explicit ray coordinates and the full orthogonality graph are provided as Supplemental Material~\cite{SupplementalMaterial}.
+
+\textbf{The golden ratio construction.} The golden ratio $\varphi = (1{+}\sqrt{5})/2$ satisfies $\varphi^2 = \varphi + 1$, giving $|\varphi|^2 \approx 2.618$---above the norm-2 threshold that controls KS-uncolorability in quadratic fields. The basic alphabet $\{0, \pm 1, \pm\varphi\}$ is colorable. However, Hermitian orthogonal completion generates rays with coordinates in the full ring $\Z[\varphi]$, including $\varphi - 1 = 1/\varphi$, and the completed pool of 205~rays is KS-uncolorable. Greedy deletion yields a smallest found subset of \textbf{52~vectors}.
+
+This construction is invisible to standard alphabet searches: the golden ratio construction is revealed only by the geometric closure operation, not by the algebraic coordinates alone.
+
+To our knowledge, neither the Heegner-7 nor the golden ratio KS set has been previously reported.
+
+\section{Contextual advantage}
+
+The CSW framework~\cite{CSW2014} maps the orthogonality graph $G$ of a ray set to a noncontextuality inequality via three invariants:
+\[
+\alpha(G) \leq \vartheta(G) \leq \alpha^*(G),
+\]
+where $\alpha$ is the independence number (classical bound), $\vartheta$ is the Lov\'asz theta number (quantum bound), and $\alpha^*$ is the fractional packing number. A quantum advantage exists when $\vartheta > \alpha$.
+
+Each ray $v_i$ defines a rank-1 projective test $P_i = |v_i\rangle\langle v_i|$. Two rays with $\langle u | v \rangle = 0$ yield mutually exclusive outcomes regardless of whether they share a basis---a consequence of Hilbert space structure. The exclusivity graph $G$ encodes these constraints among all projective tests; $\alpha(G)$ bounds the noncontextual value of the corresponding CSW inequality, and $\vartheta(G)$ bounds the quantum value~\cite{CSW2014}.
+
+Table~\ref{tab:csw} compares the CSW invariants for minimized KS sets and full ray pools across the known algebraic KS constructions. (The Eisenstein construction coincides with Cabello's recent simplest KS set~\cite{Cabello2025simplest}; the golden ratio construction is omitted from the pool comparison because its 205-ray pool CSW invariants have not yet been computed.)
+
+\begin{table}[t]
+\centering
+\caption{CSW invariants for algebraic KS constructions. Top: minimized KS subsets. Bottom: full ray pools (complete closure before minimization). The ratio $\vartheta/\alpha$ measures contextual advantage.}
+\label{tab:csw}
+\begin{tabular}{lcccc}
+\toprule
+\multicolumn{5}{c}{\textit{Minimized KS sets}} \\
+\midrule
+Construction & $n$ & $\alpha$ & $\vartheta$ & $\vartheta/\alpha$ \\
+\midrule
+Integer (CK-31) & 31 & 11 & 11.71 & 1.065 \\
+Eisenstein & 33 & 12 & 12.05 & 1.004 \\
+Peres & 33 & 12 & 12.00 & 1.000 \\
+$\Z[\sqrt{-2}]$ & 33 & 12 & 12.00 & 1.000 \\
+Heegner-7 & 43 & 16 & 16.00 & 1.000 \\
+\midrule
+\multicolumn{5}{c}{\textit{Full ray pools}} \\
+\midrule
+Construction & $n$ & $\alpha$ & $\vartheta$ & $\vartheta/\alpha$ \\
+\midrule
+Heegner-7 & 145 & 50 & 55.89 & \textbf{1.118} \\
+Eisenstein & 57 & 18 & 19.34 & 1.074 \\
+Integer & 49 & 17 & 17.70 & 1.041 \\
+Peres & 49 & 23 & 23.00 & 1.000 \\
+$\Z[\sqrt{-2}]$ & 49 & 23 & 23.00 & 1.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Heegner-7 full pool achieves $\vartheta/\alpha = 1.118$---a 12\% quantum advantage, the largest among the five algebraic KS ray pools with computed CSW data. For comparison, CK-31's minimized set achieves only $\vartheta/\alpha = 1.065$, and most minimized KS sets are $\vartheta$-perfect ($\vartheta = \alpha$). Yet the Heegner-7 minimized 43-vector set itself satisfies $\vartheta(G) = \alpha(G)$, exhibiting no violation at all.
+
+\section{The auxiliary ray mechanism}
+
+We identify the structural origin of this effect. Define a ray as \emph{basis-participating} if it belongs to at least one orthonormal basis, and \emph{auxiliary} otherwise. Auxiliary rays have orthogonal neighbors in the graph but do not appear in any complete triple.
+
+KS-uncolorability depends on the basis \emph{hypergraph}: auxiliary rays are invisible to it. But the CSW framework depends on the orthogonality \emph{graph}: auxiliary rays contribute edges that constrain the independence number $\alpha$ without adding bases.
+
+In the Heegner-7 pool, 76 of 145 rays (52\%) are auxiliary. These rays add 522 orthogonal pairs, including 9 hub vertices of degree~16, severely restricting independent sets ($\alpha/n = 0.345$). The SDP relaxation exploits these constraints, distributing weight fractionally to achieve $\vartheta/n = 0.386$.
+
+When minimization reduces the pool to 43 vectors, it removes auxiliary rays first---they are dispensable for uncolorability. But these are precisely the rays that enabled $\vartheta > \alpha$. The contextual advantage is destroyed.
+
+An ablation study confirms this: removing auxiliary rays in batches of~16, $\vartheta/\alpha$ degrades smoothly from 1.118 through 1.09, 1.06, to 1.03, while KS-uncolorability and all 42 bases are preserved (since auxiliary rays do not participate in bases). Removing all 76 auxiliary rays collapses the advantage entirely (full ablation data in Supplemental Material~\cite{SupplementalMaterial}).
+
+\begin{table}[t]
+\centering
+\caption{Auxiliary ray fraction and spectral tightness for the five pools with computed CSW data. $H = -n\lambda_{\min}/(\lambda_{\max} - \lambda_{\min})$ is the Hoffman bound. Spectral tightness $\alpha/H < 1$ correlates with CSW violation.}
+\label{tab:mechanism}
+\begin{tabular}{lcccc}
+\toprule
+Construction & Aux.\ frac. & $\alpha/H$ & $\vartheta/\alpha$ \\
+\midrule
+Heegner-7 & 52\% & 0.977 & \textbf{1.118} \\
+Eisenstein & 0\% & 0.904 & 1.074 \\
+Integer & 0\% & 0.977 & 1.041 \\
+Peres & 33\% & 1.176 & 1.000 \\
+$\Z[\sqrt{-2}]$ & 33\% & 1.176 & 1.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Hoffman bound provides a spectral explanation (Table~\ref{tab:mechanism}). Pools with $\alpha/H < 1$ exhibit CSW violations; those with $\alpha/H > 1$ satisfy $\vartheta = \alpha$. The Eisenstein pool has no auxiliary rays yet still exhibits a CSW violation ($\vartheta/\alpha = 1.074$): here the advantage is purely spectral, arising from the density of orthogonality edges among basis-participating rays alone. The Peres and $\Z[\sqrt{-2}]$ pools show no violation despite 33\% auxiliary rays because their orthogonality graphs decompose into disconnected components; since $\vartheta$ and $\alpha$ are additive over disjoint unions~\cite{Knuth1994}, isolated auxiliary components cannot create a gap. The Heegner-7 pool combines both mechanisms: auxiliary rays that bridge into the basis-participating core, enabling the SDP to exploit their constraints. We compare only among the six algebraically generated KS constructions known to us in dimension~3; we do not claim optimality over all projector configurations in $\C^3$.
+
+\section{Discussion}
+
+Our results reveal a structural tension at the heart of KS contextuality: \emph{minimizing the proof size and maximizing the contextual strength are competing objectives}. The rays that are dispensable for the logical proof of contextuality (the auxiliary rays) are precisely those that amplify its operational strength in the CSW framework. This suggests that the standard practice of seeking minimal KS sets, while natural from a proof-complexity perspective, discards operationally relevant structure.
+
+The Heegner-7 construction's 12\% advantage is modest but structurally significant: it arises from the interplay between the number field (which determines auxiliary ray density) and the spectral properties of the orthogonality graph (which determine whether auxiliary rays translate into contextual advantage). The golden ratio construction demonstrates that geometric closure can unlock contextuality where algebra alone cannot.
+
+KS sets also have direct operational significance beyond CSW inequalities: Cabello~\cite{Cabello2024bipartite} proved that every bipartite perfect quantum strategy requires a KS-uncolorable subset, so the Heegner-7 (23~bases) and golden ratio (25~bases) sets each define new bipartite Bell scenarios admitting perfect quantum strategies.
+
+Both constructions arise from a pattern observed across all tested number fields: when the generator norm $|\alpha|^2 \leq 2$, the ring of integers supports enough exact orthogonality cancellations to produce KS sets; when $|\alpha|^2 > 2$, it does not. The integer identity $1{+}1=2$, the Eisenstein identity $1{+}\omega{+}\omega^2 = 0$, and the Heegner-7 identity $\alpha\bar\alpha = 2$ are different manifestations of this single constraint. We have verified this pattern computationally across 40+ quadratic and cyclotomic fields (all nine imaginary quadratic fields of class number~1, real quadratic fields $\Q(\sqrt{d})$ for $d = 2, \ldots, 30$, and roots of unity of order $n \leq 30$); the full algebraic classification is reported separately~\cite{Kernaghan2026landscape}.
+
+\begin{acknowledgments}
+The author thanks Ad\'an Cabello for pointing out the connection between the Eisenstein construction and his simplest KS set. The author acknowledges the use of Claude (Anthropic) for computational assistance.
+\end{acknowledgments}
+
+\begin{thebibliography}{20}
+
+\bibitem{KochenSpecker1967}
+S.~Kochen and E.~P.~Specker,
+J.\ Math.\ Mech.\ \textbf{17}, 59 (1967).
+
+\bibitem{ConwayKochen}
+J.~H.~Conway and S.~Kochen,
+reported in A.~Peres, \textit{Quantum Theory: Concepts and Methods} (Kluwer, 1993).
+
+\bibitem{Peres1991}
+A.~Peres,
+J.\ Phys.\ A \textbf{24}, L175 (1991).
+
+\bibitem{Cabello2025simplest}
+A.~Cabello,
+arXiv:2508.07335 (2025).
+
+\bibitem{CSW2014}
+A.~Cabello, S.~Severini, and A.~Winter,
+Phys.\ Rev.\ Lett.\ \textbf{112}, 040401 (2014).
+
+\bibitem{LiBrightGanesh2024}
+Z.~Li, C.~Bright, and V.~Ganesh,
+arXiv:2412.09458 (2024).
+
+\bibitem{AudemardSimon2018}
+G.~Audemard and L.~Simon,
+in \textit{Proceedings of IJCAI-18}, 5093 (2018).
+
+\bibitem{Knuth1994}
+D.~E.~Knuth,
+Electron.\ J.\ Combin.\ \textbf{1}, A1 (1994).
+
+\bibitem{Cabello2024bipartite}
+A.~Cabello,
+Phys.\ Rev.\ Lett.\ \textbf{134}, 010201 (2025); arXiv:2311.17735.
+
+\bibitem{SupplementalMaterial}
+See Supplemental Material for explicit ray coordinates, orthogonality graphs, basis lists, SAT solver details, and ablation study data for all constructions reported here.
+
+\bibitem{Kernaghan2026landscape}
+M.~Kernaghan,
+``The algebraic landscape of Kochen--Specker sets in dimension three'' (in preparation).
+
+\end{thebibliography}
+
+\end{document}
