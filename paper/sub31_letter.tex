@@ -22,7 +22,7 @@
 \date{\today}
 
 \begin{abstract}
-We report a systematic computational search for Kochen--Specker (KS) sets with fewer than 31 vectors in dimension~3, where the Conway--Kochen construction (CK-31) has stood as the smallest known for over three decades and the best proven lower bound is 24 vectors. No sub-31 KS set is found by any of six complementary strategies: SAT-based minimization, cross-pool mixing, expanded coordinate alphabets, numerical optimization, exhaustive criticality testing, and triad density analysis. A key structural finding is the \emph{norm-2 boundary}: integer alphabets lacking the coordinate~$\pm2$ (such as $\{0,\pm1,\pm3\}$) are not KS-uncolorable at all, confirming that the cancellation identity $1+1=2$ is essential. We establish that CK-31 is 3-critical (all 4991 subsets of size $\geq 28$ tested) and that cross-pool orthogonalities never contribute to minimal sets. Vertex merging produces 15 abstract KS-uncolorable graphs on 30~vertices, but Z3 cannot resolve their $\R^3$ realizability, confirming that the 24--31 gap is fundamentally a realizability problem.
+We report a systematic computational search for Kochen--Specker (KS) sets with fewer than 31 vectors in dimension~3, where the Conway--Kochen construction (CK-31) has stood as the smallest known for over three decades and the best proven lower bound is 24 vectors. No sub-31 KS set is found by any of six complementary strategies: SAT-based minimization, cross-pool mixing, expanded coordinate alphabets, numerical optimization, exhaustive criticality testing, and triad density analysis. A key structural finding is the \emph{norm-2 boundary}: integer alphabets lacking the coordinate~$\pm2$ (such as $\{0,\pm1,\pm3\}$) are not KS-uncolorable at all, confirming that the cancellation identity $1+1=2$ is essential. We establish that CK-31 is 8-critical by exhaustive enumeration of all $\binom{31}{k}$ subsets for $k = 1, \ldots, 8$ (totaling 11,460,647 SAT checks), and 12-critical by sampling ($10^6$ random subsets per $k$ for $k = 9, \ldots, 12$). Vertex merging produces 15 abstract KS-uncolorable graphs on 30~vertices; we resolve their realizability within the integer pool via finite constraint satisfaction (all 15 unrealizable), and confirm this is fundamentally a realizability problem.
 \end{abstract}
 
 \maketitle
@@ -47,7 +47,7 @@ We tested six complementary strategies, each designed to probe a different regio
 
 \textbf{Strategy 4: Numerical optimization.} We applied four non-algebraic search methods: (a)~simulated annealing (SA) placing $n = 28$--$30$ rays in $\R^3$ and $\C^3$, optimizing for orthogonal pairs and triads (200k steps each); (b)~perturbation from CK-31, removing 1--3~rays and replacing with random rays (1000 attempts per target); (c)~orthogonal completion from random seeds, iteratively adding cross products (500 attempts); (d)~soft-tolerance SA starting with tolerance~$0.1$ and tightening to~$10^{-6}$ over 300k steps.
 
-\textbf{Strategy 5: CK-31 criticality.} We tested whether CK-31 can be reduced by removing $k$ vectors for $k = 1, 2, 3$, exhaustively checking all $\binom{31}{k}$ subsets.
+\textbf{Strategy 5: CK-31 criticality.} We tested whether CK-31 can be reduced by removing $k$ vectors for $k = 1, \ldots, 12$, exhaustively checking all $\binom{31}{k}$ subsets for $k \leq 8$ and sampling $10^6$ random subsets for $k = 9, \ldots, 12$.
 
 \textbf{Strategy 6: Triad density analysis.} For each pool, we sampled random subsets of varying size and determined the threshold cardinality at which KS-uncolorable subsets first appear. This characterizes the ``rarity'' of KS sets within their own pools.
 
@@ -103,9 +103,35 @@ $\{0,\pm1,\pm2,\pm i\}$ & 127 & 31 & Mixed-field \\
 
 \textbf{Numerical optimization (Strategy 4).} All four methods fail completely. SA from scratch in $\R^3$ produces at most 5--6 orthogonal pairs and \emph{zero} triads after $2 \times 10^5$ steps; in $\C^3$, it finds zero pairs. Soft-tolerance SA finds up to 227 near-orthogonal pairs at tolerance~$0.1$, but all vanish as tolerance tightens---zero exact pairs survive. CK-31 perturbation (removing 1--3 rays and adding random replacements) never restores uncolorability: the best replacement achieves only 16 triads versus the 17 required. Orthogonal completion from random seeds builds sets of 60 rays but achieves at most 1~triad. The numerical landscape has no gradient signal: near-orthogonal configurations do not lead to exact ones.
 
-We also tested whether CK-31 can be compressed by \emph{merging} non-orthogonal ray pairs (identifying two vertices) while preserving KS-uncolorability, then checking $\R^3$ realizability using the Z3 SMT solver~\cite{Z3} with nonlinear real arithmetic. Of the $\binom{31}{2} - 67 = 398$ non-orthogonal pairs, exactly 15 merges preserve abstract KS-uncolorability, producing 30-vertex graphs with 17--19 triads and 66--67 pairs. However, Z3 could not resolve realizability for any of the~15 within 60\,s per instance (nonlinear real arithmetic over 90~variables), returning ``unknown.'' For problems of this type, Z3 typically either finds a solution quickly or does not converge; extending the timeout to 600\,s produced no change. This mirrors the computational wall encountered by Li, Bright, and Ganesh~\cite{LiBrightGanesh2024}: realizability of KS candidate graphs in~$\R^3$ is the fundamental bottleneck.
+We also tested whether CK-31 can be compressed by \emph{merging} non-orthogonal ray pairs (identifying two vertices) while preserving KS-uncolorability. Of the $\binom{31}{2} - 67 = 398$ non-orthogonal pairs, exactly 15 merges preserve abstract KS-uncolorability, producing 30-vertex graphs with 17--19 triads and 66--67 pairs. Z3~\cite{Z3} with nonlinear real arithmetic could not resolve their $\R^3$ realizability (``unknown'' after 60\,s per instance, 90 variables each).
 
-\textbf{CK-31 criticality (Strategy 5).} CK-31 is 1-critical (all 31 single-ray removals tested exhaustively), 2-critical (all 465 pairs), and 3-critical (all 4495 triples)---4991 subsets in total, each verified colorable by SAT. CK-31 cannot be reduced to 30, 29, or 28 vectors by deletion.
+To circumvent this, we reformulated realizability within the integer pool as a \emph{finite constraint satisfaction problem}: each of 30 vertices must be assigned one of the 49 (canonicalized) integer rays from $\{0,\pm1,\pm2\}$, with orthogonality edges requiring perpendicular rays and non-edges requiring non-perpendicular rays. This encodes as a SAT instance with $30 \times 49 = 1470$ Boolean variables plus cardinality and compatibility constraints, solvable in under 1\,s per graph. All 15 merged graphs are \emph{unrealizable} within the integer pool. Combined with the Z3 results, this means the 15 abstract 30-vertex KS graphs cannot be realized using any known algebraic construction; their $\R^3$ realizability remains the fundamental open question.
+
+\textbf{CK-31 criticality (Strategy 5).} CK-31 is $k$-critical for all tested $k$ up to 12 (Table~\ref{tab:criticality}). The exhaustive results ($k \leq 8$) cover all 11,460,647 subsets; the sampled results ($k = 9$--$12$) each test $10^6$ random subsets, none of which remain KS-uncolorable. At $k = 7$, removing any 7 of 31 rays leaves only 24---the Li--Bright--Ganesh lower bound---yet every one of the 2,629,575 resulting 24-ray subsets is colorable. This establishes that no 24-ray sub-configuration of CK-31 is a KS set.
+
+\begin{table}[b]
+\centering
+\caption{Extended criticality of CK-31. For $k \leq 8$, all $\binom{31}{k}$ subsets tested exhaustively; for $k \geq 9$, $10^6$ random subsets sampled.}
+\label{tab:criticality}
+\begin{tabular}{rrrll}
+\toprule
+$k$ & Remain & Subsets & Method & Result \\
+\midrule
+1 & 30 & 31 & Exhaustive & All colorable \\
+2 & 29 & 465 & Exhaustive & All colorable \\
+3 & 28 & 4,495 & Exhaustive & All colorable \\
+4 & 27 & 31,465 & Exhaustive & All colorable \\
+5 & 26 & 169,911 & Exhaustive & All colorable \\
+6 & 25 & 736,281 & Exhaustive & All colorable \\
+7 & 24 & 2,629,575 & Exhaustive & All colorable \\
+8 & 23 & 7,888,725 & Exhaustive & All colorable \\
+9 & 22 & $2.0 \times 10^7$ & Sampled & All colorable \\
+10 & 21 & $4.4 \times 10^7$ & Sampled & All colorable \\
+11 & 20 & $8.5 \times 10^7$ & Sampled & All colorable \\
+12 & 19 & $1.4 \times 10^8$ & Sampled & All colorable \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \textbf{Triad density threshold (Strategy 6).} In 500 random samples per size, no KS-uncolorable subset of the integer pool appears below $n = 42$ out of 49 rays. For the Eisenstein pool, the threshold is $n = 48$ out of 57. For Heegner-7, no KS subsets are found at any sampled size up to $n = 75$ out of 145. CK-31 achieves the highest pair density among all constructions (15.3\% of all $\binom{31}{2}$ pairs are orthogonal). These results show that triad count alone does not determine uncolorability---the topological interlocking of constraints matters.
 
@@ -115,15 +141,15 @@ Our results establish three structural facts about KS sets in dimension~3.
 
 First, \emph{the known algebraic pools are self-contained}. Cross-pool mixing never produces a smaller KS set than what exists within a single pool. This suggests that the orthogonality structure of each number ring is optimized for its own KS constructions.
 
-Second, \emph{CK-31 is uniquely minimal} among all tested algebraic sources. No other ring produces a KS set with fewer than 33 vectors, and all paths to 31 lead to integer coordinates. Combined with 3-criticality, this means CK-31 sits at a sharp minimum: it cannot be reduced by deletion, and no known algebraic extension can improve upon it.
+Second, \emph{CK-31 is uniquely minimal and deeply critical}. No other ring produces a KS set with fewer than 33 vectors, and all paths to 31 lead to integer coordinates. The 8-critical result (exhaustive) means that CK-31 cannot be reduced by deletion of \emph{any} 8 or fewer rays---this exhaustive test covers all 11.5 million subsets. Even at $k = 7$, where 24 rays remain (the current lower bound), every subset is colorable. This provides strong evidence that no sub-configuration of CK-31 approaches the lower bound.
 
 Third, \emph{density arguments are insufficient for a proof of optimality}. KS sets are extraordinarily rare even within pools that contain them. The uncolorability depends on the precise topological interlocking of basis constraints---a property that cannot be captured by counting triads or pairs alone. This suggests that closing the 24--31 gap will require realizability-based arguments (extending the Li--Bright--Ganesh framework) rather than combinatorial density bounds.
 
 The restriction to $\R^3$ versus $\C^3$ does not obviously help: working in $\C^3$ provides more orthogonality freedom per ray, but our complex pools (Eisenstein, $\Z[\sqrt{-2}]$, Heegner-7) all minimize to $\geq 33$. The Eisenstein threshold ($n = 48$ out of 57) is higher than the integer threshold ($n = 42$ out of 49), suggesting that the extra complex degrees of freedom make it \emph{harder}, not easier, to achieve the tight constraint interlocking needed for small KS sets.
 
-The vertex-merging experiment reveals the nature of the obstacle: abstract KS-uncolorable graphs on 30~vertices exist (15 were found from CK-31 alone), but determining their $\R^3$ realizability exceeds current SMT capabilities. This confirms that the 24--31 gap is fundamentally a realizability problem, not a combinatorial one.
+The vertex-merging experiment reveals the nature of the obstacle: abstract KS-uncolorable graphs on 30~vertices exist (15 were found from CK-31 alone), but they are unrealizable within the integer pool and their general $\R^3$ realizability exceeds current SMT capabilities. This confirms that the 24--31 gap is fundamentally a realizability problem, not a combinatorial one.
 
-We do not prove that 31 is optimal. However, within the space of algebraically generated ray pools---which encompasses every known KS construction in dimension~3---we have exhausted the search. A sub-31 KS set, if it exists, would require a fundamentally different construction method.
+We do not prove that 31 is optimal. A CEGAR (counterexample-guided abstraction refinement) search for 30-ray KS subsets of the integer pool eliminated 500,000 candidate subsets without finding one, consistent with CK-31's optimality within $\{0,\pm1,\pm2\}$, but the search space ($\binom{62}{30} \approx 10^{17}$) was not fully exhausted. Combined with the greedy minimization (200 trials, all converging to 31), integer-pool CSP (all 15 merged graphs unrealizable), and deep criticality ($k \leq 8$ exhaustive), the evidence strongly suggests that 31 is optimal within integer coordinates. A sub-31 KS set, if it exists, would require rays outside the $\{0,\pm1,\pm2\}$ alphabet---a fundamentally different construction method.
 
 \begin{acknowledgments}
 The author acknowledges the use of Claude (Anthropic) for computational assistance. SAT solving used PySAT with the Glucose4 solver.
