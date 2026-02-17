@@ -31,6 +31,8 @@ from pysat.card import CardEnc, EncType
 # =====================================================================
 
 def generate_integer_rays():
+    """Generate all 49 projectively distinct rays from {0,±1,±2}."""
+    from math import gcd
     rays = []
     seen = set()
     for a in range(-2, 3):
@@ -38,11 +40,14 @@ def generate_integer_rays():
             for c in range(-2, 3):
                 if a == 0 and b == 0 and c == 0:
                     continue
-                v = (a, b, c)
+                # Reduce to primitive form (remove common factors)
+                g = gcd(gcd(abs(a), abs(b)), abs(c))
+                v = (a // g, b // g, c // g)
+                # Canonicalize: first nonzero coordinate positive
                 for coord in v:
                     if coord != 0:
                         if coord < 0:
-                            v = (-a, -b, -c)
+                            v = (-v[0], -v[1], -v[2])
                         break
                 if v not in seen:
                     seen.add(v)

@@ -26,17 +26,16 @@ from pysat.solvers import Glucose4
 from pysat.card import CardEnc, EncType
 
 # =====================================================================
-# CK-31 vectors (same ordering as ks_z3_focused.py)
+# CK-31 vectors (verified KS-uncolorable, from ks_sat.py)
 # =====================================================================
 
 CK31_VECS = [
-    (1, 0, 0), (0, 1, 0), (0, 0, 1),
-    (1, 1, 0), (1, -1, 0), (1, 0, 1), (1, 0, -1), (0, 1, 1), (0, 1, -1),
-    (1, 1, 1), (1, 1, -1), (1, -1, 1), (1, -1, -1),
-    (2, 1, 0), (2, -1, 0), (2, 0, 1), (2, 0, -1), (0, 2, 1), (0, 2, -1),
-    (1, 2, 0), (1, 0, 2), (0, 1, 2),
-    (2, 1, 1), (2, 1, -1), (2, -1, 1), (1, 2, 1), (1, 2, -1), (1, 1, 2),
-    (1, -2, 1), (1, 1, -2), (1, -1, 2),
+    (0, 0, 1), (0, 1, 0), (0, 1, 1), (0, 1, -1), (0, 1, 2), (0, 2, -1),
+    (1, 0, 0), (1, 0, 1), (1, 0, -1), (1, 0, 2), (1, 0, -2),
+    (1, 1, 0), (1, 1, 1), (1, 1, -1), (1, 1, 2), (1, -1, 0),
+    (1, -1, 1), (1, -1, -1), (1, -1, -2), (1, 2, 0), (1, 2, -1),
+    (1, -2, 0), (1, -2, 1), (2, 0, 1), (2, 0, -1), (2, 1, 0),
+    (2, 1, 1), (2, 1, -1), (2, -1, 0), (2, -1, 1), (2, -1, -1),
 ]
 
 CK31_NAMES = [str(v) for v in CK31_VECS]
@@ -51,6 +50,8 @@ def dot_int(a, b):
 # =====================================================================
 
 def generate_integer_rays():
+    """Generate all 49 projectively distinct rays from {0,±1,±2}."""
+    from math import gcd
     rays = []
     seen = set()
     for a in range(-2, 3):
@@ -58,11 +59,14 @@ def generate_integer_rays():
             for c in range(-2, 3):
                 if a == 0 and b == 0 and c == 0:
                     continue
-                v = (a, b, c)
+                # Reduce to primitive form (remove common factors)
+                g = gcd(gcd(abs(a), abs(b)), abs(c))
+                v = (a // g, b // g, c // g)
+                # Canonicalize: first nonzero coordinate positive
                 for coord in v:
                     if coord != 0:
                         if coord < 0:
-                            v = (-a, -b, -c)
+                            v = (-v[0], -v[1], -v[2])
                         break
                 if v not in seen:
                     seen.add(v)
