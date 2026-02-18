@@ -2,10 +2,10 @@
 ks_z3_focused.py -- Focused Z3 search: CK-31 merging + small realizability
 ==========================================================================
 
-Key results from initial run:
-- Direct Z3 encoding: intractable even at n=15 (ForAll quantifier)
-- CK-31 vertex merging: 15 KS-preserving merges, 0 realizable
-- Random KS hypergraphs: 0/40 realizable at n=25
+Key results (corrected CK-31 vectors):
+- CK-31 vertex merging: 394 KS-preserving merges (all non-orthogonal pairs)
+- Z3 returns "unknown" for all at 60s timeout
+- Integer-pool CSP (ks_merge_integer_csp.py) proves all 394 unrealizable
 
 This script focuses on the most informative approach (C: vertex merging)
 and adds detailed analysis of WHY the merges aren't realizable.
@@ -26,24 +26,15 @@ import z3
 # =====================================================================
 
 CK31_VECS = [
-    (1,0,0), (0,1,0), (0,0,1),
-    (1,1,0), (1,-1,0), (1,0,1), (1,0,-1), (0,1,1), (0,1,-1),
-    (1,1,1), (1,1,-1), (1,-1,1), (1,-1,-1),
-    (2,1,0), (2,-1,0), (2,0,1), (2,0,-1), (0,2,1), (0,2,-1),
-    (1,2,0), (1,0,2), (0,1,2),
-    (2,1,1), (2,1,-1), (2,-1,1), (1,2,1), (1,2,-1), (1,1,2),
-    (1,-2,1), (1,1,-2), (1,-1,2),
+    (0, 0, 1), (0, 1, 0), (0, 1, 1), (0, 1, -1), (0, 1, 2), (0, 2, -1),
+    (1, 0, 0), (1, 0, 1), (1, 0, -1), (1, 0, 2), (1, 0, -2),
+    (1, 1, 0), (1, 1, 1), (1, 1, -1), (1, 1, 2), (1, -1, 0),
+    (1, -1, 1), (1, -1, -1), (1, -1, -2), (1, 2, 0), (1, 2, -1),
+    (1, -2, 0), (1, -2, 1), (2, 0, 1), (2, 0, -1), (2, 1, 0),
+    (2, 1, 1), (2, 1, -1), (2, -1, 0), (2, -1, 1), (2, -1, -1),
 ]
 
-CK31_NAMES = [
-    "(1,0,0)", "(0,1,0)", "(0,0,1)",
-    "(1,1,0)", "(1,-1,0)", "(1,0,1)", "(1,0,-1)", "(0,1,1)", "(0,1,-1)",
-    "(1,1,1)", "(1,1,-1)", "(1,-1,1)", "(1,-1,-1)",
-    "(2,1,0)", "(2,-1,0)", "(2,0,1)", "(2,0,-1)", "(0,2,1)", "(0,2,-1)",
-    "(1,2,0)", "(1,0,2)", "(0,1,2)",
-    "(2,1,1)", "(2,1,-1)", "(2,-1,1)", "(1,2,1)", "(1,2,-1)", "(1,1,2)",
-    "(1,-2,1)", "(1,1,-2)", "(1,-1,2)",
-]
+CK31_NAMES = [str(v) for v in CK31_VECS]
 
 
 def dot_int(a, b):
