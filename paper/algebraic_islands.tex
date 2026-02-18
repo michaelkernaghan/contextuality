@@ -46,7 +46,7 @@ We present a computational survey showing that Kochen--Specker (KS) uncolorabili
 
 \section{Introduction}
 
-The Kochen--Specker (KS) theorem~\cite{KochenSpecker1967} is one of the foundational no-go results of quantum mechanics, demonstrating that quantum observables cannot be assigned pre-existing definite values independently of the measurement context (for a comprehensive review, see~\cite{Budroni2022}). The theorem is typically proved by exhibiting a finite set of rays (one-dimensional subspaces) in a Hilbert space $\mathcal{H}$ such that no consistent $\{0,1\}$-valued assignment exists satisfying the constraints imposed by orthogonality.
+The Kochen--Specker (KS) theorem~\cite{KochenSpecker1967} is one of the foundational no-go results of quantum mechanics, demonstrating that quantum observables cannot be assigned pre-existing definite values independently of the measurement context (for a comprehensive review, see Ref.~\cite{Budroni2022}). The theorem is typically proved by exhibiting a finite set of rays (one-dimensional subspaces) in a Hilbert space~$\mathcal{H}$ such that no consistent $\{0,1\}$-valued assignment exists satisfying the constraints imposed by~orthogonality.
 
 In dimension $d = 3$, the smallest known KS set is the Conway--Kochen 31-vector set ($\CK$), reported by Peres~\cite{Peres1993} with coordinates drawn from the integer alphabet $\{0, \pm 1, \pm 2\}$. Despite decades of effort, no smaller construction has been found. The best known lower bound is 24 vectors, established independently by Li, Bright, and Ganesh~\cite{LiBrightGanesh2024} and by Kirchweger, Peitl, and Szeider~\cite{KirchwegarPeitlSzeider2023} using SAT-based methods with algebraic realizability checking (improving the earlier bound of 22 by Uijlen and Westerbaan~\cite{UijlenWesterbaan2016}), leaving a gap of 7 vectors that remains one of the central open problems in KS theory. Trandafir and Cabello~\cite{TrandafirCabello2025} recently proved that $\CK$ is rigid (unique up to unitary transformation in $\C^3$) and conjectured that 31 is optimal.
 
@@ -57,8 +57,8 @@ In this paper, we ask a structural question: \emph{what algebraic property of a 
 The two-mechanism constraint unifies all known constructions: the integer identity $1 + 1 = 2$, the Peres identity $(\sqrt{2})^2 = 2$, the Eisenstein identity $1 + \omega + \omega^2 = 0$, and the Heegner-7 identity $\alpha\bar\alpha = 2$ are all instances of norm-2 or phase cancellation---the coordinate alphabet supports an algebraic relation whose terms have modulus at most $\sqrt{2}$, or whose phases sum to zero. Alphabets where the smallest available cancellation involves terms of modulus $\geq \sqrt{3}$ produce orthogonal pairs and triples but never enough interlocking triads for KS-uncolorability. Our main contributions are:
 
 \begin{enumerate}[label=(\roman*)]
-    \item An empirical classification of the cancellation identities that support KS-uncolorability in two-symbol alphabets: all tested cases reduce to norm-2 cancellation or phase cancellation, with no intermediate mechanisms (Sections~\ref{sec:quadratic}--\ref{sec:heegner}).
-    \item Two new KS configurations: the Heegner-7 ring $\Z[(1+\sqrt{-7})/2]$ (43 vectors, a genuinely new orthogonality graph) and the golden ratio field $\Q(\varphi)$ (52 vectors, revealed only by cross-product completion). Neither has been previously reported (Sections~\ref{sec:heegner}, \ref{sec:golden}; Appendix~\ref{app:rays}).
+    \item An empirical classification of the cancellation identities that support KS-un\-color\-ability in two-symbol alphabets: all tested cases reduce to norm-2 or phase cancellation, with no intermediate mechanisms (Sections~\ref{sec:quadratic}--\ref{sec:heegner}).
+    \item Two new KS configurations not previously reported: a 43-vector set from the Heegner-7 ring $\Z[\alpha]$ with $\alpha = (1{+}\sqrt{-7})/2$ (a genuinely new orthogonality graph), and a 52-vector set from the golden ratio field $\Q(\varphi)$, revealed only by cross-product completion (Sections~\ref{sec:heegner},~\ref{sec:golden}; Appendix~\ref{app:rays}).
     \item Evidence that the algebraic substrate has operational consequences: different islands yield different bipartite perfect quantum strategies (Section~\ref{sec:cabello}) and different Cabello--Severini--Winter contextual advantages (Section~\ref{sec:csw}), with no single island dominating on all measures.
     \item Supporting results: computational evidence that no 30-vector KS subset exists within the 37-ray union of all discovered integer-island minimal sets (Section~\ref{sec:exhaustive}), the pattern $6 \mid n$ for cyclotomic uncolorability (Section~\ref{sec:roots}), and strong graph-invariant evidence for isomorphism across the norm-2 family (Proposition~\ref{prop:isomorphism}).
 \end{enumerate}
@@ -461,7 +461,7 @@ The Gaussian integers $\Z[i]$ with the enriched alphabet $\{0, \pm 1, \pm i, \pm
 \textbf{(Strong evidence for graph isomorphism of norm-2 islands.)} The Peres $(\Z[\sqrt{2}])$ and complex quadratic $(\Z[\sqrt{-2}])$ orthogonality graphs share all tested graph invariants, both at the full pool level (49 vertices, 120 edges) and at the minimized 33-set level (33 vertices, 72 edges): identical degree sequences, eigenvalue spectra $($all 49 eigenvalues match to $10^{-6})$, triangle counts $(16)$, and traces of $A^k$ through $k = 4$. The Weisfeiler--Leman 1-dimensional color refinement algorithm stabilizes at 6 color classes $($full pool$)$ and 3 color classes $($minimized$)$ without distinguishing the graphs.  These invariants provide strong evidence for isomorphism but do not constitute a certified proof; a definitive confirmation would require a graph isomorphism solver such as nauty/traces providing an explicit vertex bijection.
 \end{proposition}
 
-This reduces the six known algebraic islands to five distinct orthogonality graph types. The Peres, complex quadratic, and Gaussian islands share a single graph type, unified by the norm-2 cancellation identity $|\alpha|^2 = 2$ operating in different rings $(\Z[\sqrt{2}], \Z[\sqrt{-2}], \Z[i])$.
+This reduces the six known algebraic islands to five distinct orthogonality graph types. The Peres, complex quadratic, and Gaussian islands share a single graph type, unified by the norm-2 cancellation identity $|\alpha|^2 = 2$ operating in different rings ($\Z[\sqrt{2}]$, $\Z[\sqrt{-2}]$,~$\Z[i]$).
 
 \subsection{Dead ends}
 
@@ -505,17 +505,18 @@ Table~\ref{tab:cancellation} summarizes the cancellation identity, alphabet, and
 \centering
 \caption{The six algebraic islands: alphabets, cancellation identities, and concrete orthogonality examples. Each cancellation identity is the algebraic equation that enables the dot product to vanish; the example shows two specific rays whose orthogonality depends on that identity.}
 \label{tab:cancellation}
-\begin{tabular}{llllcr}
+\footnotesize
+\begin{tabular}{@{}llllcr@{}}
 \toprule
-Island & Alphabet $\mathcal{A}$ & Cancellation identity & Dot-product example & Type & Min \\
+Island & Alphabet $\mathcal{A}$ & Identity & Dot-product example & Type & Min \\
 \midrule
-Integer & $\{0,\pm 1,\pm 2\}$ & $1 + 1 = 2$ & $1{\cdot}1 + 1{\cdot}1 + ({-}1){\cdot}2 = 0$ & Norm-2 & 31 \\
-Peres & $\{0,\pm 1,\pm\sqrt{2}\}$ & $(\sqrt{2})^2 = 2$ & $1{\cdot}1 + 1{\cdot}1 + ({-}\sqrt{2}){\cdot}\sqrt{2} = 0$ & Norm-2 & 33 \\
-$\Z[\sqrt{-2}]$ & $\{0,\pm 1,\pm\sqrt{-2}\}$ & $|\sqrt{-2}|^2 = 2$ & $\bar{1}{\cdot}1 + \bar{1}{\cdot}1 + \overline{({-}\sqrt{-2})}{\cdot}\sqrt{-2} = 0$ & Norm-2 & 33 \\
-Gaussian & $\{0,\pm 1,\pm i,\pm(1{+}i)\}$ & $|1+i|^2 = 2$ & $\bar{1}{\cdot}1 + \bar{1}{\cdot}1 + \overline{({-}(1{+}i))}{\cdot}(1{+}i) = 0$ & Norm-2 & 33 \\
+Integer & $\{0,\pm 1,\pm 2\}$ & $1 + 1 = 2$ & $1{\cdot}1 + 1{\cdot}1 - 1{\cdot}2 = 0$ & Norm-2 & 31 \\
+Peres & $\{0,\pm 1,\pm\!\sqrt{2}\}$ & $(\sqrt{2})^2 = 2$ & $1{\cdot}1 + 1{\cdot}1 - \sqrt{2}{\cdot}\sqrt{2} = 0$ & Norm-2 & 33 \\
+$\Z[\sqrt{-2}]$ & $\{0,\pm 1,\pm\!\sqrt{-2}\}$ & $|\sqrt{-2}|^2 = 2$ & $\bar 1{\cdot}1 + \bar 1{\cdot}1 + \overline{\sqrt{-2}}{\cdot}\sqrt{-2} = 0$ & Norm-2 & 33 \\
+Gaussian & $\{0,\pm 1,\pm i,\pm(1{+}i)\}$ & $|1{+}i|^2 = 2$ & $\bar 1{\cdot}1 + \bar 1{\cdot}1 + \overline{(1{+}i)}{\cdot}(1{+}i) = 0$ & Norm-2 & 33 \\
 Eisenstein & $\{0,\pm 1,\pm\omega,\pm\bar\omega\}$ & $1 + \omega + \omega^2 = 0$ & $1{\cdot}1 + 1{\cdot}\omega + 1{\cdot}\omega^2 = 0$ & Phase & 33 \\
-Heegner-7 & $\{0,\pm 1,\pm\alpha,\pm\bar\alpha\}$ & $\alpha\bar\alpha = 2$ & $\bar{1}{\cdot}1 + \bar{1}{\cdot}1 + ({-}\bar\alpha){\cdot}\alpha = 0$ & Norm-2 & 43 \\
-Golden & $\{0,\pm 1,\pm\varphi\}$ $\to$ completed & $\varphi^2 = \varphi + 1$ & $1{\cdot}1 + 1{\cdot}\varphi + ({-}1){\cdot}\varphi^2 = 0$ & Indirect & 52 \\
+Heegner-7 & $\{0,\pm 1,\pm\alpha,\pm\bar\alpha\}$ & $\alpha\bar\alpha = 2$ & $\bar 1{\cdot}1 + \bar 1{\cdot}1 - \bar\alpha{\cdot}\alpha = 0$ & Norm-2 & 43 \\
+Golden & $\{0,\pm 1,\pm\varphi\} \to$ compl. & $\varphi^2 = \varphi + 1$ & $1{\cdot}1 + 1{\cdot}\varphi - 1{\cdot}\varphi^2 = 0$ & Indirect & 52 \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -526,14 +527,16 @@ We can classify all \emph{primitive three-term cancellation identities} availabl
 \centering
 \caption{All primitive three-term zero-sums from the product set $\bar{\mathcal{A}} \cdot \mathcal{A}$ of a two-element alphabet $\{0, \pm 1, \pm x\}$. Each row is an algebraic constraint on~$x$; every solution corresponds to a known island. This classification applies to the raw alphabet before cross-product completion.}
 \label{tab:two-element}
-\begin{tabular}{llll}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llll@{}}
 \toprule
 Zero-sum pattern & Identity on $x$ & Solution & Island \\
 \midrule
 $1 + 1 - x = 0$ & $x = 2$ & $x = 2$ & Integer \\
-$1 + 1 - |x|^2 = 0$ & $|x|^2 = 2$ & $x = \sqrt{2}, \sqrt{-2}, \frac{1{+}\sqrt{-7}}{2}, \ldots$ & Peres / $\Z[\sqrt{-2}]$ / Heegner-7 \\
+$1 + 1 - |x|^2 = 0$ & $|x|^2 = 2$ & $\sqrt{2},\, \sqrt{-2},\, \tfrac{1{+}\sqrt{-7}}{2},\, \ldots$ & Peres/$\Z[\!\sqrt{-2}]$/Heeg.-7 \\
 $1 + x - |x|^2 = 0$ & $|x|^2 = 1 + x$ & $x = \varphi$ (real) & Golden \\
-$1 + x + |x|^2\mkern-2mu\cdot\mkern-2mu x = 0$ & $x^2 + x + 1 = 0$ & $x = \omega = e^{2\pi i/3}$ & Eisenstein \\
+$1 + x + |x|^2\!\cdot\! x = 0$ & $x^2 + x + 1 = 0$ & $x = \omega = e^{2\pi i/3}$ & Eisenstein \\
 $|x|^2 + |x|^2 - 1 = 0$ & $|x|^2 = \tfrac{1}{2}$ & $x = 1/\sqrt{2}$ & $\equiv$ Peres (rescaled) \\
 $x + x - |x|^2 = 0$ & $|x|^2 = 2x$ & $x = 2$ (real) & $\equiv$ Integer \\
 \bottomrule
@@ -609,7 +612,7 @@ If the algebraic substrate controls KS-uncolorability, it should also control th
 \]
 where $\alpha(G)$ is the independence number (classical bound), $\vartheta(G)$ is the Lov\'asz theta number (quantum bound, computed by semidefinite programming), and $\alpha^*(G)$ is the fractional packing number (nonsignaling bound, computed by linear programming). A quantum advantage exists when $\vartheta(G) > \alpha(G)$.
 
-We compute these invariants for two representations of each island: the SAT-minimized KS set (minimum cardinality) and the full ray pool (all rays generated by the alphabet before minimization). This comparison reveals a structural mechanism by which cardinality minimization destroys the CSW contextual advantage.
+We compute these invariants for two representations of each island: the SAT-minimized KS set (minimum cardinality) and the full ray pool (all rays generated by the alphabet before minimization). This comparison reveals a structural mechanism by which cardinality minimization destroys CSW contextual~advantage.
 
 \begin{table}[ht]
 \centering
@@ -805,9 +808,9 @@ The coverage is thorough for low-degree extensions but becomes increasingly spar
     \item \textbf{Cubic and higher extensions (sparse)}: we tested cubic extensions $\Q(\sqrt[3]{d})$ for $d = 2, 3, 4, 5, 6, 7$. The basic alphabets $\{0,\pm 1,\pm\sqrt[3]{d}\}$ are all colorable, but the extended alphabet $\{0,\pm 1,\pm\sqrt[3]{2},\pm\sqrt[3]{4}\}$ of $\Q(\sqrt[3]{2})$ produces an uncolorable set (minimum 60 vectors after cross-product completion), showing that cubic fields can support KS sets at higher cost.  Quartic, quintic, and higher-degree extensions are entirely unexplored; these could harbor cancellation identities qualitatively different from the quadratic norm-2 pattern.  This is the principal gap in our coverage.
     \item \textbf{Exotic cancellation candidates}: several families of multi-element alphabets from higher-degree fields remain untested and could in principle harbor qualitatively new cancellation mechanisms:
     \begin{itemize}
-        \item \emph{Cubic minimal-polynomial cancellations.}  The plastic ratio $\rho \approx 1.3247$ (smallest Pisot number, root of $x^3 = x + 1$) provides a three-element alphabet $\{0, \pm 1, \pm\rho, \pm\rho^2\}$ with cancellation identity $\rho \cdot \rho^2 - \rho - 1 = 0$.  This is neither norm-2 nor phase: the cancellation \emph{is} the minimal polynomial.  Unlike $\Q(\sqrt[3]{2})$ where $\sqrt[3]{2}\cdot\sqrt[3]{4} = 2$ reduces to norm-2, the plastic ratio identity is irreducibly cubic.  Other cubic Pisot numbers (the supersilver ratio, root of $x^3 = 2x^2 + 1$; the tribonacci constant, root of $x^3 = x^2 + x + 1$) provide analogous candidates with different product algebras.
-        \item \emph{Class-number $> 1$ imaginary quadratic fields.}  Our survey tested all nine class-1 fields (Heegner numbers) exhaustively, but rings with non-unique factorization---such as $\Z[\sqrt{-5}]$ (class number~2), where $2 \cdot 3 = (1+\sqrt{-5})(1-\sqrt{-5})$---could support cross-cancellation mechanisms unavailable in UFDs.  The multiple factorization paths create algebraic relations among ring elements that have no class-1 analogue.
-        \item \emph{Simultaneous conjugate cancellations.}  Multi-element alphabets $\{0, \pm 1, \pm\alpha, \pm\bar\alpha, \pm(\alpha + \bar\alpha)\}$ where $\alpha$ and $\bar\alpha$ participate in \emph{independent} cancellation identities could produce richer orthogonality structures than single-generator alphabets.  The Gaussian case $\{0, \pm 1, \pm i, \pm(1+i)\}$ already exhibits this (both $|i|^2 = 1$ and $|1+i|^2 = 2$), but higher-degree fields offer more conjugate pairs.
+        \item \emph{Cubic minimal-polynomial cancellations.}  The plastic ratio $\rho \approx 1.3247$ (smallest Pisot number, root of $x^3 = x + 1$) provides a three-element alphabet $\{0, \pm 1, \pm\rho, \pm\rho^2\}$ with cancellation identity $\rho \cdot \rho^2 - \rho - 1 = 0$.  This is neither norm-2 nor phase: the cancellation \emph{is} the minimal polynomial.  Unlike $\Q(\sqrt[3]{2})$ where $\sqrt[3]{2}\cdot\sqrt[3]{4} = 2$ reduces to norm-2, the plastic ratio identity is irreducibly cubic.  Other cubic Pisot numbers (the supersilver ratio, root of $x^3 = 2x^2 + 1$; the tribonacci constant, root of $x^3 = x^2 + x + 1$) provide analogous candidates with different product~algebras.
+        \item \emph{Class-number $> 1$ imaginary quadratic fields.}  Our survey tested all nine class-1 fields (Heegner numbers) exhaustively, but rings with non-unique factorization could support cross-cancellation mechanisms unavailable in UFDs.  For example, in $\Z[\sqrt{-5}]$ (class number~2), $2 \cdot 3 = (1{+}\sqrt{-5})(1{-}\sqrt{-5})$; such multiple factorization paths create algebraic relations with no class-1~analogue.
+        \item \emph{Simultaneous conjugate cancellations.}  Multi-element alphabets containing both $\alpha$ and $\bar\alpha$ as generators, where these participate in \emph{independent} cancellation identities, could produce richer orthogonality structures than single-generator alphabets.  The Gaussian case already exhibits this ($|i|^2 = 1$ and $|1{+}i|^2 = 2$ coexist), but higher-degree fields offer more conjugate~pairs.
         \item \emph{CM elliptic curve endomorphism rings.}  The $j$-invariants of CM elliptic curves are algebraic integers in large number fields whose Hilbert class polynomials provide exotic minimal-polynomial cancellations of arbitrarily high degree.  This is highly speculative but represents the logical limit of the algebraic approach.
     \end{itemize}
     Of these, the cubic Pisot numbers and class-number $> 1$ fields are the most accessible computationally; preliminary scripts for testing these are included in the repository.
@@ -836,9 +839,28 @@ This structural perspective yields both new constructions and new connections:
 
 Whether the two-mechanism constraint extends to all number fields, or whether higher-degree extensions harbor additional cancellation mechanisms and hence additional islands, remains the principal open question. The identification of Cabello's ``simplest KS set'' with the Eisenstein island suggests that the algebraic perspective may complement the ongoing search for optimal constructions. More concretely, the constraints established here---the two-element cancellation classification, density monotonicity, and the discrete 13$\to$49 ray jump---are directly applicable to the realizability-based lower-bound program of Li, Bright, and Ganesh~\cite{LiBrightGanesh2024}: algebraic pruning of candidate hypergraphs could substantially narrow the search space that their SMT solver must explore, bringing the constructive upper bound (31) and the realizability lower bound (24) closer together.
 
+There is a pleasing circularity in this enterprise: the KS theorem establishes the contextuality that underlies quantum computational advantage~\cite{BravyiGossetKoenig2018}, yet resolving the minimum KS set problem may itself require quantum resources.  The SAT and SMT instances arising from KS realizability checking are natural candidates for quantum speedup, suggesting that the very quantum effects whose foundations we probe may ultimately provide the computational power needed to complete the~proof.
+
 \subsection*{Reproducibility}
 
-All code and data are available at \url{https://github.com/michaelkernaghan/contextuality}. The repository includes explicit ray coordinates and triad/basis lists for all islands, including the 43-vector Heegner-7 set and the 52-vector golden-ratio set, as well as verifier scripts that reconstruct each KS set from its alphabet and confirm UNSAT via SAT solving. The implementation uses Python 3.11 with PySAT 1.8 (Glucose4 solver), NumPy, SciPy (L-BFGS-B optimizer and HiGHS LP solver), and CVXPY (SCS semidefinite programming solver, tolerance $10^{-9}$). Tables~\ref{tab:alphabets}--\ref{tab:closure} are generated by \texttt{ks\_islands.py}; Table~\ref{tab:roots} by \texttt{ks\_complex.py}; Table~\ref{tab:complex-quadratic} and the exhaustive 31-optimality check by \texttt{ks\_new\_islands.py} and \texttt{ks\_sat.py}; Table~\ref{tab:heegner} by \texttt{ks\_new\_island\_analysis.py}; Tables~\ref{tab:csw-min}--\ref{tab:csw-pool} and~\ref{tab:spectral} by \texttt{ks\_csw.py}, \texttt{ks\_csw\_extended.py}, and \texttt{ks\_graph\_analysis.py}; Table~\ref{tab:critical-bases} by \texttt{ks\_critical\_bases.py}; Table~\ref{tab:bpqs} by \texttt{ks\_bpqs\_sat.py}; the trigonometric sweep (Remark~\ref{rem:trig}) by \texttt{ks\_trig.py}; Proposition~\ref{prop:isomorphism} by \texttt{ks\_graph\_analysis.py}; Observation~\ref{obs:universality} by \texttt{ks\_group\_isomorphism.py}; and the cubic field, mixed alphabet, and group orbit explorations by \texttt{ks\_explore\_new.py} and \texttt{ks\_explore\_new2.py}. All randomized experiments use \texttt{random.seed(42)} for reproducibility.
+\begin{sloppypar}
+All code and data are available at
+\url{https://github.com/michaelkernaghan/contextuality}.
+The repository includes explicit ray coordinates and triad/basis lists for all islands, including the 43-vector Heegner-7 and 52-vector golden-ratio sets, as well as verifier scripts that reconstruct each KS set from its alphabet and confirm UNSAT via SAT solving. The implementation uses Python~3.11 with PySAT~1.8 (Glucose4), NumPy, SciPy (L-BFGS-B and HiGHS~LP), and CVXPY (SCS~SDP, tolerance~$10^{-9}$).
+\end{sloppypar}
+
+The script-to-table correspondence is:
+\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+\item \texttt{ks\_islands.py} $\to$ Tables~\ref{tab:alphabets}--\ref{tab:closure}
+\item \texttt{ks\_complex.py} $\to$ Table~\ref{tab:roots}
+\item \texttt{ks\_new\_islands.py}, \texttt{ks\_sat.py} $\to$ Table~\ref{tab:complex-quadratic}, 31-optimality check
+\item \texttt{ks\_new\_island\_analysis.py} $\to$ Table~\ref{tab:heegner}
+\item \texttt{ks\_csw.py}, \texttt{ks\_csw\_extended.py}, \texttt{ks\_graph\_analysis.py} $\to$ Tables~\ref{tab:csw-min}--\ref{tab:csw-pool},~\ref{tab:spectral}
+\item \texttt{ks\_critical\_bases.py} $\to$ Table~\ref{tab:critical-bases};\enspace \texttt{ks\_bpqs\_sat.py} $\to$ Table~\ref{tab:bpqs}
+\item \texttt{ks\_trig.py} $\to$ Remark~\ref{rem:trig};\enspace \texttt{ks\_graph\_analysis.py} $\to$ Prop.~\ref{prop:isomorphism}
+\item \texttt{ks\_group\_isomorphism.py} $\to$ Obs.~\ref{obs:universality};\enspace \texttt{ks\_explore\_new*.py} $\to$ cubic/mixed/orbit explorations
+\end{itemize}
+All randomized experiments use \texttt{random.seed(42)} for~reproducibility.
 
 \subsection*{Acknowledgments}
 
