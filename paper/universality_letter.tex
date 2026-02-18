@@ -34,7 +34,7 @@ We present a systematic computational survey showing that Kochen--Specker (KS) u
 
 \section{Introduction}
 
-The smallest known Kochen--Specker (KS) set in dimension~3 is the 31-vector Conway--Kochen set~\cite{ConwayKochen,Peres1993}, constructed from integer coordinates. The Peres construction~\cite{Peres1991} uses $\Z[\sqrt{2}]$ coordinates (33~vectors), and Cabello's recent simplest KS set~\cite{Cabello2025simplest} uses the Eisenstein integers $\Z[\omega]$ (33~vectors). A natural question arises: what algebraic property determines whether a number field supports KS sets, and is the 31-vector minimum specific to the integer field or a universal barrier?
+The smallest known Kochen--Specker (KS) set in dimension~3 is the 31-vector Conway--Kochen set~\cite{ConwayKochen,Peres1993}, constructed from integer coordinates.  (We use the ``original'' KS definition~\cite{LiBrightGanesh2024}: every ray belongs to at least one orthogonal triple, no triple admits a $\{0,1\}$-coloring consistent with unit sum.)  The Peres construction~\cite{Peres1991} uses $\Z[\sqrt{2}]$ coordinates (33~vectors), and Cabello's recent simplest KS set~\cite{Cabello2025simplest} uses the Eisenstein integers $\Z[\omega]$ (33~vectors).  Gould and Aravind~\cite{GouldAravind2010} showed that the Peres and Penrose 33-vector sets---despite different coordinate fields---share the same orthogonality graph, and parametrized a continuous family with the constraint $|c|^2 = 2$.  The best proven lower bound is 24~vectors~\cite{LiBrightGanesh2024,KirchwegarPeitlSzeider2023}. A natural question arises: what algebraic property determines whether a number field supports KS sets, and is the 31-vector minimum specific to the integer field or a universal barrier?
 
 We present a systematic computational survey across number fields, showing that the availability of norm-2 cancellation identities among ring elements governs KS-uncolorability, and that the 31-vector minimum is achieved by algebraically independent constructions that all produce the same graph and hypergraph.
 
@@ -146,13 +146,15 @@ We verified pairwise graph isomorphism for all $\binom{3}{2} = 3$ pairs using th
 
 The universality of $\CK$ has two implications.
 
-First, it strengthens the case that 31 is the true minimum for KS sets in dimension~3: not only does no tested algebra break the barrier, but every algebra that reaches it arrives at the same graph \emph{and} the same hypergraph. The $\CK$ orthogonality structure appears to be a unique attractor across all algebraic origins.
+Note that universality does \emph{not} hold at 33~vectors: the Schutte--Bub set has a different orthogonality graph from the Peres/Penrose family~\cite{GouldAravind2010,Cabello2025simplest}, so multiple non-isomorphic KS graphs coexist at that size. The fact that universality emerges at 31 is therefore non-trivial. One explanation is that CK-31 is the unique 31-vertex subgraph obtainable from the entire Gould--Aravind continuous family~\cite{GouldAravind2010}---regardless of parameters, deleting two rays from any 33-vector member of the family yields the same 31-vertex structure.
+
+First, this strengthens the case that 31 is the true minimum for KS sets in dimension~3: not only does no tested algebra break the barrier, but every algebra that reaches it arrives at the same graph \emph{and} the same hypergraph. The $\CK$ orthogonality structure appears to be a unique attractor across all algebraic origins.
 
 \begin{conjecture}
 The Conway--Kochen set $\CK$ achieves the true minimum: no KS set with 30 or fewer rays exists in dimension~3, and $\CK$ is the unique 31-ray KS graph up to isomorphism.
 \end{conjecture}
 
-This conjecture is supported by: the rigidity result of Trandafir and Cabello~\cite{TrandafirCabello2025}, who showed that every bipartite perfect quantum strategy based on 31 rays yields a unique strategy up to local isometry; our verification that 31 is the minimum found within the integer island across all alphabet sizes tested; the VF2-verified universality across three algebraically independent constructions at both graph and hypergraph level; and the failure of 30{,}000+ random KS-uncolorable hypergraphs to achieve geometric realizability in $\R^3$.
+The proven lower bound is 24~\cite{LiBrightGanesh2024,KirchwegarPeitlSzeider2023}; closing the gap between 24 and 31 remains the central open problem.  This conjecture is supported by: the rigidity result of Trandafir and Cabello~\cite{TrandafirCabello2025}, who showed that every bipartite perfect quantum strategy based on 31 rays yields a unique strategy up to local isometry; our verification that 31 is the minimum found within the integer island across all alphabet sizes tested; the VF2-verified universality across three algebraically independent constructions at both graph and hypergraph level; and the failure of 30{,}000+ random KS-uncolorable hypergraphs to achieve geometric realizability in $\R^3$.
 
 Second, the norm-2 cancellation boundary provides a \emph{predictive heuristic}: given a number field and a bounded coordinate alphabet, one can estimate whether KS sets are likely by checking whether the ring supports norm-2-type cancellation identities among its elements.  The relationship is tight: an alphabet is a viable candidate for producing a KS set only if it carries a cancellation identity that makes dot products vanish exactly among triples.  Without such an identity, no exact orthogonalities arise and KS-uncolorability is impossible.  The search for new KS-supporting alphabets is therefore equivalent to the search for new cancellation identities of sufficiently low norm.  While this does not constitute a proof (the search space is not exhausted), the heuristic has correctly predicted the outcome for every field tested, reducing an NP-hard combinatorial search to an algebraic check.
 
@@ -207,9 +209,25 @@ Sci.\ Rep.\ \textbf{9}, 6765 (2019).
 \bibitem{SupplementalMaterial}
 See Supplemental Material for explicit ray coordinates, edge lists, basis lists, VF2 isomorphism certificates, SAT solver details, and negative control data for all constructions reported here.
 
+\bibitem{GouldAravind2010}
+P.~K.~Gould and P.~K.~Aravind,
+Found.\ Phys.\ \textbf{40}, 1096 (2010).
+
+\bibitem{LiBrightGanesh2024}
+J.~Li, C.~Bright, and V.~Ganesh,
+in \textit{Proceedings of IJCAI-24} (2024); arXiv:2306.13319.
+
+\bibitem{KirchwegarPeitlSzeider2023}
+M.~Kirchweger, A.~Peitl, and S.~Szeider,
+in \textit{Proceedings of AAAI-23}, 4119 (2023).
+
 \bibitem{Kernaghan2026heegner}
 M.~Kernaghan,
 ``New Kochen--Specker sets from algebraic number fields with enhanced contextual advantage'' (in preparation).
+
+\bibitem{Kernaghan2026landscape}
+M.~Kernaghan,
+``The algebraic landscape of Kochen--Specker sets in dimension three'' (in preparation).
 
 \end{thebibliography}
 
