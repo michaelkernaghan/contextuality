@@ -1,0 +1,549 @@
+======================================================================
+MINIMUM KS SET IN {0,±1,±2} INTEGER POOL
+(Assumption-based MUS extraction)
+======================================================================
+
+Ray pool: 49 rays from {0,±1,±2}
+Orthogonal pairs: 138
+Triads (mutually orthogonal triples): 26
+Full pool KS-uncolorable: True
+
+======================================================================
+PHASE 1: MUS Extraction (assumption-based UNSAT core)
+======================================================================
+  Trial 1: NEW MINIMUM = 31 rays
+  Trial 20: min so far = 31, found 18 distinct minimal sets
+  Trial 40: min so far = 31, found 32 distinct minimal sets
+  Trial 60: min so far = 31, found 39 distinct minimal sets
+  Trial 80: min so far = 31, found 49 distinct minimal sets
+  Trial 100: min so far = 31, found 56 distinct minimal sets
+  Trial 120: min so far = 31, found 61 distinct minimal sets
+  Trial 140: min so far = 31, found 67 distinct minimal sets
+  Trial 160: min so far = 31, found 74 distinct minimal sets
+  Trial 180: min so far = 31, found 80 distinct minimal sets
+  Trial 200: min so far = 31, found 86 distinct minimal sets
+
+  Results after 200 trials:
+    Minimum KS set size: 31
+    Distinct minimal sets found: 86
+    Size distribution: {31: 37, 33: 88, 35: 25, 37: 11, 39: 21, 40: 3, 41: 8, 42: 4, 43: 3}
+
+All Phase 1 minimal sets have 31+ rays.
+Searching for 30-ray KS set...
+
+======================================================================
+PHASE 2: Targeted search for 30-ray KS set
+======================================================================
+
+  Strategy A: Remove one ray from each minimal 31-set
+    Testing 6 sets × 31 removals each
+    No 30-set found by single removal (186 tested, 0.0s)
+
+  Strategy B: Remove 2 rays, add 1 from outside each 31-set
+    No 30-set found by remove-2-add-1 (50406 tested, 3.7s)
+
+  Strategy C: CEGAR with structural blocking (limit 300s)
+    ... 5,000 iterations [0.5s, 10351/s]
+    ... 10,000 iterations [1.0s, 10062/s]
+    ... 15,000 iterations [1.5s, 9826/s]
+    ... 20,000 iterations [2.1s, 9655/s]
+    ... 25,000 iterations [2.6s, 9504/s]
+    ... 30,000 iterations [3.2s, 9427/s]
+    ... 35,000 iterations [3.8s, 9309/s]
+    ... 40,000 iterations [4.3s, 9223/s]
+    ... 45,000 iterations [4.8s, 9324/s]
+    ... 50,000 iterations [5.3s, 9412/s]
+    ... 55,000 iterations [5.9s, 9381/s]
+    ... 60,000 iterations [6.5s, 9166/s]
+    ... 65,000 iterations [7.1s, 9117/s]
+    ... 70,000 iterations [7.8s, 8941/s]
+    ... 75,000 iterations [8.5s, 8842/s]
+    ... 80,000 iterations [9.1s, 8763/s]
+    ... 85,000 iterations [9.8s, 8650/s]
+    ... 90,000 iterations [10.6s, 8489/s]
+    ... 95,000 iterations [11.3s, 8378/s]
+    ... 100,000 iterations [12.0s, 8353/s]
+    ... 105,000 iterations [12.6s, 8339/s]
+    ... 110,000 iterations [13.2s, 8313/s]
+    ... 115,000 iterations [13.8s, 8349/s]
+    ... 120,000 iterations [14.4s, 8362/s]
+    ... 125,000 iterations [15.0s, 8326/s]
+    ... 130,000 iterations [15.7s, 8297/s]
+    ... 135,000 iterations [16.3s, 8277/s]
+    ... 140,000 iterations [17.0s, 8240/s]
+    ... 145,000 iterations [17.6s, 8229/s]
+    ... 150,000 iterations [18.3s, 8218/s]
+    ... 155,000 iterations [18.9s, 8186/s]
+    ... 160,000 iterations [19.6s, 8151/s]
+    ... 165,000 iterations [20.3s, 8127/s]
+    ... 170,000 iterations [20.9s, 8117/s]
+    ... 175,000 iterations [21.6s, 8107/s]
+    ... 180,000 iterations [22.2s, 8119/s]
+    ... 185,000 iterations [22.9s, 8092/s]
+    ... 190,000 iterations [23.6s, 8063/s]
+    ... 195,000 iterations [24.2s, 8046/s]
+    ... 200,000 iterations [24.8s, 8050/s]
+    ... 205,000 iterations [25.6s, 8006/s]
+    ... 210,000 iterations [26.3s, 7979/s]
+    ... 215,000 iterations [26.9s, 7995/s]
+    ... 220,000 iterations [27.5s, 7992/s]
+    ... 225,000 iterations [28.2s, 7975/s]
+    ... 230,000 iterations [28.9s, 7963/s]
+    ... 235,000 iterations [29.6s, 7945/s]
+    ... 240,000 iterations [30.3s, 7928/s]
+    ... 245,000 iterations [31.0s, 7903/s]
+    ... 250,000 iterations [31.6s, 7916/s]
+    ... 255,000 iterations [32.2s, 7929/s]
+    ... 260,000 iterations [32.8s, 7917/s]
+    ... 265,000 iterations [33.5s, 7911/s]
+    ... 270,000 iterations [34.2s, 7905/s]
+    ... 275,000 iterations [34.8s, 7893/s]
+    ... 280,000 iterations [35.6s, 7876/s]
+    ... 285,000 iterations [36.2s, 7870/s]
+    ... 290,000 iterations [36.9s, 7855/s]
+    ... 295,000 iterations [37.6s, 7845/s]
+    ... 300,000 iterations [38.6s, 7778/s]
+    ... 305,000 iterations [39.3s, 7771/s]
+    ... 310,000 iterations [40.0s, 7740/s]
+    ... 315,000 iterations [40.8s, 7725/s]
+    ... 320,000 iterations [41.5s, 7703/s]
+    ... 325,000 iterations [42.3s, 7681/s]
+    ... 330,000 iterations [43.2s, 7644/s]
+    ... 335,000 iterations [44.0s, 7611/s]
+    ... 340,000 iterations [44.8s, 7586/s]
+    ... 345,000 iterations [45.6s, 7564/s]
+    ... 350,000 iterations [46.4s, 7539/s]
+    ... 355,000 iterations [47.1s, 7530/s]
+    ... 360,000 iterations [47.9s, 7523/s]
+    ... 365,000 iterations [48.6s, 7514/s]
+    ... 370,000 iterations [49.3s, 7500/s]
+    ... 375,000 iterations [50.1s, 7483/s]
+    ... 380,000 iterations [50.9s, 7469/s]
+    ... 385,000 iterations [51.5s, 7473/s]
+    ... 390,000 iterations [52.2s, 7473/s]
+    ... 395,000 iterations [52.8s, 7477/s]
+    ... 400,000 iterations [53.5s, 7481/s]
+    ... 405,000 iterations [54.2s, 7477/s]
+    ... 410,000 iterations [54.9s, 7465/s]
+    ... 415,000 iterations [55.6s, 7466/s]
+    ... 420,000 iterations [56.4s, 7451/s]
+    ... 425,000 iterations [57.1s, 7444/s]
+    ... 430,000 iterations [57.9s, 7430/s]
+    ... 435,000 iterations [58.6s, 7422/s]
+    ... 440,000 iterations [59.5s, 7397/s]
+    ... 445,000 iterations [60.2s, 7397/s]
+    ... 450,000 iterations [60.9s, 7394/s]
+    ... 455,000 iterations [61.7s, 7378/s]
+    ... 460,000 iterations [62.4s, 7374/s]
+    ... 465,000 iterations [63.1s, 7366/s]
+    ... 470,000 iterations [64.0s, 7343/s]
+    ... 475,000 iterations [64.9s, 7321/s]
+    ... 480,000 iterations [65.8s, 7295/s]
+    ... 485,000 iterations [66.6s, 7279/s]
+    ... 490,000 iterations [67.5s, 7259/s]
+    ... 495,000 iterations [68.4s, 7240/s]
+    ... 500,000 iterations [69.2s, 7224/s]
+    ... 505,000 iterations [70.1s, 7209/s]
+    ... 510,000 iterations [70.9s, 7193/s]
+    ... 515,000 iterations [71.8s, 7177/s]
+    ... 520,000 iterations [72.6s, 7167/s]
+    ... 525,000 iterations [73.4s, 7154/s]
+    ... 530,000 iterations [74.2s, 7143/s]
+    ... 535,000 iterations [75.1s, 7123/s]
+    ... 540,000 iterations [75.8s, 7123/s]
+    ... 545,000 iterations [76.5s, 7125/s]
+    ... 550,000 iterations [77.2s, 7120/s]
+    ... 555,000 iterations [78.1s, 7109/s]
+    ... 560,000 iterations [78.9s, 7097/s]
+    ... 565,000 iterations [79.7s, 7085/s]
+    ... 570,000 iterations [80.5s, 7077/s]
+    ... 575,000 iterations [81.4s, 7064/s]
+    ... 580,000 iterations [82.3s, 7051/s]
+    ... 585,000 iterations [83.2s, 7030/s]
+    ... 590,000 iterations [84.1s, 7013/s]
+    ... 595,000 iterations [85.1s, 6991/s]
+    ... 600,000 iterations [86.1s, 6968/s]
+    ... 605,000 iterations [86.9s, 6958/s]
+    ... 610,000 iterations [87.8s, 6944/s]
+    ... 615,000 iterations [88.8s, 6929/s]
+    ... 620,000 iterations [89.6s, 6917/s]
+    ... 625,000 iterations [90.6s, 6895/s]
+    ... 630,000 iterations [91.5s, 6883/s]
+    ... 635,000 iterations [92.4s, 6872/s]
+    ... 640,000 iterations [93.2s, 6865/s]
+    ... 645,000 iterations [94.2s, 6844/s]
+    ... 650,000 iterations [95.1s, 6833/s]
+    ... 655,000 iterations [95.9s, 6828/s]
+    ... 660,000 iterations [96.6s, 6829/s]
+    ... 665,000 iterations [97.4s, 6831/s]
+    ... 670,000 iterations [98.1s, 6830/s]
+    ... 675,000 iterations [98.9s, 6827/s]
+    ... 680,000 iterations [99.7s, 6822/s]
+    ... 685,000 iterations [100.5s, 6819/s]
+    ... 690,000 iterations [101.2s, 6815/s]
+    ... 695,000 iterations [102.1s, 6805/s]
+    ... 700,000 iterations [102.9s, 6800/s]
+    ... 705,000 iterations [103.8s, 6789/s]
+    ... 710,000 iterations [104.7s, 6783/s]
+    ... 715,000 iterations [105.5s, 6779/s]
+    ... 720,000 iterations [106.3s, 6774/s]
+    ... 725,000 iterations [107.2s, 6765/s]
+    ... 730,000 iterations [108.0s, 6760/s]
+    ... 735,000 iterations [108.8s, 6753/s]
+    ... 740,000 iterations [109.8s, 6742/s]
+    ... 745,000 iterations [110.7s, 6728/s]
+    ... 750,000 iterations [111.8s, 6711/s]
+    ... 755,000 iterations [112.6s, 6704/s]
+    ... 760,000 iterations [113.5s, 6697/s]
+    ... 765,000 iterations [114.3s, 6694/s]
+    ... 770,000 iterations [115.1s, 6687/s]
+    ... 775,000 iterations [116.0s, 6681/s]
+    ... 780,000 iterations [116.9s, 6671/s]
+    ... 785,000 iterations [117.8s, 6665/s]
+    ... 790,000 iterations [118.6s, 6658/s]
+    ... 795,000 iterations [119.5s, 6652/s]
+    ... 800,000 iterations [120.4s, 6646/s]
+    ... 805,000 iterations [121.2s, 6640/s]
+    ... 810,000 iterations [122.1s, 6633/s]
+    ... 815,000 iterations [123.1s, 6623/s]
+    ... 820,000 iterations [123.9s, 6616/s]
+    ... 825,000 iterations [124.8s, 6608/s]
+    ... 830,000 iterations [125.7s, 6601/s]
+    ... 835,000 iterations [126.7s, 6590/s]
+    ... 840,000 iterations [127.6s, 6581/s]
+    ... 845,000 iterations [128.6s, 6570/s]
+    ... 850,000 iterations [129.6s, 6560/s]
+    ... 855,000 iterations [130.6s, 6547/s]
+    ... 860,000 iterations [131.5s, 6539/s]
+    ... 865,000 iterations [132.5s, 6529/s]
+    ... 870,000 iterations [133.5s, 6519/s]
+    ... 875,000 iterations [134.5s, 6507/s]
+    ... 880,000 iterations [135.5s, 6496/s]
+    ... 885,000 iterations [136.5s, 6481/s]
+    ... 890,000 iterations [137.6s, 6470/s]
+    ... 895,000 iterations [138.6s, 6459/s]
+    ... 900,000 iterations [139.6s, 6446/s]
+    ... 905,000 iterations [140.7s, 6434/s]
+    ... 910,000 iterations [141.7s, 6423/s]
+    ... 915,000 iterations [142.8s, 6407/s]
+    ... 920,000 iterations [143.9s, 6392/s]
+    ... 925,000 iterations [144.9s, 6383/s]
+    ... 930,000 iterations [145.9s, 6375/s]
+    ... 935,000 iterations [146.9s, 6366/s]
+    ... 940,000 iterations [147.8s, 6360/s]
+    ... 945,000 iterations [148.7s, 6353/s]
+    ... 950,000 iterations [149.6s, 6348/s]
+    ... 955,000 iterations [150.6s, 6340/s]
+    ... 960,000 iterations [151.6s, 6332/s]
+    ... 965,000 iterations [152.5s, 6327/s]
+    ... 970,000 iterations [153.4s, 6322/s]
+    ... 975,000 iterations [154.3s, 6319/s]
+    ... 980,000 iterations [155.3s, 6311/s]
+    ... 985,000 iterations [156.5s, 6296/s]
+    ... 990,000 iterations [157.6s, 6283/s]
+    ... 995,000 iterations [158.7s, 6271/s]
+    ... 1,000,000 iterations [159.7s, 6263/s]
+    ... 1,005,000 iterations [160.7s, 6253/s]
+    ... 1,010,000 iterations [161.8s, 6244/s]
+    ... 1,015,000 iterations [162.7s, 6237/s]
+    ... 1,020,000 iterations [163.7s, 6231/s]
+    ... 1,025,000 iterations [164.7s, 6225/s]
+    ... 1,030,000 iterations [165.6s, 6219/s]
+    ... 1,035,000 iterations [166.6s, 6214/s]
+    ... 1,040,000 iterations [167.5s, 6210/s]
+    ... 1,045,000 iterations [168.4s, 6205/s]
+    ... 1,050,000 iterations [169.3s, 6200/s]
+    ... 1,055,000 iterations [170.3s, 6194/s]
+    ... 1,060,000 iterations [171.3s, 6188/s]
+    ... 1,065,000 iterations [172.3s, 6181/s]
+    ... 1,070,000 iterations [173.2s, 6176/s]
+    ... 1,075,000 iterations [174.3s, 6169/s]
+    ... 1,080,000 iterations [175.2s, 6165/s]
+    ... 1,085,000 iterations [176.1s, 6160/s]
+    ... 1,090,000 iterations [177.2s, 6152/s]
+    ... 1,095,000 iterations [178.2s, 6145/s]
+    ... 1,100,000 iterations [179.2s, 6138/s]
+    ... 1,105,000 iterations [180.2s, 6132/s]
+    ... 1,110,000 iterations [181.3s, 6122/s]
+    ... 1,115,000 iterations [182.4s, 6113/s]
+    ... 1,120,000 iterations [183.5s, 6102/s]
+    ... 1,125,000 iterations [184.6s, 6094/s]
+    ... 1,130,000 iterations [185.7s, 6086/s]
+    ... 1,135,000 iterations [186.8s, 6077/s]
+    ... 1,140,000 iterations [187.9s, 6068/s]
+    ... 1,145,000 iterations [189.0s, 6057/s]
+    ... 1,150,000 iterations [190.1s, 6049/s]
+    ... 1,155,000 iterations [191.3s, 6039/s]
+    ... 1,160,000 iterations [192.4s, 6030/s]
+    ... 1,165,000 iterations [193.4s, 6024/s]
+    ... 1,170,000 iterations [194.5s, 6015/s]
+    ... 1,175,000 iterations [195.6s, 6006/s]
+    ... 1,180,000 iterations [196.7s, 5998/s]
+    ... 1,185,000 iterations [197.8s, 5991/s]
+    ... 1,190,000 iterations [198.8s, 5986/s]
+    ... 1,195,000 iterations [199.8s, 5980/s]
+    ... 1,200,000 iterations [200.8s, 5975/s]
+    ... 1,205,000 iterations [201.9s, 5969/s]
+    ... 1,210,000 iterations [202.9s, 5962/s]
+    ... 1,215,000 iterations [204.0s, 5956/s]
+    ... 1,220,000 iterations [205.0s, 5950/s]
+    ... 1,225,000 iterations [206.2s, 5941/s]
+    ... 1,230,000 iterations [207.3s, 5934/s]
+    ... 1,235,000 iterations [208.4s, 5927/s]
+    ... 1,240,000 iterations [209.5s, 5919/s]
+    ... 1,245,000 iterations [210.6s, 5911/s]
+    ... 1,250,000 iterations [211.7s, 5905/s]
+    ... 1,255,000 iterations [212.9s, 5896/s]
+    ... 1,260,000 iterations [214.1s, 5886/s]
+    ... 1,265,000 iterations [215.3s, 5875/s]
+    ... 1,270,000 iterations [216.7s, 5861/s]
+    ... 1,275,000 iterations [217.8s, 5854/s]
+    ... 1,280,000 iterations [218.9s, 5846/s]
+    ... 1,285,000 iterations [220.0s, 5840/s]
+    ... 1,290,000 iterations [221.1s, 5835/s]
+    ... 1,295,000 iterations [222.2s, 5829/s]
+    ... 1,300,000 iterations [223.3s, 5821/s]
+    ... 1,305,000 iterations [224.4s, 5815/s]
+    ... 1,310,000 iterations [225.5s, 5808/s]
+    ... 1,315,000 iterations [226.7s, 5802/s]
+    ... 1,320,000 iterations [227.7s, 5797/s]
+    ... 1,325,000 iterations [228.9s, 5788/s]
+    ... 1,330,000 iterations [230.2s, 5777/s]
+    ... 1,335,000 iterations [231.4s, 5769/s]
+    ... 1,340,000 iterations [232.6s, 5761/s]
+    ... 1,345,000 iterations [233.8s, 5753/s]
+    ... 1,350,000 iterations [235.0s, 5744/s]
+    ... 1,355,000 iterations [236.3s, 5734/s]
+    ... 1,360,000 iterations [237.5s, 5726/s]
+    ... 1,365,000 iterations [238.7s, 5718/s]
+    ... 1,370,000 iterations [239.9s, 5710/s]
+    ... 1,375,000 iterations [241.2s, 5702/s]
+    ... 1,380,000 iterations [242.4s, 5694/s]
+    ... 1,385,000 iterations [243.6s, 5686/s]
+    ... 1,390,000 iterations [244.8s, 5679/s]
+    ... 1,395,000 iterations [245.9s, 5673/s]
+    ... 1,400,000 iterations [247.1s, 5666/s]
+    ... 1,405,000 iterations [248.4s, 5657/s]
+    ... 1,410,000 iterations [249.7s, 5648/s]
+    ... 1,415,000 iterations [251.0s, 5638/s]
+    ... 1,420,000 iterations [252.3s, 5629/s]
+    ... 1,425,000 iterations [253.5s, 5621/s]
+    ... 1,430,000 iterations [254.7s, 5614/s]
+    ... 1,435,000 iterations [255.8s, 5609/s]
+    ... 1,440,000 iterations [257.1s, 5601/s]
+    ... 1,445,000 iterations [258.2s, 5596/s]
+    ... 1,450,000 iterations [259.4s, 5589/s]
+    ... 1,455,000 iterations [260.6s, 5583/s]
+    ... 1,460,000 iterations [261.8s, 5576/s]
+    ... 1,465,000 iterations [263.0s, 5570/s]
+    ... 1,470,000 iterations [264.1s, 5565/s]
+    ... 1,475,000 iterations [265.3s, 5560/s]
+    ... 1,480,000 iterations [266.5s, 5554/s]
+    ... 1,485,000 iterations [267.7s, 5548/s]
+    ... 1,490,000 iterations [268.9s, 5541/s]
+    ... 1,495,000 iterations [270.2s, 5533/s]
+    ... 1,500,000 iterations [271.5s, 5525/s]
+    ... 1,505,000 iterations [272.8s, 5517/s]
+    ... 1,510,000 iterations [274.1s, 5509/s]
+    ... 1,515,000 iterations [275.4s, 5501/s]
+    ... 1,520,000 iterations [276.8s, 5492/s]
+    ... 1,525,000 iterations [278.1s, 5484/s]
+    ... 1,530,000 iterations [279.4s, 5477/s]
+    ... 1,535,000 iterations [280.7s, 5469/s]
+    ... 1,540,000 iterations [281.9s, 5463/s]
+    ... 1,545,000 iterations [283.2s, 5455/s]
+    ... 1,550,000 iterations [284.5s, 5448/s]
+    ... 1,555,000 iterations [285.7s, 5442/s]
+    ... 1,560,000 iterations [286.9s, 5437/s]
+    ... 1,565,000 iterations [288.2s, 5431/s]
+    ... 1,570,000 iterations [289.4s, 5425/s]
+    ... 1,575,000 iterations [290.7s, 5417/s]
+    ... 1,580,000 iterations [292.1s, 5409/s]
+    ... 1,585,000 iterations [293.4s, 5401/s]
+    ... 1,590,000 iterations [294.7s, 5395/s]
+    ... 1,595,000 iterations [296.0s, 5388/s]
+    ... 1,600,000 iterations [297.3s, 5381/s]
+    ... 1,605,000 iterations [298.6s, 5375/s]
+    ... 1,610,000 iterations [300.0s, 5367/s]
+    Time limit reached (1,610,145 iterations, 300.0s)
+
+  No 30-ray KS set found in integer pool.
+
+======================================================================
+FINAL RESULT
+======================================================================
+  Minimum KS set in {0,±1,±2} pool: 31 rays
+  Distinct minimal sets found: 86
+  Total time: 303.8s
+
+  CONCLUSION: CK-31 is optimal within the integer pool.
+  Any sub-31 KS set (if it exists) requires rays outside
+  the {0,±1,±2} alphabet.
+
+======================================================================
+MINIMAL SETS (size 31):
+======================================================================
+  Set 1: 31 rays, 17 triads, 71 pairs
+    (1, 1, 1)
+    (1, 1, 0)
+    (1, 1, -1)
+    (2, 1, 0)
+    (2, 1, -1)
+    (1, 0, 1)
+    (1, 0, 0)
+    (2, 0, -1)
+    (1, 0, -1)
+    (2, -1, 0)
+    (2, -1, -1)
+    (1, -1, 1)
+    (1, -1, 0)
+    (1, -1, -1)
+    (1, 2, 1)
+    (1, 2, 0)
+    (1, 2, -1)
+    (1, 1, 2)
+    (1, 0, 2)
+    (1, -1, 2)
+    (1, -2, 1)
+    (1, -2, 0)
+    (1, -2, -1)
+    (0, 1, 1)
+    (0, 2, 1)
+    (0, 1, 0)
+    (0, 2, -1)
+    (0, 1, -1)
+    (0, 1, 2)
+    (0, 1, -2)
+    (0, 0, 1)
+  Set 2: 31 rays, 17 triads, 71 pairs
+    (1, 1, 1)
+    (1, 1, 0)
+    (1, 1, -1)
+    (2, 1, 1)
+    (2, 1, 0)
+    (2, 1, -1)
+    (1, 0, 1)
+    (2, 0, 1)
+    (1, 0, 0)
+    (2, 0, -1)
+    (1, 0, -1)
+    (2, -1, 1)
+    (2, -1, 0)
+    (2, -1, -1)
+    (1, -1, 1)
+    (1, -1, 0)
+    (1, -1, -1)
+    (1, 2, 0)
+    (1, 2, -1)
+    (1, 1, 2)
+    (1, 0, 2)
+    (1, 0, -2)
+    (1, -1, -2)
+    (1, -2, 1)
+    (1, -2, 0)
+    (0, 1, 1)
+    (0, 1, 0)
+    (0, 2, -1)
+    (0, 1, -1)
+    (0, 1, 2)
+    (0, 0, 1)
+  Set 3: 31 rays, 17 triads, 71 pairs
+    (1, 1, 1)
+    (1, 1, 0)
+    (1, 1, -1)
+    (2, 1, 1)
+    (2, 1, 0)
+    (2, 1, -1)
+    (1, 0, 1)
+    (2, 0, 1)
+    (1, 0, 0)
+    (2, 0, -1)
+    (1, 0, -1)
+    (2, -1, 1)
+    (2, -1, 0)
+    (2, -1, -1)
+    (1, -1, 1)
+    (1, -1, 0)
+    (1, -1, -1)
+    (1, 2, 1)
+    (1, 2, 0)
+    (1, 1, -2)
+    (1, 0, 2)
+    (1, 0, -2)
+    (1, -1, 2)
+    (1, -2, 0)
+    (1, -2, -1)
+    (0, 1, 1)
+    (0, 2, 1)
+    (0, 1, 0)
+    (0, 1, -1)
+    (0, 1, -2)
+    (0, 0, 1)
+  Set 4: 31 rays, 17 triads, 71 pairs
+    (1, 1, 1)
+    (1, 1, 0)
+    (1, 1, -1)
+    (2, 1, 1)
+    (2, 1, 0)
+    (2, 1, -1)
+    (1, 0, 1)
+    (2, 0, 1)
+    (1, 0, 0)
+    (2, 0, -1)
+    (1, 0, -1)
+    (1, -1, 1)
+    (1, -1, 0)
+    (1, -1, -1)
+    (1, 1, 2)
+    (1, 1, -2)
+    (1, 0, 2)
+    (1, 0, -2)
+    (1, -1, 2)
+    (1, -1, -2)
+    (1, -2, 1)
+    (1, -2, 0)
+    (1, -2, -1)
+    (0, 1, 1)
+    (0, 2, 1)
+    (0, 1, 0)
+    (0, 2, -1)
+    (0, 1, -1)
+    (0, 1, 2)
+    (0, 1, -2)
+    (0, 0, 1)
+  Set 5: 31 rays, 17 triads, 71 pairs
+    (1, 1, 1)
+    (1, 1, 0)
+    (1, 1, -1)
+    (1, 0, 1)
+    (2, 0, 1)
+    (1, 0, 0)
+    (2, 0, -1)
+    (1, 0, -1)
+    (2, -1, 1)
+    (2, -1, 0)
+    (2, -1, -1)
+    (1, -1, 1)
+    (1, -1, 0)
+    (1, -1, -1)
+    (1, 2, 1)
+    (1, 2, 0)
+    (1, 2, -1)
+    (1, 1, 2)
+    (1, 1, -2)
+    (1, 0, 2)
+    (1, 0, -2)
+    (1, -1, 2)
+    (1, -1, -2)
+    (0, 1, 1)
+    (0, 2, 1)
+    (0, 1, 0)
+    (0, 2, -1)
+    (0, 1, -1)
+    (0, 1, 2)
+    (0, 1, -2)
+    (0, 0, 1)
+  Set 6: 31 rays, 17 triads, 71 pairs
+  ... and 1 more
+
+======================================================================
