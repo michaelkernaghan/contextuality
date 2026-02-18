@@ -1,2 +1,10 @@
 __pycache__/
 *.pyc
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*Notes.bib
+paper/nul
+paper/sub31_compile.log

@@ -1,0 +1,41 @@
+Plastic ratio rho = 1.324718
+  Verify: rho^3 - rho - 1 = -2.66e-15
+Tribonacci constant tau = 1.839287
+  Verify: tau^3 - tau^2 - tau - 1 = -1.33e-15
+
+============================================================
+EXPERIMENT 1: Plastic Ratio (rho ~ 1.3247)
+  rho^3 = rho + 1  (cubic minimal polynomial cancellation)
+============================================================
+  Cancellation check: rho*rho^2 - rho - 1 = -2.66e-15
+  Verify orthogonality: (rho, 1, 1).(rho^2, -rho, -1) = -2.66e-15
+
+  Basic alphabet: {0, +/-1, +/-rho, +/-rho^2}
+    rho = 1.324718, rho^2 = 1.754878
+    Rays: 109
+    Orthogonal pairs: 348
+    Triads: 16
+    Triads/ray: 0.147
+    KS-uncolorable: False
+
+  Extended alphabet: {0, +/-1, +/-rho, +/-rho^2, +/-(rho+1)}
+    rho+1 = rho^3 = 2.324718
+    Rays: 193
+    Orthogonal pairs: 798
+    Triads: 54
+    Triads/ray: 0.280
+    KS-uncolorable: False
+
+  Cross-product completion of basic alphabet:
+    Completion iter 1: +300 rays (total 409)
+    Completion iter 2: +312 rays (total 721)
+    Completion iter 3: +240 rays (total 961)
+    Completion iter 4: +48 rays (total 1009)
+    Completed pool: 1009 rays
+    Orthogonal pairs: 2772
+    Triads: 924
+    Triads/ray: 0.916
+    KS-uncolorable: True
+    Minimizing (500 trials for larger pool)...
+  Running 500 randomized minimization trials...
+  Starting pool: 1009 vectors
