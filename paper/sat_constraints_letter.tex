@@ -1,0 +1,181 @@
+\documentclass[twocolumn,prl,superscriptaddress,nofootinbib]{revtex4-2}
+
+\usepackage{amsmath,amssymb}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\KS}{\mathrm{KS}}
+\newcommand{\CK}{\mathrm{CK}\text{-}31}
+
+\begin{document}
+
+\title{Algebraic constraints for SAT-based searches\\for minimum Kochen--Specker sets}
+
+\author{Michael Kernaghan}
+\affiliation{Pacific Quantum Systems, Vancouver, Canada}
+
+\date{\today}
+
+\begin{abstract}
+The search for the minimum Kochen--Specker (KS) set in dimension~3 is currently bounded between 24 vectors (Li, Bright, and Ganesh, 2024) and 31 vectors (Conway--Kochen). We propose five explicit Boolean constraints, derived from a systematic algebraic classification of KS-supporting number fields, that can be incorporated into the SAT+CAS framework used to establish the lower bound. One constraint---\emph{finite pool realizability}---is proven sound: it provides a fast first-stage embeddability screen over 49~integer rays, resolving in under one second per candidate graph, with Z3 fallback for inconclusive cases. Three generation-phase constraints (strengthened triangle participation, edge density, triad count) are empirical, consistent across all six known algebraic pools but not yet proven necessary. A fifth constraint extends the catalogue of blocked unembeddable subgraphs via vertex merging. We give explicit conjunctive normal form (CNF) constructions for each constraint, clearly distinguishing proven from empirical bounds.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+The minimum KS problem---finding the fewest rays in $\R^3$ (or $\C^3$) admitting no consistent $\{0,1\}$-coloring under orthogonality constraints---has resisted closure for over 55~years. Li, Bright, and Ganesh~\cite{LiBrightGanesh2024} established the current lower bound of 24 using a SAT+CAS pipeline called \textsc{MathCheck}: a SAT solver enumerates candidate KS graphs satisfying combinatorial constraints (squarefree, minimum degree~3, every vertex in a triangle, non-010-colorable), while a computer algebra system (CAS) performs isomorph-free orderly generation and an SMT solver (Z3) checks embeddability in $\R^3$.  The upper bound of 31 is Conway--Kochen's integer construction~\cite{ConwayKochen} using the coordinate alphabet $\{0, \pm1, \pm2\}$.
+
+A recent algebraic classification~\cite{Kernaghan2026landscape,Kernaghan2026sub31} identified exactly six number rings supporting KS sets in dimension~3, each characterized by a cancellation identity of norm~$\leq 2$.  This classification yields structural constraints that can be encoded as additional CNF clauses in the \textsc{MathCheck} framework.  We present five such constraints---one proven sound for the integer coordinate pool, three empirical but consistent across all known pools, and one that extends the blocked-subgraph catalogue---giving explicit variable encodings and clause constructions following the conventions of~\cite{LiBrightGanesh2024}.
+
+\section{Notation and variables}
+
+We adopt the variable scheme of~\cite{LiBrightGanesh2024}.  For a candidate KS graph on $n$ vertices:
+\begin{itemize}
+\item $e_{ij}$ ($1 \leq i < j \leq n$): edge variable, true iff vertices $i$ and $j$ are adjacent (orthogonal).
+\item $t_{ijk}$ ($1 \leq i < j < k \leq n$): triangle variable, true iff $\{i,j,k\}$ form a triangle (orthogonal basis).  Defined by $t_{ijk} \leftrightarrow (e_{ij} \wedge e_{ik} \wedge e_{jk})$, encoded in CNF as four clauses:
+\begin{align}
+&(\neg t_{ijk} \vee e_{ij}) \wedge (\neg t_{ijk} \vee e_{ik}) \wedge (\neg t_{ijk} \vee e_{jk}) \notag \\
+&\wedge\; (t_{ijk} \vee \neg e_{ij} \vee \neg e_{ik} \vee \neg e_{jk}). \notag
+\end{align}
+\end{itemize}
+Li et al.\ encode four base constraints: squarefree ($\neg C_4$), minimum degree~3, every vertex in a triangle, and non-010-colorability.  We add five constraints derived from the algebraic landscape.
+
+\section{Constraint 1: Strengthened triangle participation}
+
+Li et al.\ require every vertex to participate in at least one triangle (Section~4.3 of~\cite{LiBrightGanesh2024}).  The algebraic data suggest a stronger condition.
+
+In CK-31, every vertex participates in at least 2 of the 17~triads, with the minimum-participation vertex having exactly~2.  Across all six known algebraic pools, the minimum per-vertex triad count in any minimal KS set is~2.  We conjecture this is necessary:
+
+\medskip
+\noindent\textbf{Conjecture.}  \emph{Every vertex in a minimum KS set in dimension~3 participates in at least two orthogonal triads.}
+
+\medskip
+\noindent\textbf{Encoding.}  For each vertex $i$, let $T_i = \{t_{ijk} : j < k,\; j \neq i,\; k \neq i\}$ be the set of all triangle variables containing vertex~$i$.  We add a cardinality constraint $\textsc{AtLeast}(2,\; T_i)$ for each $1 \leq i \leq n$, encoded via the sequential counter method~\cite{BailleuxBoufkhad2003} with $O(|T_i|)$ auxiliary variables and clauses.
+
+\medskip
+\noindent\textbf{Status: empirical.}  If any vertex participates in only one triad, removing it eliminates one triad and at most 3~orthogonal pairs.  In all six known pools, this always restores colorability.  This constraint should be used as a \emph{heuristic} pruning aid, not as part of a certified lower-bound proof, unless the conjecture is established.
+
+\section{Constraints 2--3: Density bounds}
+
+CK-31 has 71 orthogonal pairs out of $\binom{31}{2} = 465$ possible (edge density $\delta \approx 0.153$, the highest among all known KS constructions) and 17~triads.  Our threshold analysis~\cite{Kernaghan2026sub31} shows that KS-uncolorable subsets of the integer pool do not appear below $n = 42$ out of 49~rays, confirming that high density is necessary.
+
+We encode two cardinality constraints via the totalizer encoding~\cite{BailleuxBoufkhad2003}:
+
+\noindent\textbf{(C2) Edge density.}
+$\textsc{AtLeast}(f(n),\; \{e_{ij}\})$
+where $f(n) = \lceil 0.15 \cdot \binom{n}{2} \rceil$ (e.g., $f(25) = 45$, $f(30) = 66$, $f(31) = 71$).
+
+\noindent\textbf{(C3) Triad count.}
+$\textsc{AtLeast}(g(n),\; \{t_{ijk}\})$
+where $g(n) = \lceil n \cdot 1.45/3 \rceil$ (e.g., $g(25) = 13$, $g(31) = 15$).  The ratio 1.45 is the minimum triads-per-vertex incidence across all six pools (Peres-33: $16 \cdot 3/33 \approx 1.45$).
+
+\textbf{Status: empirical.}  Both bounds are derived from observed extrema across all six algebraic pools and are not proven necessary.  They should be used as heuristic pruning constraints, not in a certified enumeration pipeline.
+
+\section{Constraint 4: Finite pool realizability}
+
+Li et al.\ check embeddability via Z3 over nonlinear real arithmetic, which frequently returns ``unknown'' for graphs above order~20.  We propose a \emph{finite pool} SAT encoding as a fast first-stage screen: if SAT, the graph is constructively embeddable; if UNSAT, the result is inconclusive for $\R^3$ and one falls back to Z3 or exact methods.
+
+The alphabet $\{0, \pm1, \pm2\}$ generates exactly $R = 49$ projectively distinct rays in $\R^3$ (canonicalized: first nonzero coordinate positive, $\gcd$-reduced).  Among these 49~rays, there are 71~orthogonal pairs (distinct from the 71~edges of CK-31, though the coincidence reflects CK-31's integer origin).  Given a \emph{fixed} KS candidate graph $G = (V, E)$ on $n$ vertices produced by the generation phase, we introduce assignment variables $x_{v,r}$ (vertex $v$ mapped to ray $r$):
+
+\noindent\textbf{(C4a) Exactly one ray per vertex:}
+$\bigvee_{r} x_{v,r}$ and $\neg x_{v,r_1} \vee \neg x_{v,r_2}$ for all $r_1 < r_2$, for each~$v$.
+
+\noindent\textbf{(C4b) Orthogonality:} For each edge $(i,j) \in E$ and each ray pair $(r_1, r_2)$ that is \emph{not} orthogonal:
+$\neg x_{i,r_1} \vee \neg x_{j,r_2}$.
+This requires the precomputed complement of the 71~orthogonal pairs: $\binom{49}{2} + 49 - 71 = 1154$ forbidden pairs per edge.
+
+\noindent\textbf{(C4c) Distinctness (injectivity):}
+$\neg x_{i,r} \vee \neg x_{j,r}$ for all $i < j$, all~$r$.
+This enforces that distinct vertices map to distinct rays, appropriate since KS sets are defined as sets (not multisets) of rays.
+
+For $n = 30$ with ${\sim}70$ edges, this yields 1470~primary variables and ${\sim}218{,}000$ clauses (C4b dominates), resolved by Glucose4 in under 1\,s on a single core (Intel i5-12450H).  We verified all 394 vertex-merged CK-31 graphs (all UNSAT) in under 1\,s each~\cite{Kernaghan2026sub31}.
+
+\textbf{Soundness and scope.}  A satisfying assignment is a constructive proof of embeddability in $\R^3$.  UNSAT means the graph is not realizable within the $\{0,\pm1,\pm2\}$ pool specifically; it may still be realizable over $\R^3$ via coordinates from other number fields.  The encoding is therefore a \emph{one-sided} test: SAT $\Rightarrow$ embeddable; UNSAT $\Rightarrow$ inconclusive.  For a complete pipeline, UNSAT results should be passed to Z3 or checked against additional pools (Eisenstein with 57~rays, Peres and $\Z[\sqrt{-2}]$ with 49~rays each) before being classified as unembeddable.
+
+\section{Constraint 5: Unembeddable subgraph blocking from vertex merging}
+\label{sec:merging}
+
+Li et al.\ dynamically block minimal unembeddable subgraphs up to order~12 (17~such graphs found).  We extend this catalogue using vertex merging of CK-31.
+
+By merging each of the 394 non-orthogonal vertex pairs of CK-31, we obtain 394 abstract graphs on 30~vertices that are KS-uncolorable but provably unrealizable within the integer pool (Section~4).  While these order-30 graphs are too large for direct subgraph blocking, they contain minimal unembeddable subgraphs that can be extracted.
+
+\medskip
+\noindent\textbf{Extraction procedure.}
+\begin{enumerate}
+\item Take a merged graph $G'$ on 30 vertices (UNSAT in integer pool).
+\item Iteratively remove vertices: for each vertex $v$, check if $G' \setminus \{v\}$ is still integer-pool UNSAT.
+\item If so, remove $v$ and continue.  If not, keep $v$ and try the next.
+\item Repeat until no vertex can be removed---the result is a locally minimal unembeddable subgraph.
+\end{enumerate}
+
+Any minimal unembeddable subgraph of order~$\leq 23$ found by this procedure can be added to \textsc{MathCheck}'s blocking catalogue, supplementing the 17~graphs of order~$\leq 12$ already used.  Each blocked subgraph eliminates an exponentially large family of candidate extensions from the SAT search tree.
+
+\textbf{Status: sound for integer pool; heuristic for $\R^3$.}  The extraction is with respect to integer-pool realizability specifically.  The resulting blocked graphs are provably sound for any search restricted to integer coordinates.  For the general $\R^3$ search, they serve as heuristic blocks: integer-pool unrealizability is necessary but not sufficient for $\R^3$ unembeddability.
+
+\section{Discussion}
+
+Table~\ref{tab:summary} summarizes the five constraints.
+
+\begin{table}[b]
+\centering
+\caption{Summary of proposed constraints.  \emph{Gen} = generation phase; \emph{check} = embeddability verification.}
+\label{tab:summary}
+\begin{tabular}{llll}
+\toprule
+Constraint & Phase & Status & Impact \\
+\midrule
+Triangle $\geq 2$ & gen & empirical & Weak-vertex pruning \\
+Edge density & gen & empirical & Sparse-graph pruning \\
+Triad count & gen & empirical & Low-triad pruning \\
+Finite pool SAT & check & proven$^*$ & Seconds vs.\ timeouts \\
+Merged blocking & check & pool-sound & Extends catalogue \\
+\bottomrule
+\end{tabular}
+\smallskip
+
+\noindent {\footnotesize $^*$SAT = embeddable (constructive); UNSAT = inconclusive for $\R^3$.}
+\end{table}
+
+The finite pool realizability check (Constraint~4) addresses the main bottleneck in the \textsc{MathCheck} pipeline.  At order~23, Li et al.\ generated 41~KS candidates, all unembeddable; at higher orders the candidate count grows dramatically while Z3 increasingly returns ``unknown.''  The finite pool encoding resolves in under one second and provides a constructive embedding when SAT.  When UNSAT, the result is inconclusive for $\R^3$, and Z3 or additional pools should be consulted.  In practice, we expect most graphs encountered during generation to be resolvable by the integer pool alone, with Z3 fallback needed only for rare borderline cases.
+
+The generation-phase constraints (1--3) are empirical: they are consistent across all six known algebraic pools~\cite{Kernaghan2026landscape} but not proven necessary.  A KS set arising from a previously unknown algebraic source could in principle violate them.  These constraints are therefore appropriate as heuristic pruning aids to accelerate the search, but should not be incorporated into a certified lower-bound proof without further theoretical justification.  Together, the heuristic and proven constraints could make the search at orders~25--27 tractable within the existing \textsc{MathCheck} infrastructure.
+
+\begin{acknowledgments}
+The author acknowledges the use of Claude (Anthropic) for computational assistance.  SAT solving used PySAT with the Glucose4 solver~\cite{AudemardSimon2018}.
+\end{acknowledgments}
+
+\begin{thebibliography}{20}
+
+\bibitem{LiBrightGanesh2024}
+Z.~Li, C.~Bright, and V.~Ganesh,
+in \textit{Proceedings of IJCAI-24}, 2105 (2024); arXiv:2306.13319.
+
+\bibitem{ConwayKochen}
+J.~H.~Conway and S.~Kochen,
+reported in A.~Peres, \textit{Quantum Theory: Concepts and Methods} (Kluwer, 1993).
+
+\bibitem{Kernaghan2026landscape}
+M.~Kernaghan,
+``The algebraic landscape of Kochen--Specker sets in dimension three'' (in preparation).
+
+\bibitem{Kernaghan2026sub31}
+M.~Kernaghan,
+``Computational evidence for the optimality of Conway--Kochen's 31-vector Kochen--Specker set'' (in preparation).
+
+\bibitem{BailleuxBoufkhad2003}
+O.~Bailleux and Y.~Boufkhad,
+in \textit{Proceedings of SAT 2003}, LNCS 2919, 108 (2003).
+
+\bibitem{AudemardSimon2018}
+G.~Audemard and L.~Simon,
+in \textit{Proceedings of IJCAI-18}, 5093 (2018).
+
+\end{thebibliography}
+
+\end{document}

@@ -22,7 +22,7 @@
 \date{\today}
 
 \begin{abstract}
-We report a systematic computational search for Kochen--Specker (KS) sets with fewer than 31 vectors in dimension~3, where the Conway--Kochen construction (CK-31) has stood as the smallest known for over three decades and the best proven lower bound is 24 vectors. No sub-31 KS set is found by any of six complementary strategies: SAT-based minimization, cross-pool mixing, expanded coordinate alphabets, numerical optimization, exhaustive criticality testing, and triad density analysis. A key structural finding is the \emph{norm-2 boundary}: integer alphabets lacking the coordinate~$\pm2$ (such as $\{0,\pm1,\pm3\}$) are not KS-uncolorable at all, confirming that the cancellation identity $1+1=2$ is essential. We establish that CK-31 is 8-critical by exhaustive enumeration of all $\binom{31}{k}$ subsets for $k = 1, \ldots, 8$ (totaling 11,460,647 SAT checks), and 12-critical by sampling ($10^6$ random subsets per $k$ for $k = 9, \ldots, 12$). Vertex merging produces 394 abstract KS-uncolorable graphs on 30~vertices (every non-orthogonal pair merge preserves KS-uncolorability); we resolve their realizability within the integer pool via finite constraint satisfaction (all 394 unrealizable), and confirm this is fundamentally a realizability problem.
+We report a systematic computational search for Kochen--Specker (KS) sets with fewer than 31 vectors in dimension~3, where the Conway--Kochen construction (CK-31) has stood as the smallest known for over three decades and the best proven lower bound is 24 vectors. No sub-31 KS set is found by any of six complementary strategies: SAT-based minimization, cross-pool mixing, expanded coordinate alphabets, numerical optimization, exhaustive criticality testing, and triad density analysis. A notable empirical finding is the \emph{norm-2 boundary}: all tested integer-like alphabets lacking the coordinate~$\pm2$ (such as $\{0,\pm1,\pm3\}$) are not KS-uncolorable, consistent with the hypothesis that the cancellation identity $1+1=2$ is necessary. We establish that CK-31 is 8-critical by exhaustive enumeration of all $\binom{31}{k}$ subsets for $k = 1, \ldots, 8$ (totaling 11,460,647 SAT checks); no uncolorable subset is observed in $10^6$ uniform random samples for each $k = 9, \ldots, 12$. Vertex merging produces 394 abstract KS-uncolorable graphs on 30~vertices (every non-orthogonal pair merge preserves KS-uncolorability); we resolve their realizability within the integer pool via finite constraint satisfaction (all 394 unrealizable within the $\{0,\pm1,\pm2\}$ pool).
 \end{abstract}
 
 \maketitle
@@ -31,21 +31,25 @@ We report a systematic computational search for Kochen--Specker (KS) sets with f
 
 The Kochen--Specker (KS) theorem~\cite{KochenSpecker1967} demonstrates that quantum measurements in dimension~$d \geq 3$ cannot be explained by noncontextual hidden-variable theories. In dimension~3, the theorem requires exhibiting a finite set of rays (directions) such that no consistent $\{0,1\}$-valued coloring assigns exactly one~1 per orthonormal basis while respecting pairwise orthogonality exclusion. The minimum number of rays needed for such a construction is a fundamental open problem.
 
-Conway and Kochen's 31-vector set~\cite{ConwayKochen}, which uses integer coordinates from the alphabet $\{0,\pm1,\pm2\}$, has stood as the smallest known KS set in dimension~3 for over three decades. The best lower bound in dimension~3 is 24 vectors, established by Li, Bright, and Ganesh~\cite{LiBrightGanesh2024} using SAT-based methods combined with algebraic realizability checking. Closing the gap between 24 and 31---or proving that 31 is optimal---remains open.
+Conway and Kochen's 31-vector set~\cite{ConwayKochen} uses integer coordinates from the \emph{coordinate alphabet} $\{0,\pm1,\pm2\}$---the finite set of values from which ray coordinates are drawn (called ``vector components'' by Pavicic et al.~\cite{Pavicic2019}; the alphabet can be read directly from the coordinate labels on the cube diagrams used to display such constructions~\cite{Peres1991}).  Two rays are orthogonal when $\sum_k u_k v_k = 0$; for coordinates from a finite alphabet, this requires an algebraic relation---a \emph{cancellation identity}---among alphabet elements.  For $\{0,\pm1,\pm2\}$, the key identity is $1+1=2$, yielding cancellations such as $1{\cdot}1 + 1{\cdot}1 + (-1){\cdot}2 = 0$.  These cancellations create exact orthogonal triples (bases), and when enough bases interlock, no consistent $\{0,1\}$-coloring exists.  CK-31 has stood as the smallest known KS set in dimension~3 for over three decades. The best lower bound is 24 vectors, established by Li, Bright, and Ganesh~\cite{LiBrightGanesh2024} using SAT-based methods combined with algebraic realizability checking. Closing the gap between 24 and 31---or proving that 31 is optimal---remains open.
 
-Recent work~\cite{Kernaghan2026landscape} identified six algebraic number rings that support KS constructions in dimension~3, each producing a distinct ray pool. This algebraic classification provides a structured framework for an exhaustive sub-31 search: rather than searching over arbitrary ray configurations, we can systematically test every known algebraic source of KS orthogonalities.
+We identify six algebraic number rings known to support KS constructions in dimension~3, each with a distinct cancellation identity producing a distinct ray pool (Table~\ref{tab:results}).  Rather than searching over arbitrary ray configurations, we systematically construct alphabets from these algebraic number fields and test every known algebraic source of KS orthogonalities.
 
 \section{Methods}
 
+A \emph{ray pool} is a finite set of projectively distinct rays in $\R^3$ (or $\C^3$), canonicalized so the first nonzero coordinate is positive and coordinates are $\gcd$-reduced.  A \emph{triad} is an unordered triple of mutually orthogonal rays (an orthonormal basis up to normalization).  The \emph{orthogonality graph} of a pool has rays as vertices and edges between orthogonal pairs; triads are its 3-cliques.  Throughout, merging, deletion, and embedding operations act on orthogonality graphs and their triads.
+
+We encode KS-uncolorability as a SAT instance.  For a ray set with orthogonal pairs $E$ and triads $\mathcal{T}$, introduce Boolean variables $b_v$ (ray $v$ colored~1).  For each triad $\{a,b,c\} \in \mathcal{T}$, add an exactly-one constraint: $(b_a \vee b_b \vee b_c)$ and $(\neg b_\alpha \vee \neg b_\beta)$ for each pair $\alpha \neq \beta \in \{a,b,c\}$.  For each orthogonal pair $(u,v) \in E$ not sharing a triad, add $(\neg b_u \vee \neg b_v)$.  This extends the standard KS constraint (exactly one per complete basis) by enforcing mutual exclusion on orthogonal pairs that do not complete to any basis in the pool---a strictly stronger condition that is standard in computational KS studies.  UNSAT means no valid $\{0,1\}$-coloring exists.
+
 We tested six complementary strategies, each designed to probe a different region of the search space.
 
-\textbf{Strategy 1: Exact minimization.} For each of the six known algebraic ray pools (integer, Eisenstein $\Z[\omega]$, Peres $\Z[\sqrt{2}]$, $\Z[\sqrt{-2}]$, Heegner-7 $\Z[(1{+}\sqrt{-7})/2]$, golden ratio $\Z[\varphi]$), we applied three minimization methods: (a)~MUS (minimal unsatisfiable subset) extraction from the SAT encoding, yielding a locally minimal (not necessarily globally minimum) ray set; (b)~enhanced greedy deletion with 2000 random trials plus five deterministic orderings (degree ascending/descending, triad participation ascending/descending, combined); (c)~swap-based local search starting from greedy minima. The SAT encoding uses Glucose4~\cite{AudemardSimon2018} via PySAT, with both triad constraints (exactly one ray per basis colored~1) and pairwise exclusion constraints for all orthogonal pairs.
+\textbf{Strategy 1: SAT-verified minimization.} For each of the six algebraic ray pools (Table~\ref{tab:results}), we applied three heuristic methods: (a)~clause-level MUS extraction, (b)~greedy deletion with 2000 random trials plus deterministic orderings, (c)~swap-based local search. The SAT encoding uses Glucose4~\cite{AudemardSimon2018} via PySAT.
 
 \textbf{Strategy 2: Cross-pool mixing.} We merged rays from different algebraic pools, deduplicated by canonical form, and tested whether cross-pool orthogonalities enable smaller KS sets. All 15 pairwise combinations and the full 477-ray union of all six pools were tested with 500 greedy trials each.
 
-\textbf{Strategy 3: Larger alphabets.} We expanded coordinate alphabets beyond those generating the known pools: integer alphabets $\{0,\pm1,\ldots,\pm k\}$ for $k = 3, 4, 5$; extended Peres alphabets adding $\pm2$, $\pm2\sqrt{2}$, $\pm3$; Eisenstein pools with increased coefficient bounds and norm cutoffs; extended complex field alphabets for $\Z[\sqrt{-2}]$ and Heegner-7; mixed-field alphabets combining elements from different rings; and completion-expanded pools.
+\textbf{Strategy 3: Larger alphabets.} We tested 30 expanded alphabets: integer $\{0,\pm1,\ldots,\pm k\}$ for $k = 3, 4, 5$; extended Peres, Eisenstein, $\Z[\sqrt{-2}]$, and Heegner-7 pools; mixed-field alphabets; completion-expanded pools; and Pisot-number fields (plastic, tribonacci, silver ratios).
 
-\textbf{Strategy 4: Numerical optimization.} We applied four non-algebraic search methods: (a)~simulated annealing (SA) placing $n = 28$--$30$ rays in $\R^3$ and $\C^3$, optimizing for orthogonal pairs and triads (200k steps each); (b)~perturbation from CK-31, removing 1--3~rays and replacing with random rays (1000 attempts per target); (c)~orthogonal completion from random seeds, iteratively adding cross products (500 attempts); (d)~soft-tolerance SA starting with tolerance~$0.1$ and tightening to~$10^{-6}$ over 300k steps.
+\textbf{Strategy 4: Numerical optimization.} Four non-algebraic methods: simulated annealing ($n = 28$--$30$ rays, $2 \times 10^5$ steps), CK-31 perturbation (random ray replacement, 1000 attempts), orthogonal completion from random seeds, and soft-tolerance annealing.
 
 \textbf{Strategy 5: CK-31 criticality.} We tested whether CK-31 can be reduced by removing $k$ vectors for $k = 1, \ldots, 12$, exhaustively checking all $\binom{31}{k}$ subsets for $k \leq 8$ and sampling $10^6$ random subsets for $k = 9, \ldots, 12$.
 
@@ -53,15 +57,15 @@ We tested six complementary strategies, each designed to probe a different regio
 
 \section{Results}
 
-\textbf{Exact minimization (Strategy 1).} All three methods converge to the same minimum for each pool (Table~\ref{tab:results}). No method finds a set below the known minimum. The MUS extraction for the integer pool returns all 49 rays but greedy-minimizes to 31; for $\Z[\sqrt{-2}]$, the MUS directly returns 33 rays.
+\textbf{SAT-verified minimization (Strategy 1).} All three heuristic methods converge to the same minimum for each pool (Table~\ref{tab:results}), providing evidence of stability though not a proof of optimality. No method finds a set below the known minimum. The MUS extraction operates at the clause level (not ray level): for the integer pool, every clause participates in some minimal conflict, so the clause-level MUS spans all 49~rays; however, greedy ray deletion reduces this to~31.  A ray-level group-MUS or MaxSAT formulation would be needed for exact ray minimization.  For $\Z[\sqrt{-2}]$, the clause-level MUS directly spans only 33~rays.
 
 \begin{table}[t]
 \centering
-\caption{Minimum KS subset size found by each strategy. ``Exact'' combines MUS, greedy (2000 trials), and swap search. ``Cross'' is the minimum found when that pool is included in any pairwise or full cross-pool merge (Strategy~2).}
+\caption{Minimum KS subset size found by each strategy. ``SAT'' combines MUS extraction, greedy deletion (2000 trials), and swap search---these are heuristic methods verified by SAT, not provably optimal. ``Cross'' is the minimum found when that pool is included in any pairwise or full cross-pool merge (Strategy~2).}
 \label{tab:results}
 \begin{tabular}{lccccc}
 \toprule
-Pool & Rays & Triads & Exact & Cross & Larger \\
+Pool & Rays & Triads & SAT & Cross & Larger \\
 \midrule
 Integer & 49 & 26 & \textbf{31} & 31 & 31 \\
 Eisenstein & 57 & 22 & 33 & 33 & 33 \\
@@ -73,7 +77,7 @@ Golden ratio & 205 & 166 & 51 & 51 & 51 \\
 \end{tabular}
 \end{table}
 
-\textbf{Cross-pool mixing (Strategy 2).} Despite significant cross-pool orthogonalities (e.g., Integer~+~Golden shares 78 cross-triads), every minimized set draws rays from a single pool only. The composition is always: any combination including Integer $\to$ 31 rays (all Integer); any combination without Integer $\to$ 33 rays (all from one pool). The 477-ray union of all six pools minimizes to 31 Integer rays. Cross-pool orthogonalities are never exploited.
+\textbf{Cross-pool mixing (Strategy 2).} Despite significant cross-pool orthogonalities (e.g., Integer~+~Golden shares 78 cross-triads), every minimized set draws rays from a single pool only: any combination including Integer yields 31 (all Integer); without Integer, 33.  The 477-ray union minimizes to 31 Integer rays.  Note that greedy deletion is biased toward large basins of attraction, so mixed-pool solutions cannot be ruled out.
 
 \textbf{Larger alphabets (Strategy 3).} We tested 30 expanded alphabets (Table~\ref{tab:expanded}). Every extension that includes $\pm2$ converges to~31 using integer rays. Greedy minimization is heuristic, so for large pools (e.g., $\{0,\pm1,\ldots,\pm4\}$ with 289 rays reaching only~36 in 500 trials) the true minimum may be lower; however, every pool containing the $\{0,\pm1,\pm2\}$ subset found~31 when given sufficient trials.
 
@@ -99,15 +103,21 @@ $\{0,\pm1,\pm2,\pm i\}$ & 127 & 31 & Mixed-field \\
 \end{tabular}
 \end{table}
 
-\textbf{The norm-2 boundary.} The alphabets $\{0,\pm1,\pm3\}$ and $\{0,\pm1,\pm4\}$---which lack $\pm2$---are \emph{not KS-uncolorable at all}, despite generating 49~rays with 10~triads each. This confirms that the cancellation identity $1+1=2$, which enables exact orthogonalities such as $(1,1,0)\cdot(1,-1,0) = 0$, is essential for KS-uncolorability from integer-like alphabets. More broadly, it supports the norm-2 boundary identified in~\cite{Kernaghan2026landscape}: every known KS construction relies on a generator whose norm equals~2.
+\textbf{The norm-2 boundary.} The alphabets $\{0,\pm1,\pm3\}$ and $\{0,\pm1,\pm4\}$---which lack $\pm2$---are \emph{not KS-uncolorable at all}, despite generating 49~rays with 10~triads each.  This is consistent with the hypothesis that the norm-2 cancellation identity $1+1=2$, which enables exact orthogonalities such as $1{\cdot}1 + 1{\cdot}1 + (-1){\cdot}2 = 0$, is necessary for KS-uncolorability from integer-like alphabets. More broadly, across all tested fields, KS-uncolorability is observed only when one of two cancellation mechanisms is present: \emph{norm-2 cancellation} (an identity producing the value~2 from products of ring elements, as in $1+1=2$, $(\sqrt{2})^2=2$, $\alpha\bar\alpha=2$) or \emph{phase cancellation} (a root-of-unity sum $1+\omega+\omega^2=0$).  In all tested rings where neither mechanism is available---including those with generator norm~$\geq 3$---the pool is colorable despite containing orthogonal triples.  Three higher-degree fields (plastic ratio, tribonacci, silver ratio) also produce only colorable pools, extending this observation beyond quadratic fields.  The boundary is empirical: multi-term cancellations not involving~2 may exist in untested fields.
 
-\textbf{Numerical optimization (Strategy 4).} All four methods fail completely. SA from scratch in $\R^3$ produces at most 5--6 orthogonal pairs and \emph{zero} triads after $2 \times 10^5$ steps; in $\C^3$, it finds zero pairs. Soft-tolerance SA finds up to 227 near-orthogonal pairs at tolerance~$0.1$, but all vanish as tolerance tightens---zero exact pairs survive. CK-31 perturbation (removing 1--3 rays and adding random replacements) never restores uncolorability: the best replacement achieves only 16 triads versus the 17 required. Orthogonal completion from random seeds builds sets of 60 rays but achieves at most 1~triad. The numerical landscape has no gradient signal: near-orthogonal configurations do not lead to exact ones.
+\textbf{Numerical optimization (Strategy 4).} All four non-algebraic methods fail: simulated annealing from scratch produces at most 5--6 orthogonal pairs and zero triads ($2 \times 10^5$ steps); CK-31 perturbation (removing 1--3~rays and adding random replacements, 1000~attempts each) never restores uncolorability; orthogonal completion from random seeds achieves at most 1~triad.  These failures are unsurprising---exact orthogonality is a measure-zero condition in continuous space---and primarily motivate the algebraic/discrete approach.
 
-We also tested whether CK-31 can be compressed by \emph{merging} non-orthogonal ray pairs (identifying two vertices) while preserving KS-uncolorability. Of the $\binom{31}{2} - 71 = 394$ non-orthogonal pairs, \emph{all} 394 merges preserve abstract KS-uncolorability, producing 30-vertex graphs with 17--21 triads and 70--71 orthogonal pairs. Z3~\cite{Z3} with nonlinear real arithmetic could not resolve their $\R^3$ realizability (``unknown'' after 60\,s per instance, 90 variables each).
+We also tested whether CK-31 can be compressed by \emph{merging} non-orthogonal ray pairs---identifying two vertices $u,v$ into a single vertex that inherits the union of their edges and triad memberships (triads that would contain both $u$ and $v$ are discarded as degenerate; duplicate triads are merged).  Of the $\binom{31}{2} - 71 = 394$ non-orthogonal pairs (CK-31 has exactly 71 orthogonal pairs), \emph{all} 394 merges preserve abstract KS-uncolorability, producing 30-vertex orthogonality graphs with 17--21 triads and 70--71 edges.  Intuitively, merging non-orthogonal vertices adds constraints (the merged vertex inherits both neighborhoods) without removing any; since KS-uncolorability is monotone under constraint addition, preservation is expected---though not guaranteed, since triad structure can change. Z3~\cite{Z3} with nonlinear real arithmetic could not resolve their $\R^3$ realizability (``unknown'' after 60\,s per instance, 90 variables each).
 
-To circumvent this, we reformulated realizability within the integer pool as a \emph{finite constraint satisfaction problem}: each of 30 vertices must be assigned one of the 49 (canonicalized) integer rays from $\{0,\pm1,\pm2\}$, with orthogonality edges requiring perpendicular rays and non-edges requiring non-perpendicular rays. This encodes as a SAT instance with $30 \times 49 = 1470$ Boolean variables plus cardinality and compatibility constraints, solvable in under 1\,s per graph. All 394 merged graphs are \emph{unrealizable} within the integer pool. This is a remarkably strong result: every possible single-merge compression of CK-31 preserves abstract KS-uncolorability, yet none can be realized with integer coordinates. Their general $\R^3$ realizability remains the fundamental open question.
+To circumvent this, we reformulated realizability within the integer pool as a \emph{finite SAT encoding}.  Given a candidate graph $G = (V, E)$ on $n$ vertices, we introduce Boolean assignment variables $x_{v,r}$ (vertex $v$ mapped to ray $r$, $1 \leq r \leq 49$) and encode three constraint families:
+\begin{itemize}
+\item[(C4a)] \emph{Exactly one ray per vertex:} $\bigvee_{r} x_{v,r}$ and $\neg x_{v,r_1} \vee \neg x_{v,r_2}$ for all $r_1 < r_2$.
+\item[(C4b)] \emph{Orthogonality:} for each edge $(i,j) \in E$ and each non-orthogonal ray pair $(r_1, r_2)$: $\neg x_{i,r_1} \vee \neg x_{j,r_2}$.
+\item[(C4c)] \emph{Injectivity:} $\neg x_{i,r} \vee \neg x_{j,r}$ for all $i < j$, all~$r$.
+\end{itemize}
+This is a \emph{weak} (non-induced) embedding: edges must map to orthogonal ray pairs, but non-edges are unconstrained and may acquire incidental orthogonality.  A satisfying assignment is a constructive embedding in $\R^3$; UNSAT means unrealizable within the $\{0,\pm1,\pm2\}$ pool (but not necessarily in $\R^3$ generally).  For $n = 30$ with ${\sim}70$ edges, this yields 1470~variables and ${\sim}218{,}000$ clauses, resolved by Glucose4 in under 1\,s per graph (Intel i5-12450H).  All 394 merged graphs are \emph{unrealizable} within the integer pool. Every possible single-merge compression of CK-31 preserves abstract KS-uncolorability, yet none can be realized with $\{0,\pm1,\pm2\}$ coordinates.  Whether any are realizable in $\R^3$ with other coordinates remains open and exceeds current SMT capabilities.
 
-\textbf{CK-31 criticality (Strategy 5).} CK-31 is $k$-critical for all tested $k$ up to 12 (Table~\ref{tab:criticality}). The exhaustive results ($k \leq 8$) cover all 11,460,647 subsets; the sampled results ($k = 9$--$12$) each test $10^6$ random subsets, none of which remain KS-uncolorable. At $k = 7$, removing any 7 of 31 rays leaves only 24---the Li--Bright--Ganesh lower bound---yet every one of the 2,629,575 resulting 24-ray subsets is colorable. This establishes that no 24-ray sub-configuration of CK-31 is a KS set.
+\textbf{CK-31 criticality (Strategy 5).} CK-31 is $k$-critical for all tested $k$ up to 12 (Table~\ref{tab:criticality}). The exhaustive results ($k \leq 8$) cover all 11,460,647 subsets and constitute a proof of 8-criticality.  The sampled results ($k = 9$--$12$) each test $10^6$ uniformly random subsets, none of which remain KS-uncolorable.  By the rule of three, the fraction of uncolorable subsets (if any exist) is bounded by $p_k \lesssim 3 \times 10^{-6}$ at 95\% confidence, assuming uniform sampling; however, uncolorable subsets may be concentrated in specific structural regions, so this bound is conservative. At $k = 7$, removing any 7 of 31 rays leaves only 24---the Li--Bright--Ganesh lower bound---yet every one of the 2,629,575 resulting 24-ray subsets is colorable. This establishes that no 24-ray sub-configuration of CK-31 is a KS set.
 
 \begin{table}[b]
 \centering
@@ -133,26 +143,34 @@ $k$ & Remain & Subsets & Method & Result \\
 \end{tabular}
 \end{table}
 
-\textbf{Triad density threshold (Strategy 6).} In 500 random samples per size, no KS-uncolorable subset of the integer pool appears below $n = 42$ out of 49 rays. For the Eisenstein pool, the threshold is $n = 48$ out of 57. For Heegner-7, no KS subsets are found at any sampled size up to $n = 75$ out of 145. CK-31 achieves the highest pair density among all constructions (15.3\% of all $\binom{31}{2}$ pairs are orthogonal). These results show that triad count alone does not determine uncolorability---the topological interlocking of constraints matters.
+\textbf{Triad density threshold (Strategy 6).} In 500 uniform random samples per size (an exploratory diagnostic, not a precise threshold estimate), no KS-uncolorable subset of the integer pool is observed below $n = 42$ out of 49~rays (upper bound on prevalence: $p \lesssim 0.006$ at 95\%); for the Eisenstein pool, $n = 48$ out of 57; for Heegner-7, none at any sampled size up to $n = 75$ out of 145. Among all tested constructions, CK-31's minimum achieves the highest pair density (15.3\% of $\binom{31}{2}$ pairs are orthogonal). These results show that triad count alone does not determine uncolorability---the topological interlocking of constraints matters.
 
 \section{Discussion}
 
 Our results establish three structural facts about KS sets in dimension~3.
 
-First, \emph{the known algebraic pools are self-contained}. Cross-pool mixing never produces a smaller KS set than what exists within a single pool. This suggests that the orthogonality structure of each number ring is optimized for its own KS constructions.
+First, \emph{the known algebraic pools are self-contained}: cross-pool mixing never produces a smaller KS set than what exists within a single pool.
 
 Second, \emph{CK-31 is uniquely minimal and deeply critical}. No other ring produces a KS set with fewer than 33 vectors, and all paths to 31 lead to integer coordinates. The 8-critical result (exhaustive) means that CK-31 cannot be reduced by deletion of \emph{any} 8 or fewer rays---this exhaustive test covers all 11.5 million subsets. Even at $k = 7$, where 24 rays remain (the current lower bound), every subset is colorable. This provides strong evidence that no sub-configuration of CK-31 approaches the lower bound.
 
 Third, \emph{density arguments are insufficient for a proof of optimality}. KS sets are extraordinarily rare even within pools that contain them. The uncolorability depends on the precise topological interlocking of basis constraints---a property that cannot be captured by counting triads or pairs alone. This suggests that closing the 24--31 gap will require realizability-based arguments (extending the Li--Bright--Ganesh framework) rather than combinatorial density bounds.
 
-The restriction to $\R^3$ versus $\C^3$ does not obviously help: working in $\C^3$ provides more orthogonality freedom per ray, but our complex pools (Eisenstein, $\Z[\sqrt{-2}]$, Heegner-7) all minimize to $\geq 33$. The Eisenstein threshold ($n = 48$ out of 57) is higher than the integer threshold ($n = 42$ out of 49), suggesting that the extra complex degrees of freedom make it \emph{harder}, not easier, to achieve the tight constraint interlocking needed for small KS sets.
+Working in $\C^3$ does not help: our complex pools all minimize to $\geq 33$.
 
-The vertex-merging experiment reveals the nature of the obstacle: abstract KS-uncolorable graphs on 30~vertices exist (all 394 non-orthogonal merges of CK-31 preserve uncolorability), but none are realizable within the integer pool and their general $\R^3$ realizability exceeds current SMT capabilities. That \emph{every} merge preserves KS-uncolorability reflects the deep criticality of CK-31: no vertex is ``expendable'' enough that merging it destroys the constraint structure. This confirms that the 24--31 gap is fundamentally a realizability problem, not a combinatorial one.
+The vertex-merging experiment reveals the nature of the obstacle: all 394 merges of CK-31 preserve abstract KS-uncolorability yet none are realizable within the integer pool.  That \emph{every} merge preserves uncolorability reflects CK-31's deep criticality: no vertex is expendable enough that merging it destroys the constraint structure.  Within the integer coordinate framework, the 24--31 gap is a realizability problem: combinatorially viable 30-vertex KS graphs exist in abundance, but none embed in the known algebraic pools.
 
-We do not prove that 31 is optimal. A CEGAR (counterexample-guided abstraction refinement) search for 30-ray KS subsets of the 49-ray integer pool eliminated 500,000 candidate subsets without finding one, consistent with CK-31's optimality within $\{0,\pm1,\pm2\}$, but the search space ($\binom{49}{30} \approx 10^{12}$) was not fully exhausted. Combined with the greedy minimization (200 trials, all converging to 31), integer-pool CSP (all 394 merged graphs unrealizable), and deep criticality ($k \leq 8$ exhaustive), the evidence strongly suggests that 31 is optimal within integer coordinates. A sub-31 KS set, if it exists, would require rays outside the $\{0,\pm1,\pm2\}$ alphabet---a fundamentally different construction method.
+We do not prove that 31 is optimal.  Among all tested two-element alphabets of the form $\{0, \pm 1, \pm x\}$, the cancellation identities producing KS-uncolorable pools are $x = 2$, $|x|^2 = 2$, $|x|^2 = x+1$, and $x^2+x+1=0$---corresponding to the six pools in Table~\ref{tab:results}, none achieving fewer than~31.  An exploratory \emph{density trend} is observed: simpler cancellation identities produce denser orthogonality structures (integer: 0.53 triads/ray, minimum~31; Peres: 0.45, minimum~33; golden ratio: 0.20, minimum~52).  This trend suggests---but does not prove---that achieving sub-31 density from a more complex identity would be difficult.  The principal untested territory is multi-element alphabets from higher-degree number fields, where qualitatively new cancellation mechanisms could arise; our tests of Pisot-number fields (plastic, tribonacci, silver ratios) found no KS-uncolorable pools, but these do not exhaust the possibilities.
+
+Within the algebraic framework tested, the evidence is strong: greedy minimization (2000 trials per pool, all converging to known minima), integer-pool realizability (all 394 merges unrealizable), and deep criticality ($k \leq 8$ exhaustive) all point to CK-31's optimality within integer coordinates.  A sub-31 KS set, if it exists, would require a fundamentally different cancellation identity from a number field not yet tested.
+
+These results are directly applicable to the realizability-based lower-bound program of Li, Bright, and Ganesh~\cite{LiBrightGanesh2024}, which enumerates abstract KS hypergraphs on $n$ vertices and checks whether they can be realized as rays in $\R^3$.  Their method is bottlenecked by the enormous number of candidate hypergraphs and by Z3 returning ``unknown'' on embeddability queries above order~20.  Our finite pool SAT encoding (C4a--C4c) can serve as a fast first-stage witness: a SAT result provides a constructive $\R^3$ embedding (with explicit coordinates), short-circuiting the expensive Z3 realizability check.  UNSAT means only that no embedding exists within the tested pool, and the candidate must fall through to Z3.  The value is as a ``quick accept'' screen, not a pruning filter.
+
+Additionally, our algebraic data suggest three empirical generation-phase observations consistent with all six tested pools: every vertex participates in at least 2~triangles, edge density $\geq 0.15 \cdot \binom{n}{2}$, and triad count $\geq \lceil n \cdot 1.45/3 \rceil$.  These are not proven necessary and should be treated as heuristic pruning aids only.  The 394 merged graphs also yield candidate blocked subgraphs: extracting locally minimal unrealizable subgraphs from these order-30 graphs could extend \textsc{MathCheck}'s blocking catalogue.
+
+Combining these algebraic and SAT-based pruning tools with realizability checking could reduce the LBG search space by orders of magnitude.
 
 \begin{acknowledgments}
-The author acknowledges the use of Claude (Anthropic) for computational assistance. SAT solving used PySAT with the Glucose4 solver.
+The author acknowledges the use of Claude (Anthropic) for computational assistance. SAT solving used PySAT with the Glucose4 solver.  Code, ray/triad lists, and SAT instances are available at \url{https://github.com/michaelkernaghan/contextuality}.
 \end{acknowledgments}
 
 \begin{thebibliography}{20}
@@ -169,13 +187,17 @@ reported in A.~Peres, \textit{Quantum Theory: Concepts and Methods} (Kluwer, 199
 Z.~Li, C.~Bright, and V.~Ganesh,
 in \textit{Proceedings of IJCAI-24}, 2105 (2024); arXiv:2306.13319.
 
-\bibitem{Kernaghan2026landscape}
-M.~Kernaghan,
-``The algebraic landscape of Kochen--Specker sets in dimension three'' (in preparation).
-
 \bibitem{AudemardSimon2018}
 G.~Audemard and L.~Simon,
 in \textit{Proceedings of IJCAI-18}, 5093 (2018).
+
+\bibitem{Peres1991}
+A.~Peres,
+J.\ Phys.\ A \textbf{24}, L175 (1991).
+
+\bibitem{Pavicic2019}
+M.~Pavicic, N.~D.~Megill, B.~C.~Waegell, and P.~K.~Aravind,
+Sci.\ Rep.\ \textbf{9}, 6765 (2019).
 
 \bibitem{Z3}
 L.~de~Moura and N.~Bj{\o}rner,

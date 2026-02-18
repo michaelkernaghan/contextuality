@@ -86,13 +86,19 @@ The \emph{orthogonality graph} $G(S)$ of a ray set $S$ has vertices correspondin
 
 \subsection{Coordinate alphabets and number fields}
 
-A \emph{coordinate alphabet} $\mathcal{A} \subset \R$ (or $\C$) is a finite set of values from which ray coordinates are drawn. Given an alphabet $\mathcal{A}$, the induced ray set is
+A \emph{coordinate alphabet} $\mathcal{A} \subset \R$ (or $\C$) is a finite set of values from which ray coordinates are drawn.  (Pavicic et al.~\cite{Pavicic2019} call these ``vector components''; we adopt ``alphabet'' to emphasize the combinatorial generating role---one selects symbols from $\mathcal{A}$ and assembles them into three-coordinate ``words'' that represent rays.)  Given an alphabet $\mathcal{A}$, the induced ray set is
 \[
 S(\mathcal{A}) = \{ [v] : v \in \mathcal{A}^3 \setminus \{0\} \}
 \]
-where $[v]$ denotes the equivalence class of $v$ under scalar multiplication (the ray).
+where $[v]$ denotes the equivalence class of $v$ under scalar multiplication (the ray).  The alphabet of a known KS set can often be read directly from its geometric representation: in the cube diagrams used to display the Peres~33, Conway--Kochen~31, and related constructions~\cite{Peres1991,Peres1993}, each vertex carries explicit integer coordinates, and the set of distinct coordinate values appearing across all vertices is precisely the alphabet $\mathcal{A}$.
 
-The \emph{cancellation identity} of an alphabet is the algebraic equation that enables nontrivial orthogonalities. For the integer alphabet $\{0, \pm 1, \pm 2\}$, the key identity is $1 + 1 = 2$, which yields the three-term dot-product cancellation $1 \cdot 1 + 1 \cdot 1 + (-1) \cdot 2 = 0$.
+Two rays $v, w \in \mathcal{A}^3$ are orthogonal when their dot product vanishes: $\sum_k \bar v_k w_k = 0$.  For coordinates drawn from a finite alphabet, this requires an algebraic relation among elements of $\mathcal{A}$ that makes the sum cancel exactly---a \emph{cancellation identity}.  The cancellation identity is the mechanism by which an alphabet produces orthogonal rays, and hence the mechanism by which it can potentially generate a Kochen--Specker set.
+
+For the integer alphabet $\{0, \pm 1, \pm 2\}$, the key identity is $1 + 1 = 2$: two coordinates of magnitude~1 can sum to cancel a single coordinate of magnitude~2, as in $1 \cdot 1 + 1 \cdot 1 + (-1) \cdot 2 = 0$.  For the Peres alphabet $\{0, \pm 1, \pm\sqrt{2}\}$, it is $(\sqrt{2})^2 = 2 = 1 + 1$.  For the Eisenstein alphabet $\{0, \pm 1, \pm\omega, \pm\bar\omega\}$ (where $\omega = e^{2\pi i/3}$), it is the three-term phase cancellation $1 + \omega + \omega^2 = 0$.  In every case, the identity has the same effect: it creates exact orthogonalities among triples of rays (triads), and when enough triads interlock, no consistent $\{0,1\}$-coloring exists---a KS set.
+
+One might ask whether the trivial identity $1 + (-1) = 0$ already suffices---after all, it makes dot products vanish (e.g., $1 \cdot 1 + 1 \cdot (-1) + 0 \cdot 0 = 0$).  The answer is that the minimal alphabet $\{0, \pm 1\}$ generates only 13 projective rays in $\R^3$ (the 3 axis directions, 6 face diagonals, and 4 body diagonals of the cube), far too few for a KS set (the minimum known is 31).  The identity $1 + 1 = 2$ is what unlocks the $\pm 2$ coordinate, expanding the pool from 13 to 49 rays---nearly four times as many---and creating the dense triad network that KS-uncolorability requires.  In this sense, $1 + 1 = 2$ is the simplest \emph{useful} cancellation identity: the first one that generates enough orthogonal structure for the coloring constraints to become unsatisfiable.
+
+The methodological approach of this paper is to \emph{reverse} this chain: we systematically construct coordinate alphabets from algebraic number fields, identify their cancellation identities, generate the induced ray sets, and test for KS-uncolorability.  This turns the search for new KS sets into a question of algebra: which rings admit cancellation identities of low enough norm to produce the dense orthogonality structures that KS-uncolorability requires?
 
 \subsection{Cross-product completion}
 
@@ -471,21 +477,74 @@ The $6 \mid n$ conjecture (Conjecture~\ref{conj:6n}) and the Cortez--Morales--Re
 
 \subsection{Why six islands?}
 
-The six known algebraic islands correspond to five fundamentally different cancellation mechanisms (with the Peres, complex quadratic, and Gaussian islands sharing the same numerical mechanism):
+The six known algebraic islands arise from two fundamentally different cancellation mechanisms:
 
 \begin{enumerate}
-    \item \textbf{Integer} ($1 + 1 = 2$): additive doubling of units.
-    \item \textbf{Peres} ($(\sqrt{2})^2 = 2$), \textbf{Complex quadratic} ($|\sqrt{-2}|^2 = 2$), and \textbf{Gaussian} ($|1+i|^2 = 2$): squaring (or modulus-squaring) produces 2. These three islands share the same minimal combinatorial structure (degree distribution $\{4{:}30, 8{:}3\}$, min 33) despite living in different rings.
-    \item \textbf{Eisenstein} ($1 + \omega + \omega^2 = 0$): three-term complex phase cancellation.
-    \item \textbf{Heegner-7} ($\alpha\bar\alpha = 2$ where $\alpha = (1+\sqrt{-7})/2$): norm-2 cancellation through a quadratic integer satisfying $\alpha^2 - \alpha + 2 = 0$. Despite sharing the norm-2 identity with the Peres family, the richer alphabet (7 elements vs.\ 5) produces a more complex orthogonality graph (42 triads from 145 rays), yielding a larger minimum KS set of 43 vectors.
-    \item \textbf{Golden} ($\varphi^2 = \varphi + 1$): the Fibonacci recurrence.
+    \item[\textbf{(A)}] \textbf{Norm-2 cancellation}: an algebraic identity producing the value~2 from products of ring elements, enabling three-term dot-product cancellations of the form $a_1 b_1 + a_2 b_2 + a_3 b_3 = 0$ with bounded coordinates. Five islands use this mechanism:
+    \begin{itemize}
+        \item \textbf{Integer} ($1 + 1 = 2$): additive doubling of units.
+        \item \textbf{Peres} ($(\sqrt{2})^2 = 2$), \textbf{Complex quadratic} ($|\sqrt{-2}|^2 = 2$), and \textbf{Gaussian} ($|1+i|^2 = 2$): squaring (or modulus-squaring) produces 2. These three share the same minimal combinatorial structure (degree distribution $\{4{:}30, 8{:}3\}$, min 33) despite living in different rings.
+        \item \textbf{Heegner-7} ($\alpha\bar\alpha = 2$ where $\alpha = (1+\sqrt{-7})/2$): norm-2 cancellation through a quadratic integer satisfying $\alpha^2 - \alpha + 2 = 0$. Despite sharing the norm-2 identity with the Peres family, the richer alphabet (7 elements vs.\ 5) produces a more complex orthogonality graph (42 triads from 145 rays), yielding a larger minimum KS set of 43 vectors.
+    \end{itemize}
+    \item[\textbf{(B)}] \textbf{Phase cancellation}: a root-of-unity identity $1 + \omega + \omega^2 = 0$ (where $\omega = e^{2\pi i/3}$), in which three complex unit-norm elements sum to zero. This mechanism produces a qualitatively different three-term cancellation: the vanishing sum involves three equal-magnitude terms rather than two small terms balancing one larger term. The \textbf{Eisenstein island} ($\Z[\omega]$, min 33) is the sole representative.
 \end{enumerate}
+
+The \textbf{golden ratio island} ($\varphi^2 = \varphi + 1$, min 52) requires special comment. The generator $\varphi$ has norm $|\varphi|^2 \approx 2.618 > 2$, which would place it outside the norm-2 boundary. However, cross-product completion generates the reciprocal $1/\varphi$ (with $|1/\varphi|^2 < 1$), and the completed coordinate set contains the ratio $\varphi : 1/\varphi = \varphi^2 = \varphi + 1$, reintroducing norm-2-type cancellations indirectly. The golden island therefore does not violate the norm-2 boundary but rather demonstrates that the relevant criterion is not the generator's own norm but whether the \emph{effective coordinate set after completion} admits norm-2-type or phase-type cancellations.
 
 Each mechanism generates a distinct orthogonality structure in its completed ray set, and the efficiency of the mechanism (measured by the minimum KS set size) correlates inversely with its algebraic complexity. The integer identity involves two distinct magnitudes and produces the densest triad network (26 triads from 49 rays, ratio 0.53). The golden ratio identity involves three distinct magnitudes and produces the sparsest (10 triads from 49 rays, ratio 0.20), requiring completion to 205 rays before becoming KS-uncolorable.
 
 The isomorphism between the Peres ($\Z[\sqrt{2}]$), complex quadratic ($\Z[\sqrt{-2}]$), and Gaussian ($\Z[i]$ with $1+i$) islands is noteworthy: three different rings produce graph-isomorphic minimal KS sets because the Hermitian inner product reduces $\overline{\sqrt{-2}} \cdot \sqrt{-2}$, $(\sqrt{2})^2$, and $\overline{(1+i)} \cdot (1+i)$ all to the same value 2. This confirms that the ``true'' classification is by cancellation identity, not by ambient field.
 
 The Heegner-7 island is especially significant because it demonstrates that the norm-2 identity can produce \emph{different} minimal KS set sizes depending on the generator's minimal polynomial. The generator $\alpha = (1+\sqrt{-7})/2$ satisfies $\alpha^2 = \alpha - 2$, introducing a linear term absent in the Peres case ($(\sqrt{2})^2 = 2$). This additional algebraic structure enriches the ray pool (145 vs.\ 49 rays) while simultaneously making the orthogonality graph harder to ``compress'' (min 43 vs.\ 33).
+
+\subsection{Completeness for two-element alphabets}\label{sec:completeness}
+
+Table~\ref{tab:cancellation} summarizes the cancellation identity, alphabet, and a concrete dot-product example for each island.
+
+\begin{table*}[t]
+\centering
+\caption{The six algebraic islands: alphabets, cancellation identities, and concrete orthogonality examples. Each cancellation identity is the algebraic equation that enables the dot product to vanish; the example shows two specific rays whose orthogonality depends on that identity.}
+\label{tab:cancellation}
+\begin{tabular}{llllcr}
+\toprule
+Island & Alphabet $\mathcal{A}$ & Cancellation identity & Dot-product example & Type & Min \\
+\midrule
+Integer & $\{0,\pm 1,\pm 2\}$ & $1 + 1 = 2$ & $1{\cdot}1 + 1{\cdot}1 + ({-}1){\cdot}2 = 0$ & Norm-2 & 31 \\
+Peres & $\{0,\pm 1,\pm\sqrt{2}\}$ & $(\sqrt{2})^2 = 2$ & $1{\cdot}1 + 1{\cdot}1 + ({-}\sqrt{2}){\cdot}\sqrt{2} = 0$ & Norm-2 & 33 \\
+$\Z[\sqrt{-2}]$ & $\{0,\pm 1,\pm\sqrt{-2}\}$ & $|\sqrt{-2}|^2 = 2$ & $\bar{1}{\cdot}1 + \bar{1}{\cdot}1 + \overline{({-}\sqrt{-2})}{\cdot}\sqrt{-2} = 0$ & Norm-2 & 33 \\
+Gaussian & $\{0,\pm 1,\pm i,\pm(1{+}i)\}$ & $|1+i|^2 = 2$ & $\bar{1}{\cdot}1 + \bar{1}{\cdot}1 + \overline{({-}(1{+}i))}{\cdot}(1{+}i) = 0$ & Norm-2 & 33 \\
+Eisenstein & $\{0,\pm 1,\pm\omega,\pm\bar\omega\}$ & $1 + \omega + \omega^2 = 0$ & $1{\cdot}1 + 1{\cdot}\omega + 1{\cdot}\omega^2 = 0$ & Phase & 33 \\
+Heegner-7 & $\{0,\pm 1,\pm\alpha,\pm\bar\alpha\}$ & $\alpha\bar\alpha = 2$ & $\bar{1}{\cdot}1 + \bar{1}{\cdot}1 + ({-}\bar\alpha){\cdot}\alpha = 0$ & Norm-2 & 43 \\
+Golden & $\{0,\pm 1,\pm\varphi\}$ $\to$ completed & $\varphi^2 = \varphi + 1$ & $1{\cdot}1 + 1{\cdot}\varphi + ({-}1){\cdot}\varphi^2 = 0$ & Indirect & 52 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+We can show that this classification is \emph{complete} for two-element alphabets.  Consider an arbitrary alphabet $\{0, \pm 1, \pm x\}$ with $x \notin \{0, \pm 1\}$.  The Hermitian product set $\bar{\mathcal{A}} \cdot \mathcal{A}$ consists of $\{0, \pm 1, \pm x, \pm \bar{x}, \pm |x|^2\}$ (with $\bar{x} = x$ in the real case).  A non-trivial orthogonality $\sum_{k=1}^3 \bar{u}_k v_k = 0$ requires three elements of this product set to sum to zero, with at least one involving $x$ (otherwise the identity is trivial).  Table~\ref{tab:two-element} enumerates all such zero-sums.
+
+\begin{table}[h]
+\centering
+\caption{All non-trivial three-term zero-sums from the product set of a two-element alphabet $\{0, \pm 1, \pm x\}$. Each row is an algebraic constraint on~$x$; every solution reduces to a known island.}
+\label{tab:two-element}
+\begin{tabular}{llll}
+\toprule
+Zero-sum pattern & Identity on $x$ & Solution & Island \\
+\midrule
+$1 + 1 - x = 0$ & $x = 2$ & $x = 2$ & Integer \\
+$1 + 1 - |x|^2 = 0$ & $|x|^2 = 2$ & $x = \sqrt{2}, \sqrt{-2}, \frac{1{+}\sqrt{-7}}{2}, \ldots$ & Peres / $\Z[\sqrt{-2}]$ / Heegner-7 \\
+$1 + x - |x|^2 = 0$ & $|x|^2 = 1 + x$ & $x = \varphi$ (real) & Golden \\
+$1 + x + |x|^2\mkern-2mu\cdot\mkern-2mu x = 0$ & $x^2 + x + 1 = 0$ & $x = \omega = e^{2\pi i/3}$ & Eisenstein \\
+$|x|^2 + |x|^2 - 1 = 0$ & $|x|^2 = \tfrac{1}{2}$ & $x = 1/\sqrt{2}$ & $\equiv$ Peres (rescaled) \\
+$x + x - |x|^2 = 0$ & $|x|^2 = 2x$ & $x = 2$ (real) & $\equiv$ Integer \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{observation}\label{obs:two-element}
+For any two-element alphabet $\{0, \pm 1, \pm x\}$, every non-trivial cancellation identity reduces to one of the six known islands (up to scaling equivalence).  The algebraic classification is therefore \textbf{complete} for two-element alphabets: no undiscovered island can arise from this family.
+\end{observation}
+
+The completeness does \emph{not} extend to larger alphabets.  A three-element alphabet $\{0, \pm 1, \pm x, \pm y\}$ introduces cross-products $\pm xy$, $\pm \bar{x}y$, etc., enabling cancellation identities such as $1 + xy - |x|^2 = 0$ or $x + y + 1 = 0$ that involve two independent generators.  While our survey has tested many such alphabets (Table~\ref{tab:extended} and Section~\ref{sec:mixed}), the space of multi-element alphabets---particularly those arising from higher-degree number fields with multiple independent generators---is not exhaustively covered.  This is the principal remaining gap in the classification.
 
 \begin{remark}[Trigonometric consistency check]\label{rem:trig}
 As an independent test of the island classification, we swept the one-parameter family $\mathcal{A}(\theta) = \{0, \pm 1, \pm\cos\theta, \pm\sin\theta\}$ across 164 angles spanning $(0, \pi/2]$. The Pythagorean identity $\cos^2\theta + \sin^2\theta = 1$ serves as the cancellation mechanism. Exactly 5 distinct alphabets (at isolated angles: $\arctan(1/2)$, $\pi/6$, $\arctan(1/\varphi)$, $\arctan(1/\sqrt{2})$, $\pi/4$) are KS-uncolorable; all reduce to known islands via the norm-2 mechanism or golden ratio completion. No new islands emerge. Moving $1^\circ$ from any uncolorable angle destroys the property, consistent with the algebraic nature of the norm constraint.
@@ -733,24 +792,37 @@ This universality strengthens Conjecture~\ref{conj:optimal}: $\CK$ is not merely
 
 \section{Limitations and Open Questions}\label{sec:limitations}
 
-Our search is computational, not exhaustive over all possible number fields. Specifically:
+Our search is computational, not exhaustive over all possible number fields.  It is important to understand both its scope and its principled structure.
+
+The relationship between alphabets, cancellation identities, and KS sets is tight: an alphabet is a candidate for producing a KS set \emph{only if} it carries a cancellation identity---an algebraic relation among its elements that makes dot products vanish exactly.  Without such an identity, the alphabet cannot produce exact orthogonalities among triples of rays, and without orthogonal triples there is no KS set.  The search for new KS-supporting alphabets is therefore equivalent to the search for new cancellation identities of sufficiently low norm.  Our survey is systematic within this framework: for each class of number fields, we identify the candidate cancellation identities from the ring structure and test whether they generate KS-uncolorable ray sets.
+
+The coverage is thorough for low-degree extensions but becomes increasingly sparse at higher degree:
 
 \begin{enumerate}
-    \item \textbf{Alphabet choice within fields}: For $d \equiv 1 \pmod{4}$, the ring of integers of $\Q(\sqrt{d})$ is $\Z[(1+\sqrt{d})/2]$, not $\Z[\sqrt{d}]$. Our discovery that $\varphi = (1+\sqrt{5})/2$ produces a KS set while $\sqrt{5}$ does not shows that the choice of generator matters. We have tested the ring-of-integers generator $(1+\sqrt{d})/2$ for $d \in \{5, 13, 17, 21, 29\}$; results are reported in the supplementary data.
-    \item \textbf{Complex quadratic fields}: we have exhaustively tested all nine imaginary quadratic fields with class number 1 (the Heegner numbers), as well as $\Z[\sqrt{-d}]$ for $d = 2, 5, 6, 7, 10, 11, 13, 14, 15$ with enriched alphabets and Hermitian completion. The classification appears complete for imaginary quadratic fields.
-    \item \textbf{Cubic and higher extensions}: we have tested cubic extensions $\Q(\sqrt[3]{d})$ for $d = 2, 3, 4, 5, 6, 7$. The basic alphabets $\{0,\pm 1,\pm\sqrt[3]{d}\}$ are all colorable, but the extended alphabet $\{0,\pm 1,\pm\sqrt[3]{2},\pm\sqrt[3]{4}\}$ of $\Q(\sqrt[3]{2})$ produces an uncolorable set (minimum 60 vectors after cross-product completion), showing that cubic fields can support KS sets at higher cost. Higher-degree algebraic extensions remain largely unexplored.
+    \item \textbf{Quadratic fields (near-exhaustive)}: we tested real $\Q(\sqrt{d})$ for all non-square $d = 2, \ldots, 30$ with the basic alphabet $\{0, \pm 1, \pm\sqrt{d}\}$, and also the ring-of-integers generator $(1+\sqrt{d})/2$ for $d \equiv 1\pmod{4}$ ($d \in \{5, 13, 17, 21, 29\}$).  The golden ratio case ($d = 5$) demonstrates that the choice of generator within a field matters: $\varphi = (1+\sqrt{5})/2$ produces a KS set while $\sqrt{5}$ does not, because $\varphi$ participates in a cancellation identity ($\varphi^2 = \varphi + 1$) that $\sqrt{5}$ does not.
+    \item \textbf{Complex quadratic fields (exhaustive for class number~1)}: we tested all nine imaginary quadratic fields with class number 1 (the Heegner numbers: $d = 1, 2, 3, 7, 11, 19, 43, 67, 163$), as well as $\Z[\sqrt{-d}]$ for $d = 2, 5, 6, 7, 10, 11, 13, 14, 15$ with enriched alphabets and Hermitian completion.  Higher class numbers (where the ring of integers is no longer a UFD) remain untested; different factorization structures could in principle support cancellation identities not available in class-1 rings.
+    \item \textbf{Cyclotomic fields (good coverage)}: all roots of unity of order $n \leq 30$ were tested.  The $6 \mid n$ pattern for KS-uncolorability was verified but not proved for all $n$.
+    \item \textbf{Cubic and higher extensions (sparse)}: we tested cubic extensions $\Q(\sqrt[3]{d})$ for $d = 2, 3, 4, 5, 6, 7$. The basic alphabets $\{0,\pm 1,\pm\sqrt[3]{d}\}$ are all colorable, but the extended alphabet $\{0,\pm 1,\pm\sqrt[3]{2},\pm\sqrt[3]{4}\}$ of $\Q(\sqrt[3]{2})$ produces an uncolorable set (minimum 60 vectors after cross-product completion), showing that cubic fields can support KS sets at higher cost.  Quartic, quintic, and higher-degree extensions are entirely unexplored; these could harbor cancellation identities qualitatively different from the quadratic norm-2 pattern.  This is the principal gap in our coverage.
+    \item \textbf{Exotic cancellation candidates}: several families of multi-element alphabets from higher-degree fields remain untested and could in principle harbor qualitatively new cancellation mechanisms:
+    \begin{itemize}
+        \item \emph{Cubic minimal-polynomial cancellations.}  The plastic ratio $\rho \approx 1.3247$ (smallest Pisot number, root of $x^3 = x + 1$) provides a three-element alphabet $\{0, \pm 1, \pm\rho, \pm\rho^2\}$ with cancellation identity $\rho \cdot \rho^2 - \rho - 1 = 0$.  This is neither norm-2 nor phase: the cancellation \emph{is} the minimal polynomial.  Unlike $\Q(\sqrt[3]{2})$ where $\sqrt[3]{2}\cdot\sqrt[3]{4} = 2$ reduces to norm-2, the plastic ratio identity is irreducibly cubic.  Other cubic Pisot numbers (the supersilver ratio, root of $x^3 = 2x^2 + 1$; the tribonacci constant, root of $x^3 = x^2 + x + 1$) provide analogous candidates with different product algebras.
+        \item \emph{Class-number $> 1$ imaginary quadratic fields.}  Our survey tested all nine class-1 fields (Heegner numbers) exhaustively, but rings with non-unique factorization---such as $\Z[\sqrt{-5}]$ (class number~2), where $2 \cdot 3 = (1+\sqrt{-5})(1-\sqrt{-5})$---could support cross-cancellation mechanisms unavailable in UFDs.  The multiple factorization paths create algebraic relations among ring elements that have no class-1 analogue.
+        \item \emph{Simultaneous conjugate cancellations.}  Multi-element alphabets $\{0, \pm 1, \pm\alpha, \pm\bar\alpha, \pm(\alpha + \bar\alpha)\}$ where $\alpha$ and $\bar\alpha$ participate in \emph{independent} cancellation identities could produce richer orthogonality structures than single-generator alphabets.  The Gaussian case $\{0, \pm 1, \pm i, \pm(1+i)\}$ already exhibits this (both $|i|^2 = 1$ and $|1+i|^2 = 2$), but higher-degree fields offer more conjugate pairs.
+        \item \emph{CM elliptic curve endomorphism rings.}  The $j$-invariants of CM elliptic curves are algebraic integers in large number fields whose Hilbert class polynomials provide exotic minimal-polynomial cancellations of arbitrarily high degree.  This is highly speculative but represents the logical limit of the algebraic approach.
+    \end{itemize}
+    Of these, the cubic Pisot numbers and class-number $> 1$ fields are the most accessible computationally; preliminary scripts for testing these are included in the repository.
     \item \textbf{Completion termination}: the cross-product completion operation (Section~\ref{sec:closure}) terminates empirically for all tested alphabets, but we do not prove termination in general. For alphabets whose coordinate ring is not closed under the cofactor formula's operations, the completed pool could in principle grow without bound. In practice, we impose a maximum iteration limit and verify stabilization.
     \item \textbf{Transcendental coordinates}: our methods require algebraic coordinates (for exact orthogonality testing); KS sets with transcendental coordinates are not excluded.
     \item \textbf{The $6 \mid n$ conjecture}: verified for $n \leq 30$ but not proved for all $n$. A proof would likely follow from the representation theory of cyclic groups acting on $\C^3$.
     \item \textbf{Minimization is heuristic, but 33 and 43 appear optimal}: our randomized greedy minimization does not certify optimality in general. However, for the three 33-vector islands (Peres, Eisenstein, $\Z[\sqrt{-2}]$), we have verified that \emph{no} 32-vector KS subset exists within any known minimal 33-set: across 2{,}000 trials per island, we found 1--3 distinct 33-sets each, and tested all possible single-vector removals---all were colorable. Similarly, for the Heegner-7 island, all 258 subsets of size 42 across 6 distinct 43-sets were colorable. The integer island's minimum of 31 is supported by exhaustive enumeration over the 37-ray union of discovered 31-sets (Proposition~\ref{prop:31optimal}).
-    \item \textbf{Lower bound improvement}: our work does not improve the lower bound of 24; it constrains where a sub-31 construction could come from.
+    \item \textbf{Lower bound improvement}: our work does not improve the lower bound of 24; it constrains where a sub-31 construction could come from.  However, these constraints are directly applicable to the realizability-based program of Li, Bright, and Ganesh~\cite{LiBrightGanesh2024}, which works from the opposite direction: they enumerate abstract KS hypergraphs and check realizability in $\R^3$ via SMT solvers.  Our results provide a filter pipeline for their search.  The two-element alphabet completeness result eliminates all constructive candidates from known number fields; the density trend (simpler identities produce denser triad networks) sets a structural minimum on the basis count of viable candidate hypergraphs; and the discreteness of the cancellation landscape---the minimal alphabet $\{0, \pm 1\}$ generates only 13 rays, jumping to 49 at $\{0, \pm 1, \pm 2\}$ with no intermediate step---constrains the algebraic degree of coordinates that the SMT solver must handle.  Combining our algebraic pruning with their realizability checking could reduce the search space for sub-31 candidates by orders of magnitude.
     \item \textbf{Operational significance}: our connection to Cabello's work (Section~\ref{sec:cabello}) is primarily observational---we identify the Eisenstein island with his simplest KS set, but do not prove that other islands cannot arise as engines of perfect quantum strategies. A systematic study of which Bell scenarios' perfect strategies correspond to which algebraic islands would deepen this connection.
     \item \textbf{Open questions}: Does CK-31 serve as the engine of any perfect quantum strategy? What BPQS does the Heegner-7 island produce? Can the three-way trade-off (CSW advantage, hypergraph tightness, context economy) be formalized as a Pareto frontier across algebraic islands?
 \end{enumerate}
 
 \section{Conclusion}\label{sec:conclusion}
 
-The central finding of this paper is that KS-uncolorability in dimension 3 is controlled by a simple algebraic invariant: the \emph{generator norm} of the coordinate ring. Among all quadratic fields, cyclotomic fields, and selected extensions tested, KS sets exist only when the ring-of-integers generator $\alpha$ satisfies $|\alpha|^2 \leq 2$. This single constraint explains why constructions cluster into six discrete algebraic islands separated by barriers that no amount of additional vectors can overcome: the integer identity $1+1=2$, the Peres identity $(\sqrt{2})^2 = 2$, the Eisenstein identity $1+\omega+\omega^2 = 0$ (norm 1), and the Heegner-7 identity $\alpha\bar\alpha = 2$ are all manifestations of the same underlying requirement---the alphabet must support cancellation identities producing exact orthogonalities among triples.
+The central finding of this paper is that KS-uncolorability in dimension~3 requires one of exactly two cancellation mechanisms in the coordinate alphabet: \emph{norm-2 cancellation} (an algebraic identity producing the value~2 from products of ring elements, as in $1+1=2$, $(\sqrt{2})^2=2$, or $\alpha\bar\alpha=2$) or \emph{phase cancellation} (a root-of-unity sum vanishing exactly, as in $1+\omega+\omega^2=0$).  Among all quadratic fields, cyclotomic fields, and selected extensions tested, KS sets exist only when the coordinate ring supports one of these two mechanisms; alphabets where the smallest available cancellation involves norm~$\geq 3$ produce orthogonal triples but not KS-uncolorability.  This two-mechanism constraint explains why constructions cluster into six discrete algebraic islands separated by barriers that no amount of additional vectors can overcome.  The golden ratio island ($|\varphi|^2 \approx 2.618$) does not violate this boundary: cross-product completion introduces norm-2-type cancellations into the effective coordinate set, confirming that the relevant criterion is the cancellation structure of the completed alphabet, not the generator's own norm.
 
 This structural perspective yields both new constructions and new connections:
 
@@ -762,7 +834,7 @@ This structural perspective yields both new constructions and new connections:
     \item \textbf{Supporting evidence.} The $6 \mid n$ pattern for cyclotomic uncolorability connects to the $\Z[1/6]$ minimality result of Cortez, Morales, and Reyes. Strong computational evidence supports 31 as optimal for the integer island (Proposition~\ref{prop:31optimal}). A trigonometric consistency check across 164 angles finds only known islands, with KS-uncolorability at isolated algebraic points (Remark~\ref{rem:trig}). Most strikingly, the graph universality result (Observation~\ref{obs:universality}) shows that every construction achieving 31 rays---integers, rationals, mixed-field alphabets, and finite rotation group orbits---produces the \emph{same} orthogonality graph, suggesting that $\CK$ is the unique minimal realizable KS hypergraph in dimension~3.
 \end{enumerate}
 
-Whether the norm-2 boundary extends to all number fields, or whether higher-degree extensions harbor additional islands, remains the principal open question. The identification of Cabello's ``simplest KS set'' with the Eisenstein island suggests that the algebraic perspective may complement the ongoing search for optimal constructions.
+Whether the norm-2 boundary extends to all number fields, or whether higher-degree extensions harbor additional islands, remains the principal open question. The identification of Cabello's ``simplest KS set'' with the Eisenstein island suggests that the algebraic perspective may complement the ongoing search for optimal constructions. More concretely, the constraints established here---alphabet completeness, density monotonicity, and the discrete 13$\to$49 ray jump---are directly applicable to the realizability-based lower-bound program of Li, Bright, and Ganesh~\cite{LiBrightGanesh2024}: algebraic pruning of candidate hypergraphs could substantially narrow the search space that their SMT solver must explore, bringing the constructive upper bound (31) and the realizability lower bound (24) closer together.
 
 \subsection*{Reproducibility}
 
@@ -809,6 +881,12 @@ M.~Pavicic, J.-P.~Merlet, B.~McKay, and N.~D.~Megill,
 ``Kochen--Specker vectors,''
 \textit{J. Phys. A: Math. Gen.} \textbf{38}, 1577--1592 (2005).
 arXiv:quant-ph/0409014.
+
+\bibitem{Pavicic2019}
+M.~Pavicic, N.~D.~Megill, B.~C.~Waegell, and P.~K.~Aravind,
+``Automated generation of Kochen--Specker sets,''
+\textit{Sci. Rep.} \textbf{9}, 6765 (2019).
+arXiv:1905.01009.
 
 \bibitem{CabelloSeveriniWinter2014}
 A.~Cabello, S.~Severini, and A.~Winter,
