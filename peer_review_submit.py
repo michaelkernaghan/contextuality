@@ -55,7 +55,13 @@ Key claims to evaluate:
 - Density trend: simpler identities produce denser structures and smaller KS sets
 - Discrete cancellation landscape with no intermediate steps between 13 and 49 rays
 - Connection to Li-Bright-Ganesh realizability program (algebraic constraints as filter pipeline)
-- Exotic untested candidates: cubic Pisot numbers, class-number > 1 fields, CM curves
+- OCUS exhaustive proof that 31 is optimal within the 49-ray integer pool
+- Merge saturation: all 3,756 non-orthogonal pair merges across all 6 islands preserve KS-uncolorability (100%)
+- N(S) invariant (Cortez-Morales-Reyes): Eisenstein achieves minimal N=6, connecting to Z[1/6] ring minimality
+- SI-C closure comparison: bottom-up alphabet and top-down closure approaches converge
+- Connection to bipartite perfect quantum strategies (BPQS/B-KS) via Cabello
+- Graph universality: all 31-vertex KS sets across different constructions are graph-isomorphic
+- Critical bases analysis and CSW/Bell inequality connections
 
 Structure your review as:
 1. Summary (2-3 sentences)

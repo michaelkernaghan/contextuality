@@ -57,7 +57,7 @@ If $6 \mid n$, then $\zeta^{n/6}$ generates the 6th roots of unity as a subgroup
 
 \subsection{Necessity: vanishing-sum analysis}
 
-We show that if $6 \nmid n$, then $S_n$ admits a valid KS coloring.  The proof rests on two lemmas characterizing when vanishing sums of roots of unity exist.
+We show that if $6 \nmid n$, then $S_n$ admits a valid KS coloring.  The proof rests on two lemmas characterizing \emph{short} vanishing sums of roots of unity (2 or 3 terms).  We emphasize that longer vanishing sums of $n$th roots can exist for arbitrary~$n$ (see Lam and Leung~\cite{LamLeung2000} for the general classification), but only sums of $\leq 3$ terms arise as orthogonality conditions in~$\C^3$ (Section~2), so the short-sum characterization suffices.
 
 \begin{lemma}[Three-term vanishing sums]\label{lem:3term}
 If $u, v, w \in \langle\zeta\rangle$ and $u + v + w = 0$, then $3 \mid n$ and $\{u, v, w\} = \{\lambda, \lambda\omega, \lambda\omega^2\}$ for some $\lambda \in \langle\zeta\rangle$, where $\omega = \zeta^{n/3}$.  Conversely, $3 \mid n$ suffices.
@@ -184,7 +184,7 @@ The factorization $6 = 2 \times 3$ in Theorem~\ref{thm:main} reflects two indepe
 
 \emph{Interlocking} ($2 \mid n$): the element $-1 \in \langle\zeta\rangle$ creates two-term cancellations that link triads together.  Without it, the projective collapse of Lemma~\ref{lem:collapse} ensures every triad is isolated, making the coloring problem decomposable.
 
-This is consistent with the ring-theoretic result of Cortez, Morales, and Reyes~\cite{CortezMoralesReyes2022}, who proved that $\Z[1/6]$ is the minimal ring supporting KS contextuality in dimension~3.  Their result concerns realizability of projection matrices $P_v = vv^\dagger / \|v\|^2$ over subrings of~$\Q$; ours concerns a specific family of coordinate alphabets.  The two perspectives are complementary: their $N(S) = \operatorname{lcm}\{\|v\|^2\}$ invariant equals~6 for the Eisenstein 33-set, and Theorem~\ref{thm:main} shows that the arithmetic conditions $2 \mid n$ and $3 \mid n$ are independently necessary in the cyclotomic setting as well.
+This is consistent with the ring-theoretic result of Cortez, Morales, and Reyes~\cite{CortezMoralesReyes2022}, who proved that $\Z[1/6]$ is the minimal ring supporting KS contextuality in dimension~3.  Their result concerns realizability of projection matrices $P_v = vv^\dagger / \|v\|^2$ over subrings of~$\Q$; ours concerns a specific family of coordinate alphabets.  The two perspectives are complementary: their $N(S) = \operatorname{lcm}\{\|v\|^2\}$ invariant equals~6 for the Eisenstein 33-set, and Theorem~\ref{thm:main} shows that the arithmetic conditions $2 \mid n$ and $3 \mid n$ are independently necessary in the cyclotomic setting as well.  While the $\Z[1/6]$ minimality result implies that both primes are necessary, the present proof supplies the constructive mechanism: projective collapse isolates triads when $2 \nmid n$ (Case~3), and plane matching yields an explicit coloring when $3 \nmid n$ (Case~2).
 
 More broadly, the proof technique---classifying orthogonalities by the length of the underlying vanishing sum, then analyzing the resulting constraint graph---may extend to other algebraic families of KS constructions.  The projective collapse phenomenon (Lemma~\ref{lem:collapse}), where group-theoretic symmetry forces orthogonal neighbors to coalesce, suggests a representation-theoretic approach to KS colorability that goes beyond the combinatorial methods currently dominant in the field.
 
@@ -217,6 +217,11 @@ Phys.\ Rev.\ A \textbf{111}, 052204 (2025); arXiv:2501.11640.
 \bibitem{LiBrightGanesh2024}
 Z.~Li, C.~Bright, and V.~Ganesh,
 in \textit{Proceedings of IJCAI-24}, 2105 (2024); arXiv:2306.13319.
+
+\bibitem{LamLeung2000}
+T.~Y.~Lam and K.~H.~Leung,
+``On vanishing sums of roots of unity,''
+\textit{J.\ Algebra} \textbf{224}, 91 (2000).
 
 \end{thebibliography}
 
