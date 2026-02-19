@@ -57,11 +57,11 @@ We tested six complementary strategies, each designed to probe a different regio
 
 \section{Results}
 
-\textbf{SAT-verified minimization (Strategy 1).} All three heuristic methods converge to the same minimum for each pool (Table~\ref{tab:results}), providing evidence of stability. For the integer pool, we go further with an OCUS (Optimal Constrained Unsatisfiable Subset) procedure: for each target size $n \leq 30$, we add a cardinality constraint to the SAT encoding and use a CEGAR loop---when the solver finds a valid coloring, we extract a blocking clause and iterate until UNSAT. This exhaustive procedure proves that \emph{no} KS-uncolorable subset of size $\leq 30$ exists within the full 49-ray pool (each $n$ exhausted in $< 1$\,s; $n = 30$ required 272 iterations). As independent confirmation, 1{,}000 MUS extractions all returned subsets of size~31, yielding 162 distinct minimal KS sets.  For the remaining pools, the MUS extraction operates at the clause level: for $\Z[\sqrt{-2}]$, the clause-level MUS directly spans only 33~rays.
+\textbf{SAT-verified minimization (Strategy 1).} We certify the minimum for each pool using an OCUS (Optimal Constrained Unsatisfiable Subset) procedure: for each target size $n < n_{\min}$, we add a cardinality constraint to the SAT encoding and use a CEGAR loop---when the solver finds a valid coloring, we extract a blocking clause and iterate until UNSAT. This exhaustive procedure proves that \emph{no} KS-uncolorable subset smaller than the reported minimum exists within any of the six pools. The first five pools are certified in under 4\,s each (e.g., Integer: $n=30$ exhausted in 272 iterations, 0.1\,s); the Golden pool required 18{,}783 iterations (303\,s) at $n=51$. As independent confirmation for the integer pool, 1{,}000 MUS extractions all returned subsets of size~31, yielding 162 distinct minimal KS sets.
 
 \begin{table}[t]
 \centering
-\caption{Minimum KS subset size found by each strategy. ``SAT'' combines MUS extraction, greedy deletion (2000 trials), and swap search---these are heuristic methods verified by SAT, not provably optimal. ``Cross'' is the minimum found when that pool is included in any pairwise or full cross-pool merge (Strategy~2).}
+\caption{Minimum KS subset size per pool, certified by OCUS (Strategy~1). ``SAT'' is the OCUS-certified exact minimum within each pool. ``Cross'' is the minimum found when that pool is included in any pairwise or full cross-pool merge (Strategy~2).}
 \label{tab:results}
 \begin{tabular}{lccccc}
 \toprule
@@ -72,7 +72,7 @@ Eisenstein & 57 & 22 & 33 & 33 & 33 \\
 Peres & 49 & 16 & 33 & 33 & 33 \\
 $\Z[\sqrt{-2}]$ & 49 & 16 & 33 & 33 & 33 \\
 Heegner-7 & 145 & 42 & 43 & 43 & 43 \\
-Golden ratio & 205 & 166 & 51 & 51 & 51 \\
+Golden ratio & 205 & 166 & 52 & 52 & 52 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -149,7 +149,7 @@ $k$ & Remain & Subsets & Method & Result \\
 
 Our results establish four structural facts about KS sets in dimension~3.
 
-First, \emph{31 is the exact minimum within the integer pool}: the OCUS procedure exhaustively proves no $\leq 30$-ray KS subset exists among the 49 rays of $\{0,\pm 1,\pm 2\}$. Combined with the rigidity of CK-31~\cite{TrandafirCabello2025} (uniqueness up to unitary equivalence), this certifies 31 as optimal within integer coordinates.
+First, \emph{every pool minimum in Table~\ref{tab:results} is the exact minimum within its pool}: the OCUS procedure exhaustively certifies all six entries. The first five pools are certified in under 4\,s each; the Golden pool ($n=51$) required 18{,}783 CEGAR iterations (303\,s). Combined with the rigidity of CK-31~\cite{TrandafirCabello2025} (uniqueness up to unitary equivalence), this certifies 31 as optimal within integer coordinates and 33 as optimal within Peres, Eisenstein, and $\Z[\sqrt{-2}]$.
 
 Second, \emph{the known algebraic pools are self-contained}: cross-pool mixing never produces a smaller KS set than what exists within a single pool.
 
@@ -163,7 +163,7 @@ The vertex-merging experiment reveals the nature of the obstacle: all 3{,}756 me
 
 We do not prove that 31 is optimal.  Among all tested two-element alphabets of the form $\{0, \pm 1, \pm x\}$, the cancellation identities producing KS-uncolorable pools are $x = 2$, $|x|^2 = 2$, $|x|^2 = x+1$, and $x^2+x+1=0$---corresponding to the six pools in Table~\ref{tab:results}, none achieving fewer than~31.  An exploratory \emph{density trend} is observed: simpler cancellation identities produce denser orthogonality structures (integer: 0.53 triads/ray, minimum~31; Peres: 0.45, minimum~33; golden ratio: 0.20, minimum~52).  This trend suggests---but does not prove---that achieving sub-31 density from a more complex identity would be difficult.  The principal untested territory is multi-element alphabets from higher-degree number fields, where qualitatively new cancellation mechanisms could arise; our tests of Pisot-number fields (plastic, tribonacci, silver ratios) found no KS-uncolorable pools, but these do not exhaust the possibilities.
 
-Within the algebraic framework tested, CK-31's optimality is established for the integer pool (OCUS exhaustive proof) and strongly supported for all other pools.  The Cortez--Morales--Reyes $N(S) = \operatorname{lcm}\{\|v\|^2 : v \in S\}$ invariant~\cite{CortezMoralesReyes2022} provides an independent algebraic perspective: CK-31 has $N = 30$ ($= 2 \times 3 \times 5$), while the Eisenstein island achieves $N = 6$---exactly the minimal ring $\Z[1/6]$ of their theorem.  Every island requires primes 2 and 3; the additional prime 5 in CK-31 arises from its $\|v\|^2 = 5$ rays.  A sub-31 KS set could in principle exist in an untested number field with a qualitatively new cancellation identity.  (Note that ``smallest'' is not the only measure of simplicity: Cabello~\cite{Cabello2025simplest} argues that his 33-vector Eisenstein set is ``simplest'' by fewest bases and highest symmetry.  Our focus on vertex count is complementary.)
+Within the algebraic framework tested, every pool minimum is OCUS-certified (Table~\ref{tab:results}).  The Cortez--Morales--Reyes $N(S) = \operatorname{lcm}\{\|v\|^2 : v \in S\}$ invariant~\cite{CortezMoralesReyes2022} provides an independent algebraic perspective: CK-31 has $N = 30$ ($= 2 \times 3 \times 5$), while the Eisenstein island achieves $N = 6$---exactly the minimal ring $\Z[1/6]$ of their theorem.  Every island requires primes 2 and 3; the additional prime 5 in CK-31 arises from its $\|v\|^2 = 5$ rays.  A sub-31 KS set could in principle exist in an untested number field with a qualitatively new cancellation identity.  (Note that ``smallest'' is not the only measure of simplicity: Cabello~\cite{Cabello2025simplest} argues that his 33-vector Eisenstein set is ``simplest'' by fewest bases and highest symmetry.  Our focus on vertex count is complementary.)
 
 These results are directly applicable to the realizability-based lower-bound programs of Li, Bright, and Ganesh~\cite{LiBrightGanesh2024} and Kirchweger et al.~\cite{KirchwegarPeitlSzeider2023}, both of which enumerate abstract KS hypergraphs on $n$ vertices and check whether they can be realized as rays in $\R^3$.  Both programs are bottlenecked by Z3 returning ``unknown'' on embeddability queries above order~20---a limitation we also encountered.  Our finite pool SAT encoding (C4a--C4c) offers a complementary approach: by reformulating realizability within a finite ray pool as a pure Boolean satisfiability problem (rather than nonlinear real arithmetic), it resolves instances that defeat Z3.  A SAT result provides a constructive $\R^3$ embedding with explicit coordinates, short-circuiting the expensive Z3 check; UNSAT means only that no embedding exists within the tested pool, and the candidate must fall through to Z3.  The encoding is fast (under 1\,s per 30-vertex graph) and could serve as a ``quick accept'' screen in the LBG pipeline.
 
