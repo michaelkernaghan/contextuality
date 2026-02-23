@@ -860,6 +860,10 @@ The structural explanation is clean: the Peres and $\Z[\sqrt{-2}]$ islands share
 The Peres/\mbox{$\Z[\sqrt{-2}]$} flex is \emph{infinitesimal} only: second-order obstruction analysis shows a nonzero component in the cokernel of the Jacobian, blocking extension to a finite deformation.  The set is infinitesimally flexible but finitely rigid---the moduli space has isolated points (Peres and Penrose realizations) rather than a continuous family.
 \end{observation}
 
+\begin{remark}[Algebraic alphabets as a new construction family]\label{rem:new-construction}
+Trandafir and Cabello~\cite{TrandafirCabello2025} show in their Appendix~B that none of the known methods to construct KS sets produce rigid KS sets in~$\C^3$.  They identify two construction families: dimension-lifting ($\C^d \to \C^D$ with $d < D$), which cannot reach~$\C^3$ since KS sets are impossible in~$\C^2$; and concatenation of basic structures (e.g., 10-node subgraphs), which they show always yields non-rigid sets.  The algebraic alphabet method introduced here falls outside both families: rather than lifting or concatenating geometric building blocks, it generates ray pools from cancellation identities in algebraic number fields and extracts minimal KS subsets via SAT solvers.  This approach circumvents the obstruction identified by Trandafir and Cabello: because the rays are pinned to algebraic values by number-theoretic constraints rather than assembled from flexible geometric pieces, the resulting sets can be rigid.  Indeed, four of the six islands are rigid in~$\C^3$ (Observation~\ref{obs:rigidity}), showing that the algebraic alphabet method extends the known construction landscape beyond the two families analyzed in~\cite{TrandafirCabello2025}.
+\end{remark}
+
 \begin{observation}[Three distinct 33-vector KS sets]\label{obs:three-33}
 The literature now contains three minimal 33-vector KS sets with pairwise non-isomorphic orthogonality graphs:
 
