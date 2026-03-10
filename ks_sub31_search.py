@@ -28,6 +28,14 @@ import time
 random.seed(42)
 np.random.seed(42)
 
+try:
+    from ks_spectral_filter import passes_fast_filter
+    HAS_SPECTRAL = True
+except ImportError:
+    HAS_SPECTRAL = False
+
+filtered_count = 0
+
 
 def is_ks_uncolorable_full(n_vertices, triads, ortho_pairs):
     """Test KS-uncolorability using BOTH triads and pairwise constraints.
@@ -207,6 +215,13 @@ for n_remove in range(1, 10):
                          for i, j in ck31_pairs
                          if i in keep_set and j in keep_set]
 
+            if HAS_SPECTRAL and not passes_fast_filter(n_remaining, sub_pairs):
+                filtered_count += 1
+                tested += 1
+                if tested % 5000 == 0:
+                    print(f"    ... tested {tested}/{total_combos}")
+                continue
+
             if is_ks_uncolorable_full(n_remaining, sub_triads, sub_pairs):
                 found_smaller = True
                 removed_coords = [CK31_INT[r] for r in remove]
@@ -235,6 +250,13 @@ for n_remove in range(1, 10):
             sub_pairs = [(remap[i], remap[j])
                          for i, j in ck31_pairs
                          if i in keep_set and j in keep_set]
+
+            if HAS_SPECTRAL and not passes_fast_filter(n_remaining, sub_pairs):
+                filtered_count += 1
+                tested += 1
+                if tested % 5000 == 0:
+                    print(f"    ... tested {tested}/{n_trials}")
+                continue
 
             if is_ks_uncolorable_full(n_remaining, sub_triads, sub_pairs):
                 found_smaller = True
@@ -368,3 +390,5 @@ except ImportError:
 print(f"\n{'='*70}")
 print("SEARCH COMPLETE")
 print("=" * 70)
+if HAS_SPECTRAL:
+    print(f"  Spectral filter rejected: {filtered_count} candidates")

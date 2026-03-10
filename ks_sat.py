@@ -35,6 +35,12 @@ except ImportError:
     print("WARNING: pysat not found, using backtracking (slower)")
     print("Install with: pip install python-sat")
 
+try:
+    from ks_spectral_filter import passes_fast_filter
+    HAS_SPECTRAL = True
+except ImportError:
+    HAS_SPECTRAL = False
+
 
 def is_uncolorable(n, pairs, triads):
     """Check if a ray configuration is KS-uncolorable."""
