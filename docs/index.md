@@ -60,6 +60,10 @@ Contextuality is now understood to be a key **resource for quantum computation**
 
 - [Michael Kernaghan](people/michael-kernaghan.md) | [Asher Peres](people/asher-peres.md) | [Adán Cabello](people/adan-cabello.md) | [Rob Spekkens](people/rob-spekkens.md)
 
+### Institutional Affiliation
+
+This atlas is a project of **[Pacific Quantum Systems](https://pacific-quantum-systems.com/)**, a research initiative based in Vancouver, BC, investigating the mathematical foundations of quantum mechanics and their applications to quantum computation, post-quantum cryptography, and quantum communications.
+
 ### Reference
 
 - **[Bibliography](bibliography.md)** — Key papers and resources on KS sets and contextuality

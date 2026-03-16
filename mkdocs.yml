@@ -1,0 +1,75 @@
+site_name: Contextuality & KS Set Atlas
+site_description: A research resource on Kochen–Specker sets, contextuality, and their role in quantum computation
+site_author: Michael Kernaghan
+
+copyright: "&copy; 2026 Pacific Quantum Systems. All rights reserved."
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.expand
+    - toc.integrate
+
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.superfences
+  - pymdownx.details
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Home: index.md
+  - KS Sets:
+      - Peres 33 (3D): ks-sets/peres-33-3d.md
+      - Conway–Kochen 31 (3D): ks-sets/conway-kochen-31-3d.md
+      - Kernaghan 20 (4D): ks-sets/kernaghan-20-4d.md
+      - Kernaghan–Peres 40 (8D): ks-sets/kernaghan-peres-40-8d.md
+      - Cabello 18 (4D): ks-sets/cabello-18-4d.md
+      - Eisenstein 33 (3D): ks-sets/eisenstein-33-3d.md
+      - Heegner-7 43 (3D): ks-sets/heegner7-43-3d.md
+      - Golden Ratio 52 (3D): ks-sets/golden-52-3d.md
+      - "Z[√-2] 33 (3D)": ks-sets/zsqrt2-neg-33-3d.md
+      - KS Coloring Test Program: ks-sets/peres-ks-test-program.md
+      - Computational Search Results: ks-sets/ks-search-results.md
+  - Research:
+      - Overview: research/index.md
+      - The Six Algebraic Islands: research/algebraic-islands.md
+      - Papers: research/papers.md
+  - History of Contextuality:
+      - Introduction: history/index.md
+      - Early Quantum Theory (1900–1930): history/early-quantum.md
+      - EPR, Bohm, and Measurement (1930–1960): history/epr-bohm.md
+      - The Kochen–Specker Theorem (1967): history/kochen-specker.md
+      - Contextuality in Interpretations of QM: history/contextuality-in-interpretations.md
+      - Modern Contextuality & Quantum Information: history/contextuality-modern.md
+  - Topics:
+      - Contextuality Basics: topics/contextuality-basics.md
+      - Generalized Contextuality (Spekkens): topics/generalized-contextuality-spekkens.md
+      - Contextuality & Quantum Computation: topics/contextuality-and-quantum-computation.md
+  - People & History:
+      - Michael Kernaghan: people/michael-kernaghan.md
+      - Asher Peres: people/asher-peres.md
+      - Adán Cabello: people/adan-cabello.md
+      - Rob Spekkens: people/rob-spekkens.md
+  - Classic Papers (1966–2014): classic-papers.md
+  - Recent Papers (2022–2026): recent-papers.md
+  - Bibliography: bibliography.md
