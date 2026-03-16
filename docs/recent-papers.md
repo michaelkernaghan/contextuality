@@ -1,4 +1,4 @@
-# Recent Papers (2022–2025)
+# Recent Papers (2022–2026)
 
 A curated selection of recent papers and preprints connecting contextuality to quantum computation, quantum information, and related areas. This page highlights the active research frontier where foundational concepts meet practical applications.
 

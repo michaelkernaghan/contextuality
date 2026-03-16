@@ -84,20 +84,6 @@ The only letter with a complete algebraic proof (no computational evidence neede
 
 ---
 
-## Peer Review
-
-All papers have undergone multiple rounds of GPT-based peer review (GPT-5.2 Pro via OpenAI API), with all issues resolved. Review transcripts are archived in `claude-inbox/peer-reviews/`.
-
-| Paper | Rounds | Final verdict |
-|-------|--------|---------------|
-| Main paper | 1 (Major Revision → addressed) | Ready |
-| Heegner-7 letter | 2 | Ready |
-| Universality letter | 2 | Ready |
-| Sub-31 letter | 5 | Ready |
-| Cyclotomic letter | 6 | Ready |
-
----
-
 ## Computational Reproducibility
 
 All results are reproducible via Python scripts in the `contextuality/` repository. Key dependencies: Python 3.11, PySAT 1.8 (Glucose4), NumPy, SciPy. All scripts use `random.seed(42)` for reproducibility.

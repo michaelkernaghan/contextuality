@@ -6,15 +6,13 @@ Extracted from: A. Peres, *Quantum Theory: Concepts and Methods* (Kluwer, 1993),
 
 ---
 
-## The Kochen-Specker Theorem (pages 197–198)
+## The Kochen-Specker Theorem via Peres' 33 Vectors
 
-A proof of the theorem is as follows. Let $u_1, \ldots, u_N$ be a complete set of proof vectors. The $N$ matrices $P_\mu = u_\mu u_\mu^*$ are projection operators satisfying $u_1, \ldots, u_N$ in mutually orthogonal bases, with $\sum P_\mu = \mathbf{1}$. There are several ways of associating the value 1 with one of these matrices (that is, the value 0 with the $N - 1$ others). Consider a distinct orthogonal basis, which may share some of their unit vectors $u_\mu$ and give 0 with the $N - 1$ others. The assumption that if a vector is a member of more than one basis, the value assigned to that vector is the same, irrespective of the choice of the other vectors, leads to a contradiction, as the proof shows. This assumption — that the value assigned to a projection operator depends only on the projector itself, not on the context in which it is measured — is the assumption of *noncontextuality*.
+The Peres 33-vector construction provides one of the most elegant proofs of the Kochen-Specker theorem in 3 dimensions. The argument uses 33 rays in $\mathbb{R}^3$, arranged into 16 orthogonal triads (complete sets of 3 mutually orthogonal rays). Each ray appears in multiple triads, and this overlap makes any noncontextual $\{0,1\}$-assignment impossible.
 
-The most economical proof known at the time of Peres's writing uses only 33 vectors belonging to 16 distinct bases in $\mathbb{R}^3$. That set enjoys a parity proof, using only 20 vectors. However, the purists, including Kochen and Specker themselves, want a complete proof, not only a lemma, and their count is that a minimal proof would have used 10 vectors. Some authors conjecture that a set of $3 \times 8 = 24$ distinct vectors (some of these vectors appear twice in this "master set," as a way leading to a contradiction). Three of the vectors appear twice in this "master set." The second, much longer step is to replace 15 times the same subroutine.
+The **noncontextuality assumption** is that the value assigned to a projection operator $P_\mu = u_\mu u_\mu^*$ depends only on the projector itself, not on which orthogonal basis it is measured alongside. Peres showed this assumption leads to a contradiction using only 33 carefully chosen rays.
 
-Peres originally gave the theorem with two projection vectors out of a given set (they were originally given by Kochen and Specker themselves in 1967). The first step is to build a set of 33 vectors having the required property. These vectors have values involving only small integers, 0, $\pm 1$ (this symbol stands for $-1$), 2 (means $\sqrt{2}$). Opposite rays, such as $10\bar{2}$ and $\bar{1}0 2$, are counted only once, because they correspond to the same projector.
-
-The values 1 and 0 will be called green and red, respectively (as green = yes, red = no), to refer to that ray's outcome. The 33 proof vectors are shown in Fig. 7.2 below. They will be labelled $x\bar{y}z$; e.g., $\bar{1}$ (this symbol stands for $-1$), $\bar{2}$ (means $\sqrt{2}$).
+The 33 vectors use unnormalized integer coordinates from $\{0, \pm 1, \pm \sqrt{2}\}$. In Peres' compact notation, $\bar{1}$ denotes $-1$ and $\bar{2}$ denotes $-\sqrt{2}$. Opposite rays (e.g., $10\bar{2}$ and $\bar{1}02$) are counted once since they define the same projector. The values 1 and 0 are called **green** and **red** respectively (green = "yes," the system is in this state; red = "no").
 
 ### Exercises (page 197)
 

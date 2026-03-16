@@ -2,7 +2,7 @@
 
 ## The Algebraic Islands Programme
 
-This section documents original research (2026) on the algebraic classification of Kochen-Specker sets in dimension three. The central discovery is that KS-uncolorable ray pools in $\mathbb{R}^3$ and $\mathbb{C}^3$ cluster into exactly **six algebraic islands**, each characterized by a number ring whose generators satisfy norm-$\leq 2$ cancellation identities.
+This section documents original research (2026) on the algebraic classification of Kochen-Specker sets in dimension three. The central discovery is that KS-uncolorable ray pools in $\mathbb{R}^3$ and $\mathbb{C}^3$ cluster into exactly **six algebraic islands** (six distinct graph families), each characterized by number rings whose generators satisfy norm-$\leq 2$ cancellation identities. Multiple rings can produce the same island when they yield isomorphic orthogonality graphs.
 
 ### Central Thesis
 

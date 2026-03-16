@@ -2,7 +2,9 @@
 
 ## Classification
 
-Systematic enumeration of algebraic number rings reveals exactly six "islands" — families of rays in $\mathbb{C}^3$ that produce KS-uncolorable pools. Each island is defined by a number ring whose generators satisfy a norm-$\leq 2$ cancellation identity.
+Systematic enumeration of algebraic number rings reveals exactly six "islands" — families of rays in $\mathbb{C}^3$ that produce KS-uncolorable pools with distinct graph types. Each island is defined by a number ring whose generators satisfy a norm-$\leq 2$ cancellation identity.
+
+Note: "six islands" refers to six distinct *graph families*, not six rings. Some rings produce isomorphic orthogonality graphs — for instance, $\mathbb{Z}[\sqrt{-2}]$, Gaussian integers $\mathbb{Z}[i]$, and Peres' $\mathbb{Z}[\sqrt{2}]$ all produce the same "Peres graph." These are counted as one island (the Peres island) with multiple algebraic realizations.
 
 | # | Island | Ring | Min KS | Cancellation Identity | Pool Size |
 |---|--------|------|--------|-----------------------|-----------|

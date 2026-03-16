@@ -64,15 +64,15 @@ This rigidity is a new result not covered by the Trandafir-Cabello analysis, whi
 
 ## Contextual Advantage
 
-The Heegner-7 set exhibits the highest contextual advantage among all known 3D KS sets, measured via the Cabello-Severini-Winter (CSW) graph invariants:
+The Heegner-7 set exhibits the highest contextual advantage among all known 3D KS sets, measured via the Cabello-Severini-Winter (CSW) graph invariants on the **full 145-ray pool** orthogonality graph (not just the 43-ray minimal set):
 
-| Invariant | Value |
-|-----------|-------|
-| Independence number $\alpha(G)$ | 50 |
-| Lovász theta $\vartheta(G)$ | 55.89 |
-| Contextuality ratio $\theta/\alpha$ | **1.118** |
+| Invariant | Graph | Value |
+|-----------|-------|-------|
+| Independence number $\alpha(G)$ | 145-ray pool | 50 |
+| Lovász theta $\vartheta(G)$ | 145-ray pool | 55.89 |
+| Contextuality ratio $\theta/\alpha$ | 145-ray pool | **1.118** |
 
-The ratio $\theta/\alpha > 1$ certifies quantum contextuality. The Heegner-7 value of 1.118 exceeds all other known 3D constructions, suggesting that the richer algebraic structure of the Heegner-7 ring produces stronger contextual correlations.
+The CSW invariants are computed on the full pool graph because the contextual advantage measures the maximum quantum-over-classical violation achievable using any rays from the algebraic pool. The ratio $\theta/\alpha > 1$ certifies quantum contextuality. The Heegner-7 value of 1.118 exceeds all other known 3D constructions, and the advantage degrades smoothly as rays are removed (ablation study).
 
 ---
 
@@ -102,7 +102,7 @@ The Heegner-7 set occupies a middle position in the six-island hierarchy: larger
 
 ## Why "Heegner-7"?
 
-The number 7 is one of the nine **Heegner numbers** (1, 2, 3, 7, 11, 19, 43, 67, 163) — the values of $d$ for which $\mathbb{Q}(\sqrt{-d})$ has class number one (unique factorization). All nine Heegner number fields were tested; only $d=7$ produces a KS set, because it is the only one whose fundamental unit satisfies a norm-2 cancellation identity.
+The number 7 is one of the nine **Heegner numbers** (1, 2, 3, 7, 11, 19, 43, 67, 163) — the values of $d$ for which $\mathbb{Q}(\sqrt{-d})$ has class number one (unique factorization). All nine Heegner number fields were tested; only $d=7$ produces a KS set. The key algebraic integer $\alpha = (1+\sqrt{-7})/2$ satisfies $\alpha \bar{\alpha} = 2$, providing the norm-2 cancellation needed for orthogonality. For larger Heegner numbers ($d = 11, 19, \ldots, 163$), the corresponding algebraic integers have norm too large to support the necessary cancellations.
 
 ---
 
