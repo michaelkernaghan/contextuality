@@ -148,4 +148,38 @@ A curated collection of key references on Kochen–Specker sets, contextuality, 
 
 ---
 
+## Algebraic Classification of KS Sets
+
+- M. Kernaghan, "The Algebraic Landscape of Kochen-Specker Sets in Dimension Three" (2026)
+    - Comprehensive classification: six algebraic islands, norm-2 boundary, rigidity, BPQS, merge saturation.
+
+- M. Kernaghan, "New KS Sets from Algebraic Number Fields with Enhanced Contextual Advantage" (2026, PRL letter)
+    - Heegner-7 (43 vectors) and Golden ratio (52 vectors) — genuinely new 3D KS constructions.
+
+- M. Kernaghan, "Graph Universality of CK-31 and the Norm-2 Boundary" (2026, PRL letter)
+    - All 31-vertex KS sets share the same orthogonality graph.
+
+- M. Kernaghan, "Computational Evidence for the Optimality of CK-31" (2026, PRL letter)
+    - Six strategies confirming CK-31 as the minimal 3D KS set. OCUS exhaustive proof.
+
+- M. Kernaghan, "Kochen-Specker Uncolorability in Cyclotomic Fields Requires Exactly 6|n" (2026, PRL letter)
+    - Complete algebraic proof: cyclotomic KS-uncolorability iff 6|n.
+
+- A. Cabello, "Simplest Kochen-Specker Set," *Physical Review Letters* (2025), arXiv:2508.07335
+    - 33-vector KS set via Wigner-Heisenberg construction (= Eisenstein-33 island).
+
+- A. Cabello, "Simplest Bipartite Perfect Quantum Strategies," *Physical Review Letters* **134**, 010201 (2024), arXiv:2311.17735
+    - BPQS definition and KS equivalence. Foundation for BPQS analysis of all six islands.
+
+- Z.-P. Liu et al., "Equivalence between Fully Non-signaling, Fully Non-disturbing, Arbitrary Violation of Noncontextuality, and Possibilistic Tsirelson," *Physical Review Research* **6**, L042035 (2024), arXiv:2310.10600
+    - Chain of contextuality equivalences. Six authors.
+
+- S. Trandafir and A. Cabello, rigidity of Kochen-Specker sets (2024)
+    - Infinitesimal rigidity analysis; CK-31 rigid, Peres-33 flexible.
+
+- F. Li, A. Bright, and V. Ganesh, SAT-based KS search, IJCAI 2024, arXiv:2306.13319
+    - Computational lower bound of 24 vectors for 3D KS sets.
+
+---
+
 *This bibliography will be expanded as the atlas grows. Suggestions for additional references are welcome.*

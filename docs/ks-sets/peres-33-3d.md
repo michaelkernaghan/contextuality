@@ -359,9 +359,60 @@ This algebraic impossibility will now be rephrased in the geometric language of 
 
 ---
 
+## Recent Research (2026)
+
+### Rigidity Analysis
+
+The Peres 33-vector set is **infinitesimally flexible** but **finitely rigid**:
+
+| Property | Value |
+|----------|-------|
+| Orthogonal pairs | 72 |
+| Null space dim | 42 |
+| Symmetry dim | 41 |
+| Deformation modes | **1 (flex)** |
+| Finitely rigid? | Yes (2nd-order blocked) |
+
+The single infinitesimal flex is blocked at second order (cokernel component 0.075). The Trandafir-Cabello analysis confirms: Peres-33 is "not rigid" in the infinitesimal sense but admits no finite deformations.
+
+### Three Distinct 33-Vector KS Sets
+
+There are now three known structurally distinct KS sets with exactly 33 vectors in 3D:
+
+| Set | Ring | Pairs | Rigid? | Graph type |
+|-----|------|-------|--------|------------|
+| **Peres-33** | $\mathbb{Z}[\sqrt{2}]$ | 72 | Flex | Peres graph |
+| **Eisenstein-33** | $\mathbb{Z}[\omega]$ | 78 | Rigid | Eisenstein graph |
+| **CK-33** | $\mathbb{Z}$ | 76 | Rigid | CK-33 graph |
+
+The Eisenstein-33 set has 6 more orthogonal pairs (78 vs 72), which kill the flex mode. CK-33 (Conway-Kochen, communicated to Peres ~1990) has 76 pairs and a different graph entirely. The Penrose-33 set shares the Peres graph but is unitarily inequivalent.
+
+### The Flex Belongs to the Graph
+
+The $\mathbb{Z}[\sqrt{-2}]$ 33-vector set — using complex coordinates instead of real — has the **same orthogonality graph** as Peres and exhibits the **same 1-dimensional flex**. This proves the deformation mode is a property of the graph structure (72 pairs), not of the algebraic field used for coordinates.
+
+### BPQS
+
+$$|S_A| \times |S_B| = 7 \times 9 = 63$$
+
+Exact bipartite perfect quantum strategy, verified computationally.
+
+---
+
 ## References
 
 - A. Peres, *Quantum Theory: Concepts and Methods*, Kluwer Academic Publishers (1993), Chapter 7
 - A. Peres, "Two simple proofs of the Kochen-Specker theorem," *J. Phys. A: Math. Gen.* **24**, L175 (1991)
 - S. Kochen and E. P. Specker, "The Problem of Hidden Variables in Quantum Mechanics," *J. Math. Mech.* **17**, 59–87 (1967)
 - M. Kernaghan, "Bell-Kochen-Specker theorem for 20 vectors," *J. Phys. A: Math. Gen.* **27**, L829 (1994)
+- M. Kernaghan, "The Algebraic Landscape of Kochen-Specker Sets in Dimension Three" (2026)
+- S. Trandafir and A. Cabello, rigidity of KS sets (2024)
+
+---
+
+## Cross-Links
+
+- [Conway-Kochen 31-Vector KS Set (3D)](conway-kochen-31-3d.md) — The minimal integer KS set
+- [Eisenstein 33-Vector KS Set (3D)](eisenstein-33-3d.md) — Rigid 33-vector set with different graph
+- [$\mathbb{Z}[\sqrt{-2}]$ 33-Vector KS Set (3D)](zsqrt2-neg-33-3d.md) — Graph-isomorphic complex realization
+- [The Six Algebraic Islands](../research/algebraic-islands.md) — Full classification

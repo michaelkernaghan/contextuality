@@ -16,6 +16,53 @@ The period 2022–2025 has seen a resurgence of interest in contextuality, with 
 
 ---
 
+## 2026
+
+### The Algebraic Landscape of Kochen-Specker Sets in Dimension Three
+
+**Author:** Michael Kernaghan (Pacific Quantum Systems)
+**Date:** 2026
+**Status:** Pending arXiv submission
+
+Comprehensive classification of KS-producing number rings in dimension 3. Discovers six algebraic islands unified by the norm-$\leq 2$ cancellation principle. Introduces two genuinely new KS sets (Heegner-7, Golden ratio) and establishes rigidity, merge saturation, and BPQS results for all six islands.
+
+**Tags:** `KS-sets` `algebraic-classification` `number-rings`
+
+**Related:** [The Six Algebraic Islands](research/algebraic-islands.md)
+
+---
+
+### Simplest Kochen-Specker Set
+
+**Author:** Adán Cabello
+**Date:** 2025
+**Link:** [arXiv:2508.07335](https://arxiv.org/abs/2508.07335)
+**Journal:** Physical Review Letters
+
+Constructs a 33-vector, 14-basis KS set via the Wigner-Heisenberg group in $\mathbb{C}^3$. The construction naturally produces Eisenstein-integer coordinates. Table I provides BPQS numbers. Independently discovers the same set found by the algebraic islands programme via alphabet enumeration.
+
+!!! note "Connection to Algebraic Islands"
+    This is the Eisenstein-33 set of our classification — the $\mathbb{Z}[\omega]$ island. The WH group construction and alphabet enumeration converge on the same mathematical object.
+
+**Tags:** `KS-sets` `Eisenstein` `Wigner-Heisenberg` `BPQS`
+
+**Related:** [Eisenstein 33-Vector KS Set](ks-sets/eisenstein-33-3d.md), [Adán Cabello](people/adan-cabello.md)
+
+---
+
+### Simplest Bipartite Perfect Quantum Strategies
+
+**Author:** Adán Cabello
+**Date:** 2024 (published PRL 2025)
+**Link:** [arXiv:2311.17735](https://arxiv.org/abs/2311.17735)
+**Journal:** *Phys. Rev. Lett.* **134**, 010201 (2024)
+
+Defines bipartite perfect quantum strategies (BPQS) and proves every BPQS defines a Bell-KS set. Theorem 1 establishes the BPQS-KS equivalence. Definition 2 provides the formal B-KS definition used in the algebraic islands paper.
+
+**Tags:** `BPQS` `Bell-nonlocality` `KS-sets`
+
+---
+
 ## 2025
 
 ### Contextuality of Quantum Error-Correcting Codes
@@ -71,6 +118,19 @@ Reports improvements in how magic states are prepared, and highlights that magic
 ---
 
 ## 2024
+
+### Equivalence between Fully Non-signaling, Fully Non-disturbing, Arbitrary Violation of Noncontextuality, and Possibilistic Tsirelson
+
+**Authors:** Z.-P. Liu, K. Zhang, A. Cabello, and 3 others
+**Date:** 2024
+**Link:** [arXiv:2310.10600](https://arxiv.org/abs/2310.10600)
+**Journal:** *Phys. Rev. Research* **6**, L042035 (2024)
+
+Establishes a chain of equivalences between four notions of contextuality: FNS, FN, AVN, and PT. Six authors. Appendices A-H contain full proofs. Key reference for the algebraic islands paper's BPQS and contextuality framework.
+
+**Tags:** `contextuality` `equivalences` `foundations`
+
+---
 
 ### An Algebraic Characterisation of Kochen–Specker Contextuality
 
@@ -184,6 +244,13 @@ Presents an experimental demonstration of high-dimensional single-system context
 
 ## Papers by Theme
 
+### Algebraic Classification & New Constructions
+
+- The Algebraic Landscape of KS Sets in Dimension Three (2026)
+- Simplest Kochen-Specker Set — Cabello (2025)
+- Simplest Bipartite Perfect Quantum Strategies — Cabello (2024/2025)
+- Equivalence between FNS, FN, AVN, PT — Liu et al. (2024)
+
 ### Magic States & MBQC
 
 - Invested and Potential Magic Resources in MBQC (2025)
@@ -227,6 +294,9 @@ The KS sets documented in this atlas provide the foundational structures that th
 | [Cabello 18 (4D)](ks-sets/cabello-18-4d.md) | Minimal contextuality witnesses, experimental tests |
 | [Generalized Contextuality](topics/generalized-contextuality-spekkens.md) | Resource-theoretic hierarchies, GPT extensions |
 | [Contextuality & Computation](topics/contextuality-and-quantum-computation.md) | MBQC magic resources, error correction links |
+| [Eisenstein 33 (3D)](ks-sets/eisenstein-33-3d.md) | Cabello 2025 WH construction, smallest BPQS |
+| [Heegner-7 43 (3D)](ks-sets/heegner7-43-3d.md) | Enhanced contextual advantage, new Bell scenarios |
+| [Six Algebraic Islands](research/algebraic-islands.md) | Algebraic classification, norm-2 boundary |
 
 ---
 
@@ -240,4 +310,4 @@ This page will be updated as new papers appear. Key venues to watch:
 
 ---
 
-*Last updated: 2025*
+*Last updated: March 2026*

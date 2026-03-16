@@ -27,11 +27,28 @@ Contextuality is now understood to be a key **resource for quantum computation**
 
 ## Quick Links
 
+### Research (2026)
+
+- **[The Six Algebraic Islands](research/algebraic-islands.md)** — Classification of all KS-producing number rings in dimension 3
+- **[Research Papers](research/papers.md)** — One main paper and four PRL letters on the algebraic landscape of KS sets
+- **[Research Overview](research/index.md)** — The algebraic islands programme and key results
+
 ### Featured KS Sets
 
+**Classic Constructions:**
+
+- **[Conway-Kochen 31-Vector Set (3D)](ks-sets/conway-kochen-31-3d.md)** — The minimal known KS set in 3 dimensions (strong optimality evidence)
+- **[Peres 33-Vector Set (3D)](ks-sets/peres-33-3d.md)** — The classic 33-vector construction with full proof
 - **[Kernaghan 20-Vector Set (4D)](ks-sets/kernaghan-20-4d.md)** — The first 20-vector KS set in 4 dimensions, a landmark construction from 1994
 - **[Kernaghan–Peres 40-Vector Set (8D)](ks-sets/kernaghan-peres-40-8d.md)** — A highly efficient 40-vector construction in 8 dimensions (three qubits), connected to GHZ-type paradoxes
 - **[Cabello 18-Vector Set (4D)](ks-sets/cabello-18-4d.md)** — The minimal known KS set in 4 dimensions
+
+**New Constructions (2026):**
+
+- **[Eisenstein 33-Vector Set (3D)](ks-sets/eisenstein-33-3d.md)** — Rigid 33-vector set over $\mathbb{Z}[\omega]$, smallest known BPQS (45)
+- **[Heegner-7 43-Vector Set (3D)](ks-sets/heegner7-43-3d.md)** — First KS set from a Heegner number field, highest contextual advantage ($\theta/\alpha = 1.118$)
+- **[Golden Ratio 52-Vector Set (3D)](ks-sets/golden-52-3d.md)** — Discovered via cross-product completion, invisible to raw alphabet search
+- **[$\mathbb{Z}[\sqrt{-2}]$ 33-Vector Set (3D)](ks-sets/zsqrt2-neg-33-3d.md)** — Complex realization of the Peres graph, proving the flex belongs to the graph
 
 ### Key Topics
 
@@ -46,3 +63,4 @@ Contextuality is now understood to be a key **resource for quantum computation**
 ### Reference
 
 - **[Bibliography](bibliography.md)** — Key papers and resources on KS sets and contextuality
+- **[Recent Papers](recent-papers.md)** — Curated selection of recent papers (2022-2026)
