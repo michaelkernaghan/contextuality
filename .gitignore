@@ -16,6 +16,9 @@ __pycache__/
 .vscode/
 .idea/
 
+# Generated review bundles
+site_review_bundle.md
+
 # OS
 .DS_Store
 Thumbs.db
