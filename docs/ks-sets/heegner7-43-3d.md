@@ -76,13 +76,13 @@ The CSW invariants are computed on the full pool graph because the contextual ad
 
 ---
 
-## BPQS (Bipartite Perfect Quantum Strategy)
+## BPQS (Bipartite Perfect Quantum Strategy) — *Heuristic upper bound*
 
 The Heegner-7 set defines a bipartite perfect quantum strategy with:
 
 $$|S_A| \times |S_B| \leq 9 \times 12 = 108$$
 
-This is the best BPQS found (heuristic upper bound). The 23 bases of the Heegner-7 set define a new Bell scenario not previously studied.
+This is the best BPQS found by heuristic search (not proved optimal). The 23 bases of the Heegner-7 set define a new Bell scenario not previously studied.
 
 ---
 

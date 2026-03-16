@@ -64,7 +64,7 @@ The rigidity is a consequence of the graph structure, not the algebraic field: t
 
 ---
 
-## BPQS (Bipartite Perfect Quantum Strategy)
+## BPQS (Bipartite Perfect Quantum Strategy) — *Exact*
 
 The Eisenstein-33 set defines a bipartite perfect quantum strategy with:
 

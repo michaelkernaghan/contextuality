@@ -42,11 +42,11 @@ The central organizing principle is the **generator norm**: for a ring element $
 
 Strong computational evidence that CK-31 is the minimum KS set in dimension 3:
 
-### OCUS Proof (Integer Pool)
+### OCUS Proof (Integer Pool) — *Proved*
 
 The OCUS (Optimal Constrained Unsatisfiable Subset) algorithm exhaustively proved that no $\leq 30$-vector KS subset exists in the 49-ray integer pool $\{0, \pm 1, \pm 2\}$. Completed in 272 iterations (0.1 seconds).
 
-### Six Independent Strategies
+### Six Independent Strategies — *Computational evidence*
 
 | Strategy | Method | Result |
 |----------|--------|--------|
@@ -61,7 +61,7 @@ The OCUS (Optimal Constrained Unsatisfiable Subset) algorithm exhaustively prove
 
 ---
 
-## Graph Universality of CK-31
+## Graph Universality of CK-31 — *Proved (VF2-verified)*
 
 All 31-vertex KS sets found by any method — integer alphabet, rational coordinates, mixed-field constructions, $A_4$ and $S_4$ group orbits — share the **same orthogonality graph** (verified by VF2 isomorphism, both graph and hypergraph).
 
@@ -69,7 +69,7 @@ This universality means the CK-31 graph is the unique minimal graph supporting K
 
 ---
 
-## MUS Landscape
+## MUS Landscape — *Computational result*
 
 From 5000 MUS (Minimal Unsatisfiable Subset) trials on the 49-ray integer pool, exactly **6 distinct minimal 31-sets** exist:
 
@@ -81,7 +81,7 @@ From 5000 MUS (Minimal Unsatisfiable Subset) trials on the 49-ray integer pool, 
 
 ---
 
-## Merge Saturation
+## Merge Saturation — *Computational result; conjecture for general case*
 
 All six minimal KS sets exhibit 100% merge preservation: merging any pair of non-orthogonal vertices preserves KS-uncolorability.
 
@@ -94,11 +94,11 @@ All six minimal KS sets exhibit 100% merge preservation: merging any pair of non
 | Heegner-7 | 43 | 796 | 796 | 100% |
 | Golden-52 | 52 | 1204 | 1204 | 100% |
 
-**Total**: 3,756 merges, all preserving KS-uncolorability. This motivates the **merge-saturation conjecture**: every minimal KS set in $\mathbb{R}^3$/$\mathbb{C}^3$ is merge-saturated.
+**Total**: 3,756 merges, all preserving KS-uncolorability. This motivates the **merge-saturation conjecture** *(open)*: every minimal KS set in $\mathbb{R}^3$/$\mathbb{C}^3$ is merge-saturated.
 
 ---
 
-## Rigidity Classification
+## Rigidity Classification — *Proved (Jacobian null space)*
 
 | Island | Vectors | Pairs | Null dim | Sym dim | Deformation | Status |
 |--------|---------|-------|----------|---------|-------------|--------|
@@ -115,7 +115,7 @@ The Peres and $\mathbb{Z}[\sqrt{-2}]$ flex is **infinitesimal only** — blocked
 
 ## BPQS / Bell Connections
 
-Each KS set defines a bipartite perfect quantum strategy (BPQS), connecting the KS theorem to Bell nonlocality:
+Each KS set defines a bipartite perfect quantum strategy (BPQS), connecting the KS theorem to Bell nonlocality. Status varies per island — see the "Status" column:
 
 | Island | $|S_A| \times |S_B|$ | Product | Status |
 |--------|---------------------|---------|--------|
@@ -130,7 +130,7 @@ The Eisenstein-33 set achieves the smallest known BPQS (45) among all 3D KS sets
 
 ---
 
-## The 6|n Cyclotomic Theorem
+## The 6|n Cyclotomic Theorem — *Proved (algebraic proof)*
 
 **Theorem**: The cyclotomic ray pool $S_n$ (rays with coordinates in $\mathbb{Q}(\zeta_n)$) is KS-uncolorable if and only if $6 | n$.
 

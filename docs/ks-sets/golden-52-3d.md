@@ -75,13 +75,13 @@ This "invisibility" to raw search makes the golden ratio island the most structu
 
 ---
 
-## BPQS (Bipartite Perfect Quantum Strategy)
+## BPQS (Bipartite Perfect Quantum Strategy) — *Heuristic upper bound*
 
 The Golden-52 set defines a bipartite perfect quantum strategy with:
 
 $$|S_A| \times |S_B| \leq 12 \times 13 = 156$$
 
-This is the best BPQS found (heuristic upper bound). The 25 bases define a new Bell scenario.
+This is the best BPQS found by heuristic search (not proved optimal). The 25 bases define a new Bell scenario.
 
 ---
 
