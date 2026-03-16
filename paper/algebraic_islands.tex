@@ -50,7 +50,7 @@ The Kochen--Specker (KS) theorem~\cite{KochenSpecker1967} is one of the foundati
 
 In dimension $d = 3$, the smallest known KS set is the Conway--Kochen 31-vector set ($\CK$), reported by Peres~\cite{Peres1993} with coordinates drawn from the integer alphabet $\{0, \pm 1, \pm 2\}$. Despite decades of effort, no smaller construction has been found. The best known lower bound is 24 vectors, established independently by Li, Bright, and Ganesh~\cite{LiBrightGanesh2024} and by Kirchweger, Peitl, and Szeider~\cite{KirchwegarPeitlSzeider2023} using SAT-based methods with algebraic realizability checking (improving the earlier bound of 22 by Uijlen and Westerbaan~\cite{UijlenWesterbaan2016}), leaving a gap of 7 vectors that remains one of the central open problems in KS theory. Trandafir and Cabello~\cite{TrandafirCabello2025} recently proved that $\CK$ is rigid (unique up to unitary transformation in $\C^3$) and conjectured that 31 is optimal.
 
-Previous computational approaches have primarily searched within fixed coordinate alphabets~\cite{Peres1991, Pavicic2004} or generated random abstract hypergraphs and tested realizability~\cite{LiBrightGanesh2024}. The algebraic structure of the coordinate systems underlying KS sets---specifically, which number fields can support them---has received less systematic attention, though Cortez, Morales, and Reyes~\cite{CortezMoralesReyes2022} proved that $\Z[1/6]$ is the minimal ring extension of $\Z$ exhibiting KS contextuality in dimension 3.
+Previous computational approaches have primarily searched within fixed coordinate alphabets~\cite{Peres1991, Pavicic2004} or generated random abstract hypergraphs and tested realizability~\cite{LiBrightGanesh2024}. The algebraic structure of the coordinate systems underlying KS sets---specifically, which number fields can support them---has received less systematic attention, though Cortez, Morales, and Reyes~\cite{CortezMoralesReyes2022} showed (in a preprint whose arguments we have verified) that $\Z[1/6]$ is the minimal ring extension of $\Z$ exhibiting KS contextuality in dimension 3.
 
 In this paper, we ask a structural question: \emph{what algebraic property of a coordinate alphabet controls whether it can support KS sets in dimension 3?} Through a systematic computational survey of quadratic fields $\Q(\sqrt{d})$ for $d = 2, \ldots, 30$, all nine imaginary quadratic fields with class number~1, cyclotomic fields, and golden ratio extensions, we find a consistent empirical pattern: in every tested case, KS-uncolorability requires the alphabet to support a \emph{cancellation identity}---an algebraic relation among its elements that makes dot products vanish exactly---of one of two types: \emph{modulus-2 cancellation} (the generator $x$ satisfies $|x|^2 = 2$) or \emph{phase cancellation} (a vanishing sum of unit-modulus terms). Among all tested alphabets, these are the only two mechanisms observed to produce the dense triad networks required for KS-uncolorability, explaining why constructions cluster into six discrete ``algebraic islands'' among the tested fields. Whether this pattern extends to all number fields remains an open question.
 
@@ -243,7 +243,7 @@ We systematically tested the alphabet $\{0, \pm 1, \pm\sqrt{d}\}$ for every non-
 Among the quadratic fields $\Q(\sqrt{d})$ for $d \in \{2, 3, 5, 6, 7, \ldots, 30\}$ (excluding perfect squares), only $d = 2$ produces a KS-uncolorable set from the standard two-element alphabet $\{0, \pm 1, \pm\sqrt{d}\}$. All others have $\leq 10$ triads and are colorable.
 \end{proposition}
 
-A heuristic explanation: the identity $(\sqrt{d})^2 = d$ produces a three-term dot-product cancellation only when $d$ equals a sum of alphabet elements. For $d = 2$, we have $(\sqrt{2})^2 = 1 + 1$, giving the Peres cancellation. For $d \geq 3$, no comparable two-term sum from $\{1, \sqrt{d}\}$ equals $d$, so the cancellation structure is too sparse to generate sufficient triads. (A proof that no other cancellation pattern can arise for these alphabets would require a more detailed case analysis, which we leave to future work.)
+A heuristic explanation: every quadratic alphabet has a cancellation identity---$(\sqrt{d})^2 = d$---but the identity produces dense triad networks only when $d$ equals a sum of alphabet elements, i.e., when the cancellation has \emph{low norm}.  For $d = 2$, we have $(\sqrt{2})^2 = 1 + 1$, giving the Peres cancellation with norm~2.  For $d \geq 3$, no two-term sum from $\{1, \sqrt{d}\}$ equals $d$, so the cancellation has norm~$\geq 3$ and the orthogonality structure is too sparse for KS-uncolorability.  The explanatory variable is therefore the \emph{norm of the cancellation}, not the mere existence of one.  (A proof that no other cancellation pattern can arise for these alphabets would require a more detailed case analysis, which we leave to future work.)
 
 \section{Complex Coordinate Alphabets}\label{sec:complex}
 
@@ -278,7 +278,7 @@ The ray set generated by $n$th roots of unity in $\C^3$ is KS-uncolorable if and
 \end{theorem}
 
 \begin{proof}
-\emph{Sufficiency.} If $6 \mid n$, then $\langle\zeta^{n/6}\rangle$ generates the 6th roots of unity as a subgroup; the Eisenstein 33-vector KS set~\cite{Cabello2025simplest} lives in the $n=6$ pool, which embeds into the $n$-pool.
+\emph{Sufficiency.} If $6 \mid n$, then $\langle\zeta^{n/6}\rangle$ generates the 6th roots of unity as a subgroup; the Eisenstein 33-vector KS set~\cite{Cabello2025simplest} lives in the $n=6$ pool, which embeds into the $n$-pool.  (This is a proof of existence by embedding a known construction; an intrinsic characterization of \emph{why} $6 \mid n$ suffices---rather than inheriting from the Eisenstein set---remains open.)
 
 \emph{Necessity.} We show that if $6 \nmid n$, then the pool is KS-colorable.
 
@@ -424,7 +424,7 @@ Cross-product completion adds 150+ rays beyond the original alphabets, but the m
 Trandafir and Cabello~\cite{TrandafirCabello2025} construct their KS sets by starting from the 13-element minimal state-independent contextuality (SI-C) set of Yu and Oh, completing to orthonormal bases (25 rays), and adding all vectors orthogonal to $\geq 2$ existing vectors (97 rays total).  We computed the overlap between this 97-ray SI-C closure and our 49-ray integer pool $\{0,\pm1,\pm2\}$: they share 37 rays, with 60 rays in the SI-C closure only (coordinates up to $\pm 5$, norms up to~35) and 12 rays in the integer pool only (those with two $\pm 2$ coordinates, norm~9).  A second round of orthogonal closure grows the SI-C set to 1{,}741~rays that \emph{contain} the entire integer pool as a subset.  The two constructions---their top-down closure from SI-C and our bottom-up alphabet enumeration---thus converge: CK-31 lives in the intersection of both frameworks.
 \end{remark}
 
-\subsection{The six known islands}\label{sec:sixislands}
+\subsection{The six known islands among tested fields}\label{sec:sixislands}
 
 \begin{observation}\label{obs:islands}
 Among all alphabets and fields tested in our survey---quadratic fields $\Q(\sqrt{d})$ for $d = 2, \ldots, 30$, cyclotomic fields for $n \leq 30$, and selected extensions---six algebraic islands support KS sets:
@@ -520,9 +520,9 @@ This reduces the six known algebraic islands to five distinct orthogonality grap
 
 The $6 \mid n$ theorem (Theorem~\ref{thm:6n}) and the Cortez--Morales--Reyes result that $\Z[1/6]$ is the minimal KS ring~\cite{CortezMoralesReyes2022} both identify the primes 2 and 3 as the arithmetic backbone of three-dimensional contextuality. In the cyclotomic setting, divisibility by 2 provides real-axis orthogonalities and divisibility by 3 provides three-term phase cancellations; both are necessary and jointly sufficient for KS-uncolorability. In the ring-theoretic setting, inverting 2 and 3 is necessary and sufficient for the existence of a KS contextual set of vectors with entries in $\Z[1/N]$. The precise relationship between these two formulations deserves further investigation.
 
-\subsection{Why six islands?}
+\subsection{Why six islands among tested fields?}
 
-Among all tested coordinate alphabets, we observe six algebraic islands, arising from two fundamentally different cancellation mechanisms:
+Among all tested coordinate alphabets, we observe six algebraic islands.  We emphasize that this is a survey finding, not a completeness theorem: untested families (higher-degree extensions, class-number~$> 1$ fields, multi-element alphabets) could in principle harbor additional islands.  The six arise from two fundamentally different cancellation mechanisms:
 
 \begin{enumerate}
     \item[\textbf{(A)}] \textbf{Norm-2 cancellation}: an algebraic identity producing the value~2 from products of ring elements, enabling three-term dot-product cancellations of the form $a_1 b_1 + a_2 b_2 + a_3 b_3 = 0$ with bounded coordinates. Five islands use this mechanism:
@@ -534,7 +534,7 @@ Among all tested coordinate alphabets, we observe six algebraic islands, arising
     \item[\textbf{(B)}] \textbf{Phase cancellation}: a root-of-unity identity $1 + \omega + \omega^2 = 0$ (where $\omega = e^{2\pi i/3}$), in which three complex unit-norm elements sum to zero. This mechanism produces a qualitatively different three-term cancellation: the vanishing sum involves three equal-magnitude terms rather than two small terms balancing one larger term. The \textbf{Eisenstein island} ($\Z[\omega]$, min 33) is the sole representative.
 \end{enumerate}
 
-The \textbf{golden ratio island} ($\varphi^2 = \varphi + 1$, min 52) requires special comment. The generator $\varphi$ has $|\varphi|^2 \approx 2.618 > 2$, so it does not participate directly in a modulus-2 cancellation identity.  However, cross-product completion generates the reciprocal $1/\varphi$ (with $|1/\varphi|^2 < 1$), and the completed coordinate set contains the ratio $\varphi : 1/\varphi = \varphi^2 = \varphi + 1$, reintroducing modulus-2-type cancellations indirectly. The golden island demonstrates that the relevant criterion is the cancellation structure of the \emph{completed} coordinate set, not the raw alphabet: it is possible for cross-product completion to introduce cancellation mechanisms absent in the original alphabet.  This is also why the two-element alphabet classification (Observation~\ref{obs:two-element}) applies only to raw alphabets before completion.
+The \textbf{golden ratio island} ($\varphi^2 = \varphi + 1$, min 52) is a genuine boundary case for the dichotomy. The generator $\varphi$ has $|\varphi|^2 \approx 2.618 > 2$ and is not a root of unity, so the raw alphabet satisfies \emph{neither} mechanism---and indeed the raw set is colorable.  Cross-product completion generates the reciprocal $1/\varphi$ (with $|1/\varphi|^2 < 1$), and the completed coordinate set contains cancellations involving both $\varphi$ and $1/\varphi$ that make the completed pool KS-uncolorable.  Whether this should be classified as ``indirect modulus-2'' (since the completed pool contains effective norm-2 cancellations) or as a third mechanism---\emph{completion-induced cancellation}, where the raw alphabet lacks any low-norm identity but cross-product closure generates one---is partly a matter of convention.  We adopt the former interpretation for simplicity but emphasize that the golden ratio is the one case in our survey where the dichotomy is maintained only by appealing to the completed algebra rather than the generating alphabet.  This is also why the two-element alphabet classification (Observation~\ref{obs:two-element}) applies only to raw alphabets before completion: the golden ratio island tests the limits of the two-mechanism framework.
 
 Each mechanism generates a distinct orthogonality structure in its completed ray set, and the efficiency of the mechanism (measured by the minimum KS set size) correlates inversely with its algebraic complexity. The integer identity involves two distinct magnitudes and produces the densest triad network (26 triads from 49 rays, ratio 0.53). The golden ratio identity involves three distinct magnitudes and produces the sparsest (10 triads from 49 rays, ratio 0.20), requiring completion to 205 rays before becoming KS-uncolorable.
 
@@ -747,7 +747,7 @@ The Hoffman bound provides a spectral explanation for which pools admit a CSW vi
 \[
 \alpha(G) \leq \frac{n \cdot (-\lambda_{\min})}{\lambda_{\max} - \lambda_{\min}}.
 \]
-This bound is valid for all graphs (not only regular graphs); for regular graphs $\lambda_{\max}$ equals the common degree, but the inequality holds in general with $\lambda_{\max}$ as the spectral radius. However, for disconnected graphs the bound can be loose, since the spectral radius of each component contributes independently. When $\alpha(G)$ is well below this bound, the graph is ``spectrally tight'': the eigenvalue structure constrains independent sets more than the combinatorial structure alone requires, leaving room for the SDP relaxation $\vartheta(G)$ to exceed $\alpha(G)$.
+This bound is valid for all graphs (not only regular graphs); for regular graphs $\lambda_{\max}$ equals the common degree, but the inequality holds in general with $\lambda_{\max}$ as the spectral radius. However, for disconnected graphs the bound does not apply in its standard form---$\alpha(G)$ can exceed $H(G)$, as Table~\ref{tab:spectral} confirms for the Peres and $\Z[\sqrt{-2}]$ pools ($\alpha/H = 1.176$)---since the spectral radius of each component contributes independently and the global eigenvalue extrema may not reflect the per-component structure. When $\alpha(G)$ is well below this bound, the graph is ``spectrally tight'': the eigenvalue structure constrains independent sets more than the combinatorial structure alone requires, leaving room for the SDP relaxation $\vartheta(G)$ to exceed $\alpha(G)$.
 
 \begin{table}[ht]
 \centering
@@ -766,7 +766,7 @@ $\Z[\sqrt{-2}]$ & 49 & 5.53 & $-3.68$ & 19.6 & 23 & 1.176 & 1.000 \\
 \end{tabular}
 \end{table}
 
-The pattern in Table~\ref{tab:spectral} is clear: the three pools with $\alpha/H < 1$ (spectrally tight) have CSW violations, with the largest violation ($\vartheta/\alpha = 1.118$) occurring for the Heegner-7 pool ($\alpha/H = 0.977$). The two $\vartheta$-perfect pools have $\alpha/H > 1$, meaning $\alpha$ exceeds the Hoffman bound; this occurs because these graphs are disconnected (the 16 auxiliary rays of degree 3 form loosely connected components), invalidating the bound for non-connected graphs.
+The pattern in Table~\ref{tab:spectral} is clear: the three pools with $\alpha/H < 1$ (spectrally tight) have CSW violations, with the largest violation ($\vartheta/\alpha = 1.118$) occurring for the Heegner-7 pool ($\alpha/H = 0.977$). The two $\vartheta$-perfect pools have $\alpha/H > 1$, meaning $\alpha$ exceeds the Hoffman bound; this is expected rather than anomalous, because these graphs are disconnected (the 16 auxiliary rays of degree 3 form loosely connected components) and the Hoffman bound does not apply to disconnected graphs in its standard form.
 
 \subsection{Contextual tightness: critical bases analysis}\label{sec:critical-bases}
 
@@ -867,7 +867,7 @@ The Peres/\mbox{$\Z[\sqrt{-2}]$} flex is \emph{infinitesimal} only: second-order
 \end{observation}
 
 \begin{remark}[Algebraic alphabets as a new construction family]\label{rem:new-construction}
-Trandafir and Cabello~\cite{TrandafirCabello2025} show in their Appendix~B that none of the known methods to construct KS sets produce rigid KS sets in~$\C^3$.  They identify two construction families: dimension-lifting ($\C^d \to \C^D$ with $d < D$), which cannot reach~$\C^3$ since KS sets are impossible in~$\C^2$; and concatenation of basic structures (e.g., 10-node subgraphs), which they show always yields non-rigid sets.  The algebraic alphabet method introduced here falls outside both families: rather than lifting or concatenating geometric building blocks, it generates ray pools from cancellation identities in algebraic number fields and extracts minimal KS subsets via SAT solvers.  This approach circumvents the obstruction identified by Trandafir and Cabello: because the rays are pinned to algebraic values by number-theoretic constraints rather than assembled from flexible geometric pieces, the resulting sets can be rigid.  Indeed, four of the six islands are rigid in~$\C^3$ (Observation~\ref{obs:rigidity}), showing that the algebraic alphabet method extends the known construction landscape beyond the two families analyzed in~\cite{TrandafirCabello2025}.
+Trandafir and Cabello~\cite{TrandafirCabello2025} show in their Appendix~B that none of the known methods to construct KS sets produce rigid KS sets in~$\C^3$.  They identify two construction families: dimension-lifting ($\C^d \to \C^D$ with $d < D$), which cannot reach~$\C^3$ since KS sets are impossible in~$\C^2$; and concatenation of basic structures (e.g., 10-node subgraphs), which they show always yields non-rigid sets.  The algebraic alphabet method introduced here falls outside both families: rather than lifting or concatenating geometric building blocks, it generates ray pools from cancellation identities in algebraic number fields and extracts minimal KS subsets via SAT solvers.  This approach circumvents the obstruction identified by Trandafir and Cabello \emph{for their two specific construction families}: because the rays are pinned to algebraic values by number-theoretic constraints rather than assembled from flexible geometric pieces, the resulting sets can be rigid.  (We note that the correlation between algebraic pinning and rigidity is observed in four of six cases but is not proved in general.)  Indeed, four of the six islands are rigid in~$\C^3$ (Observation~\ref{obs:rigidity}), showing that the algebraic alphabet method extends the known construction landscape beyond the two families analyzed in~\cite{TrandafirCabello2025}.
 \end{remark}
 
 \begin{observation}[Three distinct 33-vector KS sets]\label{obs:three-33}
@@ -903,13 +903,13 @@ Among 5{,}000 independent MUS (Minimal Unsatisfiable Subset) extractions from th
 The Conway--Kochen set $\CK$ achieves the true minimum for KS sets in $\R^3$: no KS set with 30 or fewer rays exists.
 \end{conjecture}
 
-This conjecture is supported by: the rigidity of $\CK$ in~$\C^3$ (Observation~\ref{obs:rigidity}; confirmed independently by Trandafir and Cabello~\cite{TrandafirCabello2025}); the OCUS proof that no $\leq 30$-ray KS subset exists within the full 49-ray integer pool (Remark after Proposition~\ref{prop:31optimal}); the absence of any sub-31 KS set across all six algebraic islands (Observation~\ref{obs:islands}); universal merge saturation (Observation~\ref{obs:merge}); the MUS landscape analysis showing only six distinct minimal 31-sets, all sharing a 13-ray invariant core and exhibiting sharp norm stratification (Observation~\ref{obs:mus-landscape}); the complete failure of 30{,}000+ random hypergraphs to achieve geometric realizability; and the graph universality result below.
+This conjecture is supported by: the rigidity of $\CK$ in~$\C^3$ (Observation~\ref{obs:rigidity}; confirmed independently by Trandafir and Cabello~\cite{TrandafirCabello2025}); the OCUS proof that no $\leq 30$-ray KS subset exists within the full 49-ray integer pool (Remark after Proposition~\ref{prop:31optimal}); the absence of any sub-31 KS set across all six algebraic islands (Observation~\ref{obs:islands}); universal merge saturation (Observation~\ref{obs:merge}); the MUS landscape analysis showing only six distinct minimal 31-sets, all sharing a 13-ray invariant core and exhibiting sharp norm stratification (Observation~\ref{obs:mus-landscape}); and the complete failure of 30{,}000+ random hypergraphs to achieve geometric realizability.  The graph universality result (Observation~\ref{obs:universality}) is a consistency check entailed by rigidity rather than independent evidence, but confirms that no alternative 31-vertex orthogonality graph emerges from any tested construction family.
 
 \begin{observation}[Graph universality of $\CK$]\label{obs:universality}
 We tested every algebraic construction in our survey that achieves the minimum of 31 rays---the integer alphabet $\{0,\pm 1,\pm 2\}$, the rational alphabet $\{0,\pm 1,\pm 2,\pm\tfrac{1}{2}\}$, the extended Peres alphabet $\{0,\pm 1,\pm\sqrt{2},\pm(1+\sqrt{2}),\pm 2\}$, the mixed modulus-2 alphabet $\{0,\pm 1,\pm 2,\pm\sqrt{2},\pm\omega,\pm\bar\omega\}$ combining three algebraic cancellation identities, and finite group orbits under the tetrahedral group $A_4$ and octahedral group $S_4$ acting on seed vectors in $\R^3$---and in every case the resulting minimal 31-ray KS set is graph-isomorphic (verified by VF2 with explicit vertex bijections) and hypergraph-isomorphic (bijections preserve triads): 71 orthogonality edges, 17 bases, degree sequence $(3^4, 4^{14}, 5^8, 6^3, 8^2)$. Despite arising from algebraically independent constructions, all roads to 31 lead to the same orthogonality graph.
 \end{observation}
 
-This universality strengthens Conjecture~\ref{conj:optimal}: $\CK$ is not merely the smallest KS set found in the integer alphabet, but a unique graph-theoretic attractor across all known algebraic and group-theoretic constructions in $\R^3$. No alternative 31-vertex orthogonality graph has been found despite systematic search across cubic fields $\Q(\sqrt[3]{d})$, Gaussian integers, roots of unity, mixed-field alphabets, and finite rotation group orbits.  The 31-vertex graph appears to be the unique minimal realizable KS hypergraph in dimension~3.
+Since Trandafir and Cabello~\cite{TrandafirCabello2025} proved that $\CK$ is rigid in~$\C^3$ (unique up to unitary equivalence), the universality across algebraic constructions is \emph{expected}: any realization of a 31-vertex KS set must be unitarily equivalent to $\CK$, so all constructions that achieve 31 rays necessarily produce the same orthogonality graph.  The value of Observation~\ref{obs:universality} is therefore not as independent evidence for Conjecture~\ref{conj:optimal}, but as a \emph{consistency check}: it confirms that our diverse algebraic constructions all land on the unique rigid realization, and that no alternative 31-vertex orthogonality graph emerges from any tested family.  The 31-vertex graph appears to be the unique minimal realizable KS hypergraph in dimension~3.
 
 \subsection{Spectral signatures of KS-uncolorability}\label{sec:spectral-signatures}
 
@@ -994,7 +994,7 @@ A trigonometric consistency check across 164 angles finds only known islands, wi
 
 Whether the two-mechanism constraint extends to all number fields, or whether higher-degree extensions harbor additional cancellation mechanisms and hence additional islands, remains the principal open question. The identification of Cabello's ``simplest KS set'' with the Eisenstein island suggests that the algebraic perspective may complement the ongoing search for optimal constructions. More concretely, the constraints established here---the two-element cancellation classification, density monotonicity, and the discrete 13$\to$49 ray jump---are directly applicable to the realizability-based lower-bound program of Li, Bright, and Ganesh~\cite{LiBrightGanesh2024}: algebraic pruning of candidate hypergraphs could substantially narrow the search space that their SMT solver must explore, bringing the constructive upper bound (31) and the realizability lower bound (24) closer together.
 
-There is a pleasing circularity in this enterprise: the KS theorem establishes the contextuality that underlies quantum computational advantage~\cite{BravyiGossetKoenig2018}, yet resolving the minimum KS set problem may itself require quantum resources.  The SAT and SMT instances arising from KS realizability checking are natural candidates for quantum speedup, suggesting that the very quantum effects whose foundations we probe may ultimately provide the computational power needed to complete the~proof.
+We close with a speculative observation: the KS theorem establishes the contextuality that underlies quantum computational advantage~\cite{BravyiGossetKoenig2018}, and it is conceivable that resolving the minimum KS set problem could benefit from quantum resources---not for the small SAT instances themselves (which are classically trivial), but for the exponentially large realizability searches ($\binom{49}{30} \approx 10^{12}$ subsets in the integer pool alone) that a complete proof would require.
 
 \subsection*{Reproducibility}
 
@@ -1096,7 +1096,7 @@ R.~Kunjwal and R.~W.~Spekkens,
 \bibitem{CortezMoralesReyes2022}
 V.~Cortez, R.~Morales, and E.~J.~Reyes,
 ``Minimal ring extensions of the integers exhibiting Kochen--Specker contextuality,''
-arXiv:2211.13216 (2022).
+arXiv:2211.13216 [quant-ph] (2022, preprint).
 
 \bibitem{LiBrightGanesh2024}
 J.~Li, C.~Bright, and V.~Ganesh,
@@ -1119,7 +1119,7 @@ arXiv:2310.10600.
 \bibitem{Cabello2025simplest}
 A.~Cabello,
 ``Simplest Kochen--Specker set,''
-\textit{Phys.\ Rev.\ Lett.} (2025).
+\textit{Phys.\ Rev.\ Lett.} (in press, 2025).
 arXiv:2508.07335.
 
 \bibitem{TrandafirCabello2025}

@@ -5,6 +5,17 @@ __pycache__/
 *.aux
 *.log
 *.out
+*.bbl
 *Notes.bib
-paper/nul
-paper/sub31_compile.log
+
+# PDFs (papers are committed explicitly)
+*.pdf
+!paper/*.pdf
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

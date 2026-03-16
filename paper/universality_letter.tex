@@ -19,15 +19,15 @@
 
 \begin{document}
 
-\title{Graph universality of the Conway--Kochen set\\and the norm-2 boundary for Kochen--Specker uncolorability}
+\title{Graph isomorphism of 31-vertex Kochen--Specker sets\\across coordinate alphabets in dimension three}
 
 \author{Michael Kernaghan}
-\affiliation{Independent researcher, Vancouver, Canada}
+\affiliation{Pacific Quantum Systems, Vancouver, Canada}
 
-\date{\today}
+\date{March 2026}
 
 \begin{abstract}
-We present a systematic computational survey showing that Kochen--Specker (KS) uncolorability in dimension~3 is governed by the availability of \emph{norm-2 cancellations}: exact algebraic identities among coordinate ring elements that enable orthogonal triples. Across all quadratic fields, cyclotomic fields, cubic extensions, and finite rotation groups tested, KS sets exist only when the coordinate ring contains elements whose products participate in such cancellations. Six discrete algebraic islands are identified. Every construction achieving 31~rays---from integer, rational, mixed-field, and group-theoretic origins---produces the same orthogonality graph and the same basis hypergraph, verified by the VF2 isomorphism algorithm: the Conway--Kochen set $\CK$ is a unique graph-theoretic attractor. We conjecture that $\CK$ is the unique minimal realizable KS set in dimension~3.
+We present a computational survey of coordinate alphabets for Kochen--Specker (KS) constructions in dimension~3, testing quadratic fields, cyclotomic fields, and cubic extensions. KS-uncolorable sets were found only when the coordinate alphabet (after closure) contains elements enabling \emph{modulus-2 cancellations} ($|x|^2 = 2$) or \emph{phase cancellations} ($1 + \omega + \omega^2 = 0$). Six discrete algebraic islands are identified. In three alphabet-based search instances that yielded 31-ray KS subsets---integer, rational, and mixed-alphabet origins---the minimized 31-ray subsets are mutually graph-isomorphic, verified by the VF2 algorithm. We note that the rational and mixed alphabets contain the integer alphabet, so this observation may reflect rediscovery of an embedded Conway--Kochen ($\CK$) configuration rather than independent convergence. We conjecture that $\CK$ is the unique minimal KS set in dimension~3.
 \end{abstract}
 
 \maketitle
@@ -36,19 +36,19 @@ We present a systematic computational survey showing that Kochen--Specker (KS) u
 
 The smallest known Kochen--Specker (KS) set in dimension~3 is the 31-vector Conway--Kochen set~\cite{ConwayKochen,Peres1993}, constructed from integer coordinates.  (We use the ``original'' KS definition~\cite{LiBrightGanesh2024}: every ray belongs to at least one orthogonal triple, no triple admits a $\{0,1\}$-coloring consistent with unit sum.)  The Peres construction~\cite{Peres1991} uses $\Z[\sqrt{2}]$ coordinates (33~vectors), and Cabello's recent simplest KS set~\cite{Cabello2025simplest} uses the Eisenstein integers $\Z[\omega]$ (33~vectors).  Gould and Aravind~\cite{GouldAravind2010} showed that the Peres and Penrose 33-vector sets---despite different coordinate fields---share the same orthogonality graph, and parametrized a continuous family with the constraint $|c|^2 = 2$.  The best proven lower bound is 24~vectors~\cite{LiBrightGanesh2024,KirchwegarPeitlSzeider2023}. A natural question arises: what algebraic property determines whether a number field supports KS sets, and is the 31-vector minimum specific to the integer field or a universal barrier?
 
-We present a systematic computational survey across number fields, showing that the availability of norm-2 cancellation identities among ring elements governs KS-uncolorability, and that the 31-vector minimum is achieved by algebraically independent constructions that all produce the same graph and hypergraph.
+We present a computational survey across coordinate alphabets drawn from algebraic number rings, showing that modulus-2 cancellation identities correlate with KS-uncolorability, and that three alphabet-based search instances yielding 31-ray KS subsets all produce the same graph.
 
-\section{The norm-2 cancellation boundary}
+\section{The modulus-2 cancellation boundary}
 
-For each number field $K$ with ring of integers $\mathcal{O}_K$, we form a \emph{coordinate alphabet} $\mathcal{A} = \{0, \pm 1, \pm\alpha, \pm\bar\alpha, \ldots\}$---a finite set of values from which ray coordinates are drawn (called ``vector components'' by Pavicic et al.~\cite{Pavicic2019}).  The alphabet can often be read directly from the geometric representation of known KS sets: in the cube diagrams used to display the Conway--Kochen and Peres constructions~\cite{Peres1991,Peres1993}, the distinct coordinate values at the vertices are precisely $\mathcal{A}$.  Two rays are orthogonal when $\sum_i \bar{u}_i v_i = 0$; for coordinates from a finite alphabet, this requires an algebraic relation---a \emph{cancellation identity}---that makes the sum vanish exactly.  For the integer alphabet the key identity is $1+1=2$; for $\Z[\sqrt{2}]$ it is $(\sqrt{2})^2=2$; for the Eisenstein integers, $1+\omega+\omega^2=0$.  Each identity enables exact orthogonal triples (bases), and when enough bases interlock, no consistent $\{0,1\}$-coloring exists.  (The trivial cancellation $1+(-1)=0$ in the minimal alphabet $\{0,\pm 1\}$ generates only 13 projective rays---far too few for a KS set; $1+1=2$ is the simplest identity that creates a large enough pool.)  Our approach is to systematically construct alphabets from algebraic number fields, identify their cancellation identities, and test whether the resulting ray sets are KS-uncolorable.
+For each algebraic number ring, we form a \emph{coordinate alphabet} $\mathcal{A} = \{0, \pm 1, \pm\alpha, \pm\bar\alpha, \ldots\}$---a finite set of values from which ray coordinates are drawn (called ``vector components'' by Pavicic et al.~\cite{Pavicic2019}).  The relevant object is the alphabet, not the ambient field: the same field can host different alphabets with different KS outcomes (e.g.\ $\Z[\sqrt{-3}]$ and $\Z[\omega]$ both lie in $\Q(\sqrt{-3})$, but only the Eisenstein alphabet $\Z[\omega]$ supports KS sets in our search).  Two rays are orthogonal when $\sum_i \bar{u}_i v_i = 0$; for coordinates from a finite alphabet, this requires a \emph{cancellation identity}---an algebraic zero-sum that makes the dot product vanish exactly.  For the integer alphabet the key identity is $2 - 1 - 1 = 0$; for $\Z[\sqrt{2}]$ it is $\alpha\bar\alpha - 1 - 1 = 0$ where $|\alpha|^2 = 2$; for the Eisenstein integers, $1+\omega+\omega^2=0$.  Each identity enables exact orthogonal triples (bases), and when enough bases interlock, no consistent $\{0,1\}$-coloring exists.  (The trivial cancellation $1+(-1)=0$ in the minimal alphabet $\{0,\pm 1\}$ generates only 13 projective rays---far too few for a KS set.)  Our approach is to systematically construct alphabets from algebraic number rings, identify their cancellation identities, and test whether the resulting ray sets are KS-uncolorable.
 
 We generate all rays in $\C P^2$ with coordinates in $\mathcal{A}$, close under Hermitian orthogonal completion (see~\cite{Kernaghan2026heegner} for details), and test KS-uncolorability via SAT (Glucose4 solver~\cite{AudemardSimon2018}, PySAT). Minimization uses randomized greedy deletion (500 trials, seed 42) and does not guarantee minimality; reported sizes are upper bounds.
 
-Table~\ref{tab:boundary} summarizes results across 40+ fields. The pattern: KS sets were found only when the coordinate ring contains elements enabling \emph{norm-2 cancellations}.
+Table~\ref{tab:boundary} summarizes results across 40+ alphabets drawn from different rings. The empirical pattern: KS-uncolorable sets were found only when the coordinate alphabet (after closure) contains elements enabling \emph{modulus-2 cancellations} ($|x|^2 = 2$) or \emph{phase cancellations} ($1 + \omega + \omega^2 = 0$).
 
 \begin{table}[t]
 \centering
-\caption{Representative results. The column $|\alpha|^2$ shows the squared modulus of the ring generator used. KS sets arise when the effective coordinate set (after completion) contains norm-2-type cancellations. ``Min'' is the smallest KS subset found (upper bound on true minimum).}
+\caption{Representative results across coordinate alphabets. The column $|\alpha|^2$ shows the Hermitian squared modulus of the ring generator. KS sets were found only when the effective coordinate set (after completion) contains modulus-2-type cancellations. ``Min'' is the smallest KS subset found (upper bound on true minimum).}
 \label{tab:boundary}
 \begin{tabular}{lccc}
 \toprule
@@ -70,16 +70,16 @@ $\Q(\sqrt[3]{2})$ extended & 2.520 & Yes & 60 \\
 \bottomrule
 \end{tabular}
 \begin{flushleft}
-\footnotesize $^\dagger$Cross-product completion generates norm-$\leq 2$ coordinates ($1/\varphi$ satisfies $|1/\varphi|^2 < 1$).\\
+\footnotesize $^\dagger$Cross-product completion generates coordinates with $|x|^2 \leq 2$ (e.g.\ $1/\varphi$ satisfies $|1/\varphi|^2 < 1$).\\
 $^\ddagger$Basic alphabet colorable; extended alphabet $\{0,\pm 1,\pm\sqrt[3]{2},\pm\sqrt[3]{4}\}$ is uncolorable via completion.
 \end{flushleft}
 \end{table}
 
-The mechanism is cancellation identities: algebraic relations among alphabet elements that make dot products vanish exactly.  Across all tested fields, KS-uncolorability requires one of exactly two types of cancellation: (A)~\emph{norm-2 cancellation}---an identity producing the value~2 from products of ring elements, as in $1 + 1 = 2$ (integers), $(\sqrt{2})^2 = 2$ (Peres), and $\alpha\bar\alpha = 2$ (Heegner-7); or (B)~\emph{phase cancellation}---a root-of-unity sum vanishing exactly, as in $1 + \omega + \omega^2 = 0$ (Eisenstein).  These are qualitatively different: norm-2 cancellations balance two small terms against one larger term, while phase cancellations sum three equal-magnitude complex terms to zero.  For rings where neither mechanism is available within our bounded alphabets, we found orthogonal pairs but insufficient orthogonal triples to support KS-uncolorability. (Note: orthogonal triples do exist in these rings---e.g., $\Z[\sqrt{3}]$ produces 15 bases from 91 rays---but the hypergraph is KS-colorable.)
+The mechanism is cancellation identities: algebraic zero-sums among alphabet elements that make dot products vanish exactly.  Across all tested alphabets, KS-uncolorability was found only when one of two types of cancellation is available: (A)~\emph{modulus-2 cancellation}---a generator $x$ with Hermitian squared modulus $|x|^2 = 2$, enabling zero-sums such as $\alpha\bar\alpha - 1 - 1 = 0$ (integers, Peres, Heegner-7); or (B)~\emph{phase cancellation}---a root-of-unity sum vanishing exactly, as in $1+\omega+\omega^2 = 0$ (Eisenstein).  These are qualitatively different: modulus-2 cancellations balance two small terms against one larger term, while phase cancellations sum three equal-magnitude complex terms to zero.  For alphabets where neither mechanism is available within our bounded search, we found orthogonal pairs but the resulting hypergraphs were KS-colorable. (Note: orthogonal triples do exist---e.g., $\Z[\sqrt{3}]$ produces 15 bases from 91 rays---but the hypergraph is colorable.)
 
-The golden ratio field illustrates an important subtlety: $|\varphi|^2 \approx 2.618 > 2$, but completion generates the reciprocal $1/\varphi$ with $|1/\varphi|^2 < 1$, introducing norm-2-type cancellations into the effective coordinate set. The relevant criterion is not the generator's norm alone but whether the \emph{generated coordinate set} (after closure) admits sufficient cancellations.
+The golden ratio alphabet illustrates an important subtlety: $|\varphi|^2 \approx 2.618 > 2$, but completion generates the reciprocal $1/\varphi$ with $|1/\varphi|^2 < 1$, introducing modulus-2-type cancellations into the effective coordinate set. The relevant criterion is not the generator's squared modulus alone but whether the \emph{generated coordinate set} (after closure) admits sufficient cancellations.
 
-Crucially, the obstruction for $|\alpha|^2 \geq 3$ fields is \emph{not} the absence of orthogonal triples. The rings $\Z[\sqrt{3}]$, $\Z[\sqrt{5}]$, and $\Z[\sqrt{-5}]$ all produce substantial pools (133 rays, 94 bases each after completion), yet remain KS-colorable. The bases exist but are not configured to force uncolorability---the cancellation structure is insufficient.
+Crucially, the obstruction for $|\alpha|^2 \geq 3$ alphabets is \emph{not} the absence of orthogonal triples. The alphabets from $\Z[\sqrt{3}]$, $\Z[\sqrt{5}]$, and $\Z[\sqrt{-5}]$ all produce substantial pools (133 rays, 94 bases each after completion), yet remain KS-colorable. The bases exist but are not configured to force uncolorability---the cancellation structure is insufficient.
 
 Additional evidence: among cyclotomic fields $\Q(e^{2\pi i/n})$ for $n \leq 30$, KS-uncolorability was observed when $6 \mid n$---precisely the values for which the cyclotomic ring contains the Eisenstein integers $\Z[\omega]$ as a subring (since $\omega = e^{2\pi i/3}$ and $-1 = e^{i\pi}$ both lie in $\Z[e^{2\pi i/n}]$ when $6 \mid n$).
 
@@ -105,18 +105,20 @@ Golden ($\Q(\varphi)$) & 52 & -- & New \\
 \end{tabular}
 \end{table}
 
-The Peres and $\Z[\sqrt{-2}]$ islands produce graph-isomorphic minimal sets (identical degree sequences, spectra, and WL-1 signatures), yielding five distinct graph types. The Heegner-7 and golden ratio islands are genuinely new constructions not present in any existing KS catalogue; details are reported in a companion paper~\cite{Kernaghan2026heegner}.
+The Peres and $\Z[\sqrt{-2}]$ islands produce graph-isomorphic minimal sets (verified by VF2), yielding five distinct graph types. Non-isomorphism among the remaining pairs is established by differing degree sequences. The Heegner-7 and golden ratio islands are new constructions not found in the four previously known algebraic KS families; details are reported in a companion paper~\cite{Kernaghan2026heegner}.
 
 \section{Graph universality of $\CK$}
 
-The central result: every algebraic or group-theoretic construction that achieves 31~rays in dimension~3 produces the \emph{same orthogonality graph and the same basis hypergraph}.
+In three alphabet-based search instances that yielded 31-ray KS subsets, the minimized subsets are mutually graph-isomorphic.
 
-We tested three independent constructions from algebraically distinct origins:
+The three search instances use different starting alphabets:
 \begin{enumerate}
 \item Integer alphabet $\{0, \pm 1, \pm 2\}$ (109 rays after completion)
 \item Rational $\Z[\tfrac{1}{2}]$ alphabet $\{0, \pm 1, \pm 2, \pm\tfrac{1}{2}\}$ (109 rays)
-\item Mixed norm-2: $\{0, \pm 1, \pm 2, \pm\sqrt{2}, \pm\omega, \pm\bar\omega\}$ (489 rays after completion)
+\item Mixed modulus-2: $\{0, \pm 1, \pm 2, \pm\sqrt{2}, \pm\omega, \pm\bar\omega\}$ (489 rays after completion)
 \end{enumerate}
+
+\emph{Important caveat}: the rational alphabet is projectively equivalent to the integer alphabet (the identical 109-ray count confirms this), and the mixed alphabet contains the integer alphabet as a subset. We cannot rule out that the minimization procedure simply rediscovers the embedded CK configuration in each case. This observation is therefore consistent with---but does not prove---a uniqueness claim.
 
 All three resulting smallest-found sets have identical invariants:
 
@@ -140,25 +142,31 @@ WL-1 test & Indistinguishable \\
 \end{tabular}
 \end{table}
 
-We verified pairwise graph isomorphism for all $\binom{3}{2} = 3$ pairs using the VF2 algorithm~\cite{CordellaEtAl2004} (via NetworkX), which provides a definitive yes/no answer and an explicit vertex mapping. All three pairs are isomorphic. We further verified that these mappings preserve the basis hypergraph: the 17 orthonormal triples in each construction map identically under the graph isomorphism, establishing hypergraph isomorphism as well. The same orthogonality structure thus emerges from integer, rational, and mixed-field origins. Explicit ray coordinates, edge lists, basis lists, and VF2 certificates are provided as Supplemental Material~\cite{SupplementalMaterial}.
+We verified pairwise graph isomorphism for all $\binom{3}{2} = 3$ pairs using the VF2 algorithm~\cite{CordellaEtAl2004} (via NetworkX), which provides a definitive yes/no answer and an explicit vertex mapping. All three pairs are isomorphic. In dimension~3, every triangle in the orthogonality graph is already a basis triple (any two orthogonal rays in $\C^3$ determine a unique third), so graph isomorphism implies basis hypergraph isomorphism. The same orthogonality structure thus emerges from all three search instances, though as noted above, the rational and mixed searches may simply be rediscovering the embedded integer CK configuration. Explicit ray coordinates, edge lists, basis lists, and VF2 certificates are provided as Supplemental Material~\cite{SupplementalMaterial}.
 
 \section{Discussion}
 
-The universality of $\CK$ has two implications.
+The graph isomorphism of the three 31-ray subsets has two potential implications, subject to the caveat that the three searches may not be genuinely independent.
 
-Note that universality does \emph{not} hold at 33~vectors: the Schutte--Bub set has a different orthogonality graph from the Peres/Penrose family~\cite{GouldAravind2010,Cabello2025simplest}, so multiple non-isomorphic KS graphs coexist at that size. The fact that universality emerges at 31 is therefore non-trivial. One explanation is that CK-31 is the unique 31-vertex subgraph obtainable from the entire Gould--Aravind continuous family~\cite{GouldAravind2010}---regardless of parameters, deleting two rays from any 33-vector member of the family yields the same 31-vertex structure.
+Note that at 33~vectors, multiple non-isomorphic KS graphs coexist: the Sch\"utte--Bub set has a different orthogonality graph from the Peres/Penrose family~\cite{GouldAravind2010,Cabello2025simplest}. That the 31-ray subsets found by our minimization converge to a single graph type is therefore at least noteworthy, even if the evidence for true universality remains limited.
 
-First, this strengthens the case that 31 is the true minimum for KS sets in dimension~3: not only does no tested algebra break the barrier, but every algebra that reaches it arrives at the same graph \emph{and} the same hypergraph. The $\CK$ orthogonality structure appears to be a unique attractor across all algebraic origins.
+First, this is consistent with 31 being the true minimum for KS sets in dimension~3: no tested alphabet breaks the barrier. However, our minimization is heuristic (500 greedy trials), not exhaustive, so we cannot exclude the possibility of other 31-ray KS graphs within the same parent configurations.
 
-\begin{conjecture}
-The Conway--Kochen set $\CK$ achieves the true minimum: no KS set with 30 or fewer rays exists in dimension~3, and $\CK$ is the unique 31-ray KS graph up to isomorphism.
+\begin{conjecture}[Optimality]
+No KS set with 30 or fewer rays exists in dimension~3.
 \end{conjecture}
 
-The proven lower bound is 24~\cite{LiBrightGanesh2024,KirchwegarPeitlSzeider2023}; closing the gap between 24 and 31 remains the central open problem.  This conjecture is supported by: the rigidity result of Trandafir and Cabello~\cite{TrandafirCabello2025}, who showed that every bipartite perfect quantum strategy based on 31 rays yields a unique strategy up to local isometry; our verification that 31 is the minimum found within the integer island across all alphabet sizes tested; the VF2-verified universality across three algebraically independent constructions at both graph and hypergraph level; and the failure of 30{,}000+ random KS-uncolorable hypergraphs to achieve geometric realizability in $\R^3$.  Notably, the algebraic alphabet method falls outside both construction families analyzed in Trandafir and Cabello's Appendix~B (dimension-lifting and concatenation), which they showed cannot produce rigid KS sets in~$\C^3$.  The algebraic approach, constrained by number-theoretic cancellation identities rather than geometric concatenation, circumvents this obstruction and yields rigid sets in four of six islands tested.
+\begin{conjecture}[Uniqueness]
+$\CK$ is the unique 31-ray KS graph up to isomorphism.
+\end{conjecture}
 
-Second, the norm-2 cancellation boundary provides a \emph{predictive heuristic}: given a number field and a bounded coordinate alphabet, one can estimate whether KS sets are likely by checking whether the ring supports norm-2-type cancellation identities among its elements.  The relationship is tight: an alphabet is a viable candidate for producing a KS set only if it carries a cancellation identity that makes dot products vanish exactly among triples.  Without such an identity, no exact orthogonalities arise and KS-uncolorability is impossible.  The search for new KS-supporting alphabets is therefore equivalent to the search for new cancellation identities of sufficiently low norm.  While this does not constitute a proof (the search space is not exhausted), the heuristic has correctly predicted the outcome for every field tested, reducing an NP-hard combinatorial search to an algebraic check.
+\noindent These are logically independent claims: optimality could hold with multiple non-isomorphic 31-ray KS graphs, and uniqueness could hold even if a 30-ray KS set existed in a different construction family.
 
-For two-element alphabets $\{0, \pm 1, \pm x\}$, the classification is provably \emph{complete}: enumerating all three-term zero-sums from the product set $\{0, \pm 1, \pm x, \pm |x|^2\}$ yields exactly four non-trivial identities---$x = 2$, $|x|^2 = 2$, $|x|^2 = x + 1$, and $x^2 + x + 1 = 0$---each corresponding to a known island~\cite{Kernaghan2026landscape}.  Our coverage extends to quadratic fields ($\Q(\sqrt{d})$ for $d = 2, \ldots, 30$; all nine class-1 imaginary quadratic fields) and cyclotomic fields ($n \leq 30$).  The principal open question is whether multi-element alphabets from higher-degree fields harbor cancellation identities not reducible to norm-2 or phase type.  The cubic field $\Q(\sqrt[3]{2})$ already produces a KS set at 60~vectors, suggesting that the classification may extend but with rapidly increasing cost; quartic and higher extensions remain unexplored.
+The proven lower bound is 24~\cite{LiBrightGanesh2024,KirchwegarPeitlSzeider2023}; closing the gap between 24 and 31 remains the central open problem.  These conjectures are supported by: the rigidity result of Trandafir and Cabello~\cite{TrandafirCabello2025}, who showed that every bipartite perfect quantum strategy based on 31 rays yields a unique strategy up to local isometry (a result about quantum strategies, not directly about graph combinatorics, but suggestive of structural uniqueness); our verification that 31 is the minimum found within the integer island across all alphabet sizes tested; the VF2-verified graph isomorphism across three alphabet-based search instances at both graph and hypergraph level; and the failure of 30{,}000+ random KS-uncolorable hypergraphs to achieve geometric realizability in $\R^3$.  Notably, the algebraic alphabet method falls outside both construction families analyzed in Trandafir and Cabello's Appendix~B (dimension-lifting and concatenation), which they showed cannot produce rigid KS sets in~$\C^3$.  The algebraic approach, constrained by number-theoretic cancellation identities rather than geometric concatenation, circumvents this obstruction and yields rigid sets in four of six islands tested.
+
+Second, the modulus-2 cancellation pattern provides a \emph{predictive heuristic}: given a coordinate alphabet, one can estimate whether KS sets are likely by checking whether the alphabet supports modulus-2-type or phase-type cancellation identities.  An alphabet must carry \emph{some} cancellation identity to produce orthogonal triples at all; the empirical observation is that only identities of modulus-2 or phase type appear to generate enough interlocking bases for KS-uncolorability within our bounded search.  While this does not constitute a proof (the search space is not exhausted), the heuristic has correctly predicted the outcome for every alphabet tested, providing a useful filter for future searches.
+
+For the restricted family of two-element alphabets $\{0, \pm 1, \pm x\}$, enumerating all three-term zero-sums from the product set $\{0, \pm 1, \pm x, \pm |x|^2\}$ yields exactly four non-trivial identities---$x = 2$, $|x|^2 = 2$, $|x|^2 = x + 1$, and $x^2 + x + 1 = 0$---each corresponding to a known island~\cite{Kernaghan2026landscape}.  This enumeration is complete for two-element alphabets.  Our coverage extends to quadratic fields ($\Q(\sqrt{d})$ for $d = 2, \ldots, 30$; all nine class-1 imaginary quadratic fields) and cyclotomic fields ($n \leq 30$).  The principal open question is whether multi-element alphabets from higher-degree fields harbor cancellation identities not reducible to modulus-2 or phase type.  The cubic field $\Q(\sqrt[3]{2})$ already produces a KS set at 60~vectors, suggesting that the pattern may extend but with rapidly increasing cost; quartic and higher extensions remain unexplored.
 
 \begin{acknowledgments}
 The author thanks Ad\'an Cabello for discussions on the algebraic structure of KS sets. The author acknowledges the use of Claude (Anthropic) for computational assistance.
@@ -192,7 +200,7 @@ Phys.\ Rev.\ Lett.\ \textbf{112}, 040401 (2014).
 
 \bibitem{TrandafirCabello2025}
 S.~Trandafir and A.~Cabello,
-Phys.\ Rev.\ Lett.\ \textbf{134}, 010201 (2025); arXiv:2311.17735.
+Phys.\ Rev.\ A \textbf{111}, 052204 (2025); arXiv:2501.11640.
 
 \bibitem{AudemardSimon2018}
 G.~Audemard and L.~Simon,
@@ -214,7 +222,7 @@ P.~K.~Gould and P.~K.~Aravind,
 Found.\ Phys.\ \textbf{40}, 1096 (2010).
 
 \bibitem{LiBrightGanesh2024}
-J.~Li, C.~Bright, and V.~Ganesh,
+Z.~Li, C.~Bright, and V.~Ganesh,
 in \textit{Proceedings of IJCAI-24} (2024); arXiv:2306.13319.
 
 \bibitem{KirchwegarPeitlSzeider2023}
@@ -223,7 +231,7 @@ in \textit{Proceedings of AAAI-23}, 4119 (2023).
 
 \bibitem{Kernaghan2026heegner}
 M.~Kernaghan,
-``New Kochen--Specker sets from algebraic number fields with enhanced contextual advantage'' (in preparation).
+``New Kochen--Specker sets from algebraic number fields: the Heegner-7 and golden ratio constructions'' (in preparation).
 
 \bibitem{Kernaghan2026landscape}
 M.~Kernaghan,
