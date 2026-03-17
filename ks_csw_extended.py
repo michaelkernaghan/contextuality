@@ -380,7 +380,7 @@ def main():
     int_alph = [complex(x) for x in [0, 1, -1, 2, -2]]
     int_rays = generate_rays_from_alphabet(int_alph)
     int_pairs, int_triads = build_pairs_triads(int_rays)
-    a, t, astar = csw_quick("Integer pool", len(int_rays), int_pairs)
+    a, t, astar = csw_quick("Integer pool", len(int_rays), int_pairs, int_triads)
     all_results.append(("Integer pool", len(int_rays), len(int_triads), a, t, astar))
 
     # Peres pool
@@ -388,13 +388,13 @@ def main():
     p_alph = [complex(x) for x in [0, 1, -1, s2, -s2]]
     p_rays = generate_rays_from_alphabet(p_alph)
     p_pairs, p_triads = build_pairs_triads(p_rays)
-    a, t, astar = csw_quick("Peres pool", len(p_rays), p_pairs)
+    a, t, astar = csw_quick("Peres pool", len(p_rays), p_pairs, p_triads)
     all_results.append(("Peres pool", len(p_rays), len(p_triads), a, t, astar))
 
     # Eisenstein pool
     eis_rays = generate_eisenstein_rays(max_coeff=1, dim=3, norm_cutoff=3)
     eis_pairs, eis_triads = build_pairs_triads(eis_rays)
-    a, t, astar = csw_quick("Eisenstein pool", len(eis_rays), eis_pairs)
+    a, t, astar = csw_quick("Eisenstein pool", len(eis_rays), eis_pairs, eis_triads)
     all_results.append(("Eisenstein pool", len(eis_rays), len(eis_triads), a, t, astar))
 
     # Z[sqrt(-2)] pool
@@ -402,7 +402,7 @@ def main():
     cq_alph = [0, 1, -1, sd2, -sd2]
     cq_rays = generate_rays_from_alphabet(cq_alph)
     cq_pairs, cq_triads = build_pairs_triads(cq_rays)
-    a, t, astar = csw_quick("Z[sqrt(-2)] pool", len(cq_rays), cq_pairs)
+    a, t, astar = csw_quick("Z[sqrt(-2)] pool", len(cq_rays), cq_pairs, cq_triads)
     all_results.append(("Z[sqrt(-2)] pool", len(cq_rays), len(cq_triads), a, t, astar))
 
     # Heegner-7 pool
@@ -410,7 +410,7 @@ def main():
     h7_alph = [0, 1, -1, gen7, -gen7, gen7.conjugate(), -gen7.conjugate()]
     h7_rays = generate_rays_from_alphabet(h7_alph)
     h7_pairs, h7_triads = build_pairs_triads(h7_rays)
-    a, t, astar = csw_quick("Heegner-7 pool", len(h7_rays), h7_pairs)
+    a, t, astar = csw_quick("Heegner-7 pool", len(h7_rays), h7_pairs, h7_triads)
     all_results.append(("Heegner-7 pool", len(h7_rays), len(h7_triads), a, t, astar))
 
     # ================================================================
@@ -421,23 +421,23 @@ def main():
     print("=" * 70)
 
     min_rays, min_pairs, min_triads, size = get_minimal_ks(int_rays, int_pairs, int_triads)
-    a, t, astar = csw_quick("Integer min-31", size, min_pairs)
+    a, t, astar = csw_quick("Integer min-31", size, min_pairs, min_triads)
     all_results.append(("Integer min-31", size, len(min_triads), a, t, astar))
 
     min_rays, min_pairs, min_triads, size = get_minimal_ks(p_rays, p_pairs, p_triads)
-    a, t, astar = csw_quick("Peres min-33", size, min_pairs)
+    a, t, astar = csw_quick("Peres min-33", size, min_pairs, min_triads)
     all_results.append(("Peres min-33", size, len(min_triads), a, t, astar))
 
     min_rays, min_pairs, min_triads, size = get_minimal_ks(eis_rays, eis_pairs, eis_triads)
-    a, t, astar = csw_quick("Eisenstein min-33", size, min_pairs)
+    a, t, astar = csw_quick("Eisenstein min-33", size, min_pairs, min_triads)
     all_results.append(("Eisenstein min-33", size, len(min_triads), a, t, astar))
 
     min_rays, min_pairs, min_triads, size = get_minimal_ks(cq_rays, cq_pairs, cq_triads)
-    a, t, astar = csw_quick("Z[sqrt(-2)] min-33", size, min_pairs)
+    a, t, astar = csw_quick("Z[sqrt(-2)] min-33", size, min_pairs, min_triads)
     all_results.append(("Z[sqrt(-2)] min-33", size, len(min_triads), a, t, astar))
 
     min_rays, min_pairs, min_triads, size = get_minimal_ks(h7_rays, h7_pairs, h7_triads)
-    a, t, astar = csw_quick("Heegner-7 min-43", size, min_pairs)
+    a, t, astar = csw_quick("Heegner-7 min-43", size, min_pairs, min_triads)
     all_results.append(("Heegner-7 min-43", size, len(min_triads), a, t, astar))
 
     # ================================================================
