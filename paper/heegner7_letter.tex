@@ -33,7 +33,7 @@ We report two previously unknown Kochen--Specker (KS) sets in dimension~3 arisin
 
 The Kochen--Specker (KS) theorem~\cite{KochenSpecker1967} proves that quantum observables cannot be assigned pre-existing values independently of measurement context. In dimension~3, all known KS constructions draw their ray coordinates from a handful of algebraic number fields: the integers~\cite{ConwayKochen}, $\Z[\sqrt{2}]$ (the Peres construction~\cite{Peres1991}), and the Eisenstein integers $\Z[\omega]$ (Cabello's recent simplest KS set~\cite{Cabello2025simplest}). Whether other number fields support KS sets, and what operational consequences follow, has not been systematically investigated. A central open problem is the minimum size of a KS set in dimension~3: the smallest known construction uses 31 vectors~\cite{ConwayKochen}, while the best lower bound is 24~\cite{LiBrightGanesh2024}. Closing this gap---either by finding a KS set with fewer than 31 rays or by proving that none exists---motivates a systematic exploration of the algebraic structures underlying KS constructions.
 
-A survey across 40+ number fields~\cite{Kernaghan2026landscape} reveals that only a handful support KS constructions, each determined by a specific cancellation identity in its ring of integers. None of the new constructions yield a KS set smaller than 31 vectors, but they expose structural features invisible in the integer construction alone. We report two new KS sets and identify a mechanism by which the algebraic origin controls the strength of the quantum contextual advantage in the Cabello--Severini--Winter (CSW) framework~\cite{CSW2014}.
+A survey across 40+ number fields reveals that only a handful support KS constructions, each determined by a specific cancellation identity in its ring of integers. None of the new constructions yield a KS set smaller than 31 vectors, but they expose structural features invisible in the integer construction alone. We report two new KS sets and identify a mechanism by which the algebraic origin controls the strength of the quantum contextual advantage in the Cabello--Severini--Winter (CSW) framework~\cite{CSW2014}.
 
 \section{Construction method}
 
@@ -45,7 +45,7 @@ For fields where the basic alphabet yields too few bases, we apply \emph{Hermiti
 \[
 w_k = (-1)^{k+1} \det \begin{pmatrix} \bar{u}_{k+1} & \bar{u}_{k+2} \\ \bar{v}_{k+1} & \bar{v}_{k+2} \end{pmatrix}, \quad k \in \Z/3\Z,
 \]
-and canonicalize $w$ by fixing the first nonzero coordinate to be real and positive. This is iterated: each new ray generates new orthogonal pairs, which generate further completions, until the pool stabilizes. For real coordinates the formula reduces to the standard cross product. This closure can reveal KS sets invisible to the raw alphabet.
+and canonicalize $w$ by fixing the first nonzero coordinate to be real and positive. This is iterated: each new ray generates new orthogonal pairs, which generate further completions, until the pool stabilizes (an observed fixed point, typically reached in 2--4 rounds for the alphabets tested here; we do not prove termination in general). For real coordinates the formula reduces to the standard cross product. This closure can reveal KS sets invisible to the raw alphabet.
 
 \section{Two new KS sets}
 
@@ -57,7 +57,7 @@ This 43-vector set has a distinct orthogonality graph: we verified non-isomorphi
 
 This construction is not found by our direct alphabet search over $\{0, \pm 1, \pm\varphi\}$: the basic alphabet pool is colorable, and uncolorability emerges only after orthogonal completion introduces additional coordinate values.
 
-Golden ratio coordinates appear in Pavicic et al.'s 4D KS catalogue~\cite{Pavicic2019}, but no dimension-3 KS set from this field has been previously reported.  To our knowledge, neither the Heegner-7 nor the dimension-3 golden ratio KS set has been previously reported.  (For a comprehensive review of KS contextuality, see~\cite{Budroni2022}.)
+Golden ratio coordinates have appeared in higher-dimensional KS catalogs (e.g., Pavicic et al.~\cite{Pavicic2019} in dimension~4), but no dimension-3 KS set from this field has been previously reported.  To our knowledge, neither the Heegner-7 nor the dimension-3 golden ratio KS set has been previously reported.  (For a comprehensive review of KS contextuality, see~\cite{Budroni2022}.)
 
 \section{Contextual advantage}
 
@@ -104,7 +104,7 @@ The Heegner-7 full pool has $\vartheta/\alpha = 1.118$, the largest graph-theore
 
 \section{The auxiliary ray mechanism}
 
-We identify the structural origin of this effect. In the Heegner-7 pool, ``bases'' are defined as orthonormal triples all of whose coordinates lie in the designated alphabet $\{0, \pm 1, \pm\alpha, \pm\bar\alpha\}$ and its closure. The pool is closed under Hermitian orthogonal completion: every orthogonal pair generates a third ray. However, the \emph{coordinates} of that third ray may leave the designated alphabet, so the resulting triple is not counted as a basis for the KS coloring problem. This is the standard convention in KS work: bases are the \emph{designated contexts}, not all orthogonal triples that happen to exist in the pool.
+We identify the structural origin of this effect. In the Heegner-7 pool, ``bases'' are defined as orthonormal triples all of whose coordinates lie in the designated alphabet $\{0, \pm 1, \pm\alpha, \pm\bar\alpha\}$ and its closure. The pool is closed under Hermitian orthogonal completion: every orthogonal pair generates a third ray. However, the \emph{coordinates} of that third ray may leave the designated alphabet, so the resulting triple is not counted as a basis for the KS coloring problem. This is a common convention in KS work: bases are the \emph{designated contexts}, not all orthogonal triples that happen to exist in the pool.
 
 A ray is \emph{basis-participating} if it belongs to at least one designated basis, and \emph{auxiliary} otherwise. Auxiliary rays have orthogonal neighbors---and hence edges in the orthogonality graph---but appear in no designated context.
 
@@ -141,12 +141,11 @@ Our results reveal a structural tension: \emph{minimizing the proof size and max
 
 The Heegner-7 pool's 12\% $\vartheta/\alpha$ ratio is modest but structurally informative: it arises from the interplay between the number field (which determines auxiliary ray density) and the spectral properties of the orthogonality graph (which determine whether auxiliary rays translate into a $\vartheta > \alpha$ gap). Whether this graph-theoretic gap is realized operationally by the specific projector set remains to be determined. The golden ratio construction demonstrates that geometric closure can unlock contextuality where algebra alone cannot.
 
-KS sets also have direct operational significance beyond CSW inequalities: Cabello~\cite{Cabello2024bipartite} proved that every bipartite perfect quantum strategy requires a KS-uncolorable subset, so the Heegner-7 (23~bases) and golden ratio (25~bases) sets each define new bipartite Bell scenarios admitting perfect quantum strategies.
+KS sets also have direct operational significance beyond CSW inequalities: Cabello~\cite{Cabello2024bipartite} proved that every bipartite perfect quantum strategy requires a KS-uncolorable subset, so the Heegner-7 (23~bases) and golden ratio (25~bases) sets are candidates for new bipartite Bell scenarios that may admit perfect quantum strategies.
 
 Both constructions arise from a pattern observed across all tested number fields: KS-uncolorability appears to require one of two cancellation mechanisms---\emph{modulus-2 cancellation} (a generator $x$ with Hermitian squared modulus $|x|^2 = 2$, enabling identities such as $1{+}1=2$, $(\sqrt{2})^2=2$, $\alpha\bar\alpha=2$) or \emph{phase cancellation} (a root-of-unity sum vanishing exactly, as in $1{+}\omega{+}\omega^2 = 0$).  In all fields we tested, alphabets whose smallest available cancellation involves $|x|^2 \geq 3$ produce orthogonal triples but not KS-uncolorability.  The golden ratio case ($|\varphi|^2 \approx 2.618$) does not violate this pattern: cross-product completion introduces modulus-2-type cancellations into the effective coordinate set.
 
-For the restricted family of two-element alphabets $\{0, \pm 1, \pm x\}$, we can enumerate all non-trivial three-term zero-sums from the product set $\{0, \pm 1, \pm x, \pm |x|^2\}$: the only solutions are $x = 2$ (integer), $|x|^2 = 2$ (Peres, $\Z[\sqrt{-2}]$, Heegner-7), $|x|^2 = x + 1$ (golden ratio), and $x^2 + x + 1 = 0$ (Eisenstein).  This enumeration is complete for two-element alphabets, but multi-element alphabets from higher-degree number fields remain unexplored: cross-products $xy$ may introduce cancellation identities not reducible to these four types.  The broader algebraic survey is reported separately~\cite{Kernaghan2026landscape}.
-
+For the restricted family of two-element alphabets $\{0, \pm 1, \pm x\}$, we can enumerate all non-trivial three-term zero-sums from the product set $\{0, \pm 1, \pm x, \pm |x|^2\}$: the only solutions are $x = 2$ (integer), $|x|^2 = 2$ (Peres, $\Z[\sqrt{-2}]$, Heegner-7), $|x|^2 = x + 1$ (golden ratio), and $x^2 + x + 1 = 0$ (Eisenstein).  This enumeration is complete for two-element alphabets, but multi-element alphabets from higher-degree number fields remain unexplored: cross-products $xy$ may introduce cancellation identities not reducible to these four types.
 \begin{acknowledgments}
 The author thanks Ad\'an Cabello for pointing out the connection between the Eisenstein construction and his simplest KS set. The author acknowledges the use of Claude (Anthropic) for computational assistance.
 \end{acknowledgments}
@@ -195,10 +194,6 @@ Sci.\ Rep.\ \textbf{9}, 6765 (2019).
 
 \bibitem{SupplementalMaterial}
 See Supplemental Material for explicit ray coordinates, orthogonality graphs, basis lists, SAT solver details, and ablation study data for all constructions reported here.
-
-\bibitem{Kernaghan2026landscape}
-M.~Kernaghan,
-``The algebraic landscape of Kochen--Specker sets in dimension three'' (in preparation).
 
 \bibitem{Budroni2022}
 C.~Budroni, A.~Cabello, O.~G\"uhne, M.~Kleinmann, and J.-\AA.~Larsson,

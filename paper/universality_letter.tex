@@ -42,7 +42,7 @@ We present a computational survey across coordinate alphabets drawn from algebra
 
 For each algebraic number ring, we form a \emph{coordinate alphabet} $\mathcal{A} = \{0, \pm 1, \pm\alpha, \pm\bar\alpha, \ldots\}$---a finite set of values from which ray coordinates are drawn (called ``vector components'' by Pavicic et al.~\cite{Pavicic2019}).  The relevant object is the alphabet, not the ambient field: the same field can host different alphabets with different KS outcomes (e.g.\ $\Z[\sqrt{-3}]$ and $\Z[\omega]$ both lie in $\Q(\sqrt{-3})$, but only the Eisenstein alphabet $\Z[\omega]$ supports KS sets in our search).  Two rays are orthogonal when $\sum_i \bar{u}_i v_i = 0$; for coordinates from a finite alphabet, this requires a \emph{cancellation identity}---an algebraic zero-sum that makes the dot product vanish exactly.  For the integer alphabet the key identity is $2 - 1 - 1 = 0$; for $\Z[\sqrt{2}]$ it is $\alpha\bar\alpha - 1 - 1 = 0$ where $|\alpha|^2 = 2$; for the Eisenstein integers, $1+\omega+\omega^2=0$.  Each identity enables exact orthogonal triples (bases), and when enough bases interlock, no consistent $\{0,1\}$-coloring exists.  (The trivial cancellation $1+(-1)=0$ in the minimal alphabet $\{0,\pm 1\}$ generates only 13 projective rays---far too few for a KS set.)  Our approach is to systematically construct alphabets from algebraic number rings, identify their cancellation identities, and test whether the resulting ray sets are KS-uncolorable.
 
-We generate all rays in $\C P^2$ with coordinates in $\mathcal{A}$, close under Hermitian orthogonal completion (see~\cite{Kernaghan2026heegner} for details), and test KS-uncolorability via SAT (Glucose4 solver~\cite{AudemardSimon2018}, PySAT). Minimization uses randomized greedy deletion (500 trials, seed 42) and does not guarantee minimality; reported sizes are upper bounds.
+We generate all rays in $\C P^2$ with coordinates in $\mathcal{A}$, close under Hermitian orthogonal completion (iterating the cofactor formula $w_k = (-1)^{k+1}\det[\bar{u}_{k+1},\bar{u}_{k+2};\bar{v}_{k+1},\bar{v}_{k+2}]$ until the ray pool stabilizes), and test KS-uncolorability via SAT (Glucose4 solver~\cite{AudemardSimon2018}, PySAT). Minimization uses randomized greedy deletion (500 trials, seed 42) and does not guarantee minimality; reported sizes are upper bounds.
 
 Table~\ref{tab:boundary} summarizes results across 40+ alphabets drawn from different rings. The empirical pattern: KS-uncolorable sets were found only when the coordinate alphabet (after closure) contains elements enabling \emph{modulus-2 cancellations} ($|x|^2 = 2$) or \emph{phase cancellations} ($1 + \omega + \omega^2 = 0$).
 
@@ -52,7 +52,7 @@ Table~\ref{tab:boundary} summarizes results across 40+ alphabets drawn from diff
 \label{tab:boundary}
 \begin{tabular}{lccc}
 \toprule
-Field / Ring & $|\alpha|^2$ & KS? & Min \\
+Coordinate ring & $|\alpha|^2$ & KS? & Min \\
 \midrule
 $\Z$ (integers, $\alpha=2$) & -- & Yes & 31 \\
 $\Z[\sqrt{2}]$ & 2.000 & Yes & 33 \\
@@ -105,7 +105,7 @@ Golden ($\Q(\varphi)$) & 52 & -- & New \\
 \end{tabular}
 \end{table}
 
-The Peres and $\Z[\sqrt{-2}]$ islands produce graph-isomorphic minimal sets (verified by VF2), yielding five distinct graph types. Non-isomorphism among the remaining pairs is established by differing degree sequences. The Heegner-7 and golden ratio islands are new constructions not found in the four previously known algebraic KS families; details are reported in a companion paper~\cite{Kernaghan2026heegner}.
+The Peres and $\Z[\sqrt{-2}]$ islands produce graph-isomorphic minimal sets (verified by VF2), yielding five distinct graph types. Non-isomorphism among the remaining pairs is established by differing degree sequences. The Heegner-7 and golden ratio islands are new constructions not found in the four previously known algebraic KS families; explicit ray coordinates and construction details are provided as Supplemental Material~\cite{SupplementalMaterial}.
 
 \section{Graph universality of $\CK$}
 
@@ -118,7 +118,7 @@ The three search instances use different starting alphabets:
 \item Mixed modulus-2: $\{0, \pm 1, \pm 2, \pm\sqrt{2}, \pm\omega, \pm\bar\omega\}$ (489 rays after completion)
 \end{enumerate}
 
-\emph{Important caveat}: the rational alphabet is projectively equivalent to the integer alphabet (the identical 109-ray count confirms this), and the mixed alphabet contains the integer alphabet as a subset. We cannot rule out that the minimization procedure simply rediscovers the embedded CK configuration in each case. This observation is therefore consistent with---but does not prove---a uniqueness claim.
+\emph{Important caveat}: the rational alphabet is projectively equivalent to the integer alphabet (verified by canonicalizing all rays to have first nonzero coordinate equal to~1: both alphabets produce the same set of 109 projective rays), and the mixed alphabet contains the integer alphabet as a subset. We cannot rule out that the minimization procedure simply rediscovers the embedded CK configuration in each case. This observation is therefore consistent with---but does not prove---a uniqueness claim.
 
 All three resulting smallest-found sets have identical invariants:
 
@@ -148,7 +148,7 @@ We verified pairwise graph isomorphism for all $\binom{3}{2} = 3$ pairs using th
 
 The graph isomorphism of the three 31-ray subsets has two potential implications, subject to the caveat that the three searches may not be genuinely independent.
 
-Note that at 33~vectors, multiple non-isomorphic KS graphs coexist: the Sch\"utte--Bub set has a different orthogonality graph from the Peres/Penrose family~\cite{GouldAravind2010,Cabello2025simplest}. That the 31-ray subsets found by our minimization converge to a single graph type is therefore at least noteworthy, even if the evidence for true universality remains limited.
+Note that at 33~vectors, multiple non-isomorphic KS graphs coexist: the Sch\"utte set~\cite{Schutte1965,GouldAravind2010} has a different orthogonality graph from the Peres/Penrose family~\cite{GouldAravind2010,Cabello2025simplest}. That the 31-ray subsets found by our minimization converge to a single graph type is therefore at least noteworthy, even if the evidence for true universality remains limited.
 
 First, this is consistent with 31 being the true minimum for KS sets in dimension~3: no tested alphabet breaks the barrier. However, our minimization is heuristic (500 greedy trials), not exhaustive, so we cannot exclude the possibility of other 31-ray KS graphs within the same parent configurations.
 
@@ -162,11 +162,11 @@ $\CK$ is the unique 31-ray KS graph up to isomorphism.
 
 \noindent These are logically independent claims: optimality could hold with multiple non-isomorphic 31-ray KS graphs, and uniqueness could hold even if a 30-ray KS set existed in a different construction family.
 
-The proven lower bound is 24~\cite{LiBrightGanesh2024,KirchwegarPeitlSzeider2023}; closing the gap between 24 and 31 remains the central open problem.  These conjectures are supported by: the rigidity result of Trandafir and Cabello~\cite{TrandafirCabello2025}, who showed that every bipartite perfect quantum strategy based on 31 rays yields a unique strategy up to local isometry (a result about quantum strategies, not directly about graph combinatorics, but suggestive of structural uniqueness); our verification that 31 is the minimum found within the integer island across all alphabet sizes tested; the VF2-verified graph isomorphism across three alphabet-based search instances at both graph and hypergraph level; and the failure of 30{,}000+ random KS-uncolorable hypergraphs to achieve geometric realizability in $\R^3$.  Notably, the algebraic alphabet method falls outside both construction families analyzed in Trandafir and Cabello's Appendix~B (dimension-lifting and concatenation), which they showed cannot produce rigid KS sets in~$\C^3$.  The algebraic approach, constrained by number-theoretic cancellation identities rather than geometric concatenation, circumvents this obstruction and yields rigid sets in four of six islands tested.
+The proven lower bound is 24~\cite{LiBrightGanesh2024,KirchwegarPeitlSzeider2023}; closing the gap between 24 and 31 remains the central open problem.  These conjectures are supported by: the rigidity result of Trandafir and Cabello~\cite{TrandafirCabello2025}, who showed that every bipartite perfect quantum strategy based on 31 rays yields a unique strategy up to local isometry (a result about quantum strategies, not directly about graph combinatorics, but suggestive of structural uniqueness); our verification that 31 is the minimum found within the integer island across all alphabet sizes tested; the VF2-verified graph isomorphism across three alphabet-based search instances at both graph and hypergraph level; and the failure of 30{,}000+ random KS-uncolorable 3-uniform hypergraphs on 31 vertices (generated by randomized greedy construction and tested for realizability in $\R^3$ via SAT-encoded orthogonality constraints; see Supplemental Material~\cite{SupplementalMaterial}) to achieve geometric realizability.  Notably, the algebraic alphabet method falls outside both construction families analyzed in Trandafir and Cabello's Appendix~B (dimension-lifting and concatenation), which they showed cannot produce rigid KS sets in~$\C^3$.  The algebraic approach, constrained by number-theoretic cancellation identities rather than geometric concatenation, circumvents this obstruction and yields rigid sets (unique up to unitary equivalence in~$\C^3$, in the sense of Trandafir and Cabello~\cite{TrandafirCabello2025}) in four of six islands tested.
 
 Second, the modulus-2 cancellation pattern provides a \emph{predictive heuristic}: given a coordinate alphabet, one can estimate whether KS sets are likely by checking whether the alphabet supports modulus-2-type or phase-type cancellation identities.  An alphabet must carry \emph{some} cancellation identity to produce orthogonal triples at all; the empirical observation is that only identities of modulus-2 or phase type appear to generate enough interlocking bases for KS-uncolorability within our bounded search.  While this does not constitute a proof (the search space is not exhausted), the heuristic has correctly predicted the outcome for every alphabet tested, providing a useful filter for future searches.
 
-For the restricted family of two-element alphabets $\{0, \pm 1, \pm x\}$, enumerating all three-term zero-sums from the product set $\{0, \pm 1, \pm x, \pm |x|^2\}$ yields exactly four non-trivial identities---$x = 2$, $|x|^2 = 2$, $|x|^2 = x + 1$, and $x^2 + x + 1 = 0$---each corresponding to a known island~\cite{Kernaghan2026landscape}.  This enumeration is complete for two-element alphabets.  Our coverage extends to quadratic fields ($\Q(\sqrt{d})$ for $d = 2, \ldots, 30$; all nine class-1 imaginary quadratic fields) and cyclotomic fields ($n \leq 30$).  The principal open question is whether multi-element alphabets from higher-degree fields harbor cancellation identities not reducible to modulus-2 or phase type.  The cubic field $\Q(\sqrt[3]{2})$ already produces a KS set at 60~vectors, suggesting that the pattern may extend but with rapidly increasing cost; quartic and higher extensions remain unexplored.
+For the restricted family of two-element alphabets $\{0, \pm 1, \pm x\}$, enumerating all three-term zero-sums from the product set $\{0, \pm 1, \pm x, \pm |x|^2\}$ yields exactly four non-trivial identities---$x = 2$, $|x|^2 = 2$, $|x|^2 = x + 1$, and $x^2 + x + 1 = 0$---each corresponding to a known island.  This enumeration is complete for two-element alphabets.  Our coverage extends to quadratic fields ($\Q(\sqrt{d})$ for $d = 2, \ldots, 30$; all nine class-1 imaginary quadratic fields) and cyclotomic fields ($n \leq 30$).  The principal open question is whether multi-element alphabets from higher-degree fields harbor cancellation identities not reducible to modulus-2 or phase type.  The cubic field $\Q(\sqrt[3]{2})$ already produces a KS set at 60~vectors, suggesting that the pattern may extend but with rapidly increasing cost; quartic and higher extensions remain unexplored.
 
 \begin{acknowledgments}
 The author thanks Ad\'an Cabello for discussions on the algebraic structure of KS sets. The author acknowledges the use of Claude (Anthropic) for computational assistance.
@@ -217,6 +217,10 @@ Sci.\ Rep.\ \textbf{9}, 6765 (2019).
 \bibitem{SupplementalMaterial}
 See Supplemental Material for explicit ray coordinates, edge lists, basis lists, VF2 isomorphism certificates, SAT solver details, and negative control data for all constructions reported here.
 
+\bibitem{Schutte1965}
+K.~Sch\"utte,
+reported in J.~Bub, \textit{Interpreting the Quantum World} (Cambridge University Press, 1997), p.~133.
+
 \bibitem{GouldAravind2010}
 P.~K.~Gould and P.~K.~Aravind,
 Found.\ Phys.\ \textbf{40}, 1096 (2010).
@@ -228,14 +232,6 @@ in \textit{Proceedings of IJCAI-24} (2024); arXiv:2306.13319.
 \bibitem{KirchwegarPeitlSzeider2023}
 M.~Kirchweger, A.~Peitl, and S.~Szeider,
 in \textit{Proceedings of AAAI-23}, 4119 (2023).
-
-\bibitem{Kernaghan2026heegner}
-M.~Kernaghan,
-``New Kochen--Specker sets from algebraic number fields: the Heegner-7 and golden ratio constructions'' (in preparation).
-
-\bibitem{Kernaghan2026landscape}
-M.~Kernaghan,
-``The algebraic landscape of Kochen--Specker sets in dimension three'' (in preparation).
 
 \end{thebibliography}
 
