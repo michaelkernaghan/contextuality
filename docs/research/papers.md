@@ -12,9 +12,10 @@ The algebraic islands research programme has produced one main paper and four PR
 
 ### The Algebraic Landscape of Kochen-Specker Sets in Dimension Three
 
-**Length**: ~36 pages
+**Length**: ~39 pages
 **Venue**: Physical Review A (target)
 **Status**: Complete, pending arXiv submission
+**[Download PDF](../papers/algebraic_islands.pdf)**
 
 The comprehensive paper presenting the full algebraic classification. Covers:
 
@@ -30,7 +31,9 @@ The comprehensive paper presenting the full algebraic classification. Covers:
 - OCUS optimality proof for CK-31
 - Appendix with representative minimal KS sets for new islands
 
-**Key result**: Generator norm $\leq 2$ is the controlling invariant for KS-uncolorability in dimension 3.
+**Key result**: Low-complexity cancellation identities (modulus-2 or phase cancellation) are the controlling invariant for KS-uncolorability in dimension 3.
+
+**Revision notes (March 16, 2026)**: Fixed CSW α* numerical error in integer pool table (17.00 → 19.00); clarified ray-level MUS extraction methodology; added classification scope limitation; added falsifiability paragraph; strengthened novelty claim qualifications; added Cabello finite-dimensional qualifier. Reviewed by GPT-5.4-pro Oxford challenge method (32 issues assessed, 6 substantive fixes applied).
 
 ---
 
@@ -38,25 +41,31 @@ The comprehensive paper presenting the full algebraic classification. Covers:
 
 ### 1. New KS Sets from Algebraic Number Fields with Enhanced Contextual Advantage
 
-**Length**: 3 pages
+**Length**: 4 pages
 **Venue**: Physical Review Letters (target)
-**Status**: Complete, all peer review items addressed
+**Status**: Submitted to arXiv (March 2026), revision pending processing
+**[Download PDF](../papers/heegner7_letter.pdf)**
 
-Introduces the Heegner-7 (43 vectors) and Golden ratio (52 vectors) KS sets — the first genuinely new 3D KS constructions in decades. Reports the enhanced contextual advantage of Heegner-7 ($\theta/\alpha = 1.118$) and the cross-product discovery mechanism for the Golden set.
+Introduces the Heegner-7 (43 vectors) and Golden ratio (52 vectors) KS sets — the first genuinely new 3D KS constructions in decades. Reports the enhanced contextual advantage of Heegner-7 ($\vartheta/\alpha = 1.118$) and the cross-product discovery mechanism for the Golden set.
 
 **Key result**: Two genuinely new KS sets, neither in any prior catalogue, with the highest known contextual advantage in 3D.
 
+**Revision notes (March 16, 2026)**: Removed dependency on unpublished main paper ("in preparation" references); fixed Bell-scenario claim (necessity → candidates); added closure termination caveat; softened convention and Pavičić claims. Paper is now fully self-contained. GPT-5.4-pro Oxford review: 24 issues assessed, 5 substantive fixes applied.
+
 ---
 
-### 2. Graph Universality of CK-31 and the Norm-2 Boundary
+### 2. Graph Isomorphism of 31-Vertex Kochen-Specker Sets Across Coordinate Alphabets
 
-**Length**: 3 pages
+**Length**: 4 pages
 **Venue**: Physical Review Letters (target)
-**Status**: Complete, all peer review items addressed
+**Status**: Submitted to arXiv (March 2026), revision pending processing
+**[Download PDF](../papers/universality_letter.pdf)**
 
-Proves that all 31-vertex KS sets share the same orthogonality graph (VF2-verified graph and hypergraph isomorphism). Establishes the norm-2 boundary: rings with generator norm $> 2$ produce colorable pools regardless of size.
+Shows that all 31-vertex KS sets found across three alphabet-based searches share the same orthogonality graph (VF2-verified). Establishes the modulus-2 cancellation boundary as an empirical regularity. Honestly notes that the three searches may not be independent (rational and mixed alphabets contain the integer alphabet).
 
-**Key result**: The CK-31 graph is the unique minimal KS graph in 3D integer-type constructions.
+**Key result**: The CK-31 graph is recovered by every tested alphabet-based search that achieves 31 rays.
+
+**Revision notes (March 16, 2026)**: Removed dependency on unpublished papers ("in preparation" references); strengthened 109-ray projective equivalence verification; clarified Table 1 column header; added Schütte bibliography entry; anchored random hypergraph claim; defined rigidity parenthetically. Paper is now fully self-contained. GPT-5.4-pro Oxford review: 24 issues assessed, 6 substantive fixes applied.
 
 ---
 
@@ -64,7 +73,8 @@ Proves that all 31-vertex KS sets share the same orthogonality graph (VF2-verifi
 
 **Length**: 5 pages
 **Venue**: Physical Review Letters (target)
-**Status**: Complete, OCUS proof and merge saturation added
+**Status**: Complete, not submitted
+**[Download PDF](../papers/sub31_letter.pdf)**
 
 Presents six independent computational strategies that all fail to find a sub-31 KS set. Includes the OCUS exhaustive proof for the integer pool, 8-criticality of CK-31, cross-pool mixing results, and the merge saturation universal property.
 
@@ -76,11 +86,14 @@ Presents six independent computational strategies that all fail to find a sub-31
 
 **Length**: 4 pages
 **Venue**: Physical Review Letters (target)
-**Status**: Complete, all peer review items resolved (6 rounds)
+**Status**: Submitted to arXiv (March 2026), revision pending processing
+**[Download PDF](../papers/cyclotomic_letter.pdf)**
 
 The only letter with a complete algebraic proof (no computational evidence needed). Proves that the cyclotomic ray pool $S_n$ is KS-uncolorable if and only if $6|n$, via seven lemmas covering sufficiency and three necessity cases.
 
 **Key result**: Complete characterization of KS-uncolorability across all cyclotomic fields, connecting to $\mathbb{Z}[1/6]$ minimality.
+
+**Revision notes (March 16, 2026)**: Added footnote clarifying orthogonality table shows necessary divisibility conditions; marked Cabello 2025 as preprint. GPT-5.4-pro Oxford review: 15 issues assessed, 2 substantive fixes applied (proofs confirmed correct).
 
 ---
 
