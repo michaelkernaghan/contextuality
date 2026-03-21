@@ -1,142 +1,141 @@
-"""Send a LaTeX paper to GPT-5.4-pro for Oxford-style challenge review.
-
-Usage: python oxford_review.py <path_to_tex_file>
 """
+oxford_review.py -- Oxford hostile-examiner peer review via OpenAI API
+"""
+
 import re
 import sys
-import requests
-from datetime import datetime
+import json
+import urllib.request
+import urllib.error
 from pathlib import Path
+from datetime import datetime
 
-if len(sys.argv) < 2:
-    print("Usage: python oxford_review.py <path_to_tex_file>")
-    sys.exit(1)
+sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-file_path = Path(sys.argv[1])
-if not file_path.exists():
-    print(f"ERROR: File not found: {file_path}")
-    sys.exit(1)
 
-# Read API key
-api_key = None
-for line in Path(r"E:\Blockchain-Backups\Keystores\API-Keys\api-keys-master.txt").read_text(encoding="utf-8").splitlines():
-    if "sk-svcacct-" in line:
-        for part in line.strip().split():
-            if part.startswith("sk-svcacct-"):
-                api_key = part
-                break
-        if api_key:
-            break
+def strip_latex(text):
+    text = re.sub(r'%.*$', '', text, flags=re.MULTILINE)
+    match = re.search(r'\\begin\{document\}', text)
+    if match:
+        text = text[match.end():]
+    end_match = re.search(r'\\end\{document\}', text)
+    if end_match:
+        text = text[:end_match.start()]
+    text = re.sub(r'\\(?:textbf|textit|emph|texttt)\{([^}]*)\}', r'\1', text)
+    text = re.sub(r'\\(?:section|subsection|subsubsection)\*?\{([^}]*)\}', r'\n\n## \1\n', text)
+    text = re.sub(r'\\(?:label|ref|cite|eqref|url)\{[^}]*\}', '', text)
+    text = re.sub(r'\\item\b', '- ', text)
+    text = re.sub(r'\\caption\{([^}]*)\}', r'Caption: \1', text)
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip()
 
-if not api_key:
-    print("ERROR: Could not find OpenAI service account API key")
-    sys.exit(1)
 
-print(f"API key: {api_key[:30]}...")
+def get_api_key():
+    key_file = Path(r"E:\Blockchain-Backups\Keystores\API-Keys\api-keys-master.txt")
+    content = key_file.read_text(encoding='utf-8')
+    match = re.search(r'OPENAI API KEY.*?API Key:\s*(sk-[^\s]+)', content, re.DOTALL)
+    if match:
+        return match.group(1)
+    raise ValueError("OpenAI API key not found")
 
-# Read and clean LaTeX
-tex = file_path.read_text(encoding="utf-8")
-text = tex
-text = re.sub(r"\\documentclass.*?\\begin\{document\}", "", text, flags=re.DOTALL)
-text = re.sub(r"\\end\{document\}", "", text)
-for cmd in ["textbf", "textit", "emph", "texttt", "mathrm", "mathbb", "mathcal"]:
-    pattern = "\\\\" + cmd + r"\{([^}]*)\}"
-    text = re.sub(pattern, r"\1", text)
-text = re.sub(r"\\cite\{[^}]*\}", "[ref]", text)
-text = re.sub(r"\\ref\{[^}]*\}", "[ref]", text)
-text = re.sub(r"\\label\{[^}]*\}", "", text)
-text = re.sub(r"\\url\{([^}]*)\}", r"\1", text)
-text = re.sub(r"\\\\", " ", text)
-text = re.sub(r"\n{3,}", "\n\n", text)
 
-if len(text) > 80000:
-    text = text[:80000] + "\n\n[TRUNCATED]"
-
-word_count = len(text.split())
-print(f"File: {file_path.name} ({word_count} words, {len(text)} chars)")
-
-prompt = """You are conducting an Oxford-style challenge review of a research paper in quantum foundations and algebraic combinatorics. Complete ALL THREE steps thoroughly:
-
-STEP 1 — HOSTILE EXAMINER:
-What are the 3 weakest logical jumps in this reasoning? Where would a hostile examiner attack first? Look for:
-- Implicit assumptions that aren't stated
-- Terse proofs where the reader has to fill gaps
-- Rhetorical moves that overstate connections between results
-
-STEP 2 — LITERATURE CHECK:
-What claims in this argument contradict or oversimplify what cited authors actually found? Check:
-- Do citations say what the authors claim they say?
-- Are result types conflated (e.g., computational evidence treated as proof)?
-- Are referenced results published/accessible?
-
-STEP 3 — PHILOSOPHY OF SCIENCE:
-What would a philosopher of science say is missing? What assumptions are undefended?
-- Is this a universal result or specific to their parameterization?
-- Are lemmas being oversold as phenomena?
-- Does the sufficiency proof illuminate or just inherit from a known result?
-
-OUTPUT: Produce a table of actionable items with columns: Priority (High/Medium/Low), Step (1/2/3), Issue, and Suggested Fix.
-
-THE PAPER:
-
-"""
-
-print("Sending to GPT-5.4-pro via Responses API...")
-
-response = requests.post(
-    "https://api.openai.com/v1/responses",
-    headers={
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json",
-    },
-    json={
-        "model": "gpt-5.4-pro",
-        "input": prompt + text,
-    },
-    timeout=600,
+OXFORD_PROMPT = (
+    "You are a hostile Oxford examiner reviewing a paper for Physical Review A. "
+    "This paper has been through 6 rounds of GPT peer review already. "
+    "Your job is to find what they missed.\n\n"
+    "Apply the three-step Oxford Thinking Partner method:\n\n"
+    "STEP 1 - HOSTILE EXAMINER:\n"
+    "What are the 5 weakest logical jumps in this reasoning? "
+    "Where would a hostile examiner attack first? Look for implicit assumptions, "
+    "terse proofs where the reader fills gaps, rhetorical moves that overstate connections, "
+    "computational observations dressed as theorems, and places where 'among tested fields' "
+    "quietly drops out and claims become universal.\n\n"
+    "STEP 2 - LITERATURE CHECK:\n"
+    "What claims contradict or oversimplify what cited authors actually found? "
+    "Are citations used accurately?\n\n"
+    "STEP 3 - PHILOSOPHY OF SCIENCE:\n"
+    "What would a philosopher of science say is missing? "
+    "Is this universal or specific to the parameterization? "
+    "Are we overselling a survey as a classification? "
+    "Does the two-mechanism thesis have the status of conjecture, framework, or theorem? "
+    "Is 'algebraic island' a natural kind or convenient label?\n\n"
+    "OUTPUT: Produce a table with columns: "
+    "Priority (High/Medium/Low) | Issue | Section | Suggested Fix. Be ruthless."
 )
 
-if response.status_code != 200:
-    print(f"ERROR: API returned {response.status_code}")
-    print(response.text[:2000])
-    sys.exit(1)
 
-data = response.json()
+def call_openai(api_key, paper_text):
+    prompt = (
+        OXFORD_PROMPT
+        + "\n\n--- Paper text ---\n"
+        + paper_text
+        + "\n--- End of paper ---\n\n"
+        + "Provide your hostile examination now."
+    )
 
-# Extract output text
-review = ""
-for item in data.get("output", []):
-    if item.get("type") == "message":
-        for content_block in item.get("content", []):
-            if content_block.get("type") == "output_text":
-                review += content_block.get("text", "")
+    payload = {
+        "model": "gpt-5.4-pro",
+        "input": prompt,
+        "reasoning": {"effort": "high"},
+    }
 
-if not review:
-    import json
-    print("WARNING: No review text found. Raw response:")
-    print(json.dumps(data, indent=2)[:3000])
-    sys.exit(1)
+    data = json.dumps(payload).encode('utf-8')
+    req = urllib.request.Request(
+        "https://api.openai.com/v1/responses",
+        data=data,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}",
+        },
+        method="POST",
+    )
 
-usage = data.get("usage", {})
+    with urllib.request.urlopen(req, timeout=900) as resp:
+        result = json.loads(resp.read().decode('utf-8'))
+        for item in result.get('output', []):
+            if item.get('type') == 'message':
+                for c in item.get('content', []):
+                    if c.get('type') == 'output_text':
+                        return c['text']
+        raise RuntimeError(f"No text output: {json.dumps(result)[:500]}")
 
-# Save to file FIRST (before printing — Windows encoding crash prevention)
-stem = file_path.stem
-timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-outpath = Path(r"C:\Users\Michael Kernaghan\claude-inbox\peer-reviews") / f"{stem}-oxford-gpt54-{timestamp}.txt"
-outpath.parent.mkdir(parents=True, exist_ok=True)
-with open(outpath, "w", encoding="utf-8") as f:
-    f.write(f"Oxford Challenge Review: {file_path.name}\n")
-    f.write(f"Date: {datetime.now().isoformat()}\n")
-    f.write(f"Reviewer: GPT-5.4-pro (Oxford 3-step method)\n")
-    f.write(f"Tokens: {usage.get('input_tokens', '?')} input, {usage.get('output_tokens', '?')} output\n")
-    f.write(f"{'='*80}\n\n")
-    f.write(review)
 
-print(f"\nTokens: {usage.get('input_tokens', '?')} input, {usage.get('output_tokens', '?')} output")
-print(f"Review saved to: {outpath}")
+if __name__ == "__main__":
+    file_path = Path(r"C:\Users\Michael Kernaghan\contextuality\paper\algebraic_islands.tex")
 
-# Print with safe encoding
-sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-print(f"\n{'='*80}")
-print(review)
-print(f"{'='*80}")
+    print(f"Reading: {file_path}")
+    content = file_path.read_text(encoding='utf-8')
+    content = strip_latex(content)
+
+    if len(content) > 80000:
+        print(f"Truncating from {len(content)} to 80000 chars")
+        content = content[:80000]
+
+    print(f"Document: {len(content)} chars")
+    print("Sending to GPT-5.4-pro for Oxford hostile review...")
+    t0 = datetime.now()
+
+    api_key = get_api_key()
+    review = call_openai(api_key, content)
+
+    elapsed = (datetime.now() - t0).total_seconds()
+    print(f"Review received ({elapsed:.1f}s)")
+
+    reviews_dir = Path.home() / "claude-inbox" / "peer-reviews"
+    reviews_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    review_file = reviews_dir / f"algebraic_islands-oxford-gpt54-{timestamp}.txt"
+
+    sep = "=" * 70
+    header = (
+        f"Oxford Hostile Examiner Review: algebraic_islands.tex\n"
+        f"Date: {datetime.now()}\n"
+        f"Reviewer: GPT-5.4-pro\n"
+        f"Elapsed: {elapsed:.1f}s\n\n"
+        f"{sep}\n\n"
+    )
+    review_file.write_text(header + (review or "NO REVIEW"), encoding='utf-8')
+    print(f"Review saved to: {review_file}")
+    print()
+    print(sep)
+    print(review or "NO REVIEW")
