@@ -49,13 +49,16 @@ No sub-31 KS set is found by any strategy.
 An OCUS procedure certifies that~31 is the exact minimum within the 49-ray
 integer pool $\{0,\pm1,\pm2\}^3$.
 The graph perturbation search finds 61,702 abstract KS-uncolorable hypergraphs
-with fewer than~31 vertices, but none is realizable in~$\R^3$;
-a complementary vertex-merging analysis produces 394 combinatorially valid
-30-vertex KS graphs, also unrealizable.
+with fewer than~31 vertices; numerical realizability testing finds no
+$\R^3$ embedding for any of them (best residual $3.8 \times 10^{-2}$).
+A complementary vertex-merging analysis produces 394 combinatorially valid
+30-vertex KS graphs, all proved unrealizable within the integer pool by
+finite SAT encoding.
 This identifies a \emph{realizability barrier}: abstract sub-31 KS candidates
 exist in abundance, but three-dimensional geometry prevents their realization.
-We establish an empirical \emph{modulus-2 boundary}---all tested alphabets
-lacking the coordinate~$\pm2$ fail to produce KS-uncolorable pools---and
+We establish an empirical \emph{modulus-2 boundary}---among integer-like
+alphabets $\{0,\pm1,\pm x\}$, only those where $|x|^2 = 2$ (or the
+degenerate case $x = 2$) produce KS-uncolorable pools---and
 analyze structural constraints (constraint budget, plane matching property)
 relevant to proof attempts.
 The paper surveys prior work on KS minimality, taxonomizes the available
@@ -86,6 +89,16 @@ is one of the central open problems in quantum foundations. Despite more than
 five decades of effort, a definitive answer remains out of reach. The current
 situation is captured by the inequality $24 \leq n_{\min}^{(3)} \leq 31$, and
 closing this gap is the motivating problem of the present paper.
+
+This paper is a companion to Ref.~\cite{Kernaghan2026algebraic}, which
+establishes the algebraic framework---six discrete ``algebraic islands'' of
+KS-supporting number rings, two cancellation mechanisms, and the pool
+construction methodology---on which the present search is built. We assume
+that framework here and do not re-derive it; the reader is referred to
+Ref.~\cite{Kernaghan2026algebraic} for definitions, proofs, and the full
+classification. The present paper's contribution is the systematic search
+for sub-31 KS sets using that framework, the identification of structural
+barriers, and the mapping of approaches for closing the gap.
 
 \subsection*{History of the upper bound}
 
@@ -142,31 +155,37 @@ graph-theoretic perturbation, and structural analysis. No sub-31 KS set is
 found by any strategy.
 
 Our main findings are as follows. First, within each of six algebraic ray pools
-identified in our companion paper \cite{Kernaghan2026algebraic}, we apply minimum
-unsatisfiable subset (MUS) extraction and an OCUS (optimal constrained unsatisfiable
-subset) procedure to certify sharp minimum KS sizes: 31 rays for the integer
-alphabet $\{0,\pm 1,\pm 2\}$, 33 rays for the Peres, Eisenstein, and
-$\Z[\sqrt{-2}]$ alphabets, 43 rays for the Heegner-7 alphabet, and 52 rays for
-the golden-ratio alphabet. The OCUS result for the 49-ray integer pool establishes
-that~31 is the exact minimum within that pool, not merely an upper bound.
+identified in our companion paper \cite{Kernaghan2026algebraic}, MUS (minimum
+unsatisfiable subset) extraction consistently finds sharp minima: 31 rays for the
+integer pool, 33 for Peres, Eisenstein, and $\Z[\sqrt{-2}]$, 43 for Heegner-7,
+and 52 for the golden ratio. For the integer pool, an OCUS (optimal constrained
+unsatisfiable subset) procedure exhaustively certifies that no KS-uncolorable
+subset of $\leq 30$ rays exists among all 49 pool rays; for the remaining pools,
+the minima are best-known values supported by thousands of independent MUS
+extractions but not exhaustively certified.
 
-Second, we identify what we call the \emph{modulus-2 boundary}: every tested
-coordinate alphabet that lacks the entry $\pm 2$ fails to produce a
-KS-uncolorable ray pool, while every alphabet containing $\pm 2$ succeeds.
-This is consistent with the hypothesis that the cancellation identity $1 + 1 = 2$
-is not merely sufficient but necessary for KS-uncolorability in the integer setting.
-In a companion paper~\cite{Kernaghan2026algebraic}, we established that
-KS-uncolorability in dimension~3 requires one of two cancellation mechanisms,
-of which integer arithmetic with~$\pm 2$ is the simplest and most constrained.
+Second, we identify an empirical \emph{modulus-2 boundary}: among
+integer-like alphabets of the form $\{0,\pm 1,\pm x\}$, only those where
+$|x|^2 = 2$ produce KS-uncolorable pools. Alphabets with $|x|^2 \geq 3$
+(such as $\{0,\pm 1,\pm 3\}$) are colorable despite generating orthogonal
+triples. In a companion paper~\cite{Kernaghan2026algebraic}, we established
+that KS-uncolorability in dimension~3 requires one of two cancellation
+mechanisms: modulus-2 cancellation ($|x|^2 = 2$, of which the integer
+identity $1+1=2$ is the degenerate case) or phase cancellation (a vanishing
+sum of roots of unity, as in the Eisenstein field). The modulus-2 boundary
+reported here is the integer-alphabet manifestation of this broader pattern.
 
 Third, a graph perturbation search over 500,000 random trials finds 61,702
-abstract KS-uncolorable hypergraphs with fewer than~31 vertices, but none of
-these abstract structures is realizable in $\R^3$. A complementary vertex-merging
-analysis produces 394 distinct 30-vertex KS-uncolorable graphs derived from
-CK-31 by identification of pairs of rays; again, none is geometrically realizable.
-This dichotomy---abstract sub-31 KS candidates exist in abundance, yet $\R^3$
-geometry prevents every one of them from being realized---identifies the
-\emph{realizability barrier} as the core obstruction to a sub-31 KS set.
+abstract KS-uncolorable hypergraphs with fewer than~31 vertices; numerical
+optimization finds no $\R^3$ realization for any of them (best residual
+$3.8 \times 10^{-2}$, six orders of magnitude above the acceptance threshold).
+A complementary vertex-merging analysis produces 394 distinct 30-vertex
+KS-uncolorable graphs derived from CK-31; all 394 are proved unrealizable
+within the integer pool by finite SAT encoding ($< 1$\,s each).
+The convergence of these two independent lines of evidence---one numerical,
+one exact within a finite pool---identifies a \emph{realizability barrier}:
+abstract sub-31 KS candidates exist in abundance, but embedding them as
+rays in $\R^3$ appears to be the core obstruction.
 
 Fourth, we analyze the structural reasons why naive counting and coloring
 arguments are insufficient to close the gap, and identify the \emph{plane
@@ -551,7 +570,7 @@ answer (UNSAT) means the abstract graph has no realization within that pool; it 
 not rule out realizations in other pools or over the reals.
 
 %%----------------------------------------------------------------------
-\section{Exact minimization within algebraic pools}
+\section{Minimization within algebraic pools}
 \label{sec:exact}
 %%----------------------------------------------------------------------
 
@@ -868,14 +887,13 @@ surveyed here.
 \subsection{Summary}
 
 Across all 30 tested alphabets, no sub-31 KS set was found. The results
-establish an empirical modulus-2 boundary: alphabets lacking the coordinate
-$\pm2$ cannot produce KS sets in our survey. This is consistent with the
-hypothesis that the $1+1=2$ cancellation identity is structurally necessary for
-KS-uncolorability from integer-like alphabets in dimension~3, and extends to
-several non-integer fields as well. We conclude: \textit{expanded coordinate
-sets from all tested fields fail to produce sub-31 KS sets, establishing the
-empirical modulus-2 boundary as a robust feature of the known algebraic
-landscape.}
+establish an empirical modulus-2 boundary for integer-like alphabets: among
+alphabets of the form $\{0,\pm 1,\pm x\}$, only those with $|x|^2 = 2$
+produce KS-uncolorable pools. (Non-integer fields such as the Eisenstein
+integers use a different mechanism---phase cancellation---and are not
+covered by this specific boundary; see Ref.~\cite{Kernaghan2026algebraic}
+for the full two-mechanism classification.) We conclude: \textit{expanded
+coordinate sets from all tested fields fail to produce sub-31 KS sets.}
 
 %%----------------------------------------------------------------------
 \section{Numerical optimization}
@@ -1005,14 +1023,14 @@ Best configuration & $n=30$, $t=17$, $p=69$ \\
 
 \textbf{Abstract sub-31 KS-uncolorable hypergraphs are abundant.} Roughly 12.3\% of all valid perturbations produce abstract hypergraphs that have fewer than 31 vertices and are KS-uncolorable. The combinatorial requirement for a sub-31 KS set is not the bottleneck.
 
-\textbf{The geometric requirement is the bottleneck.} Of the 61,702 abstract sub-31 candidates, not a single one admits a realization in~$\R^3$. The 1,904 near-realizable cases (residual $< 0.1$) are as close as the landscape permits, and the best achievable residual is $3.8\times 10^{-2}$---more than six orders of magnitude above the acceptance threshold.
+\textbf{The geometric requirement is the bottleneck.} Of the 61,702 abstract sub-31 candidates, numerical optimization (L-BFGS-B, 10--15 random starts per candidate) finds no $\R^3$ realization for any of them. The 1,904 near-realizable cases (residual $< 0.1$) represent the closest the optimizer reaches, and the best residual across all candidates is $3.8\times 10^{-2}$---more than six orders of magnitude above the acceptance threshold of $10^{-10}$. While numerical optimization cannot prove unrealizability, the systematic failure across 61,702 independent instances with consistently large residuals constitutes strong evidence of a structural obstruction rather than an optimization artifact.
 
 \textbf{The best residual signals a structural gap, not a near-miss.} A residual of $3.8\times 10^{-2}$ reflects an incompatibility between the abstract graph's structure and three-dimensional real geometry. This is qualitatively different from a near-miss where the residual is small but optimization is slow.
 
 \textbf{The best configuration closely mirrors CK-31.} The configuration achieving the best residual has $n = 30$, $t = 17$, $p = 69$. CK-31 has $n = 31$, $t = 17$, $p = 71$. Same number of triads, two fewer pairs, one fewer vertex---but the geometry does not give way.
 
 \begin{remark}
-The 61,702 abstract sub-31 KS-uncolorable hypergraphs are combinatorial objects: they exist as hypergraphs but not (so far as we can determine) as ray sets in~$\R^3$. Their existence shows that the KS theorem's combinatorial logic does not require 31 rays; the constraint comes from the interaction of that logic with three-dimensional Euclidean geometry.
+The 61,702 abstract sub-31 KS-uncolorable hypergraphs are combinatorial objects: they exist as hypergraphs but no $\R^3$ realization has been found for any of them. Their existence shows that abstract KS-uncolorability is achievable below 31 vertices; the obstruction to a sub-31 KS \emph{set} (i.e., a realized configuration of rays) appears to lie in the interaction of uncolorability requirements with three-dimensional Euclidean geometry.
 \end{remark}
 
 %%----------------------------------------------------------------------
@@ -1051,13 +1069,13 @@ CK-31 has $\binom{31}{2} - 71 = 394$ non-adjacent pairs. By Proposition~\ref{pro
 \label{obs:barrier}
 Two independent lines of evidence converge:
 \begin{enumerate}[label=(\roman*)]
-\item \emph{Vertex merging}: all 394 combinatorially valid 30-vertex KS graphs derived from CK-31 are unrealizable within the integer pool (finite pool SAT, all UNSAT).
-\item \emph{Graph perturbation} (Section~\ref{sec:perturbation}): 61,702 abstract sub-31 KS-uncolorable hypergraphs are all unrealizable in~$\R^3$ (numerical optimization, zero residuals $< 10^{-10}$).
+\item \emph{Vertex merging}: all 394 combinatorially valid 30-vertex KS graphs derived from CK-31 are proved unrealizable within the $\{0,\pm1,\pm2\}$ integer pool (finite pool SAT, all UNSAT in $< 1$\,s each). This is an exact result within the pool; realizability in other pools or in $\R^3$ generally remains open.
+\item \emph{Graph perturbation} (Section~\ref{sec:perturbation}): among 61,702 abstract sub-31 KS-uncolorable hypergraphs, numerical optimization finds no $\R^3$ realization (best residual $3.8 \times 10^{-2}$). This is strong numerical evidence but not a proof of unrealizability.
 \end{enumerate}
-In total, at least 62,096 distinct abstract sub-31 KS-uncolorable hypergraphs have been tested; none is realizable.
+In total, at least 62,096 distinct abstract sub-31 KS-uncolorable hypergraphs have been tested; no realization has been found by any method.
 \end{observation}
 
-The 24--31 gap is not a combinatorial gap. Abstract KS-uncolorable hypergraphs with $n < 31$ exist in abundance. The gap is a \emph{realizability} gap: three-dimensional real geometry refuses to accommodate them.
+The evidence points to a \emph{realizability gap}: abstract KS-uncolorable hypergraphs with $n < 31$ exist in abundance, but embedding them as rays in $\R^3$ appears to be the core obstruction. The 394 merged graphs are definitively excluded from the integer pool; the broader claim that no sub-31 abstract KS hypergraph is $\R^3$-realizable is supported by extensive numerical evidence but remains unproved.
 
 \begin{remark}
 The finite pool SAT encoding resolves realizability instances in under 1\,s that defeat Z3. It is directly applicable as a ``quick accept'' screen in the Li--Bright--Ganesh pipeline~\cite{LiBrightGanesh2024}, which is bottlenecked by Z3 above order~20.
@@ -1117,11 +1135,13 @@ For a ray $v \in \R^3$, the perpendicular plane $v^\perp$ is 2-dimensional. A tr
 In $\R^3$, if $v$ is contained in $k$ triads, the $2k$ triad neighbors of $v$ form $k$ orthogonal pairs (a matching) within $v^\perp$. This is verified for all 31 vectors of CK-31.
 \end{observation}
 
-This is an $\R^3$-specific constraint: in higher dimensions, $v^\perp$ has dimension $\geq 2$ and orthogonal pairs need not form a matching. The 2-dimensionality of $v^\perp$ in $\R^3$ imposes rigid structure on triad sharing.
+The non-triviality of this constraint lies in its consequences for abstract hypergraph realizability. In $\R^3$, the 2-dimensionality of $v^\perp$ means that a vertex of triad-degree $k$ forces its $2k$ triad neighbors into $k$ orthogonal pairs within a single plane---a matching constraint that severely limits the number of triads that can share a vertex (at most $\lfloor (n-1)/2 \rfloor$ triads through any single ray, and each imposes a rigid directional relationship on its partners). In dimensions $d \geq 4$, $v^\perp$ has dimension $\geq 3$, orthogonal pairs within it need not form a matching, and the constraint vanishes. This dimensional restriction is a candidate explanation for why the minimum KS size in $\R^3$ is substantially larger than in $\R^4$ (where 18--20 vectors suffice).
 
-\begin{conjecture}[Plane matching as realizability obstruction]
+The plane matching property is not itself a proof of optimality---it is an $\R^3$-specific structural constraint that any realized KS set must satisfy. The open question is whether it, combined with other geometric constraints, suffices to exclude all abstract KS-uncolorable hypergraphs below 31 vertices.
+
+\begin{conjecture}[Local-global realizability gap]
 \label{conj:planematching}
-There exist abstract KS-uncolorable hypergraphs on $n < 31$ vertices whose local triad structure is compatible with the plane matching property, but for which no global consistent assignment of rays in~$\R^3$ exists.
+There exist abstract KS-uncolorable hypergraphs on $n < 31$ vertices whose local triad structure at each vertex is individually compatible with the plane matching property in~$\R^3$, but for which no globally consistent assignment of rays exists. That is, the obstruction to realizability is global, not detectable by local checks alone.
 \end{conjecture}
 
 \subsection{What a proof would require}\label{sec:proofstrategy}
