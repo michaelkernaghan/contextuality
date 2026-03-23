@@ -54,8 +54,9 @@ $\R^3$ embedding for any of them (best residual $3.8 \times 10^{-2}$).
 A complementary vertex-merging analysis produces 394 combinatorially valid
 30-vertex KS graphs, all proved unrealizable within the integer pool by
 finite SAT encoding.
-This identifies a \emph{realizability barrier}: abstract sub-31 KS candidates
-exist in abundance, but three-dimensional geometry prevents their realization.
+The convergence of exact and numerical evidence identifies a
+\emph{realizability barrier}: abstract sub-31 KS candidates exist in
+abundance, but none has been realized as rays in $\R^3$.
 We establish an empirical \emph{modulus-2 boundary}---among integer-like
 alphabets $\{0,\pm1,\pm x\}$, only those where $|x|^2 = 2$ (or the
 degenerate case $x = 2$) produce KS-uncolorable pools---and
@@ -76,7 +77,7 @@ methods of attack, and maps the landscape of approaches for closing the
 The Kochen--Specker (KS) theorem \cite{KochenSpecker1967} (see Ref.~\cite{Budroni2022} for a comprehensive review) establishes that quantum
 measurements in Hilbert spaces of dimension $d \geq 3$ cannot be described by
 noncontextual hidden-variable theories. Formally, the theorem is witnessed by a
-finite set of rays in $\R^d$ (equivalently, unit vectors up to sign) together with
+finite set of rays in $\R^d$ (or $\C^d$; equivalently, unit vectors up to scalar multiples) together with
 a collection of mutually orthogonal triples---the \emph{bases} or \emph{contexts}---such
 that no assignment of values in $\{0,1\}$ to the rays can simultaneously satisfy two
 conditions: (i) exactly one ray in each basis receives the value~1, and (ii) if two
@@ -660,8 +661,10 @@ Pairwise comparison of the six minimal sets reveals that no two are connected by
 a single-ray swap: the minimum Hamming distance (number of ray replacements
 needed to transform one set into another) is 5~ray replacements. Despite this
 topological separation, all pairs share between 25 and 26 rays out of 31,
-yielding a Jaccard similarity of approximately 0.71. CK-31, the Conway--Kochen
-construction, is one of the six.
+yielding a Jaccard similarity of approximately 0.71. CK-31 is one of the six.
+All six share the same orthogonality graph (verified by VF2 isomorphism
+testing~\cite{Kernaghan2026algebraic}), consistent with the rigidity
+result of Trandafir and Cabello~\cite{TrandafirCabello2025}.
 
 \subsection{OCUS exhaustive certification}
 
@@ -810,12 +813,12 @@ the full 30-alphabet survey is consistent with the patterns described here.
 \begin{table}[t]
 \centering
 \caption{Selected expanded alphabets. ``KS'' indicates that the pool is
-KS-uncolorable (--- means colorable); ``Min'' is the best greedy result in
-300--500 trials (--- means not applicable).}
+KS-uncolorable (--- means colorable); ``Best'' is the smallest KS subset
+found by greedy minimization in 300--500 trials (--- means not applicable).}
 \label{tab:alphabets}
 \begin{tabular}{lrcl}
 \toprule
-Alphabet & Rays & Min & Note \\
+Alphabet & Rays & Best & Note \\
 \midrule
 $\{0,\pm1,\pm2\}$ & 49 & 31 & Baseline (CK-31) \\
 $\{0,\pm1,\pm2,\pm3\}$ & 145 & 31 & Absorbs to CK-31 \\
@@ -912,7 +915,7 @@ Strategies 1--3 operate exclusively within finite algebraic ray pools: they can 
 
 Total runtime across all four methods: approximately 12 minutes.
 
-\textbf{Key insight: exact orthogonality is measure-zero.} In the space of unit vectors in $\R^3$ or $\C^3$, the condition $u \cdot v = 0$ defines a measure-zero set. There is no gradient signal connecting near-orthogonal configurations to exact ones: the ``number of exact orthogonal pairs'' objective is constant (zero) almost everywhere in continuous configuration space, jumping discontinuously only on a set of measure zero. Continuous optimization is \emph{categorically} unable to find KS sets. Any successful search must exploit algebraic structure---number-ring coordinates, symmetry groups, or other algebraic constraints that force exact orthogonality by construction.
+\textbf{Key insight: exact orthogonality is measure-zero.} In the space of unit vectors in $\R^3$ or $\C^3$, the condition $\langle u, v \rangle = 0$ defines a measure-zero set. For the unguided random-start methods tested here, there is no gradient signal connecting near-orthogonal configurations to exact ones: the ``number of exact orthogonal pairs'' objective is constant (zero) almost everywhere, jumping discontinuously on a set of measure zero. More sophisticated continuous methods (homotopy continuation, manifold-constrained search) are not ruled out in principle, but the absence of any gradient signal in the tested landscape---and the complete evaporation of near-orthogonal structure under tolerance tightening---suggests that algebraic structure is necessary for producing the exact orthogonalities that KS sets require.
 
 \textbf{Interpretation.} The failure of all four numerical methods is not independent evidence against the existence of a sub-31 KS set. A sub-31 set could exist with coordinates in an untested algebraic field. The negative control confirms that if such a set exists, it must have algebraic structure, and further search should focus on identifying algebraic fields with untested cancellation mechanisms.
 
@@ -921,7 +924,7 @@ Total runtime across all four methods: approximately 12 minutes.
 \label{sec:criticality}
 %%----------------------------------------------------------------------
 
-A KS set $S$ is \emph{deletion-minimal} if removing any single ray from $S$ produces a colorable set. Deletion-minimality implies that $S$ has no proper KS subset, since KS-uncolorability is hereditary under deletion.
+A KS set $S$ is \emph{deletion-minimal} if removing any single ray from $S$ produces a colorable set. Deletion-minimality implies that $S$ has no proper KS subset: every proper subset is contained in some single-deletion subset, and every single-deletion subset is colorable; since colorability is hereditary (any subset of a colorable set is colorable), every proper subset is colorable.
 
 \textbf{CK-31 is deletion-minimal.} We tested all 31 single-ray removals from CK-31 exhaustively via SAT. In each case, the resulting 30-ray set is colorable. This confirms that CK-31 contains no proper KS subset: \emph{every} proper subset of CK-31 is colorable. This result was verified independently for all six distinct minimal 31-sets found in the integer pool; each is deletion-minimal.
 
@@ -1072,7 +1075,7 @@ Two independent lines of evidence converge:
 \item \emph{Vertex merging}: all 394 combinatorially valid 30-vertex KS graphs derived from CK-31 are proved unrealizable within the $\{0,\pm1,\pm2\}$ integer pool (finite pool SAT, all UNSAT in $< 1$\,s each). This is an exact result within the pool; realizability in other pools or in $\R^3$ generally remains open.
 \item \emph{Graph perturbation} (Section~\ref{sec:perturbation}): among 61,702 abstract sub-31 KS-uncolorable hypergraphs, numerical optimization finds no $\R^3$ realization (best residual $3.8 \times 10^{-2}$). This is strong numerical evidence but not a proof of unrealizability.
 \end{enumerate}
-In total, at least 62,096 distinct abstract sub-31 KS-uncolorable hypergraphs have been tested; no realization has been found by any method.
+In total, 62,096 abstract sub-31 KS-uncolorable hypergraphs have been tested (394 from merging, 61,702 from perturbation; overlap and isomorphism reduction not yet performed). No realization has been found by any method.
 \end{observation}
 
 The evidence points to a \emph{realizability gap}: abstract KS-uncolorable hypergraphs with $n < 31$ exist in abundance, but embedding them as rays in $\R^3$ appears to be the core obstruction. The 394 merged graphs are definitively excluded from the integer pool; the broader claim that no sub-31 abstract KS hypergraph is $\R^3$-realizable is supported by extensive numerical evidence but remains unproved.
@@ -1090,7 +1093,7 @@ The 394 merged graphs were tested only within the integer pool. Open: (1)~realiz
 \label{sec:proof}
 %%----------------------------------------------------------------------
 
-The computational evidence is strong: no sub-31 KS set has been found by any of seven independent methods, and the realizability barrier shows that abstract sub-31 KS hypergraphs are combinatorially plentiful but geometrically excluded. We frame the following as structural insights and candidate proof directions, not as partial proofs.
+The computational evidence is strong: no sub-31 KS set has been found by any of seven independent methods, and the realizability barrier (Observation~\ref{obs:barrier}) shows that abstract sub-31 KS hypergraphs are combinatorially plentiful but have resisted all attempts at geometric realization. We frame the following as structural insights and candidate proof directions, not as partial proofs.
 
 \subsection{Constraint budget}\label{sec:budget}
 
