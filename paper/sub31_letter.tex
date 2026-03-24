@@ -153,8 +153,10 @@ We do not prove that 31 is optimal.  Among all tested two-element alphabets $\{0
 
 Our finite pool SAT encoding is directly applicable to the realizability-based lower-bound programs of Li, Bright, and Ganesh~\cite{LiBrightGanesh2024} and Kirchweger et al.~\cite{KirchwegarPeitlSzeider2023}, both bottlenecked by Z3 returning ``unknown'' on embeddability queries above order~20.  By reformulating realizability within a finite ray pool as pure Boolean satisfiability, the encoding resolves instances in under 1\,s that defeat Z3, and could serve as a ``quick accept'' screen in the LBG pipeline.
 
+\textit{Verification methodology.}---This paper was developed using an LLM-assisted workflow~\cite{Schwartz2026}.  All computational claims are reproducible via scripts with deterministic seeding; all SAT-based claims (OCUS certification, criticality, uncolorability) are machine-checkable proofs.  Key results were cross-verified using adversarial LLM peer review.
+
 \begin{acknowledgments}
-The author acknowledges the use of Claude (Anthropic) for computational assistance. SAT solving used PySAT with the Glucose4 solver.  Code, ray/triad lists, and SAT instances are available at \url{https://github.com/michaelkernaghan/contextuality}.
+Claude (Anthropic) performed all computational work including SAT-based search, OCUS certification, numerical optimization, and manuscript preparation; cross-verification was performed using GPT (OpenAI).  The author directed the research, validated results, and accepts full responsibility for the scientific content and integrity of this paper.  SAT solving used PySAT with the Glucose4 solver.  Code, ray/triad lists, and SAT instances are available at \url{https://github.com/michaelkernaghan/contextuality}.
 \end{acknowledgments}
 
 \begin{thebibliography}{20}
@@ -202,6 +204,11 @@ Phys.\ Rev.\ A \textbf{111}, 052204 (2025); arXiv:2501.11640.
 \bibitem{CortezMoralesReyes2022}
 V.~Cortez, R.~Morales, and E.~J.~Reyes,
 arXiv:2211.13216 (2022).
+
+\bibitem{Schwartz2026}
+M.~D.~Schwartz,
+``Vibe physics: the AI grad student,''
+Anthropic Research (2026).
 
 \end{thebibliography}
 

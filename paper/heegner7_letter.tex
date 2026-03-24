@@ -146,8 +146,10 @@ KS sets also have direct operational significance beyond CSW inequalities: Cabel
 Both constructions arise from a pattern observed across all tested number fields: KS-uncolorability appears to require one of two cancellation mechanisms---\emph{modulus-2 cancellation} (a generator $x$ with Hermitian squared modulus $|x|^2 = 2$, enabling identities such as $1{+}1=2$, $(\sqrt{2})^2=2$, $\alpha\bar\alpha=2$) or \emph{phase cancellation} (a root-of-unity sum vanishing exactly, as in $1{+}\omega{+}\omega^2 = 0$).  In all fields we tested, alphabets whose smallest available cancellation involves $|x|^2 \geq 3$ produce orthogonal triples but not KS-uncolorability.  The golden ratio case ($|\varphi|^2 \approx 2.618$) does not violate this pattern: cross-product completion introduces modulus-2-type cancellations into the effective coordinate set.
 
 For the restricted family of two-element alphabets $\{0, \pm 1, \pm x\}$, we can enumerate all non-trivial three-term zero-sums from the product set $\{0, \pm 1, \pm x, \pm |x|^2\}$: the only solutions are $x = 2$ (integer), $|x|^2 = 2$ (Peres, $\Z[\sqrt{-2}]$, Heegner-7), $|x|^2 = x + 1$ (golden ratio), and $x^2 + x + 1 = 0$ (Eisenstein).  This enumeration is complete for two-element alphabets, but multi-element alphabets from higher-degree number fields remain unexplored: cross-products $xy$ may introduce cancellation identities not reducible to these four types.
+\textit{Verification methodology.}---This paper was developed using an LLM-assisted workflow~\cite{Schwartz2026}.  All computational claims are reproducible via scripts with deterministic seeding; key results were cross-verified using adversarial LLM peer review.
+
 \begin{acknowledgments}
-The author thanks Ad\'an Cabello for pointing out the connection between the Eisenstein construction and his simplest KS set. The author acknowledges the use of Claude (Anthropic) for computational assistance.
+The author thanks Ad\'an Cabello for pointing out the connection between the Eisenstein construction and his simplest KS set.  Claude (Anthropic) performed all computational work including script development, SAT-based verification, and manuscript preparation; cross-verification was performed using GPT (OpenAI).  The author directed the research, validated results, and accepts full responsibility for the scientific content and integrity of this paper.
 \end{acknowledgments}
 
 \begin{thebibliography}{20}
@@ -198,6 +200,11 @@ See Supplemental Material for explicit ray coordinates, orthogonality graphs, ba
 \bibitem{Budroni2022}
 C.~Budroni, A.~Cabello, O.~G\"uhne, M.~Kleinmann, and J.-\AA.~Larsson,
 Rev.\ Mod.\ Phys.\ \textbf{94}, 045007 (2022).
+
+\bibitem{Schwartz2026}
+M.~D.~Schwartz,
+``Vibe physics: the AI grad student,''
+Anthropic Research (2026).
 
 \end{thebibliography}
 

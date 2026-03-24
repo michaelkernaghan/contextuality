@@ -168,8 +168,10 @@ Second, the modulus-2 cancellation pattern provides a \emph{predictive heuristic
 
 For the restricted family of two-element alphabets $\{0, \pm 1, \pm x\}$, enumerating all three-term zero-sums from the product set $\{0, \pm 1, \pm x, \pm |x|^2\}$ yields exactly four non-trivial identities---$x = 2$, $|x|^2 = 2$, $|x|^2 = x + 1$, and $x^2 + x + 1 = 0$---each corresponding to a known island.  This enumeration is complete for two-element alphabets.  Our coverage extends to quadratic fields ($\Q(\sqrt{d})$ for $d = 2, \ldots, 30$; all nine class-1 imaginary quadratic fields) and cyclotomic fields ($n \leq 30$).  The principal open question is whether multi-element alphabets from higher-degree fields harbor cancellation identities not reducible to modulus-2 or phase type.  The cubic field $\Q(\sqrt[3]{2})$ already produces a KS set at 60~vectors, suggesting that the pattern may extend but with rapidly increasing cost; quartic and higher extensions remain unexplored.
 
+\textit{Verification methodology.}---This paper was developed using an LLM-assisted workflow~\cite{Schwartz2026}.  All computational claims (VF2 isomorphism, SAT-based uncolorability, negative controls) are reproducible via scripts with deterministic seeding; key results were cross-verified using adversarial LLM peer review.
+
 \begin{acknowledgments}
-The author thanks Ad\'an Cabello for discussions on the algebraic structure of KS sets. The author acknowledges the use of Claude (Anthropic) for computational assistance.
+The author thanks Ad\'an Cabello for discussions on the algebraic structure of KS sets.  Claude (Anthropic) performed all computational work including VF2 isomorphism testing, SAT verification, and manuscript preparation; cross-verification was performed using GPT (OpenAI).  The author directed the research, validated results, and accepts full responsibility for the scientific content and integrity of this paper.
 \end{acknowledgments}
 
 \begin{thebibliography}{15}
@@ -232,6 +234,11 @@ in \textit{Proceedings of IJCAI-24} (2024); arXiv:2306.13319.
 \bibitem{KirchwegarPeitlSzeider2023}
 M.~Kirchweger, A.~Peitl, and S.~Szeider,
 in \textit{Proceedings of AAAI-23}, 4119 (2023).
+
+\bibitem{Schwartz2026}
+M.~D.~Schwartz,
+``Vibe physics: the AI grad student,''
+Anthropic Research (2026).
 
 \end{thebibliography}
 

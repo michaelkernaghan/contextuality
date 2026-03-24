@@ -201,8 +201,10 @@ The factorization $6 = 2 \times 3$ is suggestively consistent with---but logical
 
 More broadly, the proof technique---classifying orthogonalities by the length of the underlying vanishing sum, then analyzing the resulting constraint graph---may extend to other algebraic families of KS constructions.  Whether the projective collapse of Lemma~\ref{lem:collapse}, in which group-theoretic symmetry forces orthogonal neighbors to coalesce, occurs in other algebraic settings (e.g., Gaussian or quadratic integer alphabets) remains an open question.
 
+\textit{Verification methodology.}---This paper was developed using an LLM-assisted workflow~\cite{Schwartz2026}.  The algebraic proof was subjected to six rounds of adversarial peer review using a competing LLM, with substantive errors found and corrected in rounds~2 and~5.  Independent numerical cross-checks using PySAT (Glucose4) verified the coloring constructions for all $n \leq 100$.  The author invites independent human verification, particularly for the necessity cases.
+
 \begin{acknowledgments}
-The author acknowledges the use of Claude (Anthropic) for computational assistance.  The proof is self-contained; independent numerical cross-checks using PySAT (Glucose4) verified the coloring constructions for all $n \leq 100$.  Code is available at \url{https://github.com/michaelkernaghan/contextuality}.
+Claude (Anthropic) performed all computational work including proof construction, numerical verification, and manuscript preparation; cross-verification was performed using GPT (OpenAI) through structured adversarial peer review.  The author directed the research, validated results, and accepts full responsibility for the scientific content and integrity of this paper.  Code is available at \url{https://github.com/michaelkernaghan/contextuality}.
 \end{acknowledgments}
 
 \begin{thebibliography}{10}
@@ -231,6 +233,11 @@ in \textit{Proceedings of IJCAI-24}, 2105 (2024); arXiv:2306.13319.
 T.~Y.~Lam and K.~H.~Leung,
 ``On vanishing sums of roots of unity,''
 \textit{J.\ Algebra} \textbf{224}, 91 (2000).
+
+\bibitem{Schwartz2026}
+M.~D.~Schwartz,
+``Vibe physics: the AI grad student,''
+Anthropic Research (2026).
 
 \end{thebibliography}
 
