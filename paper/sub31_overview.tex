@@ -43,10 +43,11 @@ is bounded between 24 (established 2023) and~31 (circa 1990), a gap whose
 current width has persisted since the SAT-based lower-bound improvements of
 Li--Bright--Ganesh and Kirchweger--Peitl--Szeider.
 We report a systematic search for KS sets with fewer than~31 vectors using
-seven complementary strategies: SAT-verified minimization within six algebraic
+eight complementary strategies: SAT-verified minimization within six algebraic
 ray pools, cross-pool mixing, expanded coordinate alphabets (30~tested, including
 Pisot-number fields), numerical optimization, deletion-criticality analysis,
-triad density thresholds, and a graph perturbation search over 500,000 trials.
+triad density thresholds, a graph perturbation search over 500,000 trials,
+and vertex-merging realizability analysis.
 No sub-31 KS set is found by any strategy.
 An OCUS procedure certifies that~31 is the exact minimum within the 49-ray
 integer pool $\{0,\pm1,\pm2\}^3$.
@@ -180,7 +181,7 @@ reported here is the integer-alphabet manifestation of this broader pattern.
 Third, a graph perturbation search over 500,000 random trials finds 61,702
 abstract KS-uncolorable hypergraphs with fewer than~31 vertices; numerical
 optimization finds no $\R^3$ realization for any of them (best residual
-$3.8 \times 10^{-2}$, six orders of magnitude above the acceptance threshold).
+$3.8 \times 10^{-2}$, more than eight orders of magnitude above the acceptance threshold).
 A complementary vertex-merging analysis produces 394 distinct 30-vertex
 KS-uncolorable graphs derived from CK-31; all 394 are proved unrealizable
 within the integer pool by finite SAT encoding ($< 1$\,s each).
@@ -330,7 +331,7 @@ technique: co-certificate learning within a SAT modulo symmetries framework.  Th
 approach generates symmetry-breaking clauses automatically to prevent the
 enumeration from revisiting isomorphic configurations, and uses co-certificates
 (proofs of unsatisfiability) to certify that each explored configuration is
-genuinely unrealizable.  The method does not rely on external solvers for
+genuinely KS-uncolorable.  The method does not rely on external solvers for
 realizability and provides a self-contained proof.
 
 Both groups confirm that no KS set exists on fewer than~24 rays in $\R^3$ or
@@ -511,9 +512,10 @@ pool.
 
 \emph{OCUS} (Optimal Constrained Unsatisfiable Subset) strengthens MUS extraction by
 certifying the \emph{globally minimum} unsatisfiable subset size within the pool.
-OCUS iteratively proves, for increasing $k = 1, 2, \ldots$, that no unsatisfiable
-subset of $\leq k$ rays exists, until an unsatisfiable subset of size $k^*$ is found
-and its minimality is certified. This provides an exhaustive lower bound on the minimum
+Our implementation iteratively enumerates hitting sets of all MUSes found so far,
+using a SAT oracle to test each candidate for unsatisfiability, and advances the
+cardinality bound until it certifies that no unsatisfiable subset of size $< k^*$
+exists. This provides an exhaustive lower bound on the minimum
 KS subset size within a finite pool, at the cost of substantially greater computational
 effort than single-MUS extraction.
 
@@ -823,7 +825,7 @@ Alphabet & Rays & Best & Note \\
 \midrule
 $\{0,\pm1,\pm2\}$ & 49 & 31 & Baseline (CK-31) \\
 $\{0,\pm1,\pm2,\pm3\}$ & 145 & 31 & Absorbs to CK-31 \\
-$\{0,\pm1,\pm2,\pm3,\pm4\}$ & 289 & 36 & Heuristic limit \\
+$\{0,\pm1,\pm2,\pm3,\pm4\}$ & 289 & 36$^\dagger$ & Heuristic limit \\
 $\{0,\pm1,\pm3\}$ & 49 & --- & Not KS \\
 $\{0,\pm1,\pm4\}$ & 49 & --- & Not KS \\
 Eisenstein $c{=}3$, $n{\leq}6$ & 345 & 31 & Absorbs to CK-31 \\
@@ -834,6 +836,11 @@ $\{0,\pm1,\pm2,\pm i\}$ & 127 & 31 & Mixed-field \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+$^\dagger$Since this pool contains the $\{0,\pm1,\pm2\}$ sub-pool, its true
+minimum is at most~31 (inherited from CK-31). The reported value of~36
+reflects greedy heuristic incompleteness on the larger 289-ray search space,
+not a structural property of the pool.
 
 \subsection{The modulus-2 boundary}
 
@@ -865,9 +872,10 @@ each, comparable in size to the baseline integer pool---are \emph{not
 KS-uncolorable at all}: the full pool is 2-colorable. Despite the availability
 of orthogonal triples, the triads cannot be interlocked in a way that forces
 contradiction. Analogously, $\{0,\pm1,\pm2,\pm3,\pm4\}$ with 289~rays reaches
-only minimum~36 under greedy minimization---higher than the integer pool minimum
-despite a much larger ray count---suggesting that the additional high-norm rays
-do not contribute usable orthogonal structure.
+only minimum~36 under greedy minimization, though the true minimum is at
+most~31 since this pool contains the $\{0,\pm1,\pm2\}$ sub-pool as a subset.
+The failure to find~31 reflects the difficulty of greedy search in the larger
+289-ray space, not a structural barrier imposed by the additional rays.
 
 The mechanism is algebraic: the cancellation identity $1+1=2$ enables
 constructions such as $(1,1,1) \perp (1,1,-2)$, providing a ``two-against-one''
@@ -892,8 +900,10 @@ surveyed here.
 
 Across all 30 tested alphabets, no sub-31 KS set was found. The results
 establish an empirical modulus-2 boundary for integer-like alphabets: among
-alphabets of the form $\{0,\pm 1,\pm x\}$, only those with $|x|^2 = 2$
-produce KS-uncolorable pools. (Non-integer fields such as the Eisenstein
+alphabets of the form $\{0,\pm 1,\pm x\}$, only those where the cancellation
+identity $1 + 1 = 2$ is available---either because $|x|^2 = 2$ or because
+$x = 2$ itself (the degenerate integer case with $|x|^2 = 4$)---produce
+KS-uncolorable pools. (Non-integer fields such as the Eisenstein
 integers use a different mechanism---phase cancellation---and are not
 covered by this specific boundary; see Ref.~\cite{Kernaghan2026algebraic}
 for the full two-mechanism classification.) We conclude: \textit{expanded
@@ -949,7 +959,7 @@ $k$ removed & Remain & Subsets tested & Method \\
 \end{tabular}
 \end{table}
 
-Total: 11{,}460{,}647 exhaustive SAT checks plus $4 \times 10^6$ sampled checks. \emph{All subsets are colorable.}
+Total: 11{,}460{,}948 exhaustive SAT checks plus $4 \times 10^6$ sampled checks. \emph{All subsets are colorable.}
 
 \textbf{Significance at the lower-bound threshold.} At $k = 7$, the remaining 24 rays equal the Li--Bright--Ganesh lower bound~\cite{LiBrightGanesh2024}. All $\binom{31}{7} = 2{,}629{,}575$ subsets of CK-31 of size 24 are colorable, providing explicit confirmation at the lower-bound threshold. (This already follows from deletion-minimality, but the exhaustive check provides a concrete certificate at exactly the boundary.)
 
@@ -1027,7 +1037,7 @@ Best configuration & $n=30$, $t=17$, $p=69$ \\
 
 \textbf{Abstract sub-31 KS-uncolorable hypergraphs are abundant.} Roughly 12.3\% of all valid perturbations produce abstract hypergraphs that have fewer than 31 vertices and are KS-uncolorable. The combinatorial requirement for a sub-31 KS set is not the bottleneck.
 
-\textbf{The geometric requirement is the bottleneck.} Of the 61,702 abstract sub-31 candidates, numerical optimization (L-BFGS-B, 10--15 random starts per candidate) finds no $\R^3$ realization for any of them. The 1,904 near-realizable cases (residual $< 0.1$) represent the closest the optimizer reaches, and the best residual across all candidates is $3.8\times 10^{-2}$---more than six orders of magnitude above the acceptance threshold of $10^{-10}$. While numerical optimization cannot prove unrealizability, the systematic failure across 61,702 independent instances with consistently large residuals constitutes strong evidence of a structural obstruction rather than an optimization artifact.
+\textbf{The geometric requirement is the bottleneck.} Of the 61,702 abstract sub-31 candidates, numerical optimization (L-BFGS-B, 10--15 random starts per candidate) finds no $\R^3$ realization for any of them. The 1,904 near-realizable cases (residual $< 0.1$) represent the closest the optimizer reaches, and the best residual across all candidates is $3.8\times 10^{-2}$---more than eight orders of magnitude above the acceptance threshold of $10^{-10}$. While numerical optimization cannot prove unrealizability, the systematic failure across 61,702 independent instances with consistently large residuals constitutes strong evidence of a structural obstruction rather than an optimization artifact.
 
 \textbf{The best residual signals a structural gap, not a near-miss.} A residual of $3.8\times 10^{-2}$ reflects an incompatibility between the abstract graph's structure and three-dimensional real geometry. This is qualitatively different from a near-miss where the residual is small but optimization is slow.
 
@@ -1096,7 +1106,7 @@ The 394 merged graphs were tested only within the integer pool. Open: (1)~realiz
 \label{sec:proof}
 %%----------------------------------------------------------------------
 
-The computational evidence is strong: no sub-31 KS set has been found by any of seven independent methods, and the realizability barrier (Observation~\ref{obs:barrier}) shows that abstract sub-31 KS hypergraphs are combinatorially plentiful but have resisted all attempts at geometric realization. We frame the following as structural insights and candidate proof directions, not as partial proofs.
+The computational evidence is strong: no sub-31 KS set has been found by any of eight independent methods, and the realizability barrier (Observation~\ref{obs:barrier}) shows that abstract sub-31 KS hypergraphs are combinatorially plentiful but have resisted all attempts at geometric realization. We frame the following as structural insights and candidate proof directions, not as partial proofs.
 
 \subsection{Constraint budget}\label{sec:budget}
 
@@ -1299,7 +1309,7 @@ increasingly implausible in light of the evidence assembled.
 \label{sec:conclusion}
 %%----------------------------------------------------------------------
 
-We have described seven complementary strategies---algebraic pool construction
+We have described eight complementary strategies---algebraic pool construction
 and OCUS certification, alphabet expansion, cross-pool mixing, simulated
 annealing, modulus-based ring analysis, graph perturbation, and structural
 proof-theoretic analysis---applied systematically to six algebraic ray pools
@@ -1355,13 +1365,15 @@ that no uncolorable 3-uniform hypergraph with the matching property exists
 at order 30 would constitute a direct proof of optimality. \textit{(Research
 question; requires a new combinatorial argument.)}
 
-\item \textbf{Can merge saturation be proved for all minimal KS sets?} Vertex
-merging is verified to preserve KS-uncolorability across all 3,756 tested
-merges over the six known KS islands, with 100\% preservation. This empirical
-saturation---that every merge of a minimal KS set yields another KS
-set---suggests a structural characterization of minimal KS sets that, if
-proved, would substantially constrain the space of candidates. \textit{(Open
-conjecture; well-supported computationally.)}
+\item \textbf{Does merge saturation preserve minimality?}
+Proposition~\ref{prop:merge} proves that merging non-adjacent vertices preserves
+KS-uncolorability. A stronger open question is whether the \emph{merged set is
+itself minimal} (deletion-minimal): does merging a minimal KS set always produce
+another minimal KS set? The 100\% preservation of uncolorability across 3,756
+merges over six islands follows from the proposition; whether the merged sets are
+also deletion-minimal, and whether this property characterizes the space of
+minimal KS sets, remains open. \textit{(Open; the uncolorability preservation
+is proved, but minimality preservation is not.)}
 
 \end{enumerate}
 
@@ -1495,7 +1507,7 @@ arXiv:XXXX.XXXXX [quant-ph] (2026).
 \bibitem{Schwartz2026}
 M.~D.~Schwartz,
 ``Vibe physics: the AI grad student,''
-Anthropic Research (2026).
+arXiv:2601.02484 [physics.gen-ph] (2026).
 Available at \url{https://www.anthropic.com/research/vibe-physics}.
 
 \end{thebibliography}
