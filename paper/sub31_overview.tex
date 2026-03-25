@@ -39,7 +39,9 @@
 
 \begin{abstract}
 The minimum number of rays required for a Kochen--Specker set in dimension~3
-is bounded between 24 and~31, a gap that has persisted for over a decade.
+is bounded between 24 (established 2023) and~31 (circa 1990), a gap whose
+current width has persisted since the SAT-based lower-bound improvements of
+Li--Bright--Ganesh and Kirchweger--Peitl--Szeider.
 We report a systematic search for KS sets with fewer than~31 vectors using
 seven complementary strategies: SAT-verified minimization within six algebraic
 ray pools, cross-pool mixing, expanded coordinate alphabets (30~tested, including
@@ -142,8 +144,7 @@ exists in $\R^3$ or $\C^3$. The gap between~24 and~31 is the current frontier.
 Trandafir and Cabello~\cite{TrandafirCabello2025} recently proved that CK-31 is
 \emph{rigid}: it is unique up to unitary equivalence in $\C^3$, and every
 sub-configuration of fewer than~31 rays drawn from its basis structure is
-KS-colorable. They further conjectured, subject to a stated structural assumption,
-that $n_{\min}^{(3)} = 31$. This conjecture represents the sharpest current
+KS-colorable. They further conjectured, subject to two assumptions---that the minimum KS set is rigid and that it contains the minimal state-independent contextuality (SI-C) set---that $n_{\min}^{(3)} = 31$. This conjecture represents the sharpest current
 theoretical statement about the problem and provides the primary motivation for
 the present investigation: do the methods available today support or refute it?
 
@@ -370,8 +371,8 @@ arise by a minor modification, perturbation, or deformation of the existing
 different combinatorial structure.
 
 Trandafir and Cabello also formulated a conditional conjecture:
-subject to a structural assumption about the relationship between abstract
-KS-uncolorable hypergraphs and their geometric realizations in $\C^3$, they
+subject to the assumptions that the minimum KS set is rigid and contains the
+minimal SI-C set, they
 conjectured that $n_{\min}^{(3)} = 31$.  This conjecture is the sharpest
 theoretical statement currently available about KS minimality in dimension~3
 and provides the principal motivation for the computational investigation
@@ -1080,6 +1081,8 @@ In total, 62,096 abstract sub-31 KS-uncolorable hypergraphs have been tested (39
 
 The evidence points to a \emph{realizability gap}: abstract KS-uncolorable hypergraphs with $n < 31$ exist in abundance, but embedding them as rays in $\R^3$ appears to be the core obstruction. The 394 merged graphs are definitively excluded from the integer pool; the broader claim that no sub-31 abstract KS hypergraph is $\R^3$-realizable is supported by extensive numerical evidence but remains unproved.
 
+We distinguish this \emph{structural} realizability barrier from the \emph{computational} realizability bottleneck identified by Li, Bright, and Ganesh~\cite{LiBrightGanesh2024}, whose pipeline stalls because Z3 returns ``unknown'' on embeddability queries above order~$\sim$20. Their observation is that realizability \emph{checking} is hard; ours is that realizability itself appears to \emph{fail} for sub-31 candidates---62,096 tested, zero realized. The two findings are complementary: theirs explains why the lower bound has stalled at~24; ours suggests that closing the gap from above may require proving a geometric impossibility rather than finding a construction.
+
 \begin{remark}
 The finite pool SAT encoding resolves realizability instances in under 1\,s that defeat Z3. It is directly applicable as a ``quick accept'' screen in the Li--Bright--Ganesh pipeline~\cite{LiBrightGanesh2024}, which is bottlenecked by Z3 above order~20.
 \end{remark}
@@ -1205,7 +1208,13 @@ invoked. The 61,702 abstract sub-31 candidates found in our perturbation search
 (Section~\ref{sec:perturbation}) provide a concrete input set for such screening.
 
 \textbf{Numerical and heuristic search} (Strategies 4 and 7; simulated
-annealing, perturbation, and graph perturbation). Heuristic methods explore
+annealing, perturbation, and graph perturbation). Two additional approaches
+belong to this family but were not tested systematically: polytope-based
+generation from regular solids (tested for higher dimensions by
+Pavicic et al.~\cite{Pavicic2004} but less natural in $d = 3$ where no
+regular polytope produces KS sets), and homotopy continuation methods
+(noted by Pavicic et al.\ as having been ``tested without success on
+representative systems''). Heuristic methods explore
 large search spaces without algebraic constraints, probing for KS sets that
 might lie outside any specific algebraic pool. Their strength is speed and
 breadth: 500,000 perturbation trials can be completed where an exhaustive
@@ -1244,9 +1253,12 @@ might be perturbed downward. Rigidity and algebraic uniformity together suggest
 that any sub-31 route would require a genuinely new construction principle.
 
 \textbf{Cortez--Morales-Reyes $N(S)$ invariant} \cite{CortezMoralesReyes2022}.
-Cortez and Morales-Reyes introduced the invariant $N(S) = \mathrm{lcm}\{\|v\|^2
+Cortez, Morales, and Reyes introduced the invariant $N(S) = \mathrm{lcm}\{\|v\|^2
 : v \in S\}$ for a KS set $S$ with integer coordinates, and proved that $S$
-must be defined over the ring $\Z[1/N(S)]$. For $\CK$, $N = 30$, corresponding
+must be defined over the ring $\Z[1/N(S)]$. (Their result is formulated in
+terms of \emph{algebraic hidden states}---the non-existence of morphisms from
+partial rings of symmetric matrices---which is a ring-theoretic formulation
+of contextuality related to but distinct from KS-uncolorability of ray pools.) For $\CK$, $N = 30$, corresponding
 to the ring $\Z[1/30]$. Our Eisenstein pool has $N = 6$, precisely the minimal
 ring $\Z[1/6]$ predicted by their theorem for Eisenstein-coordinate
 constructions. This provides an independent algebraic classification: different
@@ -1443,10 +1455,10 @@ L.~de~Moura and N.~Bj{\o}rner,
 in \textit{Proceedings of TACAS 2008}, LNCS 4963, 337--340 (2008).
 
 \bibitem{CortezMoralesReyes2022}
-V.~Cortez, R.~Morales, and E.~J.~Reyes,
+I.~Cortez, C.~Morales, and M.~Reyes,
 ``Minimal ring extensions of the integers exhibiting Kochen--Specker
 contextuality,''
-arXiv:2211.13216 [quant-ph] (2022, preprint).
+arXiv:2211.13216v4 [math.NT] (2025, preprint).
 
 \bibitem{Budroni2022}
 C.~Budroni, A.~Cabello, O.~G\"uhne, M.~Kleinmann, and J.-\AA.~Larsson,
@@ -1459,7 +1471,7 @@ M.~Kirchweger, A.~Peitl, and S.~Szeider,
 in \textit{Proceedings of AAAI-23}, 4119--4126 (2023).
 
 \bibitem{LiBrightGanesh2024}
-J.~Li, C.~Bright, and V.~Ganesh,
+Z.~Li, C.~Bright, and V.~Ganesh,
 ``Leveraging SAT solvers for the minimum Kochen--Specker problem,''
 in \textit{Proceedings of IJCAI-24}, 1944--1952 (2024).
 arXiv:2306.13319.
