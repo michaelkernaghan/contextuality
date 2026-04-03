@@ -22,3 +22,9 @@ site_review_bundle.md
 # OS
 .DS_Store
 Thumbs.db
+
+# Obsidian workspace state (user-specific, don't commit)
+wiki/.obsidian/workspace.json
+wiki/.obsidian/workspace-mobile.json
+wiki/.obsidian/plugins/
+wiki/.obsidian/themes/
