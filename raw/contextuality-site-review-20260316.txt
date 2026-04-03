@@ -1,0 +1,49 @@
+Peer Review: Contextuality & KS Set Atlas Website
+Date: 2026-03-16
+Reviewer: GPT-5.4 (via Codex)
+Document: 14,502 words from 13 pages
+Tokens used: 75,734
+---
+
+FINDINGS
+
+1. The Heegner-7 CSW table is mathematically impossible as written if G is the 43-ray orthogonality graph: it lists alpha(G)=50 for a 43-vector set. Either the graph is not the KS graph, or the numbers/notation are wrong. This needs immediate clarification because it undercuts the strongest "highest contextual advantage" claim. See heegner7-43-3d.md:71.
+
+2. The algebraic-number-theory language on the Heegner-7 page is incorrect: in the imaginary quadratic field Q(sqrt(-7)), calling (1+sqrt(-7))/2 a "fundamental unit" is wrong. It is an algebraic integer of norm 2, not a fundamental unit. See heegner7-43-3d.md:105.
+
+3. The "exactly six islands / classification of all KS-producing number rings" claim is internally unstable because the same page also says Gaussian integers Z[i] produce the Peres graph. If islands classify rings, Gaussian looks like a seventh ring; if islands classify graph-families, the wording should say that. Right now the ontology shifts mid-argument. See index.md:32, research/index.md:5, algebraic-islands.md:5, algebraic-islands.md:16, and zsqrt2-neg-33-3d.md:82.
+
+4. The Peres page opens with OCR-like prose that is hard to trust and hard to read. The line about "24 distinct vectors" is especially garbled and should not appear unedited on a research site. See peres-33-3d.md:13.
+
+5. Status labeling is too loose. The site places complete theorems, computational evidence, heuristic BPQS upper bounds, and conjectures in the same rhetorical register. That is risky for readers evaluating the new 2026 claims. See algebraic-islands.md:95, algebraic-islands.md:133, heegner7-43-3d.md:85, and golden-52-3d.md:84.
+
+6. The "Recent Papers" page has chronology metadata problems: the title says 2022-2025, but the page includes a 2026 section and is stamped March 2026; one entry says "Date: 2024 (published PRL 2025)". See recent-papers.md:1, recent-papers.md:19, recent-papers.md:56, and recent-papers.md:313.
+
+7. The public-facing "GPT-based peer review" note weakens scholarly credibility rather than strengthening it. Reproducibility matters; chatbot review rounds do not belong in the same evidentiary frame as theorem/proof claims. See papers.md:89.
+
+ASSESSMENT
+
+1. Scientific accuracy: Mostly strong on internal counts. The vector/pair/rigidity data are impressively consistent across pages: CK-31 31/71/rigid, Peres 33/72/flex, Eisenstein 33/78/rigid, Z[sqrt(-2)]-33 matching Peres, Heegner-7 43/107/rigid, Golden 52/124/rigid. The main problems are the Heegner CSW table, the "fundamental unit" mistake, and the ring-vs-island taxonomy.
+
+2. Completeness: Good for the six-island narrative, but weaker around comparison objects repeatedly invoked without dedicated pages or certificates: CK-33, Gaussian, Penrose, and the explicit graph-isomorphism evidence to Cabello 2025. A downloadable data appendix would help a lot.
+
+3. Accessibility: A graduate student in quantum foundations can follow the story. A newcomer will struggle with OCUS, MUS, VF2, BPQS, CSW, "merge-saturation," and Jacobian rigidity because those are used before they are explained in one place.
+
+4. Site structure and navigation: The top-level organization is sensible. The main structural weakness is that established literature, original unpublished 2026 results, heuristic computational findings, and conjectures are not visually separated enough.
+
+5. Writing quality: Overview pages are clear and energetic. The weaker pages are the Peres page and some compressed research claims that read more like internal notes than polished exposition.
+
+6. Presentation of new results: Broadly convincing, especially because the counts and comparative tables hang together. The strongest presentation is Eisenstein vs Peres vs Z[sqrt(-2)] on rigidity/flex. The weakest point is that the Cabello 2025 relationship needs a more explicit statement of equivalence: same rays up to unitary/projective transformation, same orthogonality graph, same bases, or same BPQS object.
+
+7. Bibliography and references: Good core coverage, but style is inconsistent. Some entries are full citations, while others are placeholders or shorthand.
+
+8. Suggestions for improvement:
+- Add status badges everywhere: Proved, Computational evidence, Heuristic bound, Conjecture, Unpublished.
+- Fix the Heegner-7 CSW section first, with an explicit definition of the graph whose alpha and vartheta are being quoted.
+- Rewrite the Peres opener into clean original prose; keep the historical scan as a figure, not as primary exposition.
+- Decide whether "islands" classify rings, graph types, or realizability classes, and enforce that language consistently.
+- Add one glossary/methods page for BPQS, CSW, OCUS, MUS, VF2, rigidity, and merge operations.
+- Add dedicated comparison pages or appendices for CK-33, Gaussian/Peres realizations, and the Cabello 2025 identification.
+- Normalize bibliography entries to one citation style and remove the GPT-review note from the public research narrative.
+
+OVERALL: the site is already unusually strong in technical ambition and internal quantitative consistency. With the Heegner corrections, cleaner status labeling, and clearer ontology for "islands," it would read much more like a credible research atlas and less like a hybrid of polished pages and working notes.

@@ -1,0 +1,120 @@
+**Oxford-Style Hostile Review of Revision: Major Revision Required**
+
+This revision consists of two parts: (1) a corrected bibliography entry for Li-Bright-Ganesh (IJCAI-24), and (2) a “note added in revision” claiming a categorical connection between the parent paper's "algebraic islands" and the left-adjoint pushout construction for contextuality in Gunji et al. (arXiv:2603.22353).
+
+Below I detail my concerns, with particular focus (per instructions) on the new "Note added in revision", and referencing community standards for mathematical of claims.
+
+---
+
+## 1. Bibliography Correction:  
+The correction for Li-Bright-Ganesh adds a DOI and cleans up the bibliographic detail. This is now minimally acceptable. However:
+- The entry should omit the ambiguous "SAT + computer algebra attack" in the title if this contradicts the actual published title; double-check with the final proceedings' version and author communication.
+- Are all author initials correctly rendered?
+- The preprint arXiv number has been dropped; if the IJCAI-24 proceedings version is identical, this is permissible, but style guides differ.  
+**Grade for this: Acceptable; minor nitpicks at most.**
+
+---
+
+## 2. “Note Added in Revision” — Major Foundational Issues
+
+### 2.1. Overstatements and Unjustified Claims
+
+#### Overclaim: “Precisely the rings whose orthogonality hypergraphs generate non-trivial pushouts…”
+
+There is **no proof** provided (nor, as far as I can tell, in the parent paper) that the “algebraic islands” classified in Kernaghan’s paper are “precisely the rings whose orthogonality hypergraphs generate non-trivial pushouts in the sense of~[Gunji et al.]”
+
+In fact, this statement is almost *certainly false or at least highly nontrivial*:  
+- The Gunji et al. work addresses **general categorical/canonical construction of orthomodular posets and their relation to presheaf contextuality and the absence of global sections**.  
+- The algebraic "island" classification in the parent paper is about which *coordinate rings/number fields* admit KS-uncolorable vector assignments in d=3. These are highly concrete, number-theoretic objects; the translation to a statement about categorical pushouts is **not constructed or even sketched** in either work.
+- “Orthogonality hypergraph” is never formally defined in categorical, pushout-theoretic terms in the parent paper, nor is there any map to the Gunji et al. construction.  
+- There is a categorical **analogy** between “non-trivial pushouts” gluing logics and “uncolorability contexts”, but to claim *precisely* that the six islands *are exactly* characterized as such is unwarranted without a proof or, at minimum, a lemma or explicit construction.
+
+**Conclusion:** This paragraph’s content is **hand-waving**. No reader can check its truth from what is written, nor does the parent paper’s main body contain the required groundwork.
+
+---
+
+#### Misleading Presentation and Attributions
+
+- **Gunji et al. do not prove a result about number fields or coordinate rings per se**. Their results are about categorical structures of logics and the relation of Boolean fragments under pushouts yielding orthomodularities.
+- To suggest their paper “explains” *which* coordinate rings admit contextuality or defines “precisely” the algebraic islands is deeply misleading. They address the logic/categorical level, not coordinate algebra.
+- The sentence, “their result provides a category-theoretic explanation for *why* contextuality forces non-Boolean structure, complementing *which* coordinate algebras support KS-uncolorability…” is rhetorically clever but methodologically imprecise and immodestly overreaching.
+
+---
+
+#### Use of Technical Terms and Imprecise Notation
+
+- The phrase “orthogonality hypergraphs generate non-trivial pushouts in the sense of~[Gunji et al.]” is **undefined** — the phrase “in the sense of” masks a conceptual gap. Gunji et al. construct partial Boolean frames glued via pushouts, but how this relates to the parent paper’s algebraic structures is not spelled out.
+- What is a “non-trivial” pushout, exactly? Is the failure to be distributive/Boolean the criterion? What map is being taken, among which objects? The note must either formalize this or remove the claim.
+- The reference to “absence of global sections in the Abramsky–Brandenburger sheaf-theoretic framework” is correct in spirit but imprecise: the sheaf-theoretic framework is more general, and not every pushout/failure-of-global-section reduces to the specific algebraic islands found in Kernaghan’s work.
+
+---
+
+### 2.2. Would a Category Theorist or KS Expert Accept This?
+
+**No.**  
+A categorical logician or quantum foundations expert would immediately observe that:  
+- Kernaghan’s computational algebraic classification and Gunji et al.’s category-theoretic constructions are operating at different abstraction levels, and while their results are *philosophically adjacent*, no explicit mathematical bridge is constructed here.
+- It is *simply not true* that “precisely the rings whose orthogonality hypergraphs generate non-trivial pushouts" have been characterized, unless proven.
+- The “Note added” gives the misleading impression that a major unification or equivalence has been *proved*, not suggested as an analogy.
+
+---
+
+### 2.3. Is the Summary of Gunji et al. Accurate and Fair?
+
+**Partially.**
+- Gunji et al. do (per abstract) investigate how orthomodular structure can be canonically generated from Boolean contexts via categorical pushouts, and link this to contextuality/no-global-section phenomena.
+- However, the description here is too compressed and does not carefully distinguish between their global statements about logics and *your* specific results on coordinate rings-for-KS-sets.
+- Their result is a *structural*, not a constructive or computational, characterization — your use treats it as if it were an explicit functor on rings/fields, which it is not.
+
+---
+
+### 2.4. Bibliography Entry for Gunji et al.
+
+- No glaring issues, but since this is an unpublished preprint for “2026” and not peer-reviewed or finalized, this should be noted explicitly to the reader ("preprint, not peer reviewed; subject to revision").
+- Author names, arXiv number, and title appear to be correct.
+
+---
+
+## 3. Recommendation: MAJOR REVISION
+
+### Required Actions:
+
+1. **Retract or Heavily Qualify the Strong Claim.**  
+  Replace "the algebraic islands identified here are precisely the rings whose orthogonality hypergraphs generate non-trivial pushouts in the sense of [Gunji et al.]" with an appropriately modest statement.  
+  E.g.:  
+  *"It is intriguing to note that the algebraic islands identified here appear to correspond to settings where the orthogonality hypergraphs, viewed categorically as contexts, could give rise to non-trivial pushouts in the sense of [Gunji et al.]. However, we leave a precise formulation and proof of this correspondence to future work."*
+
+2. **Clarify the Level of Analogy.**  
+  Make clear that the note is sketching a **possible connection**, not stating a proved fact.
+
+3. **Be Precise With Language.**  
+  If “non-trivial pushout” means “yields non-Boolean, orthomodular structure,” say so. If the parent algebraic objects are not formalized categorically, declare this. Do not pretend to a degree of formalization not present.
+
+4. **Check Bibliography Formats.**  
+  Insert the proper information about the status of the Gunji et al. paper.
+
+---
+
+### **In sum**:
+
+This revision, as written, suffers from overclaiming, imprecise language, and an unjustified assertion of a deep mathematical correspondence *without any proof or even a proper definition*.
+
+It should not be published in this form. A revised version must retract or at least hedge its claims about equivalence between coordinate algebraic islands and categorical pushouts unless the author is able to **provide a rigorous proof** (which would be a new major result and should be made a central contribution, not a note).
+
+---
+
+## **Grade:**  
+**MAJOR REVISION** required.
+
+---
+
+**Summary Table**
+
+| Aspect                    | Acceptable?          | Comments                           |
+|---------------------------|---------------------|------------------------------------|
+| Bibliography (Li et al.)  | Yes (minor nits)    | Minor details only                 |
+| “Note added” accuracy     | No                  | Overclaims, no proof, hand-waving  |
+| Category theory fair?     | No                  | Analogy, not correspondence        |
+| Gunji et al. summary      | Approximates scope  | But not carefully separated        |
+| Gunji entry formatted?    | Yes (add “preprint”)| Add status note                    |
+| Overall                   | MAJOR REVISION      | Retract or recast “precisely...”   |
