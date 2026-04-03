@@ -3,7 +3,7 @@
 > Auto-maintained by LLM. Do not edit manually.
 
 **Last updated:** 2026-04-03
-**Article count:** 37
+**Article count:** 40
 
 ## Concepts
 
@@ -61,3 +61,6 @@
 
 - [[site-review-2026-03-16]] — GPT-5.4 peer review of KS atlas website; 7 critical findings including Heegner-7 CSW impossibility and island ontology issues
 - [[oxford-review-2026-03-29]] — Oxford-style hostile review of revision's categorical correspondence claim; verdict: MAJOR REVISION
+- [[peres-33-basis-record-note]] — Note on Peres-33 vs Cabello-33 basis-count record (33 vectors: 16 vs 14 bases)
+- [[2026-04-03-smallest-ks-set-3d]] — Q&A: smallest known KS set is CK-31 (31 vectors); lower bound 24; gap open
+- [[lint-2026-04-03]] — Structural lint report: 0 orphans, 1 dead link (abramsky-sheaf-contextuality), 0 stubs, count OK
