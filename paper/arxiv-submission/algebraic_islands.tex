@@ -50,7 +50,7 @@ The Kochen--Specker (KS) theorem~\cite{KochenSpecker1967} is one of the foundati
 
 In dimension $d = 3$, the smallest known KS set is the Conway--Kochen 31-vector set ($\CK$), reported by Peres~\cite{Peres1993} with coordinates drawn from the integer alphabet $\{0, \pm 1, \pm 2\}$. Despite decades of effort, no smaller construction has been found. The best known lower bound is 24 vectors, established independently by Li, Bright, and Ganesh~\cite{LiBrightGanesh2024} and by Kirchweger, Peitl, and Szeider~\cite{KirchwegarPeitlSzeider2023} using SAT-based methods with algebraic realizability checking (improving the earlier bound of 22 by Uijlen and Westerbaan~\cite{UijlenWesterbaan2016}), leaving a gap of 7 vectors that remains one of the central open problems in KS theory. Trandafir and Cabello~\cite{TrandafirCabello2025} recently proved that $\CK$ is rigid (unique up to unitary transformation in $\C^3$) and conjectured that 31 is optimal.
 
-Previous computational approaches have primarily searched within fixed coordinate alphabets~\cite{Peres1991, Pavicic2004} or generated random abstract hypergraphs and tested realizability~\cite{LiBrightGanesh2024}. The algebraic structure of the coordinate systems underlying KS sets---specifically, which number fields can support them---has received less systematic attention, though Cortez, Morales, and Reyes~\cite{CortezMoralesReyes2022} showed (in a preprint whose arguments we have verified) that $M_3(\Z[1/6])_{\mathrm{sym}}$---the partial ring of $3 \times 3$ symmetric matrices over $\Z[1/6]$---is the minimal ring extension of $\Z$ admitting no algebraic hidden states, a ring-theoretic formulation of KS contextuality in dimension~3.
+Previous computational approaches have primarily searched within fixed coordinate alphabets~\cite{Peres1991, Pavicic2004} or generated random abstract hypergraphs and tested realizability~\cite{LiBrightGanesh2024}. The algebraic structure of the coordinate systems underlying KS sets---specifically, which number fields can support them---has received less systematic attention, though Cortez, Morales, and Reyes~\cite{CortezMoralesReyes2022} showed (in a preprint whose arguments we have verified) that $M_3(\Z[1/6])_{\mathrm{sym}}$---the partial ring of $3 \times 3$ symmetric matrices over $\Z[1/6]$---is the minimal ring extension of $\Z$ admitting no algebraic hidden states, a ring-theoretic formulation of KS contextuality in dimension~3. (Indeed, the original Kochen--Specker construction~\cite{KochenSpecker1967} uses coordinates from the real cyclotomic field $\mathbb{Q}(\cos\pi/10)$, with the 18-degree rotations that chain its 15 copies of the fundamental 10-ray gadget introducing algebraic irrationals related to the golden ratio---an early, if implicit, instance of the alphabet-dependence that the present paper makes explicit.)
 
 In this paper, we ask a structural question: \emph{what algebraic property of a coordinate alphabet controls whether it can support KS sets in dimension 3?} Through a systematic computational survey of quadratic fields $\Q(\sqrt{d})$ for $d = 2, \ldots, 30$, all nine imaginary quadratic fields with class number~1, cyclotomic fields, and golden ratio extensions, we find a consistent empirical pattern: in every tested case, KS-uncolorability requires the alphabet to support a \emph{cancellation identity}---an algebraic relation among its elements that makes dot products vanish exactly---of one of two types: \emph{modulus-2 cancellation} (the generator $x$ satisfies $|x|^2 = 2$) or \emph{phase cancellation} (a vanishing sum of unit-modulus terms). Among all tested alphabets, these are the only two mechanisms observed to produce the dense triad networks required for KS-uncolorability, explaining why constructions cluster into at least six discrete ``algebraic islands'' among the tested fields (a seventh, cubic island is confirmed in Section~\ref{sec:limitations}). Whether this pattern extends to all number fields remains an open question.
 
@@ -561,23 +561,49 @@ $1 + 1 - x = 0$ & $x = 2$ & $x = 2$ & Integer \\
 $1 + 1 - |x|^2 = 0$ & $|x|^2 = 2$ & $\sqrt{2},\, \sqrt{-2},\, \ldots$ & Peres/$\Z[\!\sqrt{-2}]$/Heeg.-7 \\
 $1 + x - |x|^2 = 0$ & $|x|^2 = 1 + x$ & $x = \varphi$ (real) & Golden \\
 $1 + x + \bar{x} = 0$ & $x + \bar{x} = -1$; $x^2{+}x{+}1{=}0$ & $x = \omega = e^{2\pi i/3}$ & Eisenstein \\
+$1 - x - \bar{x} = 0$ & $x + \bar{x} = 1$ & $d \equiv 1 \pmod{4}$ & (colorable)$^\dagger$ \\
 $|x|^2 + |x|^2 - 1 = 0$ & $|x|^2 = \tfrac{1}{2}$ & $x = 1/\sqrt{2}$ & $\equiv$ Peres (rescaled) \\
 $x + x - |x|^2 = 0$ & $|x|^2 = 2x$ & $x = 2$ (real) & $\equiv$ Integer \\
 \bottomrule
 \end{tabular}
+
+\noindent $^\dagger$The zero-sum $1 - x - \bar{x} = 0$ (i.e., $\Tr(x) = 1$) holds for all imaginary quadratic generators with $d \equiv 1 \pmod{4}$ (e.g., $d = -11, -15, -19, \ldots$).  It produces all-nonzero orthogonal pairs and triads, but these triads are structurally decoupled from the one-zero triads and the full ray set remains colorable---no KS set results.  The absence of type-B (mixed) triads is proved for all integer $N \geq 3$ by SMT verification~\cite{deMouraBjorner2008} over all entry patterns; see also Table~\ref{tab:heegner} (all $d \geq 11$ are colorable).
 \end{table}
 
 \begin{observation}\label{obs:two-element}
-For any two-element alphabet $\{0, \pm 1, \pm x\}$, every primitive three-term cancellation identity in the product set $\bar{\mathcal{A}} \cdot \mathcal{A}$ reduces to one of the six known islands (up to scaling equivalence).
+For any two-element alphabet $\{0, \pm 1, \pm x\}$, every primitive three-term cancellation identity in the product set $\bar{\mathcal{A}} \cdot \mathcal{A}$ that leads to KS-uncolorability reduces to one of the six known islands (up to scaling equivalence).  One additional zero-sum pattern exists ($1 - x - \bar{x} = 0$, requiring $\Tr(x) = 1$) but produces only colorable ray sets.
 \end{observation}
 
-\emph{Justification.} The product set $\bar{\mathcal{A}} \cdot \mathcal{A}$ for $\mathcal{A} = \{0, \pm 1, \pm x\}$ contains (up to sign) the values $\{0, 1, x, \bar{x}, |x|^2\}$.  A primitive three-term vanishing sum $t_1 + t_2 + t_3 = 0$ with $t_k \in \bar{\mathcal{A}} \cdot \mathcal{A}$ must use three of these values (with signs).  We enumerate all essentially distinct cases by the number of occurrences of each symbol.  The table (Table~\ref{tab:cancellation}) lists all solutions: each row is a distinct cancellation pattern, and for each pattern we solve the resulting equation in $x$ and identify the corresponding island.  No additional patterns exist because there are only $\binom{5+2}{3}$ ways to choose three elements (with repetition) from $\{1, x, \bar{x}, |x|^2\}$, most of which yield no solution or a solution equivalent (by $x \mapsto 1/x$, $x \mapsto \bar{x}$, or rescaling) to a listed row.  This classification applies to the raw alphabet \emph{before completion}; it does not rule out the possibility that cross-product completion could introduce qualitatively new cancellation mechanisms, though no such case was observed in our survey.
+\emph{Justification.} The product set $\bar{\mathcal{A}} \cdot \mathcal{A}$ for $\mathcal{A} = \{0, \pm 1, \pm x\}$ contains (up to sign) the values $\{0, 1, x, \bar{x}, |x|^2\}$.  A primitive three-term vanishing sum $t_1 + t_2 + t_3 = 0$ with $t_k \in \bar{\mathcal{A}} \cdot \mathcal{A}$ must use three of these values (with signs).  We enumerate all essentially distinct cases by the number of occurrences of each symbol.  The table (Table~\ref{tab:two-element}) lists all solutions: each row is a distinct cancellation pattern, and for each pattern we solve the resulting equation in $x$ and identify the corresponding island (or note colorability).  No additional patterns exist because there are only $\binom{5+2}{3}$ ways to choose three elements (with repetition) from $\{1, x, \bar{x}, |x|^2\}$, most of which yield no solution or a solution equivalent (by $x \mapsto 1/x$, $x \mapsto \bar{x}$, or rescaling) to a listed row.  The $\Tr(x) = 1$ row arises from the sign pattern $(+1, -1, -1)$ on the triple $\{1, x, \bar{x}\}$, which was previously conflated with the $\Tr(x) = -1$ (Eisenstein) pattern under a sign-and-permutation equivalence that is not valid here: the two sums impose different algebraic constraints.  This classification applies to the raw alphabet \emph{before completion}; it does not rule out the possibility that cross-product completion could introduce qualitatively new cancellation mechanisms, though no such case was observed in our survey.
 
 The completeness does \emph{not} extend to larger alphabets.  A three-element alphabet $\{0, \pm 1, \pm x, \pm y\}$ introduces cross-products $\pm xy$, $\pm \bar{x}y$, etc., enabling cancellation identities such as $1 + xy - |x|^2 = 0$ or $x + y + 1 = 0$ that involve two independent generators.  While our survey has tested many such alphabets (Table~\ref{tab:extended} and Section~\ref{sec:mixed}), the space of multi-element alphabets---particularly those arising from higher-degree number fields with multiple independent generators---is not exhaustively covered.  This is the principal remaining gap in the classification.
 
 \begin{remark}[Trigonometric consistency check]\label{rem:trig}
 As an independent test of the island classification, we swept the one-parameter family $\mathcal{A}(\theta) = \{0, \pm 1, \pm\cos\theta, \pm\sin\theta\}$ across 164 angles spanning $(0, \pi/2]$. The Pythagorean identity $\cos^2\theta + \sin^2\theta = 1$ serves as the cancellation mechanism. Exactly 5 distinct alphabets (at isolated angles: $\arctan(1/2)$, $\pi/6$, $\arctan(1/\varphi)$, $\arctan(1/\sqrt{2})$, $\pi/4$) are KS-uncolorable; all reduce to known islands via the modulus-2 mechanism or golden ratio completion. No new islands emerge. Moving $1^\circ$ from any uncolorable angle destroys the property, consistent with the algebraic nature of the norm constraint.
 \end{remark}
+
+\subsection{Galois-theoretic reformulation}\label{sec:galois}
+
+The six known islands all live in quadratic extensions of $\Q$ (or $\Q$ itself), each with Galois group $\mathrm{Gal}(K/\Q) \cong \Z/2\Z$.  The non-trivial automorphism $\sigma$ sends $\sqrt{d} \mapsto -\sqrt{d}$.  The two cancellation mechanisms admit a clean reformulation in terms of the Galois norm $\mathrm{N}_{K/\Q}(x) = x \cdot \sigma(x)$ and Galois trace $\mathrm{Tr}_{K/\Q}(x) = x + \sigma(x)$ of the ring-of-integers generator~$x$.
+
+\begin{observation}\label{obs:galois-norm-trace}
+For the six known KS-supporting alphabets, the cancellation mechanism is determined by two Galois invariants of the generator:
+\begin{itemize}
+    \item \emph{Modulus-2 cancellation} $\Leftrightarrow$ $|\mathrm{N}_{K/\Q}(x)| = 2$.  Verified: $\mathrm{N}(\sqrt{2}) = -2$, $\mathrm{N}(\sqrt{-2}) = 2$, $\mathrm{N}((1+\sqrt{-7})/2) = 2$.  For imaginary quadratic fields, the algebraic norm equals the Hermitian squared modulus: $\mathrm{N}(x) = x \bar{x} = |x|^2$.
+    \item \emph{Phase cancellation} $\Leftrightarrow$ $\mathrm{N}_{K/\Q}(x) = 1$ and $\mathrm{Tr}_{K/\Q}(x) = -1$.  Verified: $\omega$ satisfies $\omega^2 + \omega + 1 = 0$, so $\mathrm{Tr}(\omega) = \omega + \omega^2 = -1$ and $\mathrm{N}(\omega) = \omega \cdot \omega^2 = 1$.  These conditions characterize roots of the cyclotomic polynomial $\Phi_3(x) = x^2 + x + 1$.
+\end{itemize}
+No other combination of norm and trace values for a quadratic-integer generator has produced a KS-uncolorable set in our survey.
+\end{observation}
+
+This reformulation connects the island classification to Gleason's theorem through a second notion of trace.  Gleason's result constrains probability measures on projection operators via the \emph{matrix trace} $\mu(P) = \mathrm{tr}(\rho P)$; the cancellation mechanisms are determined by the \emph{Galois trace} $\mathrm{Tr}_{K/\Q}(x)$.  The logical chain is: Gleason implies KS (trivially, since $v(n) = \langle n | \rho | n \rangle$ is continuous and cannot be $\{0,1\}$-valued on a connected sphere~\cite{RajanVisser2019}); our island classification then asks \emph{which arithmetics} support the finite combinatorial witnesses of this impossibility.  Both traces encode the arithmetic of the primes 2 and~3: the matrix trace requires denominators divisible by 6 for the projection matrices $P_v = vv^T/\|v\|^2$ to live in the coefficient ring (as shown by Cortez et al.~\cite{CortezMoralesReyes2022}), while the Galois trace and norm determine whether the coordinate ring contains elements whose products can sum to zero in exactly the ways that orthogonality requires.
+
+\smallskip\noindent\textbf{Galois action on the KS hypergraph.}  The automorphism $\sigma$ acts coordinate-wise on $K^3$, and since $\sigma$ is a ring homomorphism, it preserves orthogonality: $\langle v | w \rangle = 0 \Rightarrow \langle \sigma(v) | \sigma(w) \rangle = 0$.  Therefore $\sigma$ is an automorphism of both the orthogonality graph and the basis hypergraph.  This gives an additional discrete symmetry beyond the continuous unitary symmetries, and it may partially explain the universality phenomenon (Section~\ref{sec:csw}): realizations of CK-31 in different islands could be related by Galois conjugation composed with a unitary transformation.
+
+\smallskip\noindent\textbf{Connection to Heegner numbers.}  The imaginary quadratic fields $\Q(\sqrt{-d})$ with class number~1 (unique factorization in $\mathcal{O}_K$) correspond to the nine Heegner numbers $d = 1, 2, 3, 7, 11, 19, 43, 67, 163$.  The three KS-supporting imaginary quadratic islands are $d = 2, 3, 7$---all Heegner numbers.  The remaining Heegner numbers fail for transparent arithmetic reasons: $d = 1$ gives $|\mathrm{N}(i)| = 1$ (norm too small; same orthogonality as the trivial alphabet), and $d \geq 11$ gives $|\mathrm{N}(\sqrt{-d})| = d \geq 11$ (norm too large for low-complexity cancellation).  Among imaginary quadratic fields, the KS-supporting ones are precisely those Heegner-number fields whose ring-of-integers generator has algebraic norm~2 ($d = 2, 7$) or is a primitive cube root of unity ($d = 3$).
+
+\smallskip\noindent\textbf{Cyclotomic Galois structure.}  The 6\,$|\,$\,$n$ theorem (Theorem~\ref{thm:6n}) has a natural Galois-theoretic restatement.  The Galois group $\mathrm{Gal}(\Q(\zeta_n)/\Q) \cong (\Z/n\Z)^*$ must have quotients corresponding to both $\Z/2\Z$ (ensuring $-1 \in S_n$, enabling interlocking) and $\Z/3\Z$ (ensuring $\omega \in S_n$, enabling phase cancellation).  This is equivalent to requiring that $(\Z/n\Z)^*$ surjects onto $\Z/6\Z$, which holds if and only if $6 \mid n$.  The conductor of the abelian extension $\Q(\zeta_6)/\Q$ is~6---the same number appearing in the Cortez--Morales--Reyes ring condition $6 \mid N$.
+
+\smallskip\noindent\textbf{Open directions.}  Several questions arise from this reformulation: (i)~Can the norm/trace characterization of Observation~\ref{obs:galois-norm-trace} be proven exhaustive for quadratic fields, establishing that $|\mathrm{N}| = 2$ and $(\mathrm{N} = 1, \mathrm{Tr} = -1)$ are the \emph{only} norm/trace pairs yielding low-complexity cancellation? (ii)~Does the compositum $\Q(\sqrt{2}, \sqrt{-3})$, with Galois group $(\Z/2\Z)^2$, produce denser KS sets or smaller minimums than either component island? (iii)~For the cubic island $\Q(\sqrt[3]{2})$, does the Galois closure (with group $S_3$) impose additional structural constraints? (iv)~Can class field theory, specifically the conductor of abelian extensions, provide a unified invariant classifying KS-supporting fields?
 
 \subsection{Connection to perfect quantum strategies}\label{sec:cabello}
 
@@ -915,13 +941,22 @@ Whether the two-mechanism constraint extends to all number fields, or whether hi
 
 The two-mechanism thesis is falsifiable: a KS-uncolorable set from an alphabet whose product set admits no modulus-2 or phase cancellation identity would refute it. The most promising candidates were cubic Pisot-number alphabets (where the cancellation identity is the minimal polynomial itself), class-number $>1$ imaginary quadratic fields (where non-unique factorization provides alternative algebraic relations), and multi-generator alphabets with cross-cancellation mechanisms. A systematic survey of 26 class-number $> 1$ fields (Section~\ref{sec:limitations}, item~\ref{item:class-number-survey}) found no counterexamples: all tested non-UFD rings are colorable when $|\alpha|^2 \geq 8$, confirming that the operative constraint is generator norm rather than factorization structure. The space of higher-degree extensions remains the principal open frontier.
 
+\subsection*{Note added in revision}
+
+\begin{sloppypar}
+After this paper first appeared, Gunji et al.~\cite{GunjiOhzawa2026} showed that orthomodular (non-distributive) lattice structure arises canonically as a left adjoint from classical Boolean contexts via categorical pushouts, and that the failure of such a pushout to remain Boolean is equivalent to the absence of global sections in the Abramsky--Brandenburger sheaf-theoretic framework.  Their result provides a category-theoretic explanation for \emph{why} contextuality forces non-Boolean structure, complementing the present paper's computational classification of \emph{which} coordinate algebras support KS-uncolorability.  It is natural to ask whether the algebraic islands identified here correspond to settings whose orthogonality hypergraphs, viewed categorically as contexts, yield non-trivial (i.e., non-Boolean) pushouts in the sense of~\cite{GunjiOhzawa2026}; we leave a precise formulation and proof of this correspondence to future work.
+\end{sloppypar}
+
+\subsection*{Note added in second revision}
+
+The vanishing-sum enumeration in Table~\ref{tab:two-element} has been corrected to include the previously missing zero-sum $1 - x - \bar{x} = 0$ (constraint $\Tr(x) = 1$), which arises from the sign pattern $(+1, -1, -1)$ on the triple $\{1, x, \bar{x}\}$.  This pattern produces all-nonzero orthogonal triads for imaginary quadratic generators with $d \equiv 1 \pmod{4}$, but does not lead to KS-uncolorability: the cross-product obstruction (no type-B triad can form) is now proved for \emph{all} integer generator norms $N \geq 3$ via SMT verification~\cite{deMouraBjorner2008}, upgrading the previous spot-checks to a universal certificate.  No computational results or conclusions are affected; the correction tightens the enumeration and strengthens the proof.
 
 \subsection*{Reproducibility}
 
 \begin{sloppypar}
 All code and data are available at
 \url{https://github.com/michaelkernaghan/contextuality}.
-The repository includes explicit ray coordinates and triad/basis lists for all islands, including the 43-vector Heegner-7 and 52-vector golden-ratio sets, as well as verifier scripts that reconstruct each KS set from its alphabet and confirm UNSAT via SAT solving. The implementation uses Python~3.11 with PySAT~1.8 (Glucose4), NumPy, SciPy (L-BFGS-B and HiGHS~LP), and CVXPY (SCS~SDP, tolerance~$10^{-9}$).
+The repository includes explicit ray coordinates and triad/basis lists for all islands, including the 43-vector Heegner-7 and 52-vector golden-ratio sets, as well as verifier scripts that reconstruct each KS set from its alphabet and confirm UNSAT via SAT solving. The script \texttt{ks\_z3\_verify.py} provides SMT-certified proofs (Z3~\cite{deMouraBjorner2008}) that the vanishing-sum enumeration is complete and that the cross-product obstruction holds for all quadratic integer generators with $N \geq 3$. The implementation uses Python~3.11 with PySAT~1.8 (Glucose4), Z3~4.15, NumPy, SciPy (L-BFGS-B and HiGHS~LP), and CVXPY (SCS~SDP, tolerance~$10^{-9}$).
 \end{sloppypar}
 
 \begin{sloppypar}
@@ -951,6 +986,8 @@ The repository includes explicit ray coordinates and triad/basis lists for all i
 \item \texttt{ks\_ck33\_identify.py} $\to$ Obs.~\ref{obs:three-33}
 \item \texttt{ks\_quaternion.py}, \texttt{ks\_octonion.py} $\to$ Limitations, item~\ref{rem:division-algebras}
 \item \texttt{ks\_6n\_proof.py}, \texttt{ks\_6n\_proof\_theorem.py} $\to$ Thm.~\ref{thm:6n}
+\item \texttt{ks\_z3\_verify.py} $\to$ SMT certification of Table~\ref{tab:two-element} completeness and cross-product obstruction (Obs.~\ref{obs:two-element})
+\item \texttt{ks\_verify\_galois.py} $\to$ SymPy/SAT verification of Galois letter proofs (companion paper)
 \end{itemize}
 \end{sloppypar}
 All randomized experiments use \texttt{random.seed(42)} for~reproducibility.
@@ -1034,9 +1071,11 @@ arXiv:2211.13216v4 [math.NT] (2025, preprint).
 
 \bibitem{LiBrightGanesh2024}
 Z.~Li, C.~Bright, and V.~Ganesh,
-``Leveraging SAT solvers for the minimum Kochen--Specker problem,''
-in \textit{Proceedings of the 33rd International Joint Conference on Artificial Intelligence (IJCAI-24)}, pp.~1944--1952 (2024).
-arXiv:2306.13319.
+``A {SAT} solver + computer algebra attack on the minimum {Kochen}--{Specker} problem,''
+in \textit{Proceedings of the Thirty-Third International Joint Conference on Artificial Intelligence, {IJCAI-24}},
+ed.\ K.~Larson (International Joint Conferences on Artificial Intelligence Organization, 2024),
+pp.~1898--1906.
+\textsc{doi}: 10.24963/ijcai.2024/210.
 
 \bibitem{Cabello2024bipartite}
 A.~Cabello,
@@ -1078,6 +1117,11 @@ arXiv:1705.07918.
 A.~M.~Gleason,
 ``Measures on the closed subspaces of a Hilbert space,''
 \textit{J. Math. Mech.} \textbf{6}, 885--893 (1957).
+
+\bibitem{RajanVisser2019}
+D.~Rajan and M.~Visser,
+``Kochen--Specker theorem revisited,''
+arXiv:1708.01380 [quant-ph] (2019).
 
 \bibitem{Haemers1995}
 W.~H.~Haemers,
@@ -1125,6 +1169,16 @@ M.~D.~Schwartz,
 Anthropic Research (2026).
 Available at \url{https://www.anthropic.com/research/vibe-physics}.
 See also arXiv:2601.02484 for the resulting physics paper.
+
+\bibitem{GunjiOhzawa2026}
+Y.-P.~Gunji, Y.~Ohzawa, Y.~Tokuyama, Y.~Huang, and K.~Nakamura,
+``Contextuality as a left adjoint: a categorical generation of orthomodular structure,''
+arXiv:2603.22353 [quant-ph] (2026, preprint).
+
+\bibitem{deMouraBjorner2008}
+L.~de~Moura and N.~Bj{\o}rner,
+``Z3: An efficient SMT solver,''
+in \textit{TACAS 2008}, LNCS \textbf{4963}, pp.~337--340 (Springer, 2008).
 
 \end{thebibliography}
 

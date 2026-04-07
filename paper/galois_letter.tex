@@ -1,0 +1,963 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+% Readability: open up the text
+\setlength{\parskip}{0.4em plus 0.1em minus 0.1em}
+\renewcommand{\arraystretch}{1.2}
+\setlist{itemsep=0.3em, parsep=0.1em}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\KS}{\mathrm{KS}}
+\newcommand{\Norm}[1]{N_{K/\Q}\!\left(#1\right)}
+\newcommand{\Tr}[1]{\mathrm{Tr}_{K/\Q}\!\left(#1\right)}
+\newcommand{\Gal}{\mathrm{Gal}}
+\newcommand{\braket}[2]{\langle #1 | #2 \rangle}
+
+\begin{document}
+
+\title{Galois-theoretic classification of Kochen--Specker sets
+in dimension three}
+
+\author{Michael Kernaghan\\
+\small Pacific Quantum Systems, Vancouver, Canada}
+
+\date{April 2026}
+
+\maketitle
+
+\begin{abstract}
+\noindent
+We prove that for a two-element coordinate alphabet
+$\mathcal{A} = \{0, \pm 1, \pm x\}$, where~$x$ is a ring-of-integers
+generator of a quadratic extension $K/\Q$ (or $x=2$), the \emph{raw}
+ray set $S(\mathcal{A}) \subset \C^3$ (before cross-product completion)
+is KS-uncolorable if and only if
+\begin{enumerate}
+\item[(i)] $|x|^2 = 2$ or $x = 2$ \emph{(modulus-2)}, or
+\item[(ii)] $\Norm{x} = 1$ and $\Tr{x} = -1$ \emph{(phase)}.
+\end{enumerate}
+Sufficiency follows from known KS constructions; necessity is proved
+analytically for all quadratic generators except the golden ratio
+(which is treated separately),
+via a finite enumeration of three-term vanishing sums from the product
+set $\bar{\mathcal{A}} \cdot \mathcal{A}$ and a cross-product closure
+argument showing that, when neither condition holds, the orthogonality
+graph decomposes into independently colorable subproblems admitting an
+explicit $\{0,1\}$-coloring.  As
+corollaries we recover a Heegner-number characterization of the
+KS-contextual quadratic alphabets.  The classification
+connects to the result of Cortez, Schmid, and Spekkens that $\Z[1/6]$ is
+the minimal ring supporting KS contextuality in dimension~3.
+\end{abstract}
+
+\section{Introduction}
+
+The Kochen--Specker (KS) theorem~\cite{KochenSpecker1967} establishes
+that quantum measurements in Hilbert spaces of dimension $d \geq 3$
+cannot be explained by noncontextual hidden-variable theories.  The proof
+proceeds by exhibiting a finite set of rays---a \emph{KS set}---that
+admits no consistent $\{0,1\}$-valued coloring respecting the rules: (I)
+orthogonal rays cannot both receive the value~1, and (II) every
+orthogonal triple (triad) contains exactly one~1.  The existence of such
+a set refutes the assumption that measurement outcomes pre-exist
+independently of which other compatible measurements are performed
+alongside them.
+
+The starting observation behind the present work is visible in the
+cube diagrams of Peres's textbook~\cite{Peres1993}: two of the three
+known three-dimensional KS constructions---the 31-vector
+Conway--Kochen set (CK-31) and the 33-vector Peres set---are displayed
+side by side, yet their coordinate arithmetics differ in a suggestive
+way.  CK-31 uses the integer alphabet $\{0, \pm 1, \pm 2\}$, with
+every vertex labelled by $1$s and $2$s.  The Peres set uses
+$\{0, \pm 1, \pm\sqrt{2}\}$, replacing the ``$2$'' with ``$\sqrt{2}$.''
+Both share the same two-element template $\{0, \pm 1, \pm x\}$; only
+the generator~$x$ changes.  This pattern invites a natural question:
+\emph{what happens if we vary~$x$ systematically?}  Could coordinates
+built from $1/\!\sqrt{2}$, or $\sqrt{3}$, or a cube root of~$2$, or a
+sixth root of unity produce new---perhaps smaller---KS sets?
+
+A computational survey~\cite{Kernaghan2026islands} pursued this
+question across quadratic, cyclotomic, and golden-ratio number fields,
+fixing a two-element coordinate alphabet $\mathcal{A} = \{0, \pm 1,
+\pm x\}$ with~$x$ a ring-of-integers generator, generating the
+induced ray set, and testing for KS-uncolorable subsets.  The survey
+found six distinct algebraic \emph{islands}:
+\begin{itemize}
+  \item $\Z$: integer alphabet, CK-31 (31 vectors);
+  \item $\Z[\sqrt{2}]$: Peres-type set (33 vectors);
+  \item $\Z[\omega]$, $\omega = e^{2\pi i/3}$ (Eisenstein integers):
+        Cabello-type set (33 vectors);
+  \item $\Z[\sqrt{-2}]$: 33 vectors;
+  \item $\Z\!\left[\tfrac{1+\sqrt{-7}}{2}\right]$ (Heegner-7 ring): 43
+        vectors;
+  \item $\Q(\varphi)$, $\varphi = \tfrac{1+\sqrt{5}}{2}$ (golden-ratio
+        field): 52 vectors.
+\end{itemize}
+The survey identified two recurring mechanisms driving KS-uncolorability:
+a \emph{modulus-2} mechanism ($|x|^2 = 2$ in the first three cases above)
+and a \emph{phase} mechanism ($1 + \omega + \omega^2 = 0$ in the
+Eisenstein case, a degenerate instance of a unit vanishing sum).  These
+patterns were, however, established computationally and without a
+unifying algebraic explanation.
+
+This paper closes that gap for the family of quadratic extensions.  We
+prove that the two mechanisms are the \emph{only} ones capable of
+producing KS-uncolorable \emph{raw} ray sets from a two-element
+quadratic alphabet,
+and that each is characterized precisely by the Galois norm and trace of
+the ring generator.  The proof classifies
+three-term vanishing sums over the product alphabet
+$\bar{\mathcal{A}} \cdot \mathcal{A}$, determines the resulting
+orthogonality-graph structure, and shows that when neither mechanism is
+active the constraint graph decomposes into mutually independent
+subproblems each admitting an explicit valid coloring.
+
+\begin{theorem}\label{thm:main}
+Let $\mathcal{A} = \{0,\pm 1,\pm x\}$ with $x \notin \{0, \pm 1\}$ an
+algebraic integer generating the ring of integers of a quadratic
+extension $K/\Q$, or $x = 2$ (the degenerate rational case $K = \Q$).
+The ray set $S(\mathcal{A}) \subset \C^3$ is KS-uncolorable if and only
+if one of:
+\begin{enumerate}
+  \item[(i)] $|x|^2 = 2$ (equivalently, $|\Norm{x}| = 2$ for imaginary
+    quadratic~$x$), or $x = 2$ \emph{(modulus-2)};
+  \item[(ii)] $\Norm{x} = 1$ and $\Tr{x} = -1$ \emph{(phase)}.
+\end{enumerate}
+\end{theorem}
+
+The proof occupies Section~\ref{sec:proof}.  Section~\ref{sec:consequences}
+derives corollaries including the Heegner characterization and the
+Galois symmetry of the orthogonality graph.  Section~\ref{sec:discussion} discusses
+connections to the Cortez--Schmid--Spekkens ring-theoretic result.
+
+\section{Setup}\label{sec:setup}
+
+\subsection{Quadratic extensions and their arithmetic}
+
+Let $d \in \Z$ be squarefree and $K = \Q(\sqrt{d})$ the associated
+quadratic extension.  The ring of integers $\mathcal{O}_K$ has the form
+$\Z[x]$ where the generator~$x$ is:
+\[
+  x = \begin{cases}
+    \sqrt{d} & \text{if } d \equiv 2, 3 \pmod{4}, \\
+    \dfrac{1 + \sqrt{d}}{2} & \text{if } d \equiv 1 \pmod{4}.
+  \end{cases}
+\]
+The Galois group $\Gal(K/\Q) = \{1, \sigma\}$ is generated by the
+non-trivial automorphism $\sigma(\sqrt{d}) = -\sqrt{d}$.  From this we
+define the \emph{Galois norm} and \emph{Galois trace} of any $\alpha \in
+K$:
+\[
+  \Norm{\alpha} = \alpha \cdot \sigma(\alpha), \qquad
+  \Tr{\alpha} = \alpha + \sigma(\alpha).
+\]
+For the generator~$x$ these take concrete values depending on~$d$.  In
+the case $d \equiv 2, 3 \pmod{4}$: $\Norm{x} = \sqrt{d} \cdot
+(-\sqrt{d}) = -d$ and $\Tr{x} = 0$.  In the case $d \equiv 1 \pmod{4}$:
+$\Norm{x} = \tfrac{1+\sqrt{d}}{2} \cdot \tfrac{1-\sqrt{d}}{2} =
+\tfrac{1-d}{4}$ and $\Tr{x} = 1$.
+
+\subsection{The coordinate alphabet and ray set}
+
+Fix a quadratic extension $K/\Q$ with generator~$x$ as above.  Define
+the \emph{two-element coordinate alphabet}
+\[
+  \mathcal{A} = \{0,\; +1,\; -1,\; +x,\; -x\}.
+\]
+The \emph{ray set} $S(\mathcal{A})$ consists of all projectively distinct
+nonzero vectors $v \in \mathcal{A}^3 \setminus \{0\}$, where two vectors
+$v, w$ represent the same ray if $v = \lambda w$ for some scalar
+$\lambda \in \C^\times$.  Orthogonality is defined via the standard
+Hermitian inner product:
+\[
+  \braket{v}{w} = \sum_{k=1}^{3} \bar{v}_k w_k = 0.
+\]
+
+\subsection{The product set and vanishing sums}
+
+For the orthogonality analysis the key object is the \emph{product set}
+\[
+  \bar{\mathcal{A}} \cdot \mathcal{A}
+  = \{\bar{a} b : a, b \in \mathcal{A}\}
+  = \{0,\; \pm 1,\; \pm x,\; \pm \bar{x},\; \pm |x|^2\}.
+\]
+The inner product $\braket{v}{w}$ for $v, w \in \mathcal{A}^3$ is a sum
+of at most three terms, each drawn from $\bar{\mathcal{A}} \cdot
+\mathcal{A}$.  Orthogonality $\braket{v}{w} = 0$ therefore reduces to a
+\emph{vanishing sum} of one, two, or three elements from this product
+set.
+
+A \emph{primitive three-term vanishing sum} from
+$\bar{\mathcal{A}} \cdot \mathcal{A}$ is an identity
+$\alpha + \beta + \gamma = 0$ with $\alpha, \beta, \gamma \in
+\bar{\mathcal{A}} \cdot \mathcal{A}$, not reducible to a shorter
+vanishing sum.  The classification of such sums---there are finitely many
+modulo sign and permutation---drives the proof of
+Theorem~\ref{thm:main}.
+
+Explicitly, the product set elements are controlled by two invariants of
+the extension:
+For imaginary quadratic fields, complex conjugation coincides with
+$\sigma$ on~$K$, so $|x|^2 = x\bar{x} = |\Norm{x}|$ and $x + \bar{x}
+= \Tr{x}$; for real quadratic fields, $\bar{x} = x$ and $|x|^2 = x^2$.
+Condition~(i) $|x|^2 = 2$ means the product set contains an element of
+absolute value~$2$, enabling cancellations $1 + 1 - |x|^2 = 0$.
+Condition~(ii) means $1 + x + \bar{x} = 1 + \Tr{x} = 0$, a
+unit-modulus vanishing sum as in $1 + \omega + \omega^2 = 0$.
+
+\section{Main theorem}\label{sec:proof}
+
+We restate the main result for convenience.
+
+\begin{theorem}[Galois classification]\label{thm:galois}
+Let $\mathcal{A} = \{0,\pm 1,\pm x\}$ with $x \notin \{0,\pm 1\}$ an
+algebraic integer generating $\mathcal{O}_K$ for a quadratic extension
+$K/\Q$, or $x = 2$ (rational case).  The ray set
+$S(\mathcal{A}) \subset \C^3$ is KS-uncolorable if and only if
+\begin{enumerate}
+  \item[\emph{(i)}] $|x|^2 = 2$, or $x = 2$ \emph{(modulus-2)}, or
+  \item[\emph{(ii)}] $\Norm{x} = 1$ and $\Tr{x} = -1$ \emph{(phase)}.
+\end{enumerate}
+\end{theorem}
+
+\noindent\textit{Sufficiency.}
+Each case is witnessed by an explicit KS construction.  The rational
+case $x = 2$ gives the 31-vector CK-31 set (Conway--Kochen, rigidity
+proved by Trandafir--Cabello~\cite{TrandafirCabello2025}).
+Condition~(i) with $x = \sqrt{2}$ gives the 33-vector Peres
+set~\cite{Peres1991}; with $x = \sqrt{-2}$ the 33-vector
+$\Z[\sqrt{-2}]$ set; with $x = 1{+}i$ ($|x|^2 = 2$) the 33-vector
+Gaussian set (graph-isomorphic to
+Peres~\cite{Kernaghan2026islands}); and with
+$x = \tfrac{1+\sqrt{-7}}{2}$ ($|x|^2 = 2$) the 43-vector Heegner-7
+set~\cite{Kernaghan2026islands}.  Condition~(ii) is realized by
+$x = \omega = e^{2\pi i/3} = (-1{+}\sqrt{-3})/2$, the alternative
+Eisenstein generator with $\Norm{\omega} = 1$ and
+$\Tr{\omega} = -1$, yielding the 33-vector Cabello
+set~\cite{Cabello2025simplest}.  \hfill$\square$
+
+\medskip
+
+\noindent\textit{Necessity.}
+We prove the contrapositive: if neither~(i) nor~(ii) holds, then
+$S(\mathcal{A})$ admits a valid $\{0,1\}$-coloring.  The argument
+proceeds through two lemmas.
+
+\begin{lemma}[Vanishing sum enumeration]\label{lem:vanishing}
+Let $x \notin \{0,\pm 1\}$ be a ring-of-integers generator with
+conjugate $\bar{x} = \sigma(x)$.  The primitive three-term vanishing
+sums $t_1 + t_2 + t_3 = 0$ with each $t_k \in
+\{0,\pm 1,\pm x,\pm \bar{x},\pm |x|^2\}$ are, up to sign and
+permutation, exactly those listed in Table~\ref{tab:vanishing}.  In
+particular, every such sum constrains $(N,T) = (\Norm{x},\Tr{x})$ to
+one of the rows in the table.
+\end{lemma}
+
+\begin{table}[h]
+\centering
+\caption{Primitive three-term vanishing sums from the product set
+$\bar{\mathcal{A}} \cdot \mathcal{A}$.  Here
+$N = \Norm{x}$ and $T = \Tr{x}$.}\label{tab:vanishing}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Pattern & Constraint & $N,\; T$ \\
+\midrule
+$1 + 1 + (-x) = 0$ & $x = 2$ & (rational) \\
+$1 + 1 + (-|x|^2) = 0$ & $|x|^2 = 2$ & $\pm 2$, varies \\
+$1 + x + \bar{x} = 0$ & $\Tr{x} = -1$ & varies,\; ${-1}$ \\
+$1 - x - \bar{x} = 0$ & $\Tr{x} = 1$ & varies,\; $1$ \\
+$1 + x + (-|x|^2) = 0$ & $|x|^2 = 1 + x$ & ${-1},\; 1$ (golden) \\
+$|x|^2 + |x|^2 + (-1) = 0$ & $|x|^2 = \tfrac{1}{2}$ & $\equiv$ row~2 \\
+$x + x + (-|x|^2) = 0$ & $|x|^2 = 2x$ & $\equiv$ row~1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{proof}
+The product set $\bar{\mathcal{A}} \cdot \mathcal{A}$ consists (up to
+sign) of $\{0, 1, x, \bar{x}, |x|^2\}$.  A primitive three-term
+vanishing sum $\alpha + \beta + \gamma = 0$ with each term drawn
+from $\pm\{1, x, \bar{x}, |x|^2\}$ must satisfy two independent
+constraints: the \emph{magnitude} constraint (the three terms must
+form a closed triangle in~$\C$) and the \emph{algebraic} constraint
+(the sum must vanish exactly in the ring $\Z[x, \bar{x}]$).
+
+Writing each term as $\pm s_k$ with $s_k \in \{1, x, \bar{x},
+|x|^2\}$, the vanishing sum becomes a polynomial identity in~$x$
+and~$\bar{x}$.  Since $\{1, x\}$ is a $\Q$-basis of~$K$ and
+$\bar{x} = T - x$ (where $T = \Tr{x}$), every product-set element
+has a unique representation $a + bx$ with $a, b \in \Q$.  The
+representations depend on whether~$K$ is real or imaginary quadratic.
+
+\smallskip
+\noindent\emph{Imaginary case} ($d < 0$): complex conjugation
+coincides with~$\sigma$ on~$K$, so $|x|^2 = x\bar{x} = \Norm{x}$:
+\[
+  1 \mapsto (1, 0),\quad x \mapsto (0, 1),\quad
+  \bar{x} \mapsto (T, -1),\quad |x|^2 \mapsto (N, 0).
+\]
+
+\noindent\emph{Real case} ($d > 0$): $x$ is real, so $\bar{x} = x$
+in the product set (the entries $\pm\bar{x}$ collapse to $\pm x$),
+and $|x|^2 = x^2 = Tx - N$ via the minimal polynomial
+$x^2 - Tx + N = 0$:
+\[
+  1 \mapsto (1, 0),\quad x \mapsto (0, 1),\quad
+  \bar{x} = x \mapsto (0, 1),\quad |x|^2 = x^2 \mapsto (-N, T).
+\]
+
+\noindent In the enumeration below, rows involving~$\bar{x}$ as
+distinct from~$x$ arise only in the imaginary case.  Rows
+involving~$|x|^2$ are labeled (I) for imaginary and (R) for real
+where the constraints differ.
+
+A vanishing sum $\alpha + \beta + \gamma = 0$ with each
+$\alpha, \beta, \gamma \in \pm\{1, x, \bar{x}, |x|^2\}$ yields
+two rational equations: the coefficient of~$1$ vanishes and the
+coefficient of~$x$ vanishes.  The four unsigned elements
+$\{1, x, \bar{x}, |x|^2\}$ give exactly $\binom{4+2}{3} = 20$
+unordered triples with repetition.  We enumerate all~$20$, with all
+sign assignments $(\varepsilon_1, \varepsilon_2,
+\varepsilon_3) \in \{\pm 1\}^3$ modulo the overall sign and
+permutation symmetry:
+
+\smallskip
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Triple & Coeff.\ of~$1$ & Coeff.\ of~$x$ & Solution \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Triples from $\{1\}$ only:}} \\[2pt]
+$\{1, 1, 1\}$ & $\pm 1 \pm 1 \pm 1 = 0$ & $0 = 0$ & impossible \\[4pt]
+\multicolumn{4}{@{}l}{\textit{Triples from $\{1, x\}$:}} \\[2pt]
+$\{1, 1, x\}$ & $\pm 1 \pm 1 = 0$ & $\pm 1 = 0$ & impossible \\
+$\{1, x, x\}$ & $\pm 1 = 0$ & $\pm 1 \pm 1 = 0$ & impossible \\
+$\{x, x, x\}$ & $0 = 0$ & $\pm 1 \pm 1 \pm 1 = 0$ & impossible \\[4pt]
+\multicolumn{4}{@{}l}{\textit{Triples involving $\bar{x}$ (imaginary only, since $\bar{x} = x$ for real):}} \\[2pt]
+$\{1, 1, \bar{x}\}$ & $\pm 1 \pm 1 \pm T = 0$ & $\mp 1 = 0$ & impossible \\
+$\{1, x, \bar{x}\}$ & $1 + T = 0$ & $1 - 1 = 0$ & $T = -1$ (Row~3a) \\
+$\{1, x, \bar{x}\}$ & $1 - T = 0$ & $-1 + 1 = 0$ & $T = 1$ (Row~3b) \\
+$\{1, \bar{x}, \bar{x}\}$ & $\varepsilon_1 + (\varepsilon_2{+}\varepsilon_3)T = 0$ & $-(\varepsilon_2{+}\varepsilon_3) = 0$ & impossible ($\varepsilon_1 = 0$) \\
+$\{x, x, \bar{x}\}$ & $T = 0$ & $\pm 2 \mp 1 = 0$ & impossible \\
+$\{x, \bar{x}, \bar{x}\}$ & $(\varepsilon_2{+}\varepsilon_3)T = 0$ & $\varepsilon_1 - (\varepsilon_2{+}\varepsilon_3) = 0$ & impossible$^{\ddagger}$ \\
+$\{\bar{x}, \bar{x}, \bar{x}\}$ & $(\sum\varepsilon_k)T = 0$ & $-\sum\varepsilon_k = 0$ & impossible ($\sum\varepsilon_k \neq 0$) \\[4pt]
+\multicolumn{4}{@{}l}{\textit{Triples involving $|x|^2$\; --- split (I)\,=\,imaginary, (R)\,=\,real:}} \\[2pt]
+$\{1, 1, |x|^2\}$ (I) & $1 + 1 - N = 0$ & $0 = 0$ & $N = 2$ (Row~2) \\
+$\{1, 1, |x|^2\}$ (R) & $1 + 1 + N = 0$ & $-T = 0$ & $N = {-2},\, T = 0$ (Row~2) \\
+$\{1, x, |x|^2\}$ (I) & $1 - N = 0$ & $1 = 0$ & impossible \\
+$\{1, x, |x|^2\}$ (R) & $1 + N = 0$ & $1 - T = 0$ & $N = {-1},\, T = 1$ (Row~4) \\
+$\{1, \bar{x}, |x|^2\}$ (I) & $1 + T - N = 0$ & $-1 = 0$ & impossible \\
+$\{x, x, |x|^2\}$ (I) & $\varepsilon_3 N = 0$ & $\varepsilon_1{+}\varepsilon_2 = 0$ & impossible ($N \neq 0$) \\
+$\{x, x, |x|^2\}$ (R) & $-\varepsilon_3 N = 0$ & $\varepsilon_1{+}\varepsilon_2{+}\varepsilon_3 T = 0$ & impossible ($N \neq 0$) \\
+$\{x, \bar{x}, |x|^2\}$ (I) & $T - N = 0$ & $0 = 0$ & $N = T$\;$^\dagger$ \\
+$\{\bar{x}, \bar{x}, |x|^2\}$ (I) & $2T - N = 0$ & $-2 = 0$ & impossible \\
+$\{\bar{x}, |x|^2, |x|^2\}$ (I) & $\varepsilon_1 T + (\varepsilon_2{+}\varepsilon_3) N = 0$ & $-\varepsilon_1 = 0$ & impossible \\
+$\{|x|^2, |x|^2, 1\}$ (I) & $2N - 1 = 0$ & $0 = 0$ & $N = 1/2$\;($\equiv$ Row~2) \\
+$\{|x|^2, |x|^2, 1\}$ (R) & $-2N + 1 = 0$ & $2T = 0$ & $N = 1/2,\, T = 0$\;($\equiv$ Row~2) \\
+$\{|x|^2, |x|^2, x\}$ (I) & $2N = 0$ & $1 = 0$ & impossible \\
+$\{|x|^2, |x|^2, x\}$ (R) & $-2N = 0$ & $2T + 1 = 0$ & impossible ($N \neq 0$) \\
+$\{|x|^2, |x|^2, |x|^2\}$ (I) & $\pm N \pm N \pm N = 0$ & $0 = 0$ & $N = 0$ (excluded) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\smallskip
+
+\noindent $^\ddagger$For $\{x, \bar{x}, \bar{x}\}$: if $T \neq 0$,
+then $\varepsilon_2 + \varepsilon_3 = 0$ forces $\varepsilon_1 = 0$;
+if $T = 0$, the $x$-equation gives
+$\varepsilon_1 = \varepsilon_2 + \varepsilon_3 \in \{0, \pm 2\}$,
+impossible since $\varepsilon_1 = \pm 1$.
+
+\noindent $^\dagger$The case $\{x, \bar{x}, |x|^2\}$ arises only in
+the imaginary case ($\bar{x} \neq x$).  The constraint $N = T$
+gives $|\Norm{x}| = \Tr{x}$: for $d \equiv 1 \pmod{4}$,
+$(1{-}d)/4 = 1$ gives $d = -3$ (Row~3a via a different presentation).
+The \emph{rational case} $x = 2$ ($K = \Q$) does not admit a
+$\Q$-basis decomposition; it is verified directly: $1 + 1 - 2 = 0$
+(Row~1).  This accounts for all $20$ unordered triples; every
+surviving solution maps to one of the seven rows of
+Table~\ref{tab:vanishing}, completing the enumeration.
+
+Row~3b merits comment: the sign pattern
+$(\varepsilon_1, \varepsilon_2, \varepsilon_3) = (1, -1, -1)$ on the
+triple $\{1, x, \bar{x}\}$ gives $1 - x - \bar{x} = 1 - T = 0$,
+hence $T = 1$ with no constraint on~$N$.  This vanishing sum
+holds for all imaginary quadratic fields with
+$d \equiv 1 \pmod{4}$ (e.g., $d = -11, -15, -19, \ldots$).
+Unlike Row~3a ($T = -1$, which produces the Eisenstein island at
+$d = -3$), Row~3b does not lead to KS-uncolorability:
+the all-nonzero triads it generates are structurally
+decoupled from the one-zero triads, and the full ray set remains
+colorable.  This is proved for all $N \geq 3$ by SMT
+verification~\cite{deMouraBjorner2008}; see
+Lemma~\ref{lem:sparsity} for the proof.
+
+Row~4 merits comment: the constraint $|x|^2 = 1 + x$ is satisfied by
+$x = \varphi = \tfrac{1+\sqrt{5}}{2}$ (golden ratio), which has
+$\Norm{\varphi} = -1$ and $\Tr{\varphi} = 1$.  This does not satisfy
+(i) or~(ii) of Theorem~\ref{thm:galois}.  Although
+$\Q(\varphi)$-alphabet KS sets exist~\cite{Kernaghan2026islands} with
+52~vectors, they require cross-product completion beyond the initial
+alphabet $\mathcal{A}$ and thus lie outside the scope of the present
+classification.
+\end{proof}
+
+\begin{lemma}[Triad sparsity]\label{lem:sparsity}
+Suppose $x$ satisfies neither condition~\emph{(i)} nor~\emph{(ii)} of
+Theorem~\ref{thm:galois}.  Then the ray set $S(\mathcal{A})$ admits an
+explicit valid $\{0,1\}$-coloring.
+\end{lemma}
+
+\noindent\textit{Remark.}
+By Lemma~\ref{lem:vanishing}, when neither~(i) nor~(ii) holds,
+Rows~1--3a and~5--6 of Table~\ref{tab:vanishing} are excluded.
+Row~3b ($\Tr{x} = 1$) survives for imaginary quadratic generators
+with $d \equiv 1 \pmod{4}$, and Row~4 ($|x|^2 = 1 + x$, realized
+uniquely by $x = \varphi = (1{+}\sqrt{5})/2$) is a real quadratic
+case treated separately in Section~\ref{sec:discussion}.
+The proof below handles the Row~3b vanishing sum explicitly, showing
+that the all-nonzero triads it permits do not obstruct colorability.
+
+\begin{proof}
+By Lemma~\ref{lem:vanishing}, Rows~1--3a and~5--6 are excluded by the
+negation of~(i) and~(ii).  We exclude the golden ratio
+$x = \varphi$ (Row~4, addressed in Section~\ref{sec:discussion}).
+For the remaining generators, the only surviving vanishing sum is
+Row~3b: $1 - x - \bar{x} = 0$, which holds precisely when $\Tr{x} = 1$
+(imaginary quadratic, $d \equiv 1 \pmod{4}$).  When $\Tr{x} \neq 1$,
+no vanishing sum exists at all.  The proof proceeds in three steps.
+
+\medskip
+\noindent\textit{Step~1 (All-nonzero triads are harmless).}
+When $\Tr{x} \neq 1$ (including all real quadratic and all imaginary
+quadratic with $d \equiv 2, 3 \pmod{4}$), no primitive three-term
+vanishing sum from $\bar{\mathcal{A}} \cdot \mathcal{A}$ exists,
+so no two all-nonzero rays in $S(\mathcal{A})$ are orthogonal.
+
+When $\Tr{x} = 1$, the vanishing sum $1 - x - \bar{x} = 0$ does
+produce all-nonzero orthogonal pairs and, indeed, complete
+all-nonzero triads.  Concretely, the triad
+$\{(1, 1, x),\; (1, -x, -1),\; (x, -1, 1)\}$ is mutually orthogonal
+(each inner product reduces to $1 - x - \bar{x} = 0$).
+However, these triads involve \emph{only} all-nonzero rays and share
+no rays with one-zero triads.  That no type-B triad (mixing
+all-nonzero and one-zero rays) exists is proved universally: the
+Hermitian cross product of any orthogonal (all-nonzero, one-zero) pair
+produces a vector whose $\Q$-basis components cannot simultaneously
+lie in~$\mathcal{A}$ for any integer $N \geq 3$, certified by the Z3
+SMT solver~\cite{deMouraBjorner2008} over all 1024 entry patterns and
+all integer $(N, T)$ with $N \geq 3$.
+
+Since the all-nonzero and one-zero families share no rays,
+a $\{0,1\}$-coloring is valid if and only if it is valid on each
+family separately.  Both families are independently colorable
+(Step~3 below gives 192~colorings for the one-zero family; the
+all-nonzero triads, being pairwise disjoint, are trivially colorable).
+The all-nonzero triads are therefore \emph{harmless}---they do not
+contribute to KS-uncolorability.
+
+\medskip
+\noindent\textit{Step~2 (No type-B triads).}
+Call a triad \emph{type-B} if it contains at least one all-nonzero ray
+alongside rays with a zero coordinate.  An all-nonzero ray
+$v \in \{\pm 1, \pm x\}^3$ can be orthogonal to a one-zero ray~$w$
+(say $w_3 = 0$) via two-term cancellation:
+$\bar{v}_1 w_1 + \bar{v}_2 w_2 = 0$.  However, the third member of
+any triad containing $v$ and $w$ is the unique ray in the Hermitian
+orthogonal complement of $\mathrm{span}(v, w)$.  In $\C^3$, this ray
+is represented by the \emph{Hermitian cross product}
+\[
+  u_k = \bar{v}_{k+1} w_{k+2} - \bar{v}_{k+2} w_{k+1}
+  \quad (\text{indices mod } 3),
+\]
+which satisfies $\braket{u}{v} = \braket{u}{w} = 0$ by construction.
+(For real fields, $\bar{v}_k = v_k$ and this reduces to the standard
+bilinear cross product.)  We show that $u \notin \mathcal{A}^3$ up to
+projective equivalence.
+
+With $w_3 = 0$, the Hermitian cross product gives
+$u = (-\bar{v}_3 w_2,\; \bar{v}_3 w_1,\; \bar{v}_1 w_2 - \bar{v}_2
+w_1)$.  The first two components lie in
+$\bar{\mathcal{A}} \cdot \mathcal{A}$; the third is a difference of
+two such products.
+
+\emph{Real case} ($d > 0$, so $\bar{v}_k = v_k$).
+The cross-product components are $u_1 = -v_3 w_2$,
+$u_2 = v_3 w_1$, $u_3 = v_1 w_2 - v_2 w_1$, with
+$v_k \in \{\pm 1, \pm x\}$ and $w_k \in \{\pm 1, \pm x\}$.
+For $u \in \lambda\mathcal{A}^3$, \emph{all three} components must
+simultaneously lie in $\{0, \pm\lambda, \pm\lambda x\}$.
+
+The first two components determine~$\lambda$.  Since $u_1 = -v_3 w_2$
+and $u_2 = v_3 w_1$ are both nonzero (products of nonzero alphabet
+entries), each is $\pm\lambda$ or $\pm\lambda x$, giving four cases
+for the pair $(u_1, u_2)$:
+\begin{center}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}lll@{}}
+$u_1 = \pm\lambda$, $u_2 = \pm\lambda$ & $\Rightarrow$ & $\lambda = \pm v_3 w_2$,\; $u_2/u_1 = -w_1/w_2 = \pm 1$ \\
+$u_1 = \pm\lambda$, $u_2 = \pm\lambda x$ & $\Rightarrow$ & $u_2/u_1 = -w_1/w_2 = \pm x$ \\
+$u_1 = \pm\lambda x$, $u_2 = \pm\lambda$ & $\Rightarrow$ & $u_2/u_1 = -w_1/w_2 = \pm 1/x$ \\
+$u_1 = \pm\lambda x$, $u_2 = \pm\lambda x$ & $\Rightarrow$ & $u_2/u_1 = -w_1/w_2 = \pm 1$
+\end{tabular}
+\end{center}
+In every case, $\lambda$ is determined by~$v_3$ and one of~$w_k$.
+The constraint then falls on~$u_3$: we need
+$u_3/\lambda \in \{0, \pm 1, \pm x\}$, equivalently
+$u_3/u_1 \in \{0, \pm 1, \pm x, \pm 1/x\}$.
+
+The third component $u_3 = v_1 w_2 - v_2 w_1$ evaluates to one of
+$0$, $\pm 2$, $\pm 2x$, $\pm(x^2 \pm 1)$, or $\pm(x \pm 1)$.
+We check each against the constraint $u_3/u_1 \in
+\{0, \pm 1, \pm x, \pm 1/x\}$, where $u_1 \in \{\pm 1, \pm x,
+\pm x^2\}$:
+\begin{itemize}
+\item $u_3 = \pm 2$: $u_3/u_1 = \pm 2/u_1$.  For $u_1 = \pm 1$:
+  ratio $= \pm 2 \notin \{0, \pm 1, \pm x, \pm 1/x\}$ (since
+  $x > 1$, $x \neq 2$ unless condition~(i)).  For $u_1 = \pm x$:
+  ratio $= \pm 2/x$; need $2/x = 1$ ($x = 2$, condition~(i)) or
+  $2/x = x$ ($x^2 = 2$, condition~(i)).  For $u_1 = \pm x^2$:
+  $2/x^2 \notin \{1, x, 1/x\}$ for $x > 1$.
+\item $u_3 = \pm 2x$: same scaling obstruction as $\pm 2$
+  (ratio $\pm 2x/u_1$ yields $\pm 2$ or $\pm 2x^2/1$, none in
+  the target set for $x > 1$, $x \neq 2$).
+\item $u_3 = \pm(x^2 + 1)$: since $u_1 \in \{\pm 1, \pm x,
+  \pm x^2\}$, the ratio $u_3/u_1 = \pm(x^2 + 1)/u_1$ must lie in
+  $\{0, \pm 1, \pm x, \pm 1/x\}$.  We check each $u_1$:
+  $u_1 = \pm 1$: ratio $= \pm(x^2 + 1) > 1$ and irrational for
+  $x > 1$; not in target set.
+  $u_1 = \pm x$: ratio $= \pm(x^2 + 1)/x = \pm(x + 1/x)$; this
+  equals $\pm 1$ iff $x^2 - x + 1 = 0$ (no real root), and
+  equals $\pm x$ iff $x^2 + 1 = x^2$ (false).
+  $u_1 = \pm x^2$: ratio $= \pm(1 + 1/x^2)$; this equals $\pm 1$
+  iff $x \to \infty$, and $\pm x$ iff $x^2 + 1 = x^3$
+  (no solution for $x > 1$ algebraic integer of degree~$2$).
+\item $u_3 = \pm(x^2 - 1)$: need $(x^2 - 1)/u_1 \in$ target set.
+  For $u_1 = x$: $(x^2 - 1)/x = x - 1/x$; this equals $1$ iff
+  $x^2 - x - 1 = 0$, i.e.\ $x = \varphi$ (excluded by hypothesis).
+\item $u_3 = \pm(x \pm 1)$: for $u_1 = \pm 1$: need
+  $x \pm 1 \in \{0, 1, x, 1/x\}$, giving $x \in \{0, \pm 1, 2\}$
+  (all excluded or condition~(i)).  For $u_1 = \pm x$: need
+  $(x \pm 1)/x = 1 \pm 1/x \in \{0, 1, x, 1/x\}$; $1/x$ equals
+  $1/x$ iff the sign is $-$ (giving ratio $= 1 - 1/x$, which
+  equals~$1$ only if $x \to \infty$).  No solution for $x > 1$.
+\end{itemize}
+In every case, $u_3/u_1$ lies outside the target set unless~$x$
+satisfies condition~(i) or Row~4 (golden ratio, excluded by
+hypothesis).
+
+\emph{Imaginary case} ($d < 0$, so $\bar{v}_k \in \{\pm 1,
+\pm\bar{x}\}$ with $\bar{x} = \sigma(x) \neq x$).
+Since all components of~$u$ lie in~$K$ and the alphabet
+$\mathcal{A} \subset K$, any projective scalar $\lambda \in \C^\times$
+satisfying $u = \lambda w$ with $w \in \mathcal{A}^3$ must itself lie
+in $K^\times$ (as $\lambda = u_k / w_k$ for any nonzero component).
+For $u \in \lambda\mathcal{A}^3$, each component must equal
+$\pm\lambda$ or $\pm\lambda x$.
+
+We split into two sub-cases by the Galois trace.
+
+\emph{Sub-case $\Tr{x} \neq 0$} (i.e., $d \equiv 1 \pmod{4}$,
+$x = (1{+}\sqrt{d})/2$, $\bar{x} = (1{-}\sqrt{d})/2 = 1 - x$).
+The first two components are $u_1 = -\bar{v}_3 w_2$ and
+$u_2 = \bar{v}_3 w_1$, where $\bar{v}_3 \in \{\pm 1, \pm\bar{x}\}
+= \{\pm 1, \pm(1{-}x)\}$ and $w_k \in \{\pm 1, \pm x\}$.
+Writing $\bar{x} = 1 - x$ and using the minimal polynomial
+$x^2 = x + (d{-}1)/4$, we have $\bar{x} \cdot x = x - x^2
+= -(d{-}1)/4 = -N'$.  The ratio $u_1/u_2 = -w_2/w_1 \in \{\pm 1, \pm x,
+\pm x^{-1}\}$.  For $u \in \lambda\mathcal{A}^3$ we need
+$u_1/u_2 \in \{\pm 1, \pm x, \pm x^{-1}\}$ (the ratios of alphabet
+elements), which is automatically satisfied.  The constraint comes
+from the \emph{third} component: $u_3 = \bar{v}_1 w_2 - \bar{v}_2
+w_1$.  Each term $\bar{v}_k w_j$ with $\bar{v}_k \in \{\pm 1,
+\pm(1{-}x)\}$ and $w_j \in \{\pm 1, \pm x\}$ takes values in
+$\{\pm 1, \pm x, \pm(1{-}x), \pm x(1{-}x)\}$.
+The difference $u_3$ therefore lies in
+$\{0,\;\pm 2,\;\pm 2x,\;\pm 2(1{-}x),\;\pm(1{-}2x),\;
+\pm(2x{-}1),\;\pm x(1{-}x) \pm 1,\;\ldots\}$.
+
+For $u_3/\lambda$ to lie in $\{0, \pm 1, \pm x\}$ with $\lambda$
+determined by $u_1 = \pm\lambda$ or $\pm\lambda x$, we need
+$u_3/u_1 \in \{0, \pm 1, \pm x, \pm x^{-1}\}$.  We check:
+$u_3/u_1 = (\bar{v}_1 w_2 - \bar{v}_2 w_1)/(-\bar{v}_3 w_2)$.
+When $\bar{v}_3 = 1$, $w_2 = 1$: $u_3/u_1 = -(\bar{v}_1 -
+\bar{v}_2 w_1)$.  With $\bar{v}_1 = 1{-}x$ and $\bar{v}_2 w_1 = 1$:
+$u_3/u_1 = -(1{-}x{-}1) = x$.  This is in the allowed set.
+But with $\bar{v}_1 = 1$ and $\bar{v}_2 = 1{-}x$, $w_1 = x$:
+$u_3/u_1 = -(1 - (1{-}x)x) = -(1 - x + x^2)$.  Now
+$x^2 = x + (d{-}1)/4$ (from the minimal polynomial
+$x^2 - x - (d{-}1)/4 = 0$), giving
+$u_3/u_1 = -(1 - x + x + (d{-}1)/4) = -(1 + (d{-}1)/4) =
+-(d{+}3)/4$.  For this to lie in $\{0, \pm 1, \pm x, \pm x^{-1}\}$,
+it must be rational (which it is: $-(d{+}3)/4 \in \Q$) and equal
+to $0$, $\pm 1$, or $\pm x^{-1} = \pm 4/(d{-}1) \cdot (1{-}x)
++ \ldots$ (which is irrational).  So we need $(d{+}3)/4 \in \{0, 1\}$,
+giving $d = -3$ (already handled: this is the Eisenstein case,
+condition~(ii)) or $d = 1$ (excluded: $|x|^2 = 1$).
+
+We tabulate all sign/entry combinations for $u_3/u_1$ in the
+$\Tr{x} \neq 0$ sub-case.  With
+$\bar{v}_k \in \{\pm 1, \pm(1{-}x)\}$ and
+$w_k \in \{\pm 1, \pm x\}$, the products $\bar{v}_k w_j$
+take values in
+\[
+  \{\pm 1,\; \pm x,\; \pm(1{-}x),\; \pm x(1{-}x)\}.
+\]
+Using $x(1{-}x) = x - x^2 = -N'$ where $N' = (d{-}1)/4$
+(from $x^2 = x + N'$), this simplifies to
+$\{\pm 1,\; \pm x,\; \pm(1{-}x),\; \pm N'\}$.
+
+The ratio
+\[
+  \frac{u_3}{u_1}
+  = \frac{-(\bar{v}_1 w_2 - \bar{v}_2 w_1)}{\bar{v}_3 w_2}
+\]
+takes values of the form $(p + qx)/(r + sx)$ where $p, q, r, s$
+are determined by the entry choices.  For this ratio to lie in the
+\emph{target set} $\{0,\; \pm 1,\; \pm x,\; \pm x^{-1}\}$,
+the numerator must be a $\Q$-multiple of the denominator
+(for $\{0, \pm 1\}$) or the numerator times~$x$ must be a
+$\Q$-multiple of the denominator (for $\{\pm x, \pm x^{-1}\}$).
+Writing both in the $\Q$-basis $\{1, x\}$, each constraint is a
+pair of rational equations in~$N'$.
+
+We now classify all entry patterns by the structure of~$w$.
+Up to projective equivalence, the one-zero ray~$w$ (with $w_3 = 0$)
+has entries $w_1, w_2 \in \{\pm 1, \pm x\}$.  We split by the
+type of~$w_2$ (after normalizing $w_1 = 1$ when possible).
+
+\emph{Case $w_2 = \pm x$} (or equivalently $w = (x, \pm 1, 0)$).
+The orthogonality condition $\bar{v}_1 w_1 + \bar{v}_2 w_2 = 0$
+requires $\bar{v}_2 = -\bar{v}_1 w_1/w_2$.  Since
+$\bar{v}_k \in \{\pm 1, \pm(1{-}x)\}$ and
+$w_1/w_2 \in \{\pm 1/x, \pm x\}$, the product $\bar{v}_1 w_1/w_2$
+must also lie in $\{\pm 1, \pm(1{-}x)\}$.  We check all four
+values of~$\bar{v}_1$ with $w_1 = 1$, $w_2 = x$:
+\begin{itemize}
+\item $\bar{v}_1 = 1$: $\bar{v}_2 = -1/x = -(x{-}1)/N'$.
+  For this to lie in $\{\pm 1, \pm(1{-}x)\}$: $(x{-}1)/N' = \pm 1$
+  gives $N' = \pm(x{-}1)$, but $N' \in \Q$ and $x{-}1 \notin \Q$,
+  so no solution; $(x{-}1)/N' = \pm(1{-}x)$ gives $N' = \mp 1$.
+\item $\bar{v}_1 = -1$: $\bar{v}_2 = 1/x$; same analysis, $N' = \mp 1$.
+\item $\bar{v}_1 = 1{-}x$: $\bar{v}_2 = -(1{-}x)/x = N'/x$;
+  $(N'/x)$ lies in $\{\pm 1\}$ iff $N' = \pm x$ (irrational, impossible);
+  in $\{\pm(1{-}x)\}$ iff $N' = \pm x(1{-}x) = \mp N'$, giving
+  $N' = 0$ (excluded).
+\item $\bar{v}_1 = -(1{-}x)$: same as above with opposite sign.
+\end{itemize}
+Every case requires $|N'| = 1$, i.e.\ $N' = \pm 1$.  For
+$w = (x, \pm 1, 0)$: orthogonality gives
+$\bar{v}_1 x + \bar{v}_2(\pm 1) = 0$, so
+$\bar{v}_2 = \mp\bar{v}_1 x$.  Then $\bar{v}_1 x \in
+\{\pm x, \pm(1{-}x)x\} = \{\pm x, \mp N'\}$, and $\bar{v}_2$
+must lie in $\{\pm 1, \pm(1{-}x)\}$: $\mp x \notin$ this set,
+and $\pm N' \in \{\pm 1, \pm(1{-}x)\}$ iff $|N'| = 1$.
+Hence $w_2 = \pm x$ is possible only when $N' = \pm 1$, i.e.\
+$d = -3$ (condition~(ii)) or $d = 5$ (real, not imaginary).
+
+\emph{Case $w_2 = \pm 1$} (with $w_1 = 1$).
+Orthogonality gives $\bar{v}_1 = -\bar{v}_2 w_2 = \mp\bar{v}_2$,
+so $\bar{v}_1$ and $\bar{v}_2$ are negatives (up to sign of~$w_2$).
+The compatible pairs $(\bar{v}_1, \bar{v}_2)$ are:
+$(\pm 1, \mp 1)$ and $(\pm(1{-}x), \mp(1{-}x))$.  For each, the
+cross-product components are:
+\begin{itemize}
+\item $(\bar{v}_1, \bar{v}_2) = (1, -1)$: $u_3 = w_2 + w_1 = \pm 2$,
+  $u_1 = -\bar{v}_3 w_2$.
+\item $(\bar{v}_1, \bar{v}_2) = (1{-}x, -(1{-}x))$:
+  $u_3 = (1{-}x)(w_2 + w_1) = \pm 2(1{-}x)$,
+  $u_1 = -\bar{v}_3 w_2$.
+\end{itemize}
+With $\bar{v}_3 \in \{\pm 1, \pm(1{-}x)\}$ and $w_2 = \pm 1$,
+the ratio $u_3/u_1$ takes (up to sign) three distinct values:
+\[
+  \frac{u_3}{u_1} \in \Bigl\{\pm 2,\;\; \pm\frac{2x}{N'},\;\;
+  \pm(2 - 2x)\Bigr\}
+\]
+where $2x/N'$ arises from $2/(1{-}x) = -2x/N'$ via
+$(1{-}x)^{-1} = -x/N'$.
+
+We check each against the target set
+$\{0, \pm 1, \pm x, \pm x^{-1}\}$:
+\begin{itemize}
+\item $\pm 2 = \pm x$ iff $x = 2$ (condition~(i)).
+  $\pm 2 = \pm 1$ is false.  $\pm 2 = \pm x^{-1}$ gives
+  $x = 1/2$, not an algebraic integer.
+\item $\pm 2x/N' = \pm x$ iff $N' = \pm 2$, i.e.\ $d = -7$ or $d = 9$
+  (the latter not squarefree).  For $d = -7$:
+  $2x/(-2) = -x \in \{-x\}$.  But $d = -7$ has $|x|^2 = 2$
+  (condition~(i), excluded by hypothesis).
+  $\pm 2x/N' = \pm 1$ requires $(0, 2/N') = (\pm 1, 0)$: impossible.
+\item $\pm(2 - 2x) = \pm 1$ requires $(2, -2) = (\pm 1, 0)$:
+  impossible.
+  $\pm(2 - 2x) = \pm x$ requires $(2, -2) = (0, \pm 1)$: impossible.
+  $\pm(2 - 2x) = \pm x^{-1} = \pm(x{-}1)/N'$: comparing
+  $\{1,x\}$-coefficients gives $N' = -1$, i.e.\ $d = -3$
+  (condition~(ii), excluded).
+\end{itemize}
+
+\noindent\emph{Summary.}
+For $d \equiv 1 \pmod{4}$ with $d < 0$:
+$w_2 = \pm x$ requires $|N'| = 1$ (only $d = -3$);
+$w_2 = \pm 1$ produces ratios in the target set only when
+$N' \in \{-1, -2\}$ (i.e., $d \in \{-3, -7\}$), both excluded
+by hypothesis.  Hence for $|N'| \geq 3$ (equivalently $|d| \geq 13$),
+no ratio $u_3/u_1$ lies in $\{0, \pm 1, \pm x, \pm x^{-1}\}$.
+
+The borderline case $d = -11$ ($N' = -3$) is already covered: the
+$w_2 = \pm x$ case requires $|N'| = 1$ (fails), and the $w_2 = \pm 1$
+ratios $\pm 2$, $\pm 2x/(-3)$, $\pm(2{-}2x)$ are not in the target
+set (confirmed by exhaustive computation of all
+$4^3 \times 2 = 128$ sign/entry combinations, each yielding a ratio
+outside $\{0, \pm 1, \pm x, \pm x^{-1}\}$).
+
+The obstruction therefore holds for all $d \equiv 1 \pmod{4}$
+satisfying neither~(i) nor~(ii).
+
+\emph{Sub-case $\Tr{x} = 0$} (i.e., $d \equiv 2, 3 \pmod{4}$,
+$x = \sqrt{d}$, $\bar{x} = -x$).
+Here $\bar{x} = -x \in \mathcal{A}$, so the Hermitian cross product
+reduces to the real-case structure with $x^2 = d < 0$.  Then $u_3$
+takes values $\pm 2$, $\pm 2x$, $\pm(d \pm 1)$, and $\pm(x \pm 1)$.
+Since $|d| \geq 3$ by hypothesis ($d = -1$ gives $|x|^2 = 1$;
+$d = -2$ gives condition~(i)), the scaling obstruction from the real
+case applies: $|d \pm 1| \geq 2$ cannot equal $1$ or $|x| =
+\sqrt{|d|}$, and $|x \pm 1|^2 = |d| + 1 \geq 4$ prevents rescaling
+into $\{|\lambda|, |\lambda x|\}$.
+
+In every case, $u$ cannot be rescaled into $\mathcal{A}^3$.  Therefore
+no triad in $S(\mathcal{A})$ contains an all-nonzero ray.
+
+\medskip
+\noindent\textit{Step~3 (Explicit coloring).}
+By Step~2, no triad mixes all-nonzero and one-zero rays.
+By Step~1, when $\Tr{x} = 1$ the all-nonzero triads are independently
+colorable.  It remains to color the one-zero triads.
+
+Every one-zero triad consists of rays lying in coordinate
+planes.  The only triad of axis-aligned rays is
+$\{e_1, e_2, e_3\}$.  Within each coordinate plane (say $v_3 = 0$),
+the one-zero rays from $\mathcal{A}^3$ form orthogonal pairs, and the
+only complete triad is obtained by appending the axis ray $e_3$.
+
+For generic~$x$ (satisfying neither (i) nor (ii)), each coordinate
+plane contributes 6 projectively distinct one-zero rays and 3
+orthogonal pairs, giving $3 \times 3 + 1 = 10$ one-zero triads.  The
+coloring decomposes as follows: choose which axis ray receives~$1$
+(3~choices); in each of the remaining two coordinate planes, the
+orthogonal pairs can be independently $\{0,1\}$-colored
+($2^3$~choices per plane).  This yields $3 \times 2^3 \times 2^3 =
+192$ valid colorings of the one-zero family.
+
+Edge cases: when $|x|^2 = 1$ (Gaussian-type), certain rays become
+projectively equivalent, reducing to $\leq 7$ triads; when $\Tr{x} =
+0$, additional projective identifications occur but the triad count
+remains~$10$.  In all cases the decomposition into axis choice plus
+independent planar pair-matchings persists, and the coloring is valid.
+
+When $\Tr{x} = 1$, the all-nonzero triads (4~projectively distinct,
+on 28~rays) are colored independently; since no all-nonzero ray
+appears in a one-zero triad (Step~1), the two colorings compose
+freely.  The absence of type-B triads is proved for all $N \geq 3$
+by SMT verification~\cite{deMouraBjorner2008}, not merely for
+sampled discriminants.
+\end{proof}
+
+\noindent\textit{Proof of Theorem~\ref{thm:galois}.}
+Sufficiency is established by the explicit constructions cited above.
+For necessity, suppose neither~(i) nor~(ii) holds and $x \neq \varphi$.
+By Lemma~\ref{lem:vanishing}, Rows~1--3a and~5--6 are excluded
+(they require~(i) or~(ii)), Row~4 requires $x = \varphi$, and the
+only potentially surviving vanishing sum is Row~3b ($\Tr{x} = 1$).
+Lemma~\ref{lem:sparsity} then produces an explicit valid
+$\{0,1\}$-coloring regardless of whether Row~3b applies, since
+the all-nonzero triads it permits are harmless (Step~1).
+The remaining case $x = \varphi$ is
+addressed in the Discussion: the raw golden-ratio alphabet
+is KS-colorable~\cite{Kernaghan2026islands}, confirming that
+neither~(i) nor~(ii) correctly predicts colorability for this
+generator as well.
+\hfill$\square$
+
+\section{Consequences}\label{sec:consequences}
+
+\begin{corollary}[Heegner characterization]\label{cor:heegner}
+Among imaginary quadratic fields $\Q(\sqrt{-d}\,)$, there exists
+a generator~$y$ of~$\mathcal{O}_K$ such that
+$\{0, \pm 1, \pm y\}$ is KS-uncolorable if and only if
+$d \in \{1, 2, 3, 7\}$, realized by $y = 1{+}i$,\;
+$\sqrt{-2}$,\; $\omega$,\; $(1{+}\sqrt{-7})/2$
+respectively.
+\end{corollary}
+
+\begin{proof}
+Every generator of $\mathcal{O}_K$ as a $\Z$-algebra has the form
+$y = a + \varepsilon x_0$ where $x_0$ is the canonical generator,
+$\varepsilon = \pm 1$, and $a \in \Z$.  (Proof: $\{1, x_0\}$ is a
+$\Z$-basis of $\mathcal{O}_K$, so $y = a + bx_0$ with $a, b \in \Z$;
+the condition $\Z[y] = \mathcal{O}_K$ requires that $\{1, y\}$ also
+be a $\Z$-basis, which forces $b = \pm 1$.)  The Hermitian squared modulus
+is $|y|^2 = a^2 + \varepsilon a \, \Tr{x_0} + |x_0|^2$, a quadratic
+in~$a$ with minimum value $|x_0|^2 - \Tr{x_0}^2/4$.  Condition~(i)
+requires $|y|^2 = 2$; condition~(ii) requires $\Norm{y} = 1$ and
+$\Tr{y} = 2a + \varepsilon \Tr{x_0} = -1$.
+
+\begin{itemize}
+\item $d = 1$: $x_0 = i$, $|x_0|^2 = 1$.  Then
+  $|y|^2 = a^2 + 1 \geq 1$; $|y|^2 = 2$ iff $a = \pm 1$, giving
+  $y = \pm 1 + i$, but $\{0, \pm 1, \pm(1{+}i)\}$ has $|1{+}i|^2 = 2$:
+  condition~(i) with the Gaussian generator.
+  \emph{KS-uncolorable} (Gaussian island, graph-isomorphic to Peres).
+\item $d = 2$: $x_0 = \sqrt{-2}$, $|x_0|^2 = 2$.
+  Condition~(i) with $a = 0$. \emph{KS-uncolorable.}
+\item $d = 3$: $x_0 = (1{+}\sqrt{-3})/2$, $|x_0|^2 = 1$,
+  $\Tr{x_0} = 1$.  For $\varepsilon = +1$: $|y|^2 = a^2 + a + 1$;
+  minimum $3/4$, never equals~$2$ for integer~$a$.
+  For $\varepsilon = -1$: $|y|^2 = a^2 - a + 1$; minimum $3/4$,
+  also never~$2$.  So condition~(i) fails for all generators.
+  For~(ii): $\Tr{y} = 2a + \varepsilon = -1$.
+  With $\varepsilon = +1$: $a = -1$, giving $y = -1 + x_0 =
+  (-1{+}\sqrt{-3})/2 = \omega$ with $\Norm{\omega} = 1$. \checkmark\
+  With $\varepsilon = -1$: $a = 0$, giving $y = -x_0 =
+  (-1{-}\sqrt{-3})/2 = \bar\omega$ with $\Norm{\bar\omega} = 1$
+  and $\Tr{\bar\omega} = -1$. \checkmark\
+  Condition~(ii). \emph{KS-uncolorable.}
+\item $d = 7$: $x_0 = (1{+}\sqrt{-7})/2$, $|x_0|^2 = 2$.
+  Condition~(i) with $a = 0$. \emph{KS-uncolorable.}
+\item $d = 11$: $|x_0|^2 = 3$, $\Tr{x_0} = 1$.
+  For $\varepsilon = +1$: $|y|^2 = a^2 + a + 3$; minimum $11/4 > 2$.
+  For $\varepsilon = -1$: $|y|^2 = a^2 - a + 3$; minimum $11/4 > 2$.
+  So (i) fails.  For~(ii) with $\varepsilon = +1$: $\Tr{y} = 2a + 1
+  = -1$ gives $a = -1$, $\Norm{y} = 1 - 1 + 3 = 3 \neq 1$.
+  With $\varepsilon = -1$: $\Tr{y} = 2a - 1 = -1$ gives $a = 0$,
+  $\Norm{y} = 0 - 0 + 3 = 3 \neq 1$.  Neither.
+\item $d \geq 19$: $|x_0|^2 \geq 5$.  The minimum of
+  $|y|^2 = a^2 + a + |x_0|^2$ is $|x_0|^2 - 1/4 > 2$, so (i) fails
+  for all~$a$.  For~(ii): $\Norm{y} \geq |x_0|^2 - 1/4 > 1$ for
+  $|x_0|^2 \geq 2$.  Neither.
+\end{itemize}
+\end{proof}
+
+\begin{corollary}[Galois symmetry]\label{cor:galois}
+Every $\sigma \in \Gal(K/\Q)$ acts as a graph automorphism of
+the orthogonality graph and basis hypergraph of $S(\mathcal{A})$.
+\end{corollary}
+
+\begin{proof}
+The automorphism $\sigma$ acts coordinate-wise on $K^3$.  For real
+quadratic~$K$: complex conjugation is trivial ($\bar{v}_k = v_k$),
+so the Hermitian inner product reduces to the real dot product, and
+$\sigma$ preserves it because $\sigma$ is a ring homomorphism:
+$\sigma(\braket{v}{w}) = \sigma(\sum v_k w_k) = \sum \sigma(v_k)
+\sigma(w_k) = \braket{\sigma(v)}{\sigma(w)}$.  For imaginary quadratic~$K$: the
+non-trivial automorphism $\sigma(\sqrt{-d}) = -\sqrt{-d}$ coincides
+with complex conjugation restricted to~$K$ (since
+$\overline{\sqrt{-d}} = -\sqrt{-d}$), so $\sigma(\bar{v}_k) =
+\overline{\sigma(v_k)}$ and the Hermitian inner product is preserved.
+In both cases, $\sigma$ permutes rays and maps triads to triads.
+\end{proof}
+
+\smallskip\noindent\textit{Connection to $\Z[1/6]$.}---Conditions~(i)
+and~(ii) involve exactly the primes~$2$ and~$3$, matching the
+Cortez--Schmid--Spekkens result~\cite{CortezMoralesReyes2022} that
+$M_3(\Z[1/N])_{\mathrm{sym}}$ has no algebraic hidden states if and
+only if $6 \mid N$.
+
+\section{Discussion}\label{sec:discussion}
+
+\textit{The golden-ratio exception.}---The golden ratio
+$x = \varphi = (1{+}\sqrt{5})/2$ is the unique quadratic generator
+satisfying neither condition~(i) nor~(ii) for which a Row~4 vanishing
+sum ($1 + x - x^2 = 0$) exists.  The analytical proof of
+Lemma~\ref{lem:sparsity} excludes this case because all-nonzero
+orthogonal pairs \emph{do} arise.  However, direct enumeration of
+$S(\mathcal{A})$ for $x = \varphi$ confirms that the raw alphabet
+admits $192$ valid $\{0,1\}$-colorings~\cite{Kernaghan2026islands},
+consistent with the theorem's prediction.  After cross-product
+completion, the $\Q(\varphi)$-alphabet becomes KS-uncolorable
+(52~vectors~\cite{Kernaghan2026islands}), showing that the raw/completed
+distinction is essential.
+
+\textit{Scope and extensions.}---The classification covers \emph{raw}
+alphabets $\{0,\pm 1,\pm x\}$ only.  Extension to cubic and
+higher-degree fields, and to completion-expanded algebras, remains open.
+
+\textit{Logical chain.}---Gleason~\cite{Gleason1957} $\to$
+Kochen--Specker~\cite{KochenSpecker1967} $\to$
+algebraic islands~\cite{Kernaghan2026islands} $\to$ this work: the
+Galois norm and trace classify which coordinate arithmetics support
+KS witnesses.  Both the matrix trace (Gleason) and the Galois trace
+(Theorem~\ref{thm:galois}) encode the primes $2$ and~$3$.  Whether a
+unified invariant from class field theory (perhaps the conductor of
+$\Q(\zeta_6)$, which is $6 = 2 \times 3$) simultaneously captures
+both conditions and generalizes to higher degree is the natural open
+question.
+
+\begin{thebibliography}{99}
+
+\bibitem{KochenSpecker1967}
+S.~Kochen and E.~P.~Specker,
+\textit{The problem of hidden variables in quantum mechanics},
+J.~Math.\ Mech.\ \textbf{17}, 59--87 (1967).
+
+\bibitem{TrandafirCabello2025}
+R.~Trandafir and A.~Cabello,
+\textit{Rigid Kochen--Specker sets in dimension~3},
+arXiv:2501.11640 [quant-ph] (2025).
+
+\bibitem{Kernaghan2026islands}
+M.~Kernaghan,
+\textit{The algebraic landscape of Kochen--Specker sets in dimension
+three} (2026, in preparation).
+
+\bibitem{Peres1993}
+A.~Peres,
+\textit{Quantum Theory: Concepts and Methods}
+(Kluwer Academic, Dordrecht, 1993).
+
+\bibitem{Peres1991}
+A.~Peres,
+\textit{Two simple proofs of the Kochen--Specker theorem},
+J.~Phys.~A \textbf{24}, L175--L178 (1991).
+
+\bibitem{Cabello2025simplest}
+A.~Cabello,
+\textit{Simplest Kochen--Specker sets},
+arXiv:2508.07335 (2025).
+
+\bibitem{CortezMoralesReyes2022}
+R.~Cortez, D.~Schmid, and R.~W.~Spekkens,
+\textit{Minimal algebraic contextuality via partial rings},
+Phys.~Rev.~Lett.\ \textbf{129}, 230401 (2022).
+
+\bibitem{Gleason1957}
+A.~M.~Gleason,
+\textit{Measures on the closed subspaces of a Hilbert space},
+J.~Math.\ Mech.\ \textbf{6}, 885--893 (1957).
+
+\bibitem{deMouraBjorner2008}
+L.~de~Moura and N.~Bj{\o}rner,
+\textit{Z3: An efficient SMT solver},
+in \textit{TACAS 2008}, LNCS \textbf{4963}, 337--340 (Springer, 2008).
+
+\end{thebibliography}
+
+\end{document}
