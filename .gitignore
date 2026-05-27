@@ -28,3 +28,17 @@ wiki/.obsidian/workspace.json
 wiki/.obsidian/workspace-mobile.json
 wiki/.obsidian/plugins/
 wiki/.obsidian/themes/
+
+# Claude per-project config (may contain settings.local.json secrets)
+.claude/
+
+# Transient submission bundles / archives
+*.zip
+*.tar.gz
+
+# Stray screenshot and loose transcript dump
+paper/2026-03-24 18_48_24-.png
+/A SAT +CAS Attack on the Minimal Kochen-Specker Problem by Brian Zhengyu Li youtube transcript.txt
+
+# Manim video render project (not committed)
+/video/
