@@ -1219,6 +1219,1069 @@ theorem allN_orth_two_zeros {n : ℕ} {a b : Fin 3 → ℂ} (haN : AllNonzero n 
          simp only [mul_zero, zero_add, add_zero] at hsum
          exact close ((mul_eq_zero.mp hsum).resolve_left (hconj _)) hk hp)
 
+/-! #### Case 2 — no AllNonzero ray in any triad -/
+
+/-- Under `3 ∤ n`, a ray `b ∈ Sₙ` orthogonal to an `AllNonzero` ray `a` has
+    a unique zero coordinate: at least one (since `b` is not AllNonzero —
+    otherwise `allNonzero_not_orth` would apply, which is invoked at the call
+    site), and at most one (`allN_orth_two_zeros`). -/
+theorem orth_allN_uniqueZero {n : ℕ} {a b : Fin 3 → ℂ}
+    (haN : AllNonzero n a) (hbS : b ∈ S n) (hbN : ¬ AllNonzero n b)
+    (hab : Orthogonal a b) :
+    ∃ k : Fin 3, b k = 0 ∧ ∀ k' : Fin 3, k' ≠ k → b k' ≠ 0 := by
+  classical
+  have hex : ∃ k, b k = 0 := by
+    by_contra h
+    push Not at h
+    exact hbN ⟨hbS, h⟩
+  obtain ⟨k, hk⟩ := hex
+  exact ⟨k, hk, fun k' hkk' hk'eq =>
+    allN_orth_two_zeros haN hbS.1 hab hkk' hk'eq hk⟩
+
+/-- **Off-diagonal Case-2 contradiction.**  If two rays of `Sₙ` have *different*
+    unique zero coordinates `kb ≠ kd`, their inner product reduces to a single
+    nonzero root-of-unity term at the third coordinate, so they cannot be
+    orthogonal. -/
+private theorem case2_off_diag_absurd {b d : Fin 3 → ℂ}
+    (hbd : Orthogonal b d)
+    {kb kd : Fin 3}
+    (hbk : b kb = 0) (hbk' : ∀ k' : Fin 3, k' ≠ kb → b k' ≠ 0)
+    (hdk : d kd = 0) (hdk' : ∀ k' : Fin 3, k' ≠ kd → d k' ≠ 0)
+    (hkbd : kb ≠ kd) : False := by
+  have ipbd : (starRingEnd ℂ) (b 0) * d 0 + (starRingEnd ℂ) (b 1) * d 1 +
+              (starRingEnd ℂ) (b 2) * d 2 = 0 := by
+    have h := hbd; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  -- A small helper closing each off-diagonal branch given the surviving coord `m`.
+  -- After substituting `b kb = 0` and `d kd = 0`, only the `m`-term survives in
+  -- `ipbd`, giving `conj(b m) * d m = 0` — contradicting both factors nonzero.
+  fin_cases kb <;> fin_cases kd
+  · exact absurd rfl hkbd                                                  -- (0, 0)
+  · -- (0, 1): m = 2
+    rw [show b 0 = 0 from hbk, show d 1 = 0 from hdk] at ipbd
+    simp only [mul_zero, map_zero, zero_mul, zero_add, add_zero] at ipbd
+    exact (mul_ne_zero
+      (by rw [starRingEnd_apply]; exact star_ne_zero.mpr (hbk' 2 (by decide)))
+      (hdk' 2 (by decide))) ipbd
+  · -- (0, 2): m = 1
+    rw [show b 0 = 0 from hbk, show d 2 = 0 from hdk] at ipbd
+    simp only [mul_zero, map_zero, zero_mul, zero_add, add_zero] at ipbd
+    exact (mul_ne_zero
+      (by rw [starRingEnd_apply]; exact star_ne_zero.mpr (hbk' 1 (by decide)))
+      (hdk' 1 (by decide))) ipbd
+  · -- (1, 0): m = 2
+    rw [show b 1 = 0 from hbk, show d 0 = 0 from hdk] at ipbd
+    simp only [mul_zero, map_zero, zero_mul, zero_add, add_zero] at ipbd
+    exact (mul_ne_zero
+      (by rw [starRingEnd_apply]; exact star_ne_zero.mpr (hbk' 2 (by decide)))
+      (hdk' 2 (by decide))) ipbd
+  · exact absurd rfl hkbd                                                  -- (1, 1)
+  · -- (1, 2): m = 0
+    rw [show b 1 = 0 from hbk, show d 2 = 0 from hdk] at ipbd
+    simp only [mul_zero, map_zero, zero_mul, zero_add, add_zero] at ipbd
+    exact (mul_ne_zero
+      (by rw [starRingEnd_apply]; exact star_ne_zero.mpr (hbk' 0 (by decide)))
+      (hdk' 0 (by decide))) ipbd
+  · -- (2, 0): m = 1
+    rw [show b 2 = 0 from hbk, show d 0 = 0 from hdk] at ipbd
+    simp only [mul_zero, map_zero, zero_mul, zero_add, add_zero] at ipbd
+    exact (mul_ne_zero
+      (by rw [starRingEnd_apply]; exact star_ne_zero.mpr (hbk' 1 (by decide)))
+      (hdk' 1 (by decide))) ipbd
+  · -- (2, 1): m = 0
+    rw [show b 2 = 0 from hbk, show d 1 = 0 from hdk] at ipbd
+    simp only [mul_zero, map_zero, zero_mul, zero_add, add_zero] at ipbd
+    exact (mul_ne_zero
+      (by rw [starRingEnd_apply]; exact star_ne_zero.mpr (hbk' 0 (by decide)))
+      (hdk' 0 (by decide))) ipbd
+  · exact absurd rfl hkbd                                                  -- (2, 2)
+
+/-- **Case 2 — no AllNonzero ray in any triad.**  Under `2 ∣ n`, `3 ∤ n`,
+    every triad of `Sₙ` consists entirely of zero-bearing rays.
+
+    Proof sketch: suppose `a ∈ t` is AllNonzero, with other triad members
+    `b`, `d`.  `allNonzero_not_orth` (under `3 ∤ n`) rules out `b`, `d`
+    being AllNonzero; `allN_orth_two_zeros` bounds each below at one zero
+    coord; so each has *exactly* one zero coord (`orth_allN_uniqueZero`).
+    * `kb ≠ kd` (`case2_off_diag_absurd`): the `b ⊥ d` inner product reduces
+      to a single nonzero root-of-unity term — contradiction.
+    * `kb = kd = k`: the three orthogonalities `a ⊥ b`, `a ⊥ d`, `b ⊥ d` in
+      the orthogonal plane combine under root-of-unity unitarity to force
+      `2 · a_{k₁} · b_{k₁} · d_{k₂} = 0`, contradicting nonzero entries. -/
+theorem case2_no_allNonzero_in_triad {n : ℕ} (hn : n ≠ 0) (h3 : ¬ 3 ∣ n)
+    {t : Finset (Fin 3 → ℂ)} (ht : IsTriad (S n) t) :
+    ∀ r ∈ t, ¬ AllNonzero n r := by
+  classical
+  -- Reduce to a sub-lemma on three named rays.
+  suffices key : ∀ a b d : Fin 3 → ℂ, AllNonzero n a → b ∈ S n → d ∈ S n →
+      Orthogonal a b → Orthogonal a d → Orthogonal b d → False by
+    intro r hr hrN
+    obtain ⟨x, y, z, hxy, hxz, hyz, hteq⟩ := Finset.card_eq_three.mp ht.2.1
+    have hxS : x ∈ S n := ht.1 (by rw [hteq]; simp)
+    have hyS : y ∈ S n := ht.1 (by rw [hteq]; simp)
+    have hzS : z ∈ S n := ht.1 (by rw [hteq]; simp)
+    have hxy_o : Orthogonal x y := ht.2.2 _ (by rw [hteq]; simp) _ (by rw [hteq]; simp) hxy
+    have hxz_o : Orthogonal x z := ht.2.2 _ (by rw [hteq]; simp) _ (by rw [hteq]; simp) hxz
+    have hyz_o : Orthogonal y z := ht.2.2 _ (by rw [hteq]; simp) _ (by rw [hteq]; simp) hyz
+    rw [hteq] at hr
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hr
+    rcases hr with rfl | rfl | rfl
+    · exact key r y z hrN hyS hzS hxy_o hxz_o hyz_o
+    · exact key r x z hrN hxS hzS (Orthogonal_symm hxy_o) hyz_o hxz_o
+    · exact key r x y hrN hxS hyS (Orthogonal_symm hxz_o) (Orthogonal_symm hyz_o) hxy_o
+  -- Sub-lemma.
+  intro a b d haN hbS hdS hab had hbd
+  have hbN : ¬ AllNonzero n b := fun hbN' => allNonzero_not_orth hn h3 haN hbN' hab
+  have hdN : ¬ AllNonzero n d := fun hdN' => allNonzero_not_orth hn h3 haN hdN' had
+  obtain ⟨kb, hbk, hbk'⟩ := orth_allN_uniqueZero haN hbS hbN hab
+  obtain ⟨kd, hdk, hdk'⟩ := orth_allN_uniqueZero haN hdS hdN had
+  -- Split on whether the unique zero coords agree.
+  by_cases hkbd : kb = kd
+  · -- Same-zero-coord case: derive `2 · (product of nonzero terms) = 0`.
+    subst hkbd
+    have apow : ∀ j, (a j) ^ n = 1 := fun j => (haN.1.2 j).resolve_left (haN.2 j)
+    have ca : ∀ j, a j * (starRingEnd ℂ) (a j) = 1 := fun j =>
+      mul_conj_eq_one_of_pow hn (apow j)
+    have cb : ∀ j, j ≠ kb → b j * (starRingEnd ℂ) (b j) = 1 := fun j hj =>
+      mul_conj_eq_one_of_pow hn ((hbS.2 j).resolve_left (hbk' j hj))
+    have ipab : (starRingEnd ℂ) (a 0) * b 0 + (starRingEnd ℂ) (a 1) * b 1 +
+                (starRingEnd ℂ) (a 2) * b 2 = 0 := by
+      have h := hab; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+    have ipad : (starRingEnd ℂ) (a 0) * d 0 + (starRingEnd ℂ) (a 1) * d 1 +
+                (starRingEnd ℂ) (a 2) * d 2 = 0 := by
+      have h := had; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+    have ipbd : (starRingEnd ℂ) (b 0) * d 0 + (starRingEnd ℂ) (b 1) * d 1 +
+                (starRingEnd ℂ) (b 2) * d 2 = 0 := by
+      have h := hbd; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+    have h2c : (2 : ℂ) ≠ 0 := by norm_num
+    fin_cases kb
+    · -- k = 0; non-zero coords (k₁, k₂) = (1, 2)
+      have hb1 := hbk' 1 (by decide)
+      have hd2 := hdk' 2 (by decide)
+      have ca2 := ca 2
+      have cb1 := cb 1 (by decide); have cb2 := cb 2 (by decide)
+      rw [show b 0 = 0 from hbk] at ipab ipbd
+      rw [show d 0 = 0 from hdk] at ipad ipbd
+      simp only [mul_zero, map_zero, zero_mul, zero_add, add_zero] at ipab ipad ipbd
+      have key : (2 : ℂ) * (a 1 * b 1 * d 2) = 0 := by
+        linear_combination
+          (- a 1 * a 2 * d 1) * ipab + (a 1 * a 2 * b 1) * ipad
+          + (a 1 * b 1 * b 2) * ipbd
+          + (a 1 * b 2 * d 1 - a 1 * b 1 * d 2) * ca2
+          + (- a 1 * b 2 * d 1) * cb1 + (- a 1 * b 1 * d 2) * cb2
+      rcases mul_eq_zero.mp key with h | h
+      · exact h2c h
+      · rcases mul_eq_zero.mp h with h | h
+        · rcases mul_eq_zero.mp h with h | h
+          · exact (haN.2 1) h
+          · exact hb1 h
+        · exact hd2 h
+    · -- k = 1; non-zero coords (k₁, k₂) = (0, 2)
+      have hb0 := hbk' 0 (by decide)
+      have hd2 := hdk' 2 (by decide)
+      have ca2 := ca 2
+      have cb0 := cb 0 (by decide); have cb2 := cb 2 (by decide)
+      rw [show b 1 = 0 from hbk] at ipab ipbd
+      rw [show d 1 = 0 from hdk] at ipad ipbd
+      simp only [mul_zero, map_zero, zero_mul, zero_add, add_zero] at ipab ipad ipbd
+      have key : (2 : ℂ) * (a 0 * b 0 * d 2) = 0 := by
+        linear_combination
+          (- a 0 * a 2 * d 0) * ipab + (a 0 * a 2 * b 0) * ipad
+          + (a 0 * b 0 * b 2) * ipbd
+          + (a 0 * b 2 * d 0 - a 0 * b 0 * d 2) * ca2
+          + (- a 0 * b 2 * d 0) * cb0 + (- a 0 * b 0 * d 2) * cb2
+      rcases mul_eq_zero.mp key with h | h
+      · exact h2c h
+      · rcases mul_eq_zero.mp h with h | h
+        · rcases mul_eq_zero.mp h with h | h
+          · exact (haN.2 0) h
+          · exact hb0 h
+        · exact hd2 h
+    · -- k = 2; non-zero coords (k₁, k₂) = (0, 1)
+      have hb0 := hbk' 0 (by decide)
+      have hd1 := hdk' 1 (by decide)
+      have ca1 := ca 1
+      have cb0 := cb 0 (by decide); have cb1 := cb 1 (by decide)
+      rw [show b 2 = 0 from hbk] at ipab ipbd
+      rw [show d 2 = 0 from hdk] at ipad ipbd
+      simp only [mul_zero, map_zero, zero_mul, zero_add, add_zero] at ipab ipad ipbd
+      have key : (2 : ℂ) * (a 0 * b 0 * d 1) = 0 := by
+        linear_combination
+          (- a 0 * a 1 * d 0) * ipab + (a 0 * a 1 * b 0) * ipad
+          + (a 0 * b 0 * b 1) * ipbd
+          + (a 0 * b 1 * d 0 - a 0 * b 0 * d 1) * ca1
+          + (- a 0 * b 1 * d 0) * cb0 + (- a 0 * b 0 * d 1) * cb1
+      rcases mul_eq_zero.mp key with h | h
+      · exact h2c h
+      · rcases mul_eq_zero.mp h with h | h
+        · rcases mul_eq_zero.mp h with h | h
+          · exact (haN.2 0) h
+          · exact hb0 h
+        · exact hd1 h
+  · -- Different-zero-coord case: delegate to the off-diagonal helper.
+    exact case2_off_diag_absurd hbd hbk hbk' hdk hdk' hkbd
+
+/-! #### Case 2 — axis-0 ray dominates -/
+
+/-- If a triad `t` of `Sₙ` contains a ray `w` with `w 1 = w 2 = 0` — necessarily
+    a Case-2 axis-0 ray (`w 0 ≠ 0` since `w ≠ 0`) — then every other triad
+    member has `v 0 = 0`.  Reason: each is orthogonal to `w`, but `w`'s inner
+    product is just `conj(w 0) · v 0 = 0`, forcing `v 0 = 0`. -/
+theorem case2_axis0_dominates {n : ℕ}
+    {t : Finset (Fin 3 → ℂ)} (ht : IsTriad (S n) t)
+    {w : Fin 3 → ℂ} (hw : w ∈ t) (hw1 : w 1 = 0) (hw2 : w 2 = 0) :
+    ∀ v ∈ t, v ≠ w → v 0 = 0 := by
+  intro v hv hvw
+  have hwS : w ∈ S n := ht.1 (Finset.mem_coe.mpr hw)
+  have hw0 : w 0 ≠ 0 := by
+    intro h
+    apply hwS.1
+    funext k; fin_cases k <;> simp_all
+  have horth : Orthogonal w v := ht.2.2 _ hw _ hv (Ne.symm hvw)
+  have hsum : (starRingEnd ℂ) (w 0) * v 0 + (starRingEnd ℂ) (w 1) * v 1 +
+              (starRingEnd ℂ) (w 2) * v 2 = 0 := by
+    have h := horth; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  rw [hw1, hw2] at hsum
+  simp only [map_zero, mul_zero, zero_mul, add_zero, zero_add] at hsum
+  have hconj_ne : (starRingEnd ℂ) (w 0) ≠ 0 := by
+    rw [starRingEnd_apply]; exact star_ne_zero.mpr hw0
+  exact (mul_eq_zero.mp hsum).resolve_left hconj_ne
+
+/-! #### Case 2 — no axis-0 ray ⇒ matched pair structure (IN PROGRESS) -/
+
+/-- **(T,T,T) sub-claim.**  Three pairwise-orthogonal nonzero rays of `Sₙ`
+    that all have `v 0 = 0` cannot exist — they would form an orthogonal
+    triple inside `e₀⊥`, but only two orthogonal nonzero vectors fit in a
+    2-D space.  Case-analyzed by `x`'s support (`{1}`, `{2}`, or `{1, 2}`):
+    the size-1 cases force `y, z` onto a single axis where their inner
+    product can't vanish; the size-2 case reduces to the same
+    `2 · x_{1} · y_{1} · z_{2} = 0` rigidity identity as `case2_no_allNonzero_in_triad`. -/
+private theorem case2_three_orth_e0_perp_absurd {n : ℕ} (hn : n ≠ 0)
+    {x y z : Fin 3 → ℂ} (hxS : x ∈ S n) (hyS : y ∈ S n) (hzS : z ∈ S n)
+    (hxy : Orthogonal x y) (hxz : Orthogonal x z) (hyz : Orthogonal y z)
+    (hx0 : x 0 = 0) (hy0 : y 0 = 0) (hz0 : z 0 = 0) : False := by
+  classical
+  have ipxy : (starRingEnd ℂ) (x 0) * y 0 + (starRingEnd ℂ) (x 1) * y 1 +
+              (starRingEnd ℂ) (x 2) * y 2 = 0 := by
+    have h := hxy; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  have ipxz : (starRingEnd ℂ) (x 0) * z 0 + (starRingEnd ℂ) (x 1) * z 1 +
+              (starRingEnd ℂ) (x 2) * z 2 = 0 := by
+    have h := hxz; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  have ipyz : (starRingEnd ℂ) (y 0) * z 0 + (starRingEnd ℂ) (y 1) * z 1 +
+              (starRingEnd ℂ) (y 2) * z 2 = 0 := by
+    have h := hyz; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  rw [hx0, hy0] at ipxy
+  rw [hx0, hz0] at ipxz
+  rw [hy0, hz0] at ipyz
+  simp only [map_zero, zero_mul, add_zero, zero_add] at ipxy ipxz ipyz
+  -- After cleaning:
+  --   ipxy : conj(x 1)*y 1 + conj(x 2)*y 2 = 0
+  --   ipxz : conj(x 1)*z 1 + conj(x 2)*z 2 = 0
+  --   ipyz : conj(y 1)*z 1 + conj(y 2)*z 2 = 0
+  by_cases hx1 : x 1 = 0
+  · by_cases hx2 : x 2 = 0
+    · -- x has supp = ∅, but x ≠ 0
+      exact hxS.1 (funext fun k => by fin_cases k <;> simp_all)
+    · -- supp x = {2}: x 1 = 0, x 2 ≠ 0
+      rw [hx1] at ipxy; rw [hx1] at ipxz
+      simp only [map_zero, zero_mul, zero_add] at ipxy ipxz
+      have hconj_x2 : (starRingEnd ℂ) (x 2) ≠ 0 := by
+        rw [starRingEnd_apply]; exact star_ne_zero.mpr hx2
+      have hy2 : y 2 = 0 := (mul_eq_zero.mp ipxy).resolve_left hconj_x2
+      have hz2 : z 2 = 0 := (mul_eq_zero.mp ipxz).resolve_left hconj_x2
+      have hy1ne : y 1 ≠ 0 := fun h => hyS.1 (funext fun k => by fin_cases k <;> simp_all)
+      have hz1ne : z 1 ≠ 0 := fun h => hzS.1 (funext fun k => by fin_cases k <;> simp_all)
+      rw [hy2, hz2] at ipyz
+      simp only [map_zero, zero_mul, mul_zero, add_zero] at ipyz
+      have hconj_y1 : (starRingEnd ℂ) (y 1) ≠ 0 := by
+        rw [starRingEnd_apply]; exact star_ne_zero.mpr hy1ne
+      exact hz1ne ((mul_eq_zero.mp ipyz).resolve_left hconj_y1)
+  · by_cases hx2 : x 2 = 0
+    · -- supp x = {1}: symmetric to the previous case
+      rw [hx2] at ipxy; rw [hx2] at ipxz
+      simp only [map_zero, zero_mul, add_zero] at ipxy ipxz
+      have hconj_x1 : (starRingEnd ℂ) (x 1) ≠ 0 := by
+        rw [starRingEnd_apply]; exact star_ne_zero.mpr hx1
+      have hy1z : y 1 = 0 := (mul_eq_zero.mp ipxy).resolve_left hconj_x1
+      have hz1z : z 1 = 0 := (mul_eq_zero.mp ipxz).resolve_left hconj_x1
+      have hy2ne : y 2 ≠ 0 := fun h => hyS.1 (funext fun k => by fin_cases k <;> simp_all)
+      have hz2ne : z 2 ≠ 0 := fun h => hzS.1 (funext fun k => by fin_cases k <;> simp_all)
+      rw [hy1z, hz1z] at ipyz
+      simp only [map_zero, zero_mul, mul_zero, zero_add] at ipyz
+      have hconj_y2 : (starRingEnd ℂ) (y 2) ≠ 0 := by
+        rw [starRingEnd_apply]; exact star_ne_zero.mpr hy2ne
+      exact hz2ne ((mul_eq_zero.mp ipyz).resolve_left hconj_y2)
+    · -- supp x = {1, 2}: x 1 ≠ 0, x 2 ≠ 0.  Apply the diagonal rigidity argument.
+      have hconj_x1 : (starRingEnd ℂ) (x 1) ≠ 0 := by
+        rw [starRingEnd_apply]; exact star_ne_zero.mpr hx1
+      have hconj_x2 : (starRingEnd ℂ) (x 2) ≠ 0 := by
+        rw [starRingEnd_apply]; exact star_ne_zero.mpr hx2
+      -- y must have supp = {1, 2} (else x ⊥ y collapses)
+      have hy1ne : y 1 ≠ 0 := by
+        intro hy1z
+        rw [hy1z] at ipxy
+        simp only [mul_zero, zero_add] at ipxy
+        have hy2z : y 2 = 0 := (mul_eq_zero.mp ipxy).resolve_left hconj_x2
+        exact hyS.1 (funext fun k => by fin_cases k <;> simp_all)
+      have hy2ne : y 2 ≠ 0 := by
+        intro hy2z
+        rw [hy2z] at ipxy
+        simp only [mul_zero, add_zero] at ipxy
+        have hy1z : y 1 = 0 := (mul_eq_zero.mp ipxy).resolve_left hconj_x1
+        exact hyS.1 (funext fun k => by fin_cases k <;> simp_all)
+      have hz1ne : z 1 ≠ 0 := by
+        intro hz1z
+        rw [hz1z] at ipxz
+        simp only [mul_zero, zero_add] at ipxz
+        have hz2z : z 2 = 0 := (mul_eq_zero.mp ipxz).resolve_left hconj_x2
+        exact hzS.1 (funext fun k => by fin_cases k <;> simp_all)
+      have hz2ne : z 2 ≠ 0 := by
+        intro hz2z
+        rw [hz2z] at ipxz
+        simp only [mul_zero, add_zero] at ipxz
+        have hz1z : z 1 = 0 := (mul_eq_zero.mp ipxz).resolve_left hconj_x1
+        exact hzS.1 (funext fun k => by fin_cases k <;> simp_all)
+      -- Now x, y all have supp = {1, 2}; the rigidity identity closes the case.
+      have apow1 : (x 1) ^ n = 1 := (hxS.2 1).resolve_left hx1
+      have apow2 : (x 2) ^ n = 1 := (hxS.2 2).resolve_left hx2
+      have cx1 : x 1 * (starRingEnd ℂ) (x 1) = 1 := mul_conj_eq_one_of_pow hn apow1
+      have cx2 : x 2 * (starRingEnd ℂ) (x 2) = 1 := mul_conj_eq_one_of_pow hn apow2
+      have ypow1 : (y 1) ^ n = 1 := (hyS.2 1).resolve_left hy1ne
+      have ypow2 : (y 2) ^ n = 1 := (hyS.2 2).resolve_left hy2ne
+      have cy1 : y 1 * (starRingEnd ℂ) (y 1) = 1 := mul_conj_eq_one_of_pow hn ypow1
+      have cy2 : y 2 * (starRingEnd ℂ) (y 2) = 1 := mul_conj_eq_one_of_pow hn ypow2
+      have key : (2 : ℂ) * (x 1 * y 1 * z 2) = 0 := by
+        linear_combination
+          (- x 1 * x 2 * z 1) * ipxy + (x 1 * x 2 * y 1) * ipxz
+          + (x 1 * y 1 * y 2) * ipyz
+          + (x 1 * y 2 * z 1 - x 1 * y 1 * z 2) * cx2
+          + (- x 1 * y 2 * z 1) * cy1 + (- x 1 * y 1 * z 2) * cy2
+      have h2c : (2 : ℂ) ≠ 0 := by norm_num
+      rcases mul_eq_zero.mp key with h | h
+      · exact h2c h
+      · rcases mul_eq_zero.mp h with h | h
+        · rcases mul_eq_zero.mp h with h | h
+          · exact hx1 h
+          · exact hy1ne h
+        · exact hz2ne h
+
+/-- **Cross-plane non-orthogonality.**  If `a` has `a 1 = 0` (support ⊆ `{0, 2}`,
+    with `a 0 ≠ 0`) and `b` has `b 2 = 0` (support ⊆ `{0, 1}`, with `b 0 ≠ 0`),
+    then `a` and `b` cannot be orthogonal: their inner product reduces to
+    `conj(a 0) · b 0`, a product of two nonzero values. -/
+private theorem case2_cross_plane_absurd {a b : Fin 3 → ℂ}
+    (ha0 : a 0 ≠ 0) (hb0 : b 0 ≠ 0)
+    (ha1z : a 1 = 0) (hb2z : b 2 = 0)
+    (horth : Orthogonal a b) : False := by
+  have ipab : (starRingEnd ℂ) (a 0) * b 0 + (starRingEnd ℂ) (a 1) * b 1 +
+              (starRingEnd ℂ) (a 2) * b 2 = 0 := by
+    have h := horth; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  rw [ha1z, hb2z] at ipab
+  simp only [map_zero, zero_mul, mul_zero, add_zero] at ipab
+  exact mul_ne_zero
+    (by rw [starRingEnd_apply]; exact star_ne_zero.mpr ha0) hb0 ipab
+
+/-- **Lone-`v 0 ≠ 0`-ray forced to axis-0.**  If `u, v ∈ Sₙ` are pairwise
+    orthogonal nonzero rays both with `_ 0 = 0` (so both lie in `e₀⊥`), and
+    `r ∈ Sₙ` is orthogonal to both with `r 0 ≠ 0`, then `r 1 = r 2 = 0`
+    (i.e., `r` is axis-0).
+
+    Used in the (T,T,F)/(T,F,T)/(F,T,T) sub-cases of
+    `case2_no_axis0_v0_count` to derive a contradiction with the no-axis-0
+    hypothesis.
+
+    Proof sketch: `u` and `v` together span `e₀⊥` (a 2-D subspace of `ℂ³`);
+    any vector orthogonal to both is in `(e₀⊥)⊥ = span e₀`, hence axis-0.
+    Formalized by case-analyzing `supp u`, `supp v` (each `⊆ {1,2}`,
+    nonempty, of size 1 or 2 — and not both size 1 at the same axis, by
+    `u ⊥ v`).  The size-2/size-2 sub-case uses the same rigidity
+    `linear_combination` as `case2_three_orth_e0_perp_absurd`. -/
+private theorem case2_lone_v0_force_axis0 {n : ℕ} (hn : n ≠ 0)
+    {r u v : Fin 3 → ℂ} (hrS : r ∈ S n) (huS : u ∈ S n) (hvS : v ∈ S n)
+    (hur : Orthogonal u r) (hvr : Orthogonal v r) (huv : Orthogonal u v)
+    (hu0 : u 0 = 0) (hv0 : v 0 = 0) (hr0 : r 0 ≠ 0) :
+    r 1 = 0 ∧ r 2 = 0 := by
+  classical
+  -- Inner products
+  have ipur : (starRingEnd ℂ) (u 0) * r 0 + (starRingEnd ℂ) (u 1) * r 1 +
+              (starRingEnd ℂ) (u 2) * r 2 = 0 := by
+    have h := hur; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  have ipvr : (starRingEnd ℂ) (v 0) * r 0 + (starRingEnd ℂ) (v 1) * r 1 +
+              (starRingEnd ℂ) (v 2) * r 2 = 0 := by
+    have h := hvr; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  have ipuv : (starRingEnd ℂ) (u 0) * v 0 + (starRingEnd ℂ) (u 1) * v 1 +
+              (starRingEnd ℂ) (u 2) * v 2 = 0 := by
+    have h := huv; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  rw [hu0] at ipur ipuv
+  rw [hv0] at ipvr ipuv
+  simp only [map_zero, zero_mul, zero_add] at ipur ipvr ipuv
+  -- ipur : conj(u 1)*r 1 + conj(u 2)*r 2 = 0
+  -- ipvr : conj(v 1)*r 1 + conj(v 2)*r 2 = 0
+  -- ipuv : conj(u 1)*v 1 + conj(u 2)*v 2 = 0
+  -- Case-split on u's support in {1, 2}
+  by_cases hu1z : u 1 = 0
+  · -- supp u ⊆ {2}; nonzero ⇒ u 2 ≠ 0
+    have hu2ne : u 2 ≠ 0 := by
+      intro h; exact huS.1 (funext fun k => by fin_cases k <;> simp_all)
+    -- ipur: conj(u 2)*r 2 = 0 ⇒ r 2 = 0
+    rw [hu1z] at ipur ipuv
+    simp only [map_zero, zero_mul, zero_add] at ipur ipuv
+    have hconj_u2 : (starRingEnd ℂ) (u 2) ≠ 0 := by
+      rw [starRingEnd_apply]; exact star_ne_zero.mpr hu2ne
+    have hr2 : r 2 = 0 := (mul_eq_zero.mp ipur).resolve_left hconj_u2
+    -- ipuv: conj(u 2)*v 2 = 0 ⇒ v 2 = 0
+    have hv2z : v 2 = 0 := (mul_eq_zero.mp ipuv).resolve_left hconj_u2
+    -- v 0 = v 2 = 0, v nonzero ⇒ v 1 ≠ 0
+    have hv1ne : v 1 ≠ 0 := by
+      intro h; exact hvS.1 (funext fun k => by fin_cases k <;> simp_all)
+    -- ipvr: conj(v 1)*r 1 + conj(v 2)*r 2 = conj(v 1)*r 1 = 0 (since v 2 = 0)
+    rw [hv2z] at ipvr
+    simp only [map_zero, zero_mul, add_zero] at ipvr
+    have hconj_v1 : (starRingEnd ℂ) (v 1) ≠ 0 := by
+      rw [starRingEnd_apply]; exact star_ne_zero.mpr hv1ne
+    have hr1 : r 1 = 0 := (mul_eq_zero.mp ipvr).resolve_left hconj_v1
+    exact ⟨hr1, hr2⟩
+  · -- u 1 ≠ 0
+    by_cases hu2z : u 2 = 0
+    · -- supp u = {1}: u = (0, u 1, 0)
+      rw [hu2z] at ipur ipuv
+      simp only [map_zero, zero_mul, add_zero] at ipur ipuv
+      have hconj_u1 : (starRingEnd ℂ) (u 1) ≠ 0 := by
+        rw [starRingEnd_apply]; exact star_ne_zero.mpr hu1z
+      have hr1 : r 1 = 0 := (mul_eq_zero.mp ipur).resolve_left hconj_u1
+      have hv1z : v 1 = 0 := (mul_eq_zero.mp ipuv).resolve_left hconj_u1
+      have hv2ne : v 2 ≠ 0 := by
+        intro h; exact hvS.1 (funext fun k => by fin_cases k <;> simp_all)
+      rw [hv1z] at ipvr
+      simp only [map_zero, zero_mul, zero_add] at ipvr
+      have hconj_v2 : (starRingEnd ℂ) (v 2) ≠ 0 := by
+        rw [starRingEnd_apply]; exact star_ne_zero.mpr hv2ne
+      have hr2 : r 2 = 0 := (mul_eq_zero.mp ipvr).resolve_left hconj_v2
+      exact ⟨hr1, hr2⟩
+    · -- supp u = {1, 2}: both u 1, u 2 nonzero.  Need similar for v.
+      -- From ipuv = conj(u 1)*v 1 + conj(u 2)*v 2 = 0 (2-term root sum form):
+      -- if v 1 = 0: ipuv ⇒ conj(u 2)*v 2 = 0 ⇒ v 2 = 0 ⇒ v = 0, contradiction.
+      -- if v 2 = 0: similarly contradiction.
+      -- So v also has supp = {1, 2}.
+      have hv1ne : v 1 ≠ 0 := by
+        intro hv1z
+        rw [hv1z] at ipuv
+        simp only [mul_zero, zero_add] at ipuv
+        have hconj_u2 : (starRingEnd ℂ) (u 2) ≠ 0 := by
+          rw [starRingEnd_apply]; exact star_ne_zero.mpr hu2z
+        have hv2z : v 2 = 0 := (mul_eq_zero.mp ipuv).resolve_left hconj_u2
+        exact hvS.1 (funext fun k => by fin_cases k <;> simp_all)
+      have hv2ne : v 2 ≠ 0 := by
+        intro hv2z
+        rw [hv2z] at ipuv
+        simp only [mul_zero, add_zero] at ipuv
+        have hconj_u1 : (starRingEnd ℂ) (u 1) ≠ 0 := by
+          rw [starRingEnd_apply]; exact star_ne_zero.mpr hu1z
+        have hv1z : v 1 = 0 := (mul_eq_zero.mp ipuv).resolve_left hconj_u1
+        exact hvS.1 (funext fun k => by fin_cases k <;> simp_all)
+      -- Now both u, v have supp = {1, 2}.  Use rigidity identities
+      -- `2 · u 2 · v 1 · r 1 = 0` and `2 · u 2 · v 1 · r 2 = 0` derived via
+      -- `linear_combination` from `ipur, ipvr, ipuv` + full `u, v` unitarity.
+      have upow1 : (u 1) ^ n = 1 := (huS.2 1).resolve_left hu1z
+      have upow2 : (u 2) ^ n = 1 := (huS.2 2).resolve_left hu2z
+      have cu1 : u 1 * (starRingEnd ℂ) (u 1) = 1 := mul_conj_eq_one_of_pow hn upow1
+      have cu2 : u 2 * (starRingEnd ℂ) (u 2) = 1 := mul_conj_eq_one_of_pow hn upow2
+      have vpow1 : (v 1) ^ n = 1 := (hvS.2 1).resolve_left hv1ne
+      have vpow2 : (v 2) ^ n = 1 := (hvS.2 2).resolve_left hv2ne
+      have cv1 : v 1 * (starRingEnd ℂ) (v 1) = 1 := mul_conj_eq_one_of_pow hn vpow1
+      have cv2 : v 2 * (starRingEnd ℂ) (v 2) = 1 := mul_conj_eq_one_of_pow hn vpow2
+      have h2c : (2 : ℂ) ≠ 0 := by norm_num
+      have key1 : (2 : ℂ) * (u 2 * v 1 * r 1) = 0 := by
+        linear_combination
+          (v 1 * u 1 * u 2) * ipur + (- u 1 * v 1 * v 2) * ipvr
+          + (r 1 * u 1 * u 2) * ipuv
+          + (- 2 * v 1 * r 1 * u 2) * cu1
+          + (- u 1 * (v 1 * r 2 + r 1 * v 2)) * cu2
+          + (u 1 * r 1 * v 2) * cv1 + (u 1 * r 2 * v 1) * cv2
+      have hr1 : r 1 = 0 := by
+        rcases mul_eq_zero.mp key1 with h | h
+        · exact absurd h h2c
+        · rcases mul_eq_zero.mp h with h | h
+          · rcases mul_eq_zero.mp h with h | h
+            · exact absurd h hu2z
+            · exact absurd h hv1ne
+          · exact h
+      have key2 : (2 : ℂ) * (u 2 * v 1 * r 2) = 0 := by
+        linear_combination
+          (- v 2 * u 1 * u 2) * ipur + (u 2 * v 1 * v 2) * ipvr
+          + (r 2 * u 1 * u 2) * ipuv
+          + (u 2 * (v 2 * r 1 - r 2 * v 1)) * cu1
+          + (- u 2 * r 1 * v 2) * cv1 + (- u 2 * r 2 * v 1) * cv2
+      have hr2 : r 2 = 0 := by
+        rcases mul_eq_zero.mp key2 with h | h
+        · exact absurd h h2c
+        · rcases mul_eq_zero.mp h with h | h
+          · rcases mul_eq_zero.mp h with h | h
+            · exact absurd h hu2z
+            · exact absurd h hv1ne
+          · exact h
+      exact ⟨hr1, hr2⟩
+
+theorem case2_no_axis0_v0_count {n : ℕ} (hn : n ≠ 0) (h3 : ¬ 3 ∣ n)
+    {t : Finset (Fin 3 → ℂ)} (ht : IsTriad (S n) t)
+    (hZ : ∀ r ∈ t, ¬ AllNonzero n r)
+    (hno0 : ∀ w ∈ t, ¬ (w 1 = 0 ∧ w 2 = 0)) :
+    (t.filter (fun v => v 0 ≠ 0)).card = 2 := by
+  classical
+  obtain ⟨x, y, z, hxy, hxz, hyz, hteq⟩ := Finset.card_eq_three.mp ht.2.1
+  have hxS : x ∈ S n := ht.1 (by rw [hteq]; simp)
+  have hyS : y ∈ S n := ht.1 (by rw [hteq]; simp)
+  have hzS : z ∈ S n := ht.1 (by rw [hteq]; simp)
+  have hxy_o : Orthogonal x y :=
+    ht.2.2 _ (by rw [hteq]; simp) _ (by rw [hteq]; simp) hxy
+  have hxz_o : Orthogonal x z :=
+    ht.2.2 _ (by rw [hteq]; simp) _ (by rw [hteq]; simp) hxz
+  have hyz_o : Orthogonal y z :=
+    ht.2.2 _ (by rw [hteq]; simp) _ (by rw [hteq]; simp) hyz
+  rw [hteq]
+  -- 8-way case split on (x 0, y 0, z 0) ∈ Bool³.
+  by_cases hx0 : x 0 = 0
+  · by_cases hy0 : y 0 = 0
+    · by_cases hz0 : z 0 = 0
+      · -- (T,T,T): 3 orth rays all with `v 0 = 0` — closed by the helper.
+        exact (case2_three_orth_e0_perp_absurd hn hxS hyS hzS hxy_o hxz_o hyz_o
+          hx0 hy0 hz0).elim
+      · -- (T,T,F): only z has v 0 ≠ 0; forced axis-0 contradicts hno0.
+        exfalso
+        have hzno0 : ¬ (z 1 = 0 ∧ z 2 = 0) := hno0 z (by rw [hteq]; simp)
+        exact hzno0 (case2_lone_v0_force_axis0 hn hzS hxS hyS hxz_o hyz_o hxy_o
+          hx0 hy0 hz0)
+    · by_cases hz0 : z 0 = 0
+      · -- (T,F,T): y is the lone v 0 ≠ 0 ray.
+        exfalso
+        have hyno0 : ¬ (y 1 = 0 ∧ y 2 = 0) := hno0 y (by rw [hteq]; simp)
+        exact hyno0 (case2_lone_v0_force_axis0 hn hyS hxS hzS hxy_o
+          (Orthogonal_symm hyz_o) hxz_o hx0 hz0 hy0)
+      · -- (T,F,F) GOOD: filter = {y, z}.
+        have hf : ({x, y, z} : Finset (Fin 3 → ℂ)).filter (fun v => v 0 ≠ 0) = {y, z} := by
+          ext v
+          simp only [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
+          refine ⟨?_, ?_⟩
+          · rintro ⟨hmem, hv⟩
+            rcases hmem with rfl | rfl | rfl
+            · exact absurd hx0 hv
+            · exact Or.inl rfl
+            · exact Or.inr rfl
+          · rintro (rfl | rfl)
+            · exact ⟨Or.inr (Or.inl rfl), hy0⟩
+            · exact ⟨Or.inr (Or.inr rfl), hz0⟩
+        rw [hf]
+        exact Finset.card_eq_two.mpr ⟨y, z, hyz, rfl⟩
+  · by_cases hy0 : y 0 = 0
+    · by_cases hz0 : z 0 = 0
+      · -- (F,T,T): x is the lone v 0 ≠ 0 ray.
+        exfalso
+        have hxno0 : ¬ (x 1 = 0 ∧ x 2 = 0) := hno0 x (by rw [hteq]; simp)
+        exact hxno0 (case2_lone_v0_force_axis0 hn hxS hyS hzS
+          (Orthogonal_symm hxy_o) (Orthogonal_symm hxz_o) hyz_o hy0 hz0 hx0)
+      · -- (F,T,F) GOOD: filter = {x, z}.
+        have hf : ({x, y, z} : Finset (Fin 3 → ℂ)).filter (fun v => v 0 ≠ 0) = {x, z} := by
+          ext v
+          simp only [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
+          refine ⟨?_, ?_⟩
+          · rintro ⟨hmem, hv⟩
+            rcases hmem with rfl | rfl | rfl
+            · exact Or.inl rfl
+            · exact absurd hy0 hv
+            · exact Or.inr rfl
+          · rintro (rfl | rfl)
+            · exact ⟨Or.inl rfl, hx0⟩
+            · exact ⟨Or.inr (Or.inr rfl), hz0⟩
+        rw [hf]
+        exact Finset.card_eq_two.mpr ⟨x, z, hxz, rfl⟩
+    · by_cases hz0 : z 0 = 0
+      · -- (F,F,T) GOOD: filter = {x, y}.
+        have hf : ({x, y, z} : Finset (Fin 3 → ℂ)).filter (fun v => v 0 ≠ 0) = {x, y} := by
+          ext v
+          simp only [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
+          refine ⟨?_, ?_⟩
+          · rintro ⟨hmem, hv⟩
+            rcases hmem with rfl | rfl | rfl
+            · exact Or.inl rfl
+            · exact Or.inr rfl
+            · exact absurd hz0 hv
+          · rintro (rfl | rfl)
+            · exact ⟨Or.inl rfl, hx0⟩
+            · exact ⟨Or.inr (Or.inl rfl), hy0⟩
+        rw [hf]
+        exact Finset.card_eq_two.mpr ⟨x, y, hxy, rfl⟩
+      · -- (F,F,F): 3 with v 0 ≠ 0, no axis-0, no AllN.
+        -- Each ray has supp = {0, 1} or {0, 2}.  Two cases:
+        -- mixed planes ⇒ cross-plane non-orth (case2_cross_plane_absurd);
+        -- all same plane ⇒ same-plane rigidity (linear_combination).
+        exfalso
+        have hxno0 : ¬ (x 1 = 0 ∧ x 2 = 0) := hno0 x (by rw [hteq]; simp)
+        have hyno0 : ¬ (y 1 = 0 ∧ y 2 = 0) := hno0 y (by rw [hteq]; simp)
+        have hzno0 : ¬ (z 1 = 0 ∧ z 2 = 0) := hno0 z (by rw [hteq]; simp)
+        have hxN : ¬ AllNonzero n x := hZ x (by rw [hteq]; simp)
+        have hyN : ¬ AllNonzero n y := hZ y (by rw [hteq]; simp)
+        have hzN : ¬ AllNonzero n z := hZ z (by rw [hteq]; simp)
+        -- Each ray r with r 0 ≠ 0 and ¬ AllNonzero has r 1 = 0 ∨ r 2 = 0.
+        have hxplane : x 1 = 0 ∨ x 2 = 0 := by
+          by_contra hcon; push Not at hcon
+          exact hxN ⟨hxS, fun k => by fin_cases k; exacts [hx0, hcon.1, hcon.2]⟩
+        have hyplane : y 1 = 0 ∨ y 2 = 0 := by
+          by_contra hcon; push Not at hcon
+          exact hyN ⟨hyS, fun k => by fin_cases k; exacts [hy0, hcon.1, hcon.2]⟩
+        have hzplane : z 1 = 0 ∨ z 2 = 0 := by
+          by_contra hcon; push Not at hcon
+          exact hzN ⟨hzS, fun k => by fin_cases k; exacts [hz0, hcon.1, hcon.2]⟩
+        rcases hxplane with hx1 | hx2 <;> rcases hyplane with hy1 | hy2 <;>
+          rcases hzplane with hz1 | hz2
+        · -- all v 1 = 0: same plane {0, 2}.  Rigidity argument.
+          have hx2ne : x 2 ≠ 0 := fun h => hxno0 ⟨hx1, h⟩
+          have hy2ne : y 2 ≠ 0 := fun h => hyno0 ⟨hy1, h⟩
+          have hz2ne : z 2 ≠ 0 := fun h => hzno0 ⟨hz1, h⟩
+          have ipxy : (starRingEnd ℂ) (x 0) * y 0 + (starRingEnd ℂ) (x 1) * y 1 +
+                      (starRingEnd ℂ) (x 2) * y 2 = 0 := by
+            have h := hxy_o; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+          have ipxz : (starRingEnd ℂ) (x 0) * z 0 + (starRingEnd ℂ) (x 1) * z 1 +
+                      (starRingEnd ℂ) (x 2) * z 2 = 0 := by
+            have h := hxz_o; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+          have ipyz : (starRingEnd ℂ) (y 0) * z 0 + (starRingEnd ℂ) (y 1) * z 1 +
+                      (starRingEnd ℂ) (y 2) * z 2 = 0 := by
+            have h := hyz_o; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+          rw [hx1, hy1] at ipxy
+          rw [hx1, hz1] at ipxz
+          rw [hy1, hz1] at ipyz
+          simp only [map_zero, zero_mul, mul_zero, add_zero] at ipxy ipxz ipyz
+          have apow0 : (x 0) ^ n = 1 := (hxS.2 0).resolve_left hx0
+          have apow2 : (x 2) ^ n = 1 := (hxS.2 2).resolve_left hx2ne
+          have cx0 : x 0 * (starRingEnd ℂ) (x 0) = 1 := mul_conj_eq_one_of_pow hn apow0
+          have cx2 : x 2 * (starRingEnd ℂ) (x 2) = 1 := mul_conj_eq_one_of_pow hn apow2
+          have ypow0 : (y 0) ^ n = 1 := (hyS.2 0).resolve_left hy0
+          have ypow2 : (y 2) ^ n = 1 := (hyS.2 2).resolve_left hy2ne
+          have cy0 : y 0 * (starRingEnd ℂ) (y 0) = 1 := mul_conj_eq_one_of_pow hn ypow0
+          have cy2 : y 2 * (starRingEnd ℂ) (y 2) = 1 := mul_conj_eq_one_of_pow hn ypow2
+          have key : (2 : ℂ) * (x 0 * y 0 * z 2) = 0 := by
+            linear_combination
+              (- x 0 * x 2 * z 0) * ipxy + (x 0 * x 2 * y 0) * ipxz
+              + (x 0 * y 0 * y 2) * ipyz
+              + (x 0 * y 2 * z 0 - x 0 * y 0 * z 2) * cx2
+              + (- x 0 * y 2 * z 0) * cy0 + (- x 0 * y 0 * z 2) * cy2
+          have h2c : (2 : ℂ) ≠ 0 := by norm_num
+          rcases mul_eq_zero.mp key with h | h
+          · exact h2c h
+          · rcases mul_eq_zero.mp h with h | h
+            · rcases mul_eq_zero.mp h with h | h
+              · exact hx0 h
+              · exact hy0 h
+            · exact hz2ne h
+        · -- x 1 = 0, y 1 = 0, z 2 = 0: mixed. (x in {0,2}, z in {0,1}).
+          exact case2_cross_plane_absurd hx0 hz0 hx1 hz2 hxz_o
+        · -- x 1 = 0, y 2 = 0, z 1 = 0: (x in {0,2}, y in {0,1}).
+          exact case2_cross_plane_absurd hx0 hy0 hx1 hy2 hxy_o
+        · -- x 1 = 0, y 2 = 0, z 2 = 0: (x in {0,2}, y in {0,1}).
+          exact case2_cross_plane_absurd hx0 hy0 hx1 hy2 hxy_o
+        · -- x 2 = 0, y 1 = 0, z 1 = 0: (y in {0,2}, x in {0,1}).
+          exact case2_cross_plane_absurd hy0 hx0 hy1 hx2 (Orthogonal_symm hxy_o)
+        · -- x 2 = 0, y 1 = 0, z 2 = 0: (y in {0,2}, x in {0,1}).
+          exact case2_cross_plane_absurd hy0 hx0 hy1 hx2 (Orthogonal_symm hxy_o)
+        · -- x 2 = 0, y 2 = 0, z 1 = 0: (z in {0,2}, x in {0,1}).
+          exact case2_cross_plane_absurd hz0 hx0 hz1 hx2 (Orthogonal_symm hxz_o)
+        · -- all v 2 = 0: same plane {0, 1}.  Rigidity argument.
+          have hx1ne : x 1 ≠ 0 := fun h => hxno0 ⟨h, hx2⟩
+          have hy1ne : y 1 ≠ 0 := fun h => hyno0 ⟨h, hy2⟩
+          have hz1ne : z 1 ≠ 0 := fun h => hzno0 ⟨h, hz2⟩
+          have ipxy : (starRingEnd ℂ) (x 0) * y 0 + (starRingEnd ℂ) (x 1) * y 1 +
+                      (starRingEnd ℂ) (x 2) * y 2 = 0 := by
+            have h := hxy_o; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+          have ipxz : (starRingEnd ℂ) (x 0) * z 0 + (starRingEnd ℂ) (x 1) * z 1 +
+                      (starRingEnd ℂ) (x 2) * z 2 = 0 := by
+            have h := hxz_o; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+          have ipyz : (starRingEnd ℂ) (y 0) * z 0 + (starRingEnd ℂ) (y 1) * z 1 +
+                      (starRingEnd ℂ) (y 2) * z 2 = 0 := by
+            have h := hyz_o; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+          rw [hx2, hy2] at ipxy
+          rw [hx2, hz2] at ipxz
+          rw [hy2, hz2] at ipyz
+          simp only [map_zero, zero_mul, mul_zero, add_zero] at ipxy ipxz ipyz
+          have apow0 : (x 0) ^ n = 1 := (hxS.2 0).resolve_left hx0
+          have apow1 : (x 1) ^ n = 1 := (hxS.2 1).resolve_left hx1ne
+          have cx0 : x 0 * (starRingEnd ℂ) (x 0) = 1 := mul_conj_eq_one_of_pow hn apow0
+          have cx1 : x 1 * (starRingEnd ℂ) (x 1) = 1 := mul_conj_eq_one_of_pow hn apow1
+          have ypow0 : (y 0) ^ n = 1 := (hyS.2 0).resolve_left hy0
+          have ypow1 : (y 1) ^ n = 1 := (hyS.2 1).resolve_left hy1ne
+          have cy0 : y 0 * (starRingEnd ℂ) (y 0) = 1 := mul_conj_eq_one_of_pow hn ypow0
+          have cy1 : y 1 * (starRingEnd ℂ) (y 1) = 1 := mul_conj_eq_one_of_pow hn ypow1
+          have key : (2 : ℂ) * (x 0 * y 0 * z 1) = 0 := by
+            linear_combination
+              (- x 0 * x 1 * z 0) * ipxy + (x 0 * x 1 * y 0) * ipxz
+              + (x 0 * y 0 * y 1) * ipyz
+              + (x 0 * y 1 * z 0 - x 0 * y 0 * z 1) * cx1
+              + (- x 0 * y 1 * z 0) * cy0 + (- x 0 * y 0 * z 1) * cy1
+          have h2c : (2 : ℂ) ≠ 0 := by norm_num
+          rcases mul_eq_zero.mp key with h | h
+          · exact h2c h
+          · rcases mul_eq_zero.mp h with h | h
+            · rcases mul_eq_zero.mp h with h | h
+              · exact hx0 h
+              · exact hy0 h
+            · exact hz1ne h
+
+/-! #### Case 2 — matched-pair ratio in a coordinate plane -/
+
+/-- **Matched-pair ratio in the `{0, 1}` plane.**  For `a, b ∈ Sₙ` supported on
+    `{0, 1}` (i.e., `a 2 = b 2 = 0`, with `a 0, a 1, b 0, b 1` all nonzero
+    `n`-th roots of unity), orthogonality forces `b 1 / b 0 = -(a 1 / a 0)`.
+
+    Reason: orthogonality is `conj(a 0)·b 0 + conj(a 1)·b 1 = 0`.  Multiplying
+    by `a 0 · a 1` and using `a j · conj(a j) = 1` (unitarity of nth roots)
+    yields `a 1 · b 0 + a 0 · b 1 = 0`, giving the ratio identity after
+    division by `a 0 · b 0`. -/
+theorem case2_plane01_ratio {n : ℕ} (hn : n ≠ 0)
+    {a b : Fin 3 → ℂ} (ha : a ∈ S n) (hb : b ∈ S n)
+    (ha0 : a 0 ≠ 0) (ha1 : a 1 ≠ 0) (ha2 : a 2 = 0)
+    (hb0 : b 0 ≠ 0) (hb1 : b 1 ≠ 0) (hb2 : b 2 = 0)
+    (horth : Orthogonal a b) :
+    b 1 / b 0 = -(a 1 / a 0) := by
+  have apow0 : (a 0) ^ n = 1 := (ha.2 0).resolve_left ha0
+  have apow1 : (a 1) ^ n = 1 := (ha.2 1).resolve_left ha1
+  have ca0 : a 0 * (starRingEnd ℂ) (a 0) = 1 := mul_conj_eq_one_of_pow hn apow0
+  have ca1 : a 1 * (starRingEnd ℂ) (a 1) = 1 := mul_conj_eq_one_of_pow hn apow1
+  have ipab : (starRingEnd ℂ) (a 0) * b 0 + (starRingEnd ℂ) (a 1) * b 1 +
+              (starRingEnd ℂ) (a 2) * b 2 = 0 := by
+    have h := horth; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  rw [ha2] at ipab
+  simp only [map_zero, zero_mul, add_zero] at ipab
+  -- ipab : conj(a 0) * b 0 + conj(a 1) * b 1 = 0
+  have key : a 1 * b 0 + a 0 * b 1 = 0 := by
+    linear_combination (a 0 * a 1) * ipab + (- a 1 * b 0) * ca0 + (- a 0 * b 1) * ca1
+  -- Now `key` gives the conjugate-free orthogonality; turn into the ratio identity.
+  have ha0b0 : a 0 * b 0 ≠ 0 := mul_ne_zero ha0 hb0
+  field_simp
+  linear_combination key
+
+/-- **Matched-pair ratio in the `{0, 2}` plane.**  Analogue of
+    `case2_plane01_ratio` with coordinates `1` and `2` swapped. -/
+theorem case2_plane02_ratio {n : ℕ} (hn : n ≠ 0)
+    {a b : Fin 3 → ℂ} (ha : a ∈ S n) (hb : b ∈ S n)
+    (ha0 : a 0 ≠ 0) (ha1 : a 1 = 0) (ha2 : a 2 ≠ 0)
+    (hb0 : b 0 ≠ 0) (hb1 : b 1 = 0) (hb2 : b 2 ≠ 0)
+    (horth : Orthogonal a b) :
+    b 2 / b 0 = -(a 2 / a 0) := by
+  have apow0 : (a 0) ^ n = 1 := (ha.2 0).resolve_left ha0
+  have apow2 : (a 2) ^ n = 1 := (ha.2 2).resolve_left ha2
+  have ca0 : a 0 * (starRingEnd ℂ) (a 0) = 1 := mul_conj_eq_one_of_pow hn apow0
+  have ca2 : a 2 * (starRingEnd ℂ) (a 2) = 1 := mul_conj_eq_one_of_pow hn apow2
+  have ipab : (starRingEnd ℂ) (a 0) * b 0 + (starRingEnd ℂ) (a 1) * b 1 +
+              (starRingEnd ℂ) (a 2) * b 2 = 0 := by
+    have h := horth; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  rw [ha1] at ipab
+  simp only [map_zero, zero_mul, zero_add] at ipab
+  -- ipab : conj(a 0) * b 0 + conj(a 2) * b 2 = 0
+  have key : a 2 * b 0 + a 0 * b 2 = 0 := by
+    linear_combination (a 0 * a 2) * ipab + (- a 2 * b 0) * ca0 + (- a 0 * b 2) * ca2
+  have ha0b0 : a 0 * b 0 ≠ 0 := mul_ne_zero ha0 hb0
+  field_simp
+  linear_combination key
+
+/-! #### Case 2 — coloring and obligation (I) -/
+
+/-- The Case-2 coloring of `Sₙ` (under `2 ∣ n`, `3 ∤ n`):
+    * `v 0 = 0`: `false`.
+    * `v 0 ≠ 0`, `v 1 = v 2 = 0` (axis-0 ray): `true`.
+    * `v 0 ≠ 0`, `v 1 = 0`, `v 2 ≠ 0` ({0,2}-plane ray): `sel (v 2 / v 0)`.
+    * `v 0 ≠ 0`, `v 1 ≠ 0`, `v 2 = 0` ({0,1}-plane ray): `sel (v 1 / v 0)`.
+    * `v 0 ≠ 0`, `v 1 ≠ 0`, `v 2 ≠ 0` (AllNonzero, never in Case-2 triads): `false`. -/
+noncomputable def case2_color (sel : ℂ → Bool) (v : Fin 3 → ℂ) : Bool := by
+  classical
+  exact
+    if v 0 = 0 then false
+    else if v 1 = 0 then
+      if v 2 = 0 then true
+      else sel (v 2 / v 0)
+    else if v 2 = 0 then sel (v 1 / v 0)
+    else false
+
+/-- `case2_color sel v = true` unfolds to the three possible "true" support
+    structures: axis-0 (supp `{0}`), `{0,2}`-plane with `sel`-true ratio, or
+    `{0,1}`-plane with `sel`-true ratio. -/
+private theorem case2_color_true_iff {sel : ℂ → Bool} {v : Fin 3 → ℂ}
+    (h : case2_color sel v = true) :
+    v 0 ≠ 0 ∧
+    ((v 1 = 0 ∧ v 2 = 0) ∨
+     (v 1 = 0 ∧ v 2 ≠ 0 ∧ sel (v 2 / v 0) = true) ∨
+     (v 1 ≠ 0 ∧ v 2 = 0 ∧ sel (v 1 / v 0) = true)) := by
+  classical
+  unfold case2_color at h
+  by_cases hv0 : v 0 = 0
+  · rw [if_pos hv0] at h; exact absurd h (by decide)
+  · rw [if_neg hv0] at h
+    refine ⟨hv0, ?_⟩
+    by_cases hv1 : v 1 = 0
+    · rw [if_pos hv1] at h
+      by_cases hv2 : v 2 = 0
+      · exact Or.inl ⟨hv1, hv2⟩
+      · rw [if_neg hv2] at h
+        exact Or.inr (Or.inl ⟨hv1, hv2, h⟩)
+    · rw [if_neg hv1] at h
+      by_cases hv2 : v 2 = 0
+      · rw [if_pos hv2] at h
+        exact Or.inr (Or.inr ⟨hv1, hv2, h⟩)
+      · rw [if_neg hv2] at h
+        exact absurd h (by decide)
+
+/-- **Case 2 — obligation (I).**  Under `2 ∣ n`, `3 ∤ n`, no two orthogonal
+    rays of `Sₙ` are both colored `true` by the Case-2 coloring.
+
+    Proof by case-analysis on `(v, w)`'s support patterns (3 "true" structures
+    each = 9 sub-cases): the 7 cross-structure cases have inner product
+    reducing to a single nonzero root-of-unity term (so non-orthogonal); the
+    2 same-plane cases (both `{0,1}` or both `{0,2}`) invoke
+    `case2_plane01_ratio` / `case2_plane02_ratio` to derive
+    `sel (w_k / w 0) = sel (-(v_k / v 0))`, contradicting the
+    `exists_match_selector` invariant that exactly one of `{sel a, sel (-a)}`
+    is `true` for `a ≠ 0`. -/
+theorem case2_color_obligation_I {n : ℕ} (hn : n ≠ 0)
+    {sel : ℂ → Bool}
+    (hsel : ∀ a : ℂ, a ≠ 0 →
+       (sel a = true ∧ sel (-a) = false) ∨ (sel a = false ∧ sel (-a) = true))
+    {v w : Fin 3 → ℂ} (hv : v ∈ S n) (hw : w ∈ S n) (horth : Orthogonal v w)
+    (hcv : case2_color sel v = true) (hcw : case2_color sel w = true) : False := by
+  obtain ⟨hv0, hvstruct⟩ := case2_color_true_iff hcv
+  obtain ⟨hw0, hwstruct⟩ := case2_color_true_iff hcw
+  have ipvw : (starRingEnd ℂ) (v 0) * w 0 + (starRingEnd ℂ) (v 1) * w 1 +
+              (starRingEnd ℂ) (v 2) * w 2 = 0 := by
+    have h := horth; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
+  have hconj_v0_ne : (starRingEnd ℂ) (v 0) ≠ 0 := by
+    rw [starRingEnd_apply]; exact star_ne_zero.mpr hv0
+  rcases hvstruct with ⟨hv1z, hv2z⟩ | ⟨hv1z, hv2ne, hsv⟩ | ⟨hv1ne, hv2z, hsv⟩
+  · -- v is the axis-0 ray: any orthogonal w has `v 0` non-vanishing inner contribution.
+    rw [hv1z, hv2z] at ipvw
+    simp only [map_zero, zero_mul, add_zero] at ipvw
+    exact mul_ne_zero hconj_v0_ne hw0 ipvw
+  · -- v is in plane `{0, 2}`: case-analyze w.
+    rcases hwstruct with ⟨hw1z, hw2z⟩ | ⟨hw1z, hw2ne, hsw⟩ | ⟨hw1ne, hw2z, _⟩
+    · -- w axis-0: inner product reduces to conj(v 0) * w 0
+      rw [hw1z, hw2z] at ipvw
+      simp only [mul_zero, add_zero] at ipvw
+      exact mul_ne_zero hconj_v0_ne hw0 ipvw
+    · -- w also in plane `{0, 2}`: matched pair contradicts the selector invariant.
+      have h2v : v 2 / v 0 ≠ 0 := div_ne_zero hv2ne hv0
+      have hratio : w 2 / w 0 = -(v 2 / v 0) :=
+        case2_plane02_ratio hn hv hw hv0 hv1z hv2ne hw0 hw1z hw2ne horth
+      rw [hratio] at hsw
+      rcases hsel (v 2 / v 0) h2v with ⟨_, hf⟩ | ⟨hf, _⟩
+      · exact absurd hsw (by rw [hf]; decide)
+      · exact absurd hsv (by rw [hf]; decide)
+    · -- w in plane `{0, 1}` (cross-plane): inner reduces to conj(v 0) * w 0
+      rw [hv1z, hw2z] at ipvw
+      simp only [map_zero, zero_mul, mul_zero, add_zero] at ipvw
+      exact mul_ne_zero hconj_v0_ne hw0 ipvw
+  · -- v is in plane `{0, 1}`: case-analyze w.
+    rcases hwstruct with ⟨hw1z, hw2z⟩ | ⟨hw1z, hw2ne, _⟩ | ⟨hw1ne, hw2z, hsw⟩
+    · -- w axis-0
+      rw [hw1z, hw2z] at ipvw
+      simp only [mul_zero, add_zero] at ipvw
+      exact mul_ne_zero hconj_v0_ne hw0 ipvw
+    · -- w in plane `{0, 2}` (cross-plane)
+      rw [hv2z, hw1z] at ipvw
+      simp only [map_zero, zero_mul, mul_zero, add_zero] at ipvw
+      exact mul_ne_zero hconj_v0_ne hw0 ipvw
+    · -- w also in plane `{0, 1}`: matched pair contradicts the selector invariant.
+      have h1v : v 1 / v 0 ≠ 0 := div_ne_zero hv1ne hv0
+      have hratio : w 1 / w 0 = -(v 1 / v 0) :=
+        case2_plane01_ratio hn hv hw hv0 hv1ne hv2z hw0 hw1ne hw2z horth
+      rw [hratio] at hsw
+      rcases hsel (v 1 / v 0) h1v with ⟨_, hf⟩ | ⟨hf, _⟩
+      · exact absurd hsw (by rw [hf]; decide)
+      · exact absurd hsv (by rw [hf]; decide)
+
+/-- **Case 2 colorable.**  Under `2 ∣ n` and `3 ∤ n`, the ray set `Sₙ` admits
+    a KS coloring (`case2_color` paired with the matched-pair selector from
+    `exists_match_selector`).  This is the necessity direction for Case 2 of
+    the main theorem.
+
+    Obligation (I) is `case2_color_obligation_I`.  Obligation (II) splits
+    each triad on whether it contains an axis-0 ray:
+    * Axis-0 ray `w` exists ⇒ `case2_axis0_dominates` forces the other two
+      to have `v 0 = 0`, so only `w` is `true`-colored.
+    * Otherwise, `case2_no_axis0_v0_count` gives exactly two `v 0 ≠ 0`
+      rays.  Cross-plane non-orthogonality (`case2_cross_plane_absurd`)
+      forces them into the same coordinate plane; the matched-pair ratio
+      (`case2_plane0k_ratio`) and `exists_match_selector` invariant pick
+      exactly one as `true`. -/
+theorem case2_colorable {n : ℕ} (hn0 : n ≠ 0) (h2 : 2 ∣ n) (h3 : ¬ 3 ∣ n) :
+    ∃ c : (Fin 3 → ℂ) → Bool, IsColoring (S n) c := by
+  classical
+  obtain ⟨sel, hsel⟩ := exists_match_selector
+  refine ⟨case2_color sel, ?_, ?_⟩
+  · -- (I)
+    intro v hv w hw horth h
+    exact case2_color_obligation_I hn0 hsel hv hw horth h.1 h.2
+  · -- (II) every triad has exactly one `true`.
+    intro t ht
+    have hZ : ∀ r ∈ t, ¬ AllNonzero n r := case2_no_allNonzero_in_triad hn0 h3 ht
+    by_cases hax0 : ∃ w ∈ t, w 1 = 0 ∧ w 2 = 0
+    · -- Has an axis-0 ray.
+      obtain ⟨w, hwt, hw1, hw2⟩ := hax0
+      have hwS : w ∈ S n := ht.1 (Finset.mem_coe.mpr hwt)
+      have hw0 : w 0 ≠ 0 := by
+        intro h; exact hwS.1 (funext fun k => by fin_cases k <;> simp_all)
+      have hothers : ∀ v ∈ t, v ≠ w → v 0 = 0 :=
+        case2_axis0_dominates ht hwt hw1 hw2
+      have hcw : case2_color sel w = true := by
+        unfold case2_color
+        rw [if_neg hw0, if_pos hw1, if_pos hw2]
+      have hf : t.filter (fun v => case2_color sel v = true) = {w} := by
+        ext v
+        simp only [Finset.mem_filter, Finset.mem_singleton]
+        refine ⟨?_, ?_⟩
+        · rintro ⟨hvt, hcvt⟩
+          by_contra hne
+          have hv0 : v 0 = 0 := hothers v hvt hne
+          have hcv_f : case2_color sel v = false := by
+            unfold case2_color; rw [if_pos hv0]
+          rw [hcv_f] at hcvt; exact absurd hcvt (by decide)
+        · rintro rfl; exact ⟨hwt, hcw⟩
+      rw [hf, Finset.card_singleton]
+    · -- No axis-0 ray.
+      have hno0 : ∀ w ∈ t, ¬ (w 1 = 0 ∧ w 2 = 0) := fun w hw h12 =>
+        hax0 ⟨w, hw, h12⟩
+      have hcount := case2_no_axis0_v0_count hn0 h3 ht hZ hno0
+      obtain ⟨p, q, hpq, hpq_eq⟩ := Finset.card_eq_two.mp hcount
+      have hp_mem : p ∈ t.filter (fun v => v 0 ≠ 0) := by rw [hpq_eq]; simp
+      have hq_mem : q ∈ t.filter (fun v => v 0 ≠ 0) := by rw [hpq_eq]; simp
+      have hp_t : p ∈ t := (Finset.mem_filter.mp hp_mem).1
+      have hp0 : p 0 ≠ 0 := (Finset.mem_filter.mp hp_mem).2
+      have hq_t : q ∈ t := (Finset.mem_filter.mp hq_mem).1
+      have hq0 : q 0 ≠ 0 := (Finset.mem_filter.mp hq_mem).2
+      have hpS : p ∈ S n := ht.1 (Finset.mem_coe.mpr hp_t)
+      have hqS : q ∈ S n := ht.1 (Finset.mem_coe.mpr hq_t)
+      have hpN : ¬ AllNonzero n p := hZ p hp_t
+      have hqN : ¬ AllNonzero n q := hZ q hq_t
+      have hpno0 : ¬ (p 1 = 0 ∧ p 2 = 0) := hno0 p hp_t
+      have hqno0 : ¬ (q 1 = 0 ∧ q 2 = 0) := hno0 q hq_t
+      have hpq_o : Orthogonal p q :=
+        ht.2.2 p (Finset.mem_coe.mpr hp_t) q (Finset.mem_coe.mpr hq_t) hpq
+      have hp_plane : p 1 = 0 ∨ p 2 = 0 := by
+        by_contra hcon; push Not at hcon
+        exact hpN ⟨hpS, fun k => by fin_cases k; exacts [hp0, hcon.1, hcon.2]⟩
+      have hq_plane : q 1 = 0 ∨ q 2 = 0 := by
+        by_contra hcon; push Not at hcon
+        exact hqN ⟨hqS, fun k => by fin_cases k; exacts [hq0, hcon.1, hcon.2]⟩
+      -- t.filter (c v = true) ⊆ {p, q}, since v 0 = 0 ⇒ c v = false.
+      have hf_eq : t.filter (fun v => case2_color sel v = true)
+                 = ({p, q} : Finset (Fin 3 → ℂ)).filter (fun v => case2_color sel v = true) := by
+        ext v
+        simp only [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
+        refine ⟨?_, ?_⟩
+        · rintro ⟨hvt, hcv⟩
+          have hv0 : v 0 ≠ 0 := by
+            intro h
+            have : case2_color sel v = false := by
+              unfold case2_color; rw [if_pos h]
+            rw [this] at hcv; exact absurd hcv (by decide)
+          have hvf : v ∈ t.filter (fun w => w 0 ≠ 0) :=
+            Finset.mem_filter.mpr ⟨hvt, hv0⟩
+          rw [hpq_eq] at hvf
+          rcases Finset.mem_insert.mp hvf with rfl | hvq
+          · exact ⟨Or.inl rfl, hcv⟩
+          · exact ⟨Or.inr (Finset.mem_singleton.mp hvq), hcv⟩
+        · rintro ⟨hv_pq, hcv⟩
+          rcases hv_pq with rfl | rfl
+          · exact ⟨hp_t, hcv⟩
+          · exact ⟨hq_t, hcv⟩
+      rw [hf_eq]
+      -- Case-split p, q's planes.  Cross-plane is impossible by case2_cross_plane_absurd.
+      -- Same-plane gives matched pair, sel picks exactly one.
+      have key : (({p, q} : Finset (Fin 3 → ℂ)).filter
+                    (fun v => case2_color sel v = true)).card = 1 := by
+        rcases hp_plane with hp1z | hp2z <;> rcases hq_plane with hq1z | hq2z
+        · -- both p 1 = 0, q 1 = 0: both supp = {0, 2}.
+          have hp2ne : p 2 ≠ 0 := fun h => hpno0 ⟨hp1z, h⟩
+          have hq2ne : q 2 ≠ 0 := fun h => hqno0 ⟨hq1z, h⟩
+          have hcp : case2_color sel p = sel (p 2 / p 0) := by
+            unfold case2_color
+            rw [if_neg hp0, if_pos hp1z, if_neg hp2ne]
+          have hcq : case2_color sel q = sel (q 2 / q 0) := by
+            unfold case2_color
+            rw [if_neg hq0, if_pos hq1z, if_neg hq2ne]
+          have hratio : q 2 / q 0 = -(p 2 / p 0) :=
+            case2_plane02_ratio hn0 hpS hqS hp0 hp1z hp2ne hq0 hq1z hq2ne hpq_o
+          have hp2div : p 2 / p 0 ≠ 0 := div_ne_zero hp2ne hp0
+          rcases hsel (p 2 / p 0) hp2div with ⟨hsv_t, hsv_f⟩ | ⟨hsv_f, hsv_t⟩
+          · -- sel(p 2/p 0) = true, sel(-(p 2/p 0)) = false.  c p = true, c q = false.
+            have hcp_t : case2_color sel p = true := by rw [hcp]; exact hsv_t
+            have hcq_f : case2_color sel q = false := by rw [hcq, hratio]; exact hsv_f
+            have : ({p, q} : Finset (Fin 3 → ℂ)).filter
+                     (fun v => case2_color sel v = true) = {p} := by
+              ext v
+              simp only [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
+              refine ⟨?_, ?_⟩
+              · rintro ⟨hv_pq, hcv⟩
+                rcases hv_pq with rfl | rfl
+                · rfl
+                · rw [hcq_f] at hcv; exact absurd hcv (by decide)
+              · rintro rfl; exact ⟨Or.inl rfl, hcp_t⟩
+            rw [this, Finset.card_singleton]
+          · -- sel(p 2/p 0) = false, sel(-(p 2/p 0)) = true.  c p = false, c q = true.
+            have hcp_f : case2_color sel p = false := by rw [hcp]; exact hsv_f
+            have hcq_t : case2_color sel q = true := by rw [hcq, hratio]; exact hsv_t
+            have : ({p, q} : Finset (Fin 3 → ℂ)).filter
+                     (fun v => case2_color sel v = true) = {q} := by
+              ext v
+              simp only [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
+              refine ⟨?_, ?_⟩
+              · rintro ⟨hv_pq, hcv⟩
+                rcases hv_pq with rfl | rfl
+                · rw [hcp_f] at hcv; exact absurd hcv (by decide)
+                · rfl
+              · rintro rfl; exact ⟨Or.inr rfl, hcq_t⟩
+            rw [this, Finset.card_singleton]
+        · -- p 1 = 0, q 2 = 0: cross-plane.  Contradiction via case2_cross_plane_absurd.
+          have hq1ne : q 1 ≠ 0 := fun h => hqno0 ⟨h, hq2z⟩
+          exact (case2_cross_plane_absurd hp0 hq0 hp1z hq2z hpq_o).elim
+        · -- p 2 = 0, q 1 = 0: cross-plane (q in {0,2}-plane, p in {0,1}-plane).
+          have hp1ne : p 1 ≠ 0 := fun h => hpno0 ⟨h, hp2z⟩
+          exact (case2_cross_plane_absurd hq0 hp0 hq1z hp2z
+            (Orthogonal_symm hpq_o)).elim
+        · -- both p 2 = 0, q 2 = 0: both supp = {0, 1}.
+          have hp1ne : p 1 ≠ 0 := fun h => hpno0 ⟨h, hp2z⟩
+          have hq1ne : q 1 ≠ 0 := fun h => hqno0 ⟨h, hq2z⟩
+          have hcp : case2_color sel p = sel (p 1 / p 0) := by
+            unfold case2_color
+            rw [if_neg hp0, if_neg hp1ne, if_pos hp2z]
+          have hcq : case2_color sel q = sel (q 1 / q 0) := by
+            unfold case2_color
+            rw [if_neg hq0, if_neg hq1ne, if_pos hq2z]
+          have hratio : q 1 / q 0 = -(p 1 / p 0) :=
+            case2_plane01_ratio hn0 hpS hqS hp0 hp1ne hp2z hq0 hq1ne hq2z hpq_o
+          have hp1div : p 1 / p 0 ≠ 0 := div_ne_zero hp1ne hp0
+          rcases hsel (p 1 / p 0) hp1div with ⟨hsv_t, hsv_f⟩ | ⟨hsv_f, hsv_t⟩
+          · have hcp_t : case2_color sel p = true := by rw [hcp]; exact hsv_t
+            have hcq_f : case2_color sel q = false := by rw [hcq, hratio]; exact hsv_f
+            have : ({p, q} : Finset (Fin 3 → ℂ)).filter
+                     (fun v => case2_color sel v = true) = {p} := by
+              ext v
+              simp only [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
+              refine ⟨?_, ?_⟩
+              · rintro ⟨hv_pq, hcv⟩
+                rcases hv_pq with rfl | rfl
+                · rfl
+                · rw [hcq_f] at hcv; exact absurd hcv (by decide)
+              · rintro rfl; exact ⟨Or.inl rfl, hcp_t⟩
+            rw [this, Finset.card_singleton]
+          · have hcp_f : case2_color sel p = false := by rw [hcp]; exact hsv_f
+            have hcq_t : case2_color sel q = true := by rw [hcq, hratio]; exact hsv_t
+            have : ({p, q} : Finset (Fin 3 → ℂ)).filter
+                     (fun v => case2_color sel v = true) = {q} := by
+              ext v
+              simp only [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
+              refine ⟨?_, ?_⟩
+              · rintro ⟨hv_pq, hcv⟩
+                rcases hv_pq with rfl | rfl
+                · rw [hcp_f] at hcv; exact absurd hcv (by decide)
+                · rfl
+              · rintro rfl; exact ⟨Or.inr rfl, hcq_t⟩
+            rw [this, Finset.card_singleton]
+      exact key
+
 /-! ### Main theorem -/
 
 theorem six_divides_iff_ks_uncolorable (n : ℕ) (hn : 3 ≤ n) :
@@ -1232,9 +2295,7 @@ theorem six_divides_iff_ks_uncolorable (n : ℕ) (hn : 3 ≤ n) :
     · -- 2 ∣ n and 3 ∣ n ⇒ 6 ∣ n, contradicting h6.
       exact h6 (by omega)
     · -- Case 2 (2 ∣ n, 3 ∤ n): plane perfect matching yields an explicit coloring.
-      -- EVOLVE-BLOCK-START
-      sorry
-      -- EVOLVE-BLOCK-END
+      exact hKS (case2_colorable (by omega) h2 h3)
     · -- Case 3 (2 ∤ n, 3 ∣ n): projective collapse isolates triads.
       exact hKS (case3_colorable (by omega) h2 h3)
     · -- Case 1 (2 ∤ n, 3 ∤ n): color a ray `1` iff its 0th coordinate is nonzero.
