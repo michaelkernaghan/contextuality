@@ -1137,6 +1137,88 @@ theorem allNonzero_not_orth {n : ℕ} (hn : n ≠ 0) (h3 : ¬ 3 ∣ n) {v w : Fi
     have h := horth; unfold Orthogonal inner3 at h; rwa [Fin.sum_univ_three] at h
   exact threeTerm_dvd hn (hpow 0) (hpow 1) (hpow 2) hsum
 
+/-! #### Perfect-matching transversal (ℤ/2 negation)
+
+In each coordinate plane, two one-zero rays are orthogonal iff their ratios are
+negatives (`a' = -a`, using `-1 = ζ^{n/2}` for even `n`).  A transversal of the
+negation action picks one ray of each matched pair. -/
+
+/-- The ℤ/2 negation orbit relation on `ℂ`. -/
+def negRel (a b : ℂ) : Prop := b = a ∨ b = -a
+
+theorem negRel_equiv : Equivalence negRel := by
+  refine ⟨fun a => Or.inl rfl, ?_, ?_⟩
+  · rintro a b (rfl | rfl)
+    · exact Or.inl rfl
+    · exact Or.inr (by ring)
+  · rintro a b c (rfl | rfl) (rfl | rfl)
+    · exact Or.inl rfl
+    · exact Or.inr rfl
+    · exact Or.inr rfl
+    · exact Or.inl (by ring)
+
+/-- **Matching transversal.**  A `Bool` selector on `ℂ` choosing exactly one of each
+    `{a, -a}` pair (for `a ≠ 0`).  Built as a transversal of the negation orbit
+    quotient via `Quotient.out`. -/
+theorem exists_match_selector :
+    ∃ sel : ℂ → Bool, ∀ a : ℂ, a ≠ 0 →
+      (sel a = true ∧ sel (-a) = false) ∨ (sel a = false ∧ sel (-a) = true) := by
+  classical
+  letI s : Setoid ℂ := ⟨negRel, negRel_equiv⟩
+  set rep : ℂ → ℂ := fun a => (Quotient.mk s a).out with hrep
+  have rep_mem : ∀ a, negRel a (rep a) := fun a =>
+    negRel_equiv.symm (Quotient.exact (Quotient.out_eq (Quotient.mk s a)))
+  have rep_eq : ∀ {a b : ℂ}, negRel a b → rep a = rep b := fun {a b} h => by
+    simp only [hrep]; rw [Quotient.sound h]
+  refine ⟨fun a => decide (a = rep a), ?_⟩
+  intro a ha
+  have hne : a ≠ -a := fun h => ha (by linear_combination h / 2)
+  have hrn : rep (-a) = rep a := rep_eq (show negRel (-a) a from Or.inr (by ring))
+  rcases rep_mem a with hr | hr
+  · exact Or.inl ⟨by show decide (a = rep a) = true; rw [hr, decide_eq_true_eq],
+      by show decide (-a = rep (-a)) = false
+         rw [hrn, hr]; exact decide_eq_false_iff_not.mpr (fun h => hne h.symm)⟩
+  · exact Or.inr ⟨by show decide (a = rep a) = false
+                     rw [hr]; exact decide_eq_false_iff_not.mpr hne,
+      by show decide (-a = rep (-a)) = true; rw [hrn, hr, decide_eq_true_eq]⟩
+
+/-! #### Triad classification (Case 2) -/
+
+/-- A ray orthogonal to an all-nonzero ray has at most one zero coordinate: two
+    zeros at distinct `p ≠ k` would leave a single inner-product term
+    `conj(aₘ)·bₘ`, forcing `bₘ = 0` and hence `b = 0`. -/
+theorem allN_orth_two_zeros {n : ℕ} {a b : Fin 3 → ℂ} (haN : AllNonzero n a)
+    (hbne : b ≠ 0) (hab : Orthogonal a b) {p k : Fin 3} (hpk : p ≠ k)
+    (hp : b p = 0) (hk : b k = 0) : False := by
+  have hconj : ∀ m, (starRingEnd ℂ) (a m) ≠ 0 := fun m => by
+    rw [starRingEnd_apply]; exact star_ne_zero.mpr (haN.2 m)
+  have hsum := hab
+  unfold Orthogonal inner3 at hsum
+  rw [Fin.sum_univ_three] at hsum
+  have close : b 0 = 0 → b 1 = 0 → b 2 = 0 → False := fun e0 e1 e2 =>
+    hbne (funext fun m => by fin_cases m <;> [exact e0; exact e1; exact e2])
+  fin_cases p <;> fin_cases k <;>
+    first
+      | exact absurd rfl hpk
+      | (rw [show b 0 = 0 from hp, show b 1 = 0 from hk] at hsum
+         simp only [mul_zero, zero_add, add_zero] at hsum
+         exact close hp hk ((mul_eq_zero.mp hsum).resolve_left (hconj _)))
+      | (rw [show b 0 = 0 from hp, show b 2 = 0 from hk] at hsum
+         simp only [mul_zero, zero_add, add_zero] at hsum
+         exact close hp ((mul_eq_zero.mp hsum).resolve_left (hconj _)) hk)
+      | (rw [show b 1 = 0 from hp, show b 0 = 0 from hk] at hsum
+         simp only [mul_zero, zero_add, add_zero] at hsum
+         exact close hk hp ((mul_eq_zero.mp hsum).resolve_left (hconj _)))
+      | (rw [show b 1 = 0 from hp, show b 2 = 0 from hk] at hsum
+         simp only [mul_zero, zero_add, add_zero] at hsum
+         exact close ((mul_eq_zero.mp hsum).resolve_left (hconj _)) hp hk)
+      | (rw [show b 2 = 0 from hp, show b 0 = 0 from hk] at hsum
+         simp only [mul_zero, zero_add, add_zero] at hsum
+         exact close hk ((mul_eq_zero.mp hsum).resolve_left (hconj _)) hp)
+      | (rw [show b 2 = 0 from hp, show b 1 = 0 from hk] at hsum
+         simp only [mul_zero, zero_add, add_zero] at hsum
+         exact close ((mul_eq_zero.mp hsum).resolve_left (hconj _)) hk hp)
+
 /-! ### Main theorem -/
 
 theorem six_divides_iff_ks_uncolorable (n : ℕ) (hn : 3 ≤ n) :
