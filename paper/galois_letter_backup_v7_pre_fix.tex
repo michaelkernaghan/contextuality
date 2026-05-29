@@ -42,34 +42,27 @@ in dimension three}
 
 \begin{abstract}
 \noindent
-We classify the two-element coordinate alphabets
-$\mathcal{A} = \{0, \pm 1, \pm x\}$ with~$x$ an algebraic integer in a
-quadratic extension $K/\Q$ (or $x = \pm 2$, the rational case) for
-which the \emph{raw} ray set $S(\mathcal{A}) \subset \C^3$, before
-cross-product completion, is KS-uncolorable.  The classification gives
-three alphabet-invariant conditions, each controlled by the Galois
-norm and trace of~$x$:
+We prove that for a two-element coordinate alphabet
+$\mathcal{A} = \{0, \pm 1, \pm x\}$, where~$x$ is a ring-of-integers
+generator of a quadratic extension $K/\Q$ (or $x=2$), the \emph{raw}
+ray set $S(\mathcal{A}) \subset \C^3$ (before cross-product completion)
+is KS-uncolorable if and only if
 \begin{enumerate}
-\item[(R)]  $x = \pm 2$ \emph{(rational)},
-\item[(i)]  $\Tr{x} = 0$ and $|x|^2 = 2$ \emph{(pure modulus-2)},
-\item[(ii)] $\Norm{x} = 1$ and $|\Tr{x}| = 1$ \emph{(phase)}.
+\item[(i)] $|x|^2 = 2$ or $x = 2$ \emph{(modulus-2)}, or
+\item[(ii)] $\Norm{x} = 1$ and $\Tr{x} = -1$ \emph{(phase)}.
 \end{enumerate}
-Sufficiency is witnessed by explicit KS constructions (CK-31 for~(R),
-Peres-33 and the $\Z[\sqrt{-2}]$-33 set for~(i), the Eisenstein-33 set
-for~(ii)).  Necessity is proved by a finite enumeration of three-term
-vanishing sums over the product set $\bar{\mathcal{A}} \cdot
-\mathcal{A}$, combined with SMT verification of the resulting
-colorability obstruction, showing that when no condition holds the
-orthogonality graph admits an explicit $\{0,1\}$-coloring.  As a
-corollary we obtain a norm-and-trace characterization of the raw
-KS-contextual quadratic alphabets.  A parallel survey under cross-product
-completion~\cite{Kernaghan2026islands} identifies three further
-algebraic islands (Gaussian, Heegner-7, golden ratio) that fall outside
-the raw classification; establishing a Galois-theoretic classification
-of the completed six-island picture remains an open problem.  The
-classification connects to the result of Cortez, Schmid, and Spekkens
-that $\Z[1/6]$ is the minimal ring supporting KS contextuality in
-dimension~3.
+Sufficiency follows from known KS constructions; necessity is proved
+analytically for all quadratic generators except the golden ratio
+(which is treated separately),
+via a finite enumeration of three-term vanishing sums from the product
+set $\bar{\mathcal{A}} \cdot \mathcal{A}$ and a cross-product closure
+argument showing that, when neither condition holds, the orthogonality
+graph decomposes into independently colorable subproblems admitting an
+explicit $\{0,1\}$-coloring.  As
+corollaries we recover a Heegner-number characterization of the
+KS-contextual quadratic alphabets.  The classification
+connects to the result of Cortez, Schmid, and Spekkens that $\Z[1/6]$ is
+the minimal ring supporting KS contextuality in dimension~3.
 \end{abstract}
 
 \section{Introduction}
@@ -137,36 +130,16 @@ subproblems each admitting an explicit valid coloring.
 
 \begin{theorem}\label{thm:main}
 Let $\mathcal{A} = \{0,\pm 1,\pm x\}$ with $x \notin \{0, \pm 1\}$ an
-algebraic integer in a quadratic extension $K = \Q(\sqrt d)/\Q$, or
-$x = \pm 2$ (the degenerate rational case $K = \Q$).
-The \emph{raw} ray set $S(\mathcal{A}) \subset \C^3$ is KS-uncolorable
-if and only if one of:
+algebraic integer generating the ring of integers of a quadratic
+extension $K/\Q$, or $x = 2$ (the degenerate rational case $K = \Q$).
+The ray set $S(\mathcal{A}) \subset \C^3$ is KS-uncolorable if and only
+if one of:
 \begin{enumerate}
-  \item[(R)]  $x = \pm 2$ \emph{(rational degenerate case)};
-  \item[(i)]  $\Tr{x} = 0$ and $|x|^2 = 2$ \emph{(pure modulus-2:
-    $x = \pm\sqrt{2}$ or $x = \pm\sqrt{-2}$)};
-  \item[(ii)] $\Norm{x} = 1$ and $|\Tr{x}| = 1$ \emph{(phase, i.e.\
-    $1 + x + \bar x = 0$ or $1 - x - \bar x = 0$)}.
+  \item[(i)] $|x|^2 = 2$ (equivalently, $|\Norm{x}| = 2$ for imaginary
+    quadratic~$x$), or $x = 2$ \emph{(modulus-2)};
+  \item[(ii)] $\Norm{x} = 1$ and $\Tr{x} = -1$ \emph{(phase)}.
 \end{enumerate}
-Here $\Norm{x}$ and $\Tr{x}$ denote the Galois norm and trace of~$x$
-(Section~\ref{sec:setup}).  The three conditions are each invariant under
-$x \mapsto -x$ and under $x \mapsto \bar x$, hence depend only on the
-alphabet~$\mathcal{A}$ itself.
 \end{theorem}
-
-\begin{remark}[Raw vs.\ completed]\label{rem:raw-scope}
-Theorem~\ref{thm:main} classifies the \emph{raw} ray set
-$S(\mathcal{A})$, before cross-product completion.  A systematic
-computational survey~\cite{Kernaghan2026islands} identifies
-\emph{six} algebraic islands in dimension three once the ray pool is
-closed under cross products: the three captured above, together with
-the Gaussian alphabet ($x = 1+i$), the Heegner-7 alphabet
-($x = (1+\sqrt{-7})/2$), and the golden-ratio alphabet ($x = \varphi$).
-The latter three are \emph{colorable} at the raw level (insufficient
-triad density) and become KS-uncolorable only after completion
-introduces additional rays.  Classifying the completed six-island
-picture by Galois-theoretic invariants remains an open problem.
-\end{remark>
 
 The proof occupies Section~\ref{sec:proof}.  Section~\ref{sec:consequences}
 derives corollaries including the Heegner characterization and the
@@ -252,46 +225,32 @@ unit-modulus vanishing sum as in $1 + \omega + \omega^2 = 0$.
 
 We restate the main result for convenience.
 
-\begin{theorem}[Galois classification, restated]\label{thm:galois}
+\begin{theorem}[Galois classification]\label{thm:galois}
 Let $\mathcal{A} = \{0,\pm 1,\pm x\}$ with $x \notin \{0,\pm 1\}$ an
-algebraic integer in a quadratic extension $K = \Q(\sqrt d)/\Q$, or
-$x = \pm 2$ (rational case).  The raw ray set
-$S(\mathcal{A}) \subset \C^3$ is KS-uncolorable if and only if one of:
+algebraic integer generating $\mathcal{O}_K$ for a quadratic extension
+$K/\Q$, or $x = 2$ (rational case).  The ray set
+$S(\mathcal{A}) \subset \C^3$ is KS-uncolorable if and only if
 \begin{enumerate}
-  \item[\emph{(R)}]  $x = \pm 2$ \emph{(rational)};
-  \item[\emph{(i)}]  $\Tr{x} = 0$ and $|x|^2 = 2$ \emph{(pure modulus-2)};
-  \item[\emph{(ii)}] $\Norm{x} = 1$ and $|\Tr{x}| = 1$ \emph{(phase)}.
+  \item[\emph{(i)}] $|x|^2 = 2$, or $x = 2$ \emph{(modulus-2)}, or
+  \item[\emph{(ii)}] $\Norm{x} = 1$ and $\Tr{x} = -1$ \emph{(phase)}.
 \end{enumerate}
 \end{theorem}
 
 \noindent\textit{Sufficiency.}
-Each condition is witnessed by an explicit KS construction.
-\begin{itemize}
-\item Condition~(R) $x = \pm 2$ gives the 31-vector Conway--Kochen set
-  CK-31 (rigidity proved by
-  Trandafir--Cabello~\cite{TrandafirCabello2025}).
-\item Condition~(i) is realized uniquely (up to sign) by
-  $x = \pm\sqrt{2}$ and $x = \pm\sqrt{-2}$.  The real case gives the
-  33-vector Peres set~\cite{Peres1991}; the imaginary case gives the
-  33-vector $\Z[\sqrt{-2}]$ set~\cite{Kernaghan2026islands}, which is
-  graph-isomorphic to Peres.
-\item Condition~(ii) is realized by $x = \omega = e^{2\pi i/3} =
-  (-1{+}\sqrt{-3})/2$ ($\Norm{\omega} = 1$, $\Tr{\omega} = -1$),
-  yielding the 33-vector Eisenstein set~\cite{Cabello2025simplest};
-  equivalently, by the canonical generator
-  $x = (1{+}\sqrt{-3})/2$ ($\Norm{x} = 1$, $\Tr{x} = +1$), which
-  produces the same alphabet $\{0, \pm 1, \pm x\} = \{0, \pm 1, \pm
-  \bar\omega\}$.
-\end{itemize}
-Other alphabets with $|x|^2 = 2$ but $\Tr{x} \neq 0$ (the Gaussian
-generator $x = 1+i$ and the Heegner-7 generator
-$x = (1{+}\sqrt{-7})/2$) produce ray pools with orthogonal pairs but
-\emph{insufficient triad density} to force uncolorability at the raw
-level (Lemma~\ref{lem:sparsity}, Step~1).  Known
-KS constructions over these
-alphabets~\cite{Kernaghan2026islands} require cross-product completion
-and lie outside the scope of the present raw classification; see
-Remark~\ref{rem:raw-scope}.  \hfill$\square$
+Each case is witnessed by an explicit KS construction.  The rational
+case $x = 2$ gives the 31-vector CK-31 set (Conway--Kochen, rigidity
+proved by Trandafir--Cabello~\cite{TrandafirCabello2025}).
+Condition~(i) with $x = \sqrt{2}$ gives the 33-vector Peres
+set~\cite{Peres1991}; with $x = \sqrt{-2}$ the 33-vector
+$\Z[\sqrt{-2}]$ set; with $x = 1{+}i$ ($|x|^2 = 2$) the 33-vector
+Gaussian set (graph-isomorphic to
+Peres~\cite{Kernaghan2026islands}); and with
+$x = \tfrac{1+\sqrt{-7}}{2}$ ($|x|^2 = 2$) the 43-vector Heegner-7
+set~\cite{Kernaghan2026islands}.  Condition~(ii) is realized by
+$x = \omega = e^{2\pi i/3} = (-1{+}\sqrt{-3})/2$, the alternative
+Eisenstein generator with $\Norm{\omega} = 1$ and
+$\Tr{\omega} = -1$, yielding the 33-vector Cabello
+set~\cite{Cabello2025simplest}.  \hfill$\square$
 
 \medskip
 
@@ -461,113 +420,30 @@ alphabet $\mathcal{A}$ and thus lie outside the scope of the present
 classification.
 \end{proof}
 
-\begin{lemma}[Colorability of the complement]\label{lem:sparsity}
-Suppose $x$ satisfies none of conditions~\emph{(R)},~\emph{(i)},
-or~\emph{(ii)} of Theorem~\ref{thm:galois}.  Then the ray set
-$S(\mathcal{A})$ admits an explicit valid $\{0,1\}$-coloring.
+\begin{lemma}[Triad sparsity]\label{lem:sparsity}
+Suppose $x$ satisfies neither condition~\emph{(i)} nor~\emph{(ii)} of
+Theorem~\ref{thm:galois}.  Then the ray set $S(\mathcal{A})$ admits an
+explicit valid $\{0,1\}$-coloring.
 \end{lemma}
 
-\noindent\textit{Strategy.}
-The proof splits the residual case into two subfamilies according to
-whether the Row-2 vanishing sum $1 + 1 - |x|^2 = 0$ is available.
+\noindent\textit{Remark.}
+By Lemma~\ref{lem:vanishing}, when neither~(i) nor~(ii) holds,
+Rows~1--3a and~5--6 of Table~\ref{tab:vanishing} are excluded.
+Row~3b ($\Tr{x} = 1$) survives for imaginary quadratic generators
+with $d \equiv 1 \pmod{4}$, and Row~4 ($|x|^2 = 1 + x$, realized
+uniquely by $x = \varphi = (1{+}\sqrt{5})/2$) is a real quadratic
+case treated separately in Section~\ref{sec:discussion}.
+The proof below handles the Row~3b vanishing sum explicitly, showing
+that the all-nonzero triads it permits do not obstruct colorability.
 
-\smallskip
-\noindent\textbf{Subfamily A} (\emph{no Row-2 cancellation}):
-$|x|^2 \neq 2$.  Then by Lemma~\ref{lem:vanishing} the only surviving
-vanishing sum is Row~3b ($\Tr{x} = 1$, available when $d \equiv 1
-\pmod{4}$ imaginary), and Row~4 (golden ratio, $x = \varphi$,
-$|x|^2 = 1 + x$) which falls outside~$\mathcal{O}_K$ for any
-$d \neq 5$ and is treated separately in Section~\ref{sec:discussion}.
-We show that the all-nonzero triads from Row~3b are structurally
-decoupled from the one-zero triads, and no type-B triad (mixing the
-two families) exists.  The decoupling reduces colorability to two
-independent subproblems, both of which are explicitly colorable.
-
-\smallskip
-\noindent\textbf{Subfamily B} (\emph{Row-2 cancellation, but
-$\Tr{x} \neq 0$}): $|x|^2 = 2$ and $\Tr{x} \neq 0$.  This is the
-\emph{non-pure} modulus-2 case, where condition~(i) of
-Theorem~\ref{thm:galois} fails (it requires $\Tr{x} = 0$ as well).
-Solving $|a + b x|^2 = 2$ over $\mathcal{O}_K$ with $\Tr{x} \neq 0$,
-the alphabet is---up to sign and Galois-conjugation---one of exactly
-two:
-\begin{itemize}
-  \item the Gaussian alphabet $\{0,\pm 1,\pm(1+i)\}$ over
-    $K = \Q(i)$ (standard generator, $\Tr{x} = 2$);
-  \item the Heegner-7 halfint alphabet $\{0,\pm 1,\pm(1+\sqrt{-7})/2\}$
-    over $K = \Q(\sqrt{-7})$ ($\Tr{x} = 1$).
-\end{itemize}
-For each of these two alphabets we exhibit an explicit valid
-$\{0,1\}$-coloring (Table~\ref{tab:explicit-colorings}), verified
-both by direct constraint check and by an independent SAT solver
-(Glucose4, PySAT~\cite{AudemardSimon2018}).  These two cases
-exhaust subfamily~B; no further analytical argument is needed.
-The coexistence of type-B triads (which exist here, by the Row-2
-sum) with valid colorings shows that Row-2 cancellation alone is
-not a sufficient KS-uncolorability mechanism; the additional
-constraint $\Tr{x} = 0$---as in condition~(i)---is required to
-pack enough triads to force unsatisfiability.
-
-\begin{table}[h]
-\centering
-\caption{Explicit valid $\{0,1\}$-colorings (subfamily~B).
-Each row lists the green rays ($f(v) = 1$) of a coloring of the
-49-ray pool of the corresponding alphabet (the remaining rays are
-red, $f(v) = 0$).  Both colorings have been verified by direct
-constraint check (78~Hermitian-orthogonal pair constraints,
-14~triad-completeness constraints) and independently by SAT
-(Glucose4, PySAT~\cite{AudemardSimon2018}); reproducer scripts are
-included with this paper.}\label{tab:explicit-colorings}
-\small
-\begin{tabular}{@{}p{0.18\textwidth}p{0.74\textwidth}@{}}
-\toprule
-Alphabet & Green rays (representative vectors in $\mathcal A^3$) \\
-\midrule
-Gaussian \newline $x = 1+i$, $K=\Q(i)$ &
-  $(1,0,0)$,
-  $(1,0,1)$,
-  $(1,1,0)$,
-  $(1,1,1{+}i)$,
-  $(1,1{+}i,1)$,
-  $(1,1{+}i,1{+}i)$,
-  $(1,1{+}i,-1{-}i)$,
-  $(1,-1{-}i,1{+}i)$,
-  $(1,-1{-}i,-1{-}i)$,
-  $(1{+}i,1,1)$,
-  $(1{+}i,1,-1)$
-  \\
-\midrule
-Heegner-7 halfint \newline $x = (1{+}\sqrt{-7})/2$, \newline
-$K = \Q(\sqrt{-7})$ &
-  $(0,0,1)$,
-  $(0,1,1)$,
-  $(1,0,1)$,
-  $(1,1,x)$,
-  $(1,-1,-x)$,
-  $(1,-x,1)$,
-  $(x,1,1)$
-  \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{proof}[Proof of Lemma~\ref{lem:sparsity}]
-\noindent\textit{Subfamily~B} ($|x|^2 = 2$, $\Tr{x} \neq 0$).
-By the count above, the alphabet is one of two specific cases.
-Table~\ref{tab:explicit-colorings} exhibits an explicit valid
-$\{0,1\}$-coloring for each, completing this subfamily.  We turn to
-subfamily~A.
-
-\smallskip
-\noindent\textit{Subfamily~A} ($|x|^2 \neq 2$).
-By Lemma~\ref{lem:vanishing}, Rows~1--3a and~5--6 are excluded by
-the negation of~(R), (i), and~(ii).  Row~4 ($x = \varphi$) is
-treated in Section~\ref{sec:discussion}.  For the remaining
-generators, the only surviving vanishing sum is Row~3b:
-$1 - x - \bar{x} = 0$, which holds precisely when $\Tr{x} = 1$
+\begin{proof}
+By Lemma~\ref{lem:vanishing}, Rows~1--3a and~5--6 are excluded by the
+negation of~(i) and~(ii).  We exclude the golden ratio
+$x = \varphi$ (Row~4, addressed in Section~\ref{sec:discussion}).
+For the remaining generators, the only surviving vanishing sum is
+Row~3b: $1 - x - \bar{x} = 0$, which holds precisely when $\Tr{x} = 1$
 (imaginary quadratic, $d \equiv 1 \pmod{4}$).  When $\Tr{x} \neq 1$,
-no vanishing sum exists at all.  The remaining proof proceeds in
-three steps.
+no vanishing sum exists at all.  The proof proceeds in three steps.
 
 \medskip
 \noindent\textit{Step~1 (All-nonzero triads are harmless).}
@@ -607,43 +483,21 @@ $v \in \{\pm 1, \pm x\}^3$ can be orthogonal to a one-zero ray~$w$
 $\bar{v}_1 w_1 + \bar{v}_2 w_2 = 0$.  However, the third member of
 any triad containing $v$ and $w$ is the unique ray in the Hermitian
 orthogonal complement of $\mathrm{span}(v, w)$.  In $\C^3$, this ray
-is represented by the conjugate of the standard cross product,
+is represented by the \emph{Hermitian cross product}
 \[
-  u_k = \overline{v_{k+1} w_{k+2} - v_{k+2} w_{k+1}}
-      = \bar v_{k+1}\bar w_{k+2} - \bar v_{k+2}\bar w_{k+1}
+  u_k = \bar{v}_{k+1} w_{k+2} - \bar{v}_{k+2} w_{k+1}
   \quad (\text{indices mod } 3),
 \]
-which satisfies $\braket{u}{v} = \braket{u}{w} = 0$ for the
-Hermitian product $\braket{a}{b} = \sum_k \bar a_k b_k$ because
-$\braket{u}{v} = \sum_k (v \times w)_k v_k = \det[v, v, w] = 0$ and
-similarly $\braket{u}{w} = \det[v, w, w] = 0$.  (For real fields,
-$\bar{v}_k = v_k$ and $u$ reduces to the standard bilinear cross
-product.)  We show that $u \notin \mathcal{A}^3$ up to projective
-equivalence.
+which satisfies $\braket{u}{v} = \braket{u}{w} = 0$ by construction.
+(For real fields, $\bar{v}_k = v_k$ and this reduces to the standard
+bilinear cross product.)  We show that $u \notin \mathcal{A}^3$ up to
+projective equivalence.
 
-With $w_3 = 0$, the (conjugated) cross product gives
-$u = (-\bar{v}_3 \bar w_2,\; \bar{v}_3 \bar w_1,\;
-\bar{v}_1 \bar w_2 - \bar{v}_2 \bar w_1)$.  Writing $\bar w_k
-\in \{\pm 1, \pm \bar x\}$ and $\bar v_k \in \{\pm 1, \pm\bar x\}$,
-the first two components lie in $\bar{\mathcal{A}} \cdot
-\bar{\mathcal{A}}$ and the third is a difference of two such
-products.  For real quadratic ($\bar x = x$) this recovers
-$(-v_3 w_2, v_3 w_1, v_1 w_2 - v_2 w_1)$ as before.  For imaginary
-quadratic with $d \equiv 2, 3 \pmod 4$ (standard generator,
-$\bar x = -x$), the conjugate alphabet satisfies
-$\bar{\mathcal A} = \mathcal A$ as a set and the analysis proceeds
-by direct substitution.  For $d \equiv 1 \pmod 4$ (canonical
-halfint generator, $\bar x = 1 - x \neq \pm x$), the components
-of~$u$ lie a priori in $\bar{\mathcal A}^3$, and the test whether
-$[u]$ is projectively equivalent to a ray in~$S(\mathcal{A})$
-requires comparing $u$ to some $\lambda w'$ with
-$w' \in \mathcal{A}^3$ and $\lambda \in K^\times$; since $K$ is
-closed under conjugation we may equivalently test the conjugate
-configuration $\bar u = v \times w$ against
-$\bar\lambda \bar{\mathcal A}^3$, which is the original cross-product
-analysis over the conjugate alphabet.  We will present the
-calculation uniformly, flagging the $d \equiv 1 \pmod 4$ specializations
-where they diverge.
+With $w_3 = 0$, the Hermitian cross product gives
+$u = (-\bar{v}_3 w_2,\; \bar{v}_3 w_1,\; \bar{v}_1 w_2 - \bar{v}_2
+w_1)$.  The first two components lie in
+$\bar{\mathcal{A}} \cdot \mathcal{A}$; the third is a difference of
+two such products.
 
 \emph{Real case} ($d > 0$, so $\bar{v}_k = v_k$).
 The cross-product components are $u_1 = -v_3 w_2$,
