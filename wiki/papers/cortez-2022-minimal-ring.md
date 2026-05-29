@@ -1,15 +1,15 @@
 ---
-title: "Minimal Algebraic Contextuality via Partial Rings"
+title: "Minimal ring extensions of the integers exhibiting Kochen-Specker contextuality"
 slug: cortez-2022-minimal-ring
-authors: ["Raul Cortez", "David Schmid", "Robert W. Spekkens"]
+authors: ["Ida Cortez", "Camilo Morales", "Manuel Reyes"]
 year: 2022
-journal: "Physical Review Letters"
-doi: "10.1103/PhysRevLett.129.230401"
+journal: "Journal of Algebra and Its Applications (2025); arXiv:2211.13216"
+doi: "10.1142/S0219498825420174"
 tags: [algebraic-contextuality, partial-rings, hidden-states, Z[1/N], matrix-algebras, coloring, 85-vector, 6D]
 status: read
 ---
 
-# Minimal Algebraic Contextuality via Partial Rings
+# Minimal ring extensions of the integers exhibiting Kochen-Specker contextuality
 
 ## Summary
 
@@ -59,4 +59,4 @@ The paper bridges abstract algebra (ring theory, module theory) and quantum cont
 
 ## Citation
 
-Cortez, R., Schmid, D., & Spekkens, R. W. (2022). Minimal algebraic contextuality via partial rings. *Physical Review Letters*, 129, 230401. https://doi.org/10.1103/PhysRevLett.129.230401
+Cortez, I., Morales, C., & Reyes, M. (2022). Minimal ring extensions of the integers exhibiting Kochen-Specker contextuality. *Journal of Algebra and Its Applications* (2025). arXiv:2211.13216. https://doi.org/10.1142/S0219498825420174
