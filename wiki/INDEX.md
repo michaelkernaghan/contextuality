@@ -2,8 +2,8 @@
 
 > Auto-maintained by LLM. Do not edit manually.
 
-**Last updated:** 2026-04-03
-**Article count:** 40
+**Last updated:** 2026-04-18
+**Article count:** 45
 
 ## Concepts
 
@@ -15,6 +15,9 @@
 - [[graph-contextuality]] — CSW framework: exclusivity graphs, independence number, Lovasz theta, fractional packing
 - [[peres-33-3d]] — The 1991 Peres 33-vector 16-basis set; graph isomorphism with Z[sqrt(-2)]; relation to CK-31
 - [[csw-inequality]] — The noncontextuality inequality alpha(G) <= quantum <= theta(G) <= alpha*(G); contextual fraction connection
+- [[gleason-theorem]] — Gleason's theorem: all measures on projections are traces; ancestor of KS theorem and algebraic islands program
+- [[galois-theory-connection]] — Galois norm/trace characterization of cancellation mechanisms; Heegner number connection; cyclotomic Galois structure
+- [[abramsky-sheaf-contextuality]] — Sheaf-theoretic contextuality framework; presheaf failure = contextuality; cohomological witnesses
 
 ## Papers
 
@@ -26,6 +29,7 @@
 - [[universality-letter]] — PRL letter on graph isomorphism of 31-vertex KS sets across coordinate alphabets; six algebraic islands, CK-31 uniqueness conjecture, VF2-verified convergence
 - [[pavicic-2005-ks-vectors]] — Constructive/exhaustive enumeration of all 4D KS sets up to 24 vectors using MMP hypergraph encoding and interval arithmetic
 - [[pavicic-2019-automated-ks]] — Downward-generation from integer master sets reproducing all 1233 known 4D KS sets; extends to 6D via Eisenstein integers
+- [[pavicic-2026-engineering-contextuality]] — Entropy survey: NBMMPH formalism, criticality doctrine, critiques of Cabello-Kleinmann 33-50 and Williams-Constantin 168; 69-50 / 169-120 master class; >99% typicality claim
 - [[budroni-2022-ks-review]] — 68-page Reviews of Modern Physics survey covering KS proofs, noncontextuality inequalities, graph theory (CSW), sheaf theory, and applications
 - [[cortez-2022-minimal-ring]] — Algebraic hidden states on partial rings over Z[1/N] obstructed iff 6|N (d=3); new 85-vector uncolorable set
 - [[abramsky-2017-contextual-fraction]] — Contextual fraction CF(e) via LP equals maximum normalized Bell-inequality violation; resource monotone bounding MBQC failure
@@ -64,3 +68,4 @@
 - [[peres-33-basis-record-note]] — Note on Peres-33 vs Cabello-33 basis-count record (33 vectors: 16 vs 14 bases)
 - [[2026-04-03-smallest-ks-set-3d]] — Q&A: smallest known KS set is CK-31 (31 vectors); lower bound 24; gap open
 - [[lint-2026-04-03]] — Structural lint report: 0 orphans, 1 dead link (abramsky-sheaf-contextuality), 0 stubs, count OK
+- [[algebraic-substrate-design-guide]] — Companion note aimed at Pavicic-program audience: substrate-level design rule for contextuality engineering; BPQS cost table; cancellation-heuristic search guide; typicality caveat

@@ -26,6 +26,7 @@ and grounding multi-agent review of our Kochen-Specker papers.
 | KernaghanPeres1995 | Kernaghan, Peres | 1995 | NO | Phys. Lett. A 198, 1 |
 | CabelloEstebaranzGarcia1996 | Cabello et al. | 1996 | NO | Phys. Lett. A 212, 183 |
 | Gleason1957 | Gleason | 1957 | NO | J. Math. Mech. 6, 885 |
+| RajanVisser2019 | Rajan, Visser | 2019 | **YES** | `RajanVisser2019_KS_revisited.pdf` |
 
 ### TIER 2: Modern KS / Contextuality (arXiv available)
 | Ref | Authors | Year | Have PDF? | Corpus file |
