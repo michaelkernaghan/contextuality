@@ -39,12 +39,12 @@ Comprehensive classification of KS-producing number rings in dimension 3. Discov
 **Link:** [arXiv:2508.07335](https://arxiv.org/abs/2508.07335)
 **Journal:** Physical Review Letters
 
-Constructs a 33-vector, 14-basis KS set via the Wigner-Heisenberg group in $\mathbb{C}^3$. The construction naturally produces Eisenstein-integer coordinates. Table I provides BPQS numbers. Independently discovers the same set found by the algebraic islands programme via alphabet enumeration.
+Constructs a 33-vector, 14-basis KS set via the Weyl-Heisenberg group in $\mathbb{C}^3$. The construction naturally produces Eisenstein-integer coordinates. Table I provides BPQS numbers. Independently discovers the same set found by the algebraic islands programme via alphabet enumeration.
 
 !!! note "Connection to Algebraic Islands"
     This is the Eisenstein-33 set of our classification — the $\mathbb{Z}[\omega]$ island. The WH group construction and alphabet enumeration converge on the same mathematical object.
 
-**Tags:** `KS-sets` `Eisenstein` `Wigner-Heisenberg` `BPQS`
+**Tags:** `KS-sets` `Eisenstein` `Weyl-Heisenberg` `BPQS`
 
 **Related:** [Eisenstein 33-Vector KS Set](ks-sets/eisenstein-33-3d.md), [Adán Cabello](people/adan-cabello.md)
 

@@ -1,15 +1,18 @@
 ---
-title: "Simplest Kochen-Specker Set in Three Dimensions"
+title: "Simplest Kochen-Specker Set"
 slug: cabello-2025-simplest-ks
-authors: ["Adán Cabello", "Matthias Kleinmann", "José R. Portillo"]
+authors: ["Adán Cabello"]
 year: 2025
 journal: "Physical Review Letters"
-doi: "10.1103/PhysRevLett.134.170201"
+volume: 135
+article: 190203
+doi: "10.1103/PhysRevLett.135.190203"
+arxiv: "2508.07335"
 tags: [kochen-specker, 3D, qutrit, Weyl-Heisenberg, Yu-Oh, SIC-POVM, Majorana, simplest-ks, pseudotelepathy, 33-vector]
 status: read
 ---
 
-# Simplest Kochen-Specker Set in Three Dimensions
+# Simplest Kochen-Specker Set
 
 ## Summary
 
@@ -72,4 +75,6 @@ The Weyl-Heisenberg group is the symmetry group of **symmetric informationally c
 
 ## Citation
 
-Cabello, A., Kleinmann, M., & Portillo, J. R. (2025). Simplest Kochen-Specker set in three dimensions. *Physical Review Letters*, 134, 170201. https://doi.org/10.1103/PhysRevLett.134.170201
+Cabello, A. (2025). Simplest Kochen-Specker set. *Physical Review Letters*, 135, 190203. arXiv:2508.07335. https://doi.org/10.1103/PhysRevLett.135.190203
+
+> Note: the three-author "...requires 13 rays" paper (Cabello, Kleinmann, Portillo, *J. Phys. A* 49, 38LT01, 2016) is a *different* work — the minimality of the Yu-Oh 13-ray set — and should not be conflated with this single-author 2025 Letter.

@@ -23,7 +23,7 @@ This construction is significant for several reasons:
 
 - **Rigid**: With 78 orthogonal pairs (6 more than the Peres-33 set), the Eisenstein set is infinitesimally rigid — the additional constraints kill the flex mode present in the Peres graph
 - **Smallest BPQS**: Achieves the exact bipartite perfect quantum strategy (BPQS) count of $5 \times 9 = 45$, the smallest among all known 3D KS sets
-- **Connected to Cabello 2025**: Independently discovered via the Wigner-Heisenberg construction by Cabello (arXiv:2508.07335), who identified it as the "simplest Kochen-Specker set"
+- **Connected to Cabello 2025**: Independently discovered via the Weyl-Heisenberg construction by Cabello (arXiv:2508.07335), who identified it as the "simplest Kochen-Specker set"
 
 Key features:
 
@@ -76,7 +76,7 @@ This is the **exact minimum** BPQS for this construction, verified computational
 
 ## Connection to Cabello 2025
 
-Cabello's 2025 paper "Simplest Kochen-Specker Set" (arXiv:2508.07335, PRL) constructs a 33-vector, 14-basis KS set via the Wigner-Heisenberg (WH) group acting on $\mathbb{C}^3$. This construction naturally produces Eisenstein-integer coordinates because the WH group for dimension 3 involves cube roots of unity.
+Cabello's 2025 paper "Simplest Kochen-Specker Set" (arXiv:2508.07335, PRL) constructs a 33-vector, 14-basis KS set via the Weyl-Heisenberg (WH) group acting on $\mathbb{C}^3$. This construction naturally produces Eisenstein-integer coordinates because the WH group for dimension 3 involves cube roots of unity.
 
 Our algebraic islands programme discovered the same set independently through systematic alphabet enumeration over $\mathbb{Z}[\omega]$, providing a complementary algebraic perspective on why this construction exists.
 
@@ -97,8 +97,8 @@ Our algebraic islands programme discovered the same set independently through sy
 ## References
 
 - M. Kernaghan, "The Algebraic Landscape of Kochen-Specker Sets in Dimension Three" (2026)
-- A. Cabello, "Simplest Kochen-Specker Set," *Phys. Rev. Lett.* (2025), arXiv:2508.07335
-- A. Cabello, "Simplest Bipartite Perfect Quantum Strategies," *Phys. Rev. Lett.* **134**, 010201 (2024), arXiv:2311.17735
+- A. Cabello, "Simplest Kochen-Specker Set," *Phys. Rev. Lett.* **135**, 190203 (2025), arXiv:2508.07335
+- A. Cabello, "Simplest Bipartite Perfect Quantum Strategies," *Phys. Rev. Lett.* **134**, 010201 (2025), arXiv:2311.17735
 
 ---
 

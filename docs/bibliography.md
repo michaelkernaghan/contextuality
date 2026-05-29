@@ -165,8 +165,8 @@ A curated collection of key references on Kochen–Specker sets, contextuality, 
 - M. Kernaghan, "Kochen-Specker Uncolorability in Cyclotomic Fields Requires Exactly 6|n" (2026, PRL letter)
     - Complete algebraic proof: cyclotomic KS-uncolorability iff 6|n.
 
-- A. Cabello, "Simplest Kochen-Specker Set," *Physical Review Letters* (2025), arXiv:2508.07335
-    - 33-vector KS set via Wigner-Heisenberg construction (= Eisenstein-33 island).
+- A. Cabello, "Simplest Kochen-Specker Set," *Physical Review Letters* **135**, 190203 (2025), arXiv:2508.07335
+    - 33-vector KS set via Weyl-Heisenberg construction (= Eisenstein-33 island).
 
 - A. Cabello, "Simplest Bipartite Perfect Quantum Strategies," *Physical Review Letters* **134**, 010201 (2024), arXiv:2311.17735
     - BPQS definition and KS equivalence. Foundation for BPQS analysis of all six islands.

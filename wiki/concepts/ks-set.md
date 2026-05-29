@@ -20,7 +20,7 @@ A KS set therefore provides a finite combinatorial proof of the [[kochen-specker
 |-----|-----------|---------|-------|-------|
 | Original Kochen-Specker | R^3 | 117 | — | First proof (1967) |
 | Peres 1991 | C^3 | 33 | 16 | Long-standing record in d=3 |
-| Cabello-Kleinmann-Portillo 2025 | C^3 | 33 | 14 | Current record: fewest bases ([[cabello-2025-simplest-ks]]) |
+| Cabello 2025 | C^3 | 33 | 14 | Current record: fewest bases ([[cabello-2025-simplest-ks]]) |
 | CK-31 | C^3 | 31 | 17 | Smallest known in d=3; rigid ([[trandafir-cabello-2025-rigid-ks]]) |
 | Cabello-Estebaranz-Garcia-Alcaine | R^4 | 18 | — | Smallest known in d=4 |
 
