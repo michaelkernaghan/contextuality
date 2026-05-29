@@ -169,8 +169,8 @@ picture by Galois-theoretic invariants remains an open problem.
 \end{remark}
 
 The proof occupies Section~\ref{sec:proof}.  Section~\ref{sec:consequences}
-derives corollaries including the Heegner characterization and the
-Galois symmetry of the orthogonality graph.  Section~\ref{sec:discussion} discusses
+derives corollaries including the imaginary quadratic classification
+and the Galois symmetry of the orthogonality graph.  Section~\ref{sec:discussion} discusses
 connections to the Cortez--Morales--Reyes ring-theoretic result.
 
 \section{Setup}\label{sec:setup}
@@ -945,62 +945,63 @@ generator as well.
 
 \section{Consequences}\label{sec:consequences}
 
-\begin{corollary}[Heegner characterization]\label{cor:heegner}
-Among imaginary quadratic fields $\Q(\sqrt{-d}\,)$, there exists
-a generator~$y$ of~$\mathcal{O}_K$ such that
-$\{0, \pm 1, \pm y\}$ is KS-uncolorable if and only if
-$d \in \{1, 2, 3, 7\}$, realized by $y = 1{+}i$,\;
-$\sqrt{-2}$,\; $\omega$,\; $(1{+}\sqrt{-7})/2$
-respectively.
+\begin{corollary}[Imaginary quadratic classification]\label{cor:imagquad}
+Among imaginary quadratic fields $K = \Q(\sqrt{-d}\,)$ with $d > 0$
+squarefree, there exists a ring-of-integers generator~$y$ such that
+the raw ray set $S(\{0, \pm 1, \pm y\})$ is KS-uncolorable if and only
+if $d \in \{2, 3\}$:
+\begin{itemize}
+\item $d = 2$: $y = \sqrt{-2}$, via condition~(i) ($\Tr{y} = 0$,
+  $|y|^2 = 2$); the $\Z[\sqrt{-2}]$ island.
+\item $d = 3$: $y = \omega = (-1{+}\sqrt{-3})/2$, via condition~(ii)
+  ($\Norm{y} = 1$, $\Tr{y} = -1$); the Eisenstein island.
+\end{itemize}
 \end{corollary}
 
 \begin{proof}
-Every generator of $\mathcal{O}_K$ as a $\Z$-algebra has the form
-$y = a + \varepsilon x_0$ where $x_0$ is the canonical generator,
-$\varepsilon = \pm 1$, and $a \in \Z$.  (Proof: $\{1, x_0\}$ is a
-$\Z$-basis of $\mathcal{O}_K$, so $y = a + bx_0$ with $a, b \in \Z$;
-the condition $\Z[y] = \mathcal{O}_K$ requires that $\{1, y\}$ also
-be a $\Z$-basis, which forces $b = \pm 1$.)  The Hermitian squared modulus
-is $|y|^2 = a^2 + \varepsilon a \, \Tr{x_0} + |x_0|^2$, a quadratic
-in~$a$ with minimum value $|x_0|^2 - \Tr{x_0}^2/4$.  Condition~(i)
-requires $|y|^2 = 2$; condition~(ii) requires $\Norm{y} = 1$ and
-$\Tr{y} = 2a + \varepsilon \Tr{x_0} = -1$.
+Every $\Z$-algebra generator of $\mathcal{O}_K$ has the form
+$y = a + \varepsilon x_0$ with $a \in \Z$, $\varepsilon = \pm 1$, and
+$x_0$ the canonical generator: $\{1, x_0\}$ is a $\Z$-basis, and
+$\Z[y] = \mathcal{O}_K$ forces the $x_0$-coefficient to be $\pm 1$.
+Since the nontrivial automorphism of~$K$ is complex conjugation, the
+Galois trace and norm are $\Tr{y} = 2a + \varepsilon\,\Tr{x_0}$ and
+$\Norm{y} = |y|^2 = a^2 + \varepsilon a\,\Tr{x_0} + |x_0|^2$.  We split
+on $d \bmod 4$.
 
-\begin{itemize}
-\item $d = 1$: $x_0 = i$, $|x_0|^2 = 1$.  Then
-  $|y|^2 = a^2 + 1 \geq 1$; $|y|^2 = 2$ iff $a = \pm 1$, giving
-  $y = \pm 1 + i$, but $\{0, \pm 1, \pm(1{+}i)\}$ has $|1{+}i|^2 = 2$:
-  condition~(i) with the Gaussian generator.
-  \emph{KS-uncolorable} (Gaussian island, graph-isomorphic to Peres).
-\item $d = 2$: $x_0 = \sqrt{-2}$, $|x_0|^2 = 2$.
-  Condition~(i) with $a = 0$. \emph{KS-uncolorable.}
-\item $d = 3$: $x_0 = (1{+}\sqrt{-3})/2$, $|x_0|^2 = 1$,
-  $\Tr{x_0} = 1$.  For $\varepsilon = +1$: $|y|^2 = a^2 + a + 1$;
-  minimum $3/4$, never equals~$2$ for integer~$a$.
-  For $\varepsilon = -1$: $|y|^2 = a^2 - a + 1$; minimum $3/4$,
-  also never~$2$.  So condition~(i) fails for all generators.
-  For~(ii): $\Tr{y} = 2a + \varepsilon = -1$.
-  With $\varepsilon = +1$: $a = -1$, giving $y = -1 + x_0 =
-  (-1{+}\sqrt{-3})/2 = \omega$ with $\Norm{\omega} = 1$. \checkmark\
-  With $\varepsilon = -1$: $a = 0$, giving $y = -x_0 =
-  (-1{-}\sqrt{-3})/2 = \bar\omega$ with $\Norm{\bar\omega} = 1$
-  and $\Tr{\bar\omega} = -1$. \checkmark\
-  Condition~(ii). \emph{KS-uncolorable.}
-\item $d = 7$: $x_0 = (1{+}\sqrt{-7})/2$, $|x_0|^2 = 2$.
-  Condition~(i) with $a = 0$. \emph{KS-uncolorable.}
-\item $d = 11$: $|x_0|^2 = 3$, $\Tr{x_0} = 1$.
-  For $\varepsilon = +1$: $|y|^2 = a^2 + a + 3$; minimum $11/4 > 2$.
-  For $\varepsilon = -1$: $|y|^2 = a^2 - a + 3$; minimum $11/4 > 2$.
-  So (i) fails.  For~(ii) with $\varepsilon = +1$: $\Tr{y} = 2a + 1
-  = -1$ gives $a = -1$, $\Norm{y} = 1 - 1 + 3 = 3 \neq 1$.
-  With $\varepsilon = -1$: $\Tr{y} = 2a - 1 = -1$ gives $a = 0$,
-  $\Norm{y} = 0 - 0 + 3 = 3 \neq 1$.  Neither.
-\item $d \geq 19$: $|x_0|^2 \geq 5$.  The minimum of
-  $|y|^2 = a^2 + a + |x_0|^2$ is $|x_0|^2 - 1/4 > 2$, so (i) fails
-  for all~$a$.  For~(ii): $\Norm{y} \geq |x_0|^2 - 1/4 > 1$ for
-  $|x_0|^2 \geq 2$.  Neither.
-\end{itemize}
+\emph{$d \equiv 1, 2 \pmod 4$:} here $x_0 = \sqrt{-d}$ with
+$\Tr{x_0} = 0$, so $\Tr{y} = 2a$ is even.  Condition~(ii) requires
+$|\Tr{y}| = 1$, impossible.  Condition~(i) requires $\Tr{y} = 0$,
+i.e.\ $a = 0$, whence $|y|^2 = d$; this equals~$2$ only for $d = 2$.
+
+\emph{$d \equiv 3 \pmod 4$:} here $x_0 = (1{+}\sqrt{-d})/2$ with
+$\Tr{x_0} = 1$, so $\Tr{y} = 2a + \varepsilon$ is odd.  Condition~(i)
+requires $\Tr{y} = 0$, impossible.  Condition~(ii) requires
+$|\Tr{y}| = 1$ (so $2a + \varepsilon = \pm 1$, i.e.\
+$a \in \{0, -\varepsilon\}$) and $\Norm{y} = 1$.  Writing
+$\Norm{y} = a^2 + \varepsilon a + (1{+}d)/4$, the constraint
+$\Norm{y} = 1$ gives $d = 3 - 4a(a + \varepsilon)$; since
+$a \in \{0, -\varepsilon\}$ both yield $a(a + \varepsilon) = 0$, this
+forces $d = 3$.
+
+Hence $d \in \{2, 3\}$, realized by $y = \sqrt{-2}$ and $y = \omega$
+(equivalently $\bar\omega$) respectively.  A SAT cross-check over all
+generators with $1 \leq d \leq 43$ confirms the raw ray set is
+uncolorable for exactly these two fields.
 \end{proof}
+
+\begin{remark}[The Heegner subset is a completed-pool phenomenon]
+The four smallest Heegner numbers $d \in \{1, 2, 3, 7\}$---the Gaussian
+($1{+}i$), $\sqrt{-2}$, Eisenstein ($\omega$), and Heegner-7
+($(1{+}\sqrt{-7})/2$) alphabets---each yield a KS set, but only two of
+them ($d = 2, 3$) do so at the \emph{raw} level.  The Gaussian and
+Heegner-7 alphabets have $|x|^2 = 2$ yet $\Tr{x} \neq 0$, so they fail
+condition~(i); their raw ray pools lack the triad density to force
+uncolorability (Lemma~\ref{lem:sparsity}) and become KS sets only after
+cross-product completion (Remark~\ref{rem:raw-scope}).  The Heegner-number
+characterization therefore belongs to the completed six-island
+picture~\cite{Kernaghan2026islands}, not to the raw classification of
+Theorem~\ref{thm:main}.
+\end{remark}
 
 \begin{corollary}[Galois symmetry]\label{cor:galois}
 Every $\sigma \in \Gal(K/\Q)$ acts as a graph automorphism of
