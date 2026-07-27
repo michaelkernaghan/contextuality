@@ -2,12 +2,23 @@
 ks_rigidity_finite.py -- Test if Z[sqrt(-2)] flex is finite or infinitesimal
 =============================================================================
 
-The Jacobian analysis found 1 deformation dimension for Z[sqrt(-2)]-33,
-but linear tracing shows orthogonality breaks at second order.
+The Jacobian analysis found 1 deformation dimension for Z[sqrt(-2)]-33.
 
 Key question: Is this a FINITE flexibility (a continuous family of
 realizations) or merely an INFINITESIMAL flex (first-order motion
 blocked by higher-order obstructions)?
+
+ANSWER (corrected 2026-07-27): the flex is FINITE.  It integrates to the
+one-parameter family of Gould and Aravind, Found. Phys. 40, 1096 (2010),
+on which Peres-33 and Z[sqrt(-2)]-33 are antipodal points; exact
+certificates in Flores Gordillo, doi:10.5281/zenodo.21488474.
+
+Earlier runs of this script reported the opposite because the
+second-order obstruction vector was assembled in a different row order
+than the Jacobian -- see the note at the d2_vec assembly below.  The
+normalization block of that vector is 2*|dv_i/dt|^2, strictly positive
+for any ray that moves, so the "all second derivatives vanish" branch
+below can never fire and every run reaches the projection test.
 
 In rigidity theory, this is the distinction between:
   - Flexible: admits a continuous path of distinct realizations
@@ -448,8 +459,20 @@ if __name__ == "__main__":
         # or in the cokernel (true obstructions)
         J = compute_jacobian(flat_from_rays(min_rays), n, pairs)
 
-        # The obstruction is the vector of second derivatives
-        d2_vec = np.concatenate([d2_norm, d2_ortho_re, d2_ortho_im])
+        # The obstruction is the vector of second derivatives.
+        #
+        # It MUST use the same row ordering as constraint_vector() and
+        # compute_jacobian(), which interleave the orthogonality parts as
+        # [norms, Re_0, Im_0, Re_1, Im_1, ...].  Assembling it in blocked
+        # order -- np.concatenate([d2_norm, d2_ortho_re, d2_ortho_im]) -- is
+        # a permutation of the correct vector, so the projection below then
+        # measures nothing.  That error produced the spurious "nonzero
+        # cokernel component" reported in v1-v7 of the paper; the true
+        # component is zero and the flex is finite (Gould-Aravind circle).
+        d2_vec = np.zeros(n + 2 * len(pairs))
+        d2_vec[:n] = d2_norm
+        d2_vec[n::2] = d2_ortho_re
+        d2_vec[n + 1::2] = d2_ortho_im
 
         # Check if d2_vec is in the range of J
         # If yes, it can be corrected by a second-order term
