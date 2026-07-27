@@ -109,7 +109,9 @@ All six minimal KS sets exhibit 100% merge preservation: merging any pair of non
 | Heegner-7 | 43 | 107 | 51 | 51 | 0 | **Rigid** |
 | Golden-52 | 52 | 124 | 60 | 60 | 0 | **Rigid** |
 
-The Peres and $\mathbb{Z}[\sqrt{-2}]$ flex is **infinitesimal only** — blocked at second order. Both are finitely rigid. The flex belongs to their shared graph (72 pairs vs Eisenstein's 78), not to the choice of algebraic ring.
+The Peres and $\mathbb{Z}[\sqrt{-2}]$ flex is **finite**: it integrates to the continuous one-parameter family of Gould and Aravind (*Found. Phys.* **40**, 1096 (2010)), on which the two islands are antipodal points, so they are one configuration seen at two parameter values. The flex belongs to their shared graph (72 pairs vs Eisenstein's 78), not to the choice of algebraic ring.
+
+> **Corrected 2026-07-27.** Previously stated as infinitesimal only, blocked at second order, with both sets finitely rigid. That was an artifact of a constraint-ordering bug in `ks_rigidity_finite.py`; the true cokernel component is zero. Reported by Manuel Flores Gordillo, doi:10.5281/zenodo.21488474.
 
 ---
 

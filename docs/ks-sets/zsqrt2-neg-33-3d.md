@@ -22,8 +22,8 @@ The **$\mathbb{Z}[\sqrt{-2}]$ 33-vector KS set** is constructed over the ring of
 This construction is significant as a demonstration that the **flex belongs to the graph, not the algebra**:
 
 - **Graph-isomorphic to Peres**: The orthogonality graph of the $\mathbb{Z}[\sqrt{-2}]$ set is isomorphic to the Peres-33 graph
-- **Same flex**: Despite using complex coordinates, the set has exactly the same 1-dimensional infinitesimal flex as Peres — confirming that the deformation mode is a property of the graph structure
-- **New algebraic realization**: While not a "new island" in terms of graph type, it provides a genuinely different algebraic realization of the Peres graph
+- **Same flex**: Despite using complex coordinates, the set has exactly the same 1-dimensional flex as Peres — confirming that the deformation mode is a property of the graph structure
+- **Same configuration, different parameter value**: the two sets are not merely graph-isomorphic. They are the same 33-ray configuration at two points of one continuous family (see Rigidity below), so this is a new *algebraic route* to the Peres configuration rather than a geometrically distinct realization of it
 
 Key features:
 
@@ -49,7 +49,7 @@ The 33 rays live in $\mathbb{C}^3$, using coordinates from $\{0, \pm 1, \pm \sqr
 
 ## Rigidity (Flex)
 
-The $\mathbb{Z}[\sqrt{-2}]$ set is **infinitesimally flexible** but **finitely rigid** — the same status as the Peres set:
+The $\mathbb{Z}[\sqrt{-2}]$ set is **flexible** with one **finite** deformation dimension — the same status as the Peres set:
 
 | Property | $\mathbb{Z}[\sqrt{-2}]$-33 | Peres-33 |
 |----------|---------------------------|----------|
@@ -57,9 +57,11 @@ The $\mathbb{Z}[\sqrt{-2}]$ set is **infinitesimally flexible** but **finitely r
 | Null space dim | 42 | 42 |
 | Symmetry dim | 41 | 41 |
 | Deformation modes | **1 (flex)** | **1 (flex)** |
-| Finitely rigid? | Yes (2nd-order blocked) | Yes (2nd-order blocked) |
+| Finitely rigid? | No — flex is finite | No — flex is finite |
 
-The single infinitesimal flex is blocked at second order (cokernel component 0.075), making both sets finitely rigid despite their infinitesimal flexibility. This confirms that **the flex belongs to the graph**: any embedding of this particular 33-vertex, 72-edge orthogonality graph — whether in $\mathbb{Z}[\sqrt{2}]$, $\mathbb{Z}[\sqrt{-2}]$, or any other ring — will exhibit the same 1-dimensional flex.
+The flex is finite: it integrates to the continuous one-parameter family of Gould and Aravind (*Found. Phys.* **40**, 1096 (2010)), and the two sets sit at antipodal parameter values on that circle. This confirms that **the flex belongs to the graph**: any embedding of this particular 33-vertex, 72-edge orthogonality graph — whether in $\mathbb{Z}[\sqrt{2}]$, $\mathbb{Z}[\sqrt{-2}]$, or any other ring — will exhibit the same 1-dimensional flex. It also shows the two islands are one object seen twice.
+
+> **Corrected 2026-07-27.** This section previously stated the flex was blocked at second order with cokernel component 0.075, making both sets finitely rigid. That was an artifact of a constraint-ordering bug in `ks_rigidity_finite.py`; the true cokernel component is zero. Reported by Manuel Flores Gordillo, doi:10.5281/zenodo.21488474.
 
 ---
 

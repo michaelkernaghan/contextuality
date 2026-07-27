@@ -361,7 +361,7 @@ This algebraic impossibility will now be rephrased in the geometric language of 
 
 ### Rigidity Analysis
 
-The Peres 33-vector set is **infinitesimally flexible** but **finitely rigid**:
+The Peres 33-vector set is **flexible**, with one **finite** deformation dimension:
 
 | Property | Value |
 |----------|-------|
@@ -369,9 +369,11 @@ The Peres 33-vector set is **infinitesimally flexible** but **finitely rigid**:
 | Null space dim | 42 |
 | Symmetry dim | 41 |
 | Deformation modes | **1 (flex)** |
-| Finitely rigid? | Yes (2nd-order blocked) |
+| Finitely rigid? | No — the flex is finite |
 
-The single infinitesimal flex is blocked at second order (cokernel component 0.075). The Trandafir-Cabello analysis confirms: Peres-33 is "not rigid" in the infinitesimal sense but admits no finite deformations.
+The flex integrates to the continuous one-parameter family of Gould and Aravind (*Found. Phys.* **40**, 1096 (2010)), on which Peres-33 and the $\mathbb{Z}[\sqrt{-2}]$ set are antipodal points. The moduli space is a circle, not a set of isolated points. The Trandafir-Cabello finding that Peres-33 is "not rigid" stands, and is now known to be witnessed by a finite deformation rather than only an infinitesimal one.
+
+> **Corrected 2026-07-27.** This section previously stated the flex was infinitesimal only, blocked at second order with cokernel component 0.075. That was an artifact of a constraint-ordering bug in `ks_rigidity_finite.py` (the obstruction vector was assembled in blocked order against interleaved Jacobian rows); the true cokernel component is zero. Reported by Manuel Flores Gordillo, doi:10.5281/zenodo.21488474.
 
 ### Three Distinct 33-Vector KS Sets
 
