@@ -1,0 +1,205 @@
+Peer Review: algebraic_islands_v10.txt
+Date: 2026-11-23 10:44:17
+Reviewer: Codex (gpt-6-astra, reasoning high, CLI v0.153.4)
+Elapsed: 863.2s
+Tokens: 135,900 tokens used
+---
+
+1. **Up-front verdicts**
+
+- **Real three-symbol theorem: GAP IN PROOF in the submitted implementation.** The classification survives my checks, including an independent exact enumeration. But the supplied proof describes tolerance-dependent decisions as exact and overstates its independent verification.
+- **Certifier reductions: CORRECT AS STATED.** Both reductions preserve the minimum. The implementation is sound for these inputs; witness retention in the calling script is defective.
+- **Gould–Aravind remark: WRONG as written.** Pairwise unitary inequivalence over the whole circle is false. The family itself is valid—and a direct substitution identifies it with Gould–Aravind’s family globally, making the proposed local numerical argument unnecessary.
+
+I reran `scan`, independently rebuilt the requested pools using exact number-field arithmetic, and independently enumerated the real strata using exact root isolation. I did not rerun the lower-bound certification searches.
+
+2. **Actionable issues**
+
+Demonstrated errors:
+
+| Priority | Step | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|
+| High | 1–2 | “The only floating-point quantities in the paper are…” excludes computations that actually determine the three-symbol stratification. `branch_in_D` converts roots to doubles, rationalizes samples without certifying their cells, and uses `1e-9`; `points_of` and `in_D` use numerical tolerances. | Replace these decisions with algebraic root isolation and exact sign tests. My separate exact enumeration reproduces the result, so this is repairable without changing the theorem. |
+| Med | 2 | “rebuilds the pool … at 162 sample points and finds the same graph every time.” **False twice:** `check()` skips 19 curve samples, making only **143 comparisons**, and compares only ray/pair/triad **counts**, not graphs. | Choose a non-special sample on every curve; count completed comparisons; compare word equivalence classes and complete edge sets. |
+| Med | 3 | “Every uncolorable case was certified.” The lower-bound records exist, but **none of the 71 records contains a witness**. The final witness assertion is bypassed in every case because the certifier never improves the greedy upper bound. | Retain the greedy set, use it when `best is None`, explicitly verify it uncolourable, and serialize it. I independently reconstructed and SAT-checked all 71 upper-bound witnesses successfully. |
+| High | 5 | “its members are pairwise unitarily inequivalent” over the circle is false. Writing the family as \(W(\theta)\), **\(W(\theta+\pi)=W(\theta)\)**, and swapping the first two coordinates carries \(W(\theta)\) to \(W(-\theta)\). | Restrict the inequivalence statement to \(0\leq\theta\leq\pi/2\). An exact overlap invariant proves it there; see below. |
+| Low | 1 | “the pool \(S(P)\) and its orthogonality graph depend only on … \(F(P)\).” The actual geometrical ray set varies within a stratum. | Say that the **equivalence relation on words and the resulting orthogonality graph** depend only on \(F(P)\). |
+| Med | 4 | The supergolden paragraph says “we have not established a useful finite classification.” This now contradicts the real three-symbol theorem unless its scope is restricted. | Specify “for arbitrary alphabets” or “for complex three-symbol alphabets.” |
+
+Unsupported claims or insufficient arguments:
+
+| Priority | Step | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|
+| High | 1–2 | “deciding membership of every factor exactly by Gröbner bases” overstates what `special_sets` establishes **at an individual point**. Splitting both coordinate eliminants does not generally produce prime components. Numerical agreement supplies the remaining pointwise check. | Split using a separating primitive element, or certify individual algebraic points and evaluate factors exactly. I used the former approach and recovered exactly the same 130 sets. |
+| Med | 5 | “Near Peres’s set … therefore … coincides with ours there.” Numerical ranks alone do not prove this local uniqueness statement. | Replace the argument with the explicit global identification \(a=b=1,\ c=1/x^*\) in Gould–Aravind’s Table 3. |
+| Med | 5 | “each member has exactly one infinitesimal flex” exceeds a calculation at nine parameter values. `velocity_at` also computes distance from trivial motions, **not** the Jacobian residual promised by its docstring. | State “at all nine sampled members”; correct the docstring and check the analytic velocity against the Jacobian. |
+| Med | 4 | “the eight points are new uncolorable alphabets” is an unsupported novelty claim, especially with the already catalogued supergolden example among them. | Use “eight exceptional uncolorable alphabets” unless a literature comparison supports novelty. |
+
+Limits of this review, kept separate from errors:
+
+| Priority | Step | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|
+| Med | 3–4 | The “certified minimum” lower bounds were audited through the algorithm and archived termination records, **not independently rerun**. The paper already acknowledges that the exclusion certificates are not archived. | Preserve the existing qualification; archive independently checkable certificates if stronger reproducibility is wanted. |
+| Low | 3 | The new \(\eta/\sqrt2\), threshold-34 validation log stops after “improved ub -> 33.” It does not record completed certification. | Do not count that log as a completed validation. The older threshold-33 run does establish the stated minimum. |
+
+3. **Claims independently confirmed, with calculations and methods**
+
+**The reduction and exhaustive classification survive.**
+
+Dividing by the smallest nonzero absolute value and sorting gives \(1<x<y\). Equal absolute values or a zero generator leave at most two nonzero symbols up to sign, so the two-symbol theorem applies.
+
+Each inner product contains three signed monomial contributions; each minor contains two. The six possible monomials are exactly
+\[
+1,\ x,\ y,\ x^2,\ xy,\ y^2.
+\]
+The number of nonzero integer coefficient vectors with \(\ell_1\)-norm at most three is
+\[
+\sum_{j=1}^{3}2^j\binom6j\binom3j
+=36+180+160=376.
+\]
+Independent enumeration agrees with `all_vectors()`. Independent factorization gives **125 factors**. `inner_vec`, `minor_vec`, `factorise`, and `norm_poly` implement this correctly; primitive normalization and positive leading coefficient remove constant and sign duplicates.
+
+The proposed stratification is mathematically sufficient:
+
+- Distinct irreducible factors cannot share a curve component.
+- A nonvertical smooth branch meeting the open domain \(D\) has points over an open interval between the prescribed cuts. Boundary tangencies do not require additional strata inside \(D\).
+- Vertical factors are handled separately.
+- An isolated real point must be singular. I checked all quadratic factors: their singular zeros, where present, are at \((0,0)\), outside \(D\).
+
+I independently checked curve existence with exact algebraic comparisons and obtained **31 curves**. I then examined all pairs of those curves, split their finite intersections using a separating coordinate \(t=x+qy\), and used rational isolating intervals to decide \(x>1\) and \(y>x\). Exact factor evaluation gave **130 special sets**, matching the archive without additions or omissions.
+
+Thus the numerical weaknesses in the submitted enumerator have **not produced a wrong classification here**. They remain weaknesses in the claimed proof implementation.
+
+The rerun and archived records agree on:
+
+| Stratum | Colourable | Uncolourable |
+|---|---:|---:|
+| Generic | 1 | 0 |
+| Curves | 25 | 6 |
+| Special sets | 65 | 65 |
+| **Total** | **91** | **71** |
+
+Among the 65 uncolourable special sets, **27 meet a ratio-2 curve**, **30 meet a ratio-\(\sqrt2\) curve but no ratio-2 curve**, and **8 meet neither**. Thus \(1+31+130=162\), and the claimed 57 special sets on the six curves are correct.
+
+**Independent exact pool reconstructions reproduce the counts.**
+
+For these calculations I independently enumerated coordinate triples, normalized by the first nonzero coordinate, computed exact dot products in number fields, enumerated triangles, and submitted the resulting clauses to SAT. I did not use `pool()` or its factor-based vanishing predicate.
+
+The minimum column below reports the archived certification, not a fresh lower-bound run.
+
+| Case | Rays | Pairs | Triads | Colourable? | Archived minimum |
+|---|---:|---:|---:|---|---:|
+| Generic: \((13/11,\sqrt5)\) | 145 | 366 | 22 | Yes | — |
+| Generic on \(x=2\): \((2,\sqrt{13})\) | 145 | 426 | 50 | No | 31 |
+| Generic on \(y^2=2x^2\): \((\sqrt7,\sqrt{14})\) | 145 | 372 | 28 | No | 33 |
+| Colourable curve \(y=x+1\): \((10/3,13/3)\) | 145 | 462 | 22 | Yes | — |
+| \((\sqrt\varphi,\varphi)\) | 109 | 312 | 28 | No | 42 |
+| \((\psi,\psi^2)\) | 109 | 348 | 40 | No | 47 |
+| Table row 3: \((1.883203506,2.132241882)\) | 145 | 474 | 42 | No | 49 |
+| \((\sqrt{2+2\sqrt2},1+\sqrt2)\) | 145 | 402 | 46 | No | 49 |
+| Table row 5: \((2.205569430,2.658967082)\) | 145 | 462 | 46 | No | 51 |
+| Table row 6: \((2.359304086,2.783157885)\) | 145 | 414 | 58 | No | 55 |
+| \((1+\sqrt3,2+\sqrt3)\) | 145 | 486 | 46 | No | 56 |
+| Table row 8: \((1.249621068,1.600485180)\) | 145 | 390 | 46 | No | 57 |
+
+Every table row’s relations and uniqueness in \(D\) check out. Eliminating \(y\) gives, in table order,
+\[
+\begin{array}{ll}
+1:&x^4-x^2-1=0,\\
+2:&x^3-x^2-1=0,\\
+3:&x^4-2x^3+x^2-2x+1=0,\quad 1<x<2,\\
+4:&x^4-4x^2-4=0,\\
+5:&x^3-2x^2-1=0,\quad x>2,\\
+6:&x^3-2x^2-2=0,\quad x>2,\\
+7:&x^2-2x-2=0,\\
+8:&x^4+x^2-4=0.
+\end{array}
+\]
+Exact root counts give one admissible root in every case. In row 5 the third displayed relation is redundant but correct.
+
+The dependent examples also agree:
+
+| Alphabet’s positive letters | Rays / pairs / triads | Result |
+|---|---|---|
+| \(1,2,3\) | 145 / 546 / 50 | Uncolourable; recorded minimum 31 |
+| \(1,\sqrt2,2\) | 109 / 330 / 38 | Uncolourable; recorded minimum 31 |
+| \(1,\varphi,2\) | 145 / 450 / 50 | Uncolourable; recorded minimum 31 |
+| \(1,\varphi,\varphi^2\) | 109 / 396 / 24 | Colourable |
+| \(1,\sqrt[3]2,\sqrt[3]4\) | 109 / 300 / 28 | Colourable |
+
+The abstract’s item (E), introduction, and real-versus-complex scope in the open questions agree with these results.
+
+The supergolden minimum **47** appears in two separate completed runs: the number-field catalogue run and the factor-stratification run. Calling them separate corroborating computations is justified. They share certifier infrastructure, so they are not completely independent software implementations.
+
+**The certifier reductions and floor interpretation are sound.**
+
+For a ray in no triad, extending a colouring by assigning that ray zero satisfies every incident pair constraint. Therefore deleting it preserves uncolourability. Applying this argument along the deletion sequence shows every minimum uncolourable subset lies in the computed core. A pair without a triad does not invalidate this argument.
+
+For orbit clauses, an automorphism maps every colouring of \(M\) to a colouring of \(g(M)\). Hence every uncolourable subset must meet the complement of each image.
+
+[`check_group`](</C:/Users/Michael Kernaghan/contextuality/ks_certify_fast4.py:61>) checks permutations and edges on the **full pool**, not triads explicitly. That is sufficient here because the triad lists are precisely all graph triangles. The core is invariant, so restricting these permutations to it is correct. I independently checked all **24 permutations in all 71 real uncolourable cases**, including triangle preservation explicitly.
+
+The floor device remains sound: termination at the unchanged threshold \(L\) proves no uncolourable subset smaller than \(L\). If a smaller set is found, the updated value—not the original threshold—must be interpreted.
+
+The validation records do exactly that:
+
+- **\(2\zeta\), threshold 33:** completed with lower bound **33**, after 127 iterations.
+- **\(\mathbb Q(\sqrt{-7})\), threshold 44:** found **43**, then certified **43**. This is the expected positive control, not a contradiction.
+- **\(\eta/\sqrt2\), threshold 34:** the new log only records discovery of a 33-ray set. The older threshold-33 run completed and supports the paper’s minimum 33.
+
+All **71** three-symbol records have `no_set_below_31: true`, a non-null certified value equal to the upper bound, and the expected minimum for their stratum. **Zero** contain a witness. The reason is visible in [`certify_case`](</C:/Users/Michael Kernaghan/contextuality/ks_three_symbol_real.py:373>): it retains only the greedy set’s size, and stores a witness only after an improvement.
+
+This is a recording defect, not evidence of a false upper bound. My reconstruction obtained and freshly SAT-checked witnesses of all 71 stated sizes.
+
+**The family is valid, but its equivalence claims need replacement.**
+
+The numerical results reproduce: nine sampled members have 72 pairs and one nontrivial infinitesimal flex. The trivial-motion construction is correct: nine generators of \(\mathfrak u(3)\), plus 33 individual phases, span dimension **41**, with the common scalar phase counted twice. I checked that rank at all nine samples.
+
+At Peres’s point I also computed the Jacobian rank exactly. The real and imaginary blocks have ranks **96** and **60**, giving
+\[
+\dim\ker J=198-156=42,\qquad 42-41=1
+\]
+nontrivial infinitesimal flex.
+
+The archived velocity calculation checks independence from trivial motions, but not the linearized constraints. Using the analytic derivatives
+\[
+\dot x=ix,\qquad \dot{x^*}=-ix^*
+\]
+repairs that check. At the three velocity samples, the constraint residual was below \(8\times10^{-17}\), and the relative distance from trivial motions was \(0.368513865595\).
+
+I also checked the constant graph symbolically. With \(x=z/\sqrt2\), \(|z|=1\), exactly **72 inner products vanish identically**. None of the others vanishes on the unit circle, and no two rays coincide there. Thus the constant 33-ray Peres graph is established beyond sampling.
+
+For inequivalence, the exact identities are
+\[
+W(\theta+\pi)=W(\theta),\qquad
+P_{12}W(\theta)=W(-\theta),
+\]
+where \(P_{12}\) swaps coordinates 1 and 2. The latter generally relates different ray sets by a unitary.
+
+A corrected inequivalence statement has an exact proof. For normalized representatives,
+\[
+\sum_{i<j}|\langle v_i,v_j\rangle|^4
+=\frac{37493}{432}+\frac{17}{2}\cos(2\theta).
+\]
+I obtained this by symbolic summation over all 528 pairs. It is strictly decreasing on \(0\leq\theta\leq\pi/2\), proving pairwise inequivalence on that interval.
+
+Finally, substitute
+\[
+a=b=1,\qquad c=\frac1{x^*},\qquad
+k=-\frac{c}{c^*}=-\frac{x}{x^*}
+\]
+into [Gould–Aravind, Table 3](https://users.wpi.edu/~paravind/Publications/GouldPKA-FP.pdf). Their rays become exactly the archived word family, projectively and after relabelling. For example,
+\[
+(c^*,1,1)\sim(1,x,x),\qquad
+(1,c,1)\sim(x^*,1,x^*),\qquad
+(1,k,c)\sim(x^*,-x,1).
+\]
+I verified all 33 matches symbolically. Moreover, their general parameters are reduced to \(a=b=1\) by the diagonal unitary \(\operatorname{diag}(b,a,1)\), replacing \(c\) by \(ab^*c\). Consequently the families agree globally up to unitary equivalence. The proposed open question about agreement away from Peres is settled by this calculation.
+
+4. **Step 6**
+
+The three-symbol theorem’s classification, table, and recorded minima survive this review. The supplied computational proof needs exact real-locus decisions and an honest description of its verification before release. Fix the skipped samples and retain the witnesses.
+
+The certifier reductions are sound.
+
+Rewrite the Gould–Aravind remark: remove global pairwise inequivalence, restrict the rank claim to sampled members, and replace the numerical local-identification argument with the explicit global correspondence above. No change to the three-symbol theorem’s numerical conclusions is indicated.

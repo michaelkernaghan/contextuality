@@ -1,0 +1,144 @@
+{
+ "curve": "b^2 = 1/2 + 0 a + -1 a^2",
+ "words": [
+  "(0,0,1)",
+  "(0,1,0)",
+  "(0,1,1)",
+  "(0,1,-1)",
+  "(0,1,x*)",
+  "(0,1,-x*)",
+  "(0,x,1)",
+  "(0,x,-1)",
+  "(1,0,0)",
+  "(1,0,1)",
+  "(1,0,-1)",
+  "(1,0,x)",
+  "(1,0,-x)",
+  "(1,x,0)",
+  "(1,x,x)",
+  "(1,x,-x)",
+  "(1,-x,0)",
+  "(1,-x,x)",
+  "(1,-x,-x)",
+  "(x*,0,1)",
+  "(x*,0,-1)",
+  "(x*,1,0)",
+  "(x*,1,x*)",
+  "(x*,1,-x*)",
+  "(x*,-1,0)",
+  "(x*,-1,x*)",
+  "(x*,-1,-x*)",
+  "(x*,x,0)",
+  "(x*,x,1)",
+  "(x*,x,-1)",
+  "(x*,-x,0)",
+  "(x*,-x,1)",
+  "(x*,-x,-1)"
+ ],
+ "members": [
+  {
+   "theta": 0.0,
+   "pairs": 72,
+   "peres_graph": true,
+   "max_overlap_change_vs_theta0": 0.0,
+   "flexes": 1,
+   "sv_kept": 0.4032717861017808,
+   "sv_dropped": 1.2836023056228303e-15
+  },
+  {
+   "theta": 0.05,
+   "pairs": 72,
+   "peres_graph": true,
+   "max_overlap_change_vs_theta0": 0.0005891328996245893,
+   "flexes": 1,
+   "sv_kept": 0.40340040838498986,
+   "sv_dropped": 1.2289967955892837e-15
+  },
+  {
+   "theta": 0.2,
+   "pairs": 72,
+   "peres_graph": true,
+   "max_overlap_change_vs_theta0": 0.009396705320474836,
+   "flexes": 1,
+   "sv_kept": 0.4053228684946824,
+   "sv_dropped": 1.1927291063012834e-15
+  },
+  {
+   "theta": 0.5,
+   "pairs": 72,
+   "peres_graph": true,
+   "max_overlap_change_vs_theta0": 0.05770813374853512,
+   "flexes": 1,
+   "sv_kept": 0.41585430550193186,
+   "sv_dropped": 1.146295126898118e-15
+  },
+  {
+   "theta": 0.8,
+   "pairs": 72,
+   "peres_graph": true,
+   "max_overlap_change_vs_theta0": 0.14297382833933436,
+   "flexes": 1,
+   "sv_kept": 0.43438563858380935,
+   "sv_dropped": 1.2574900488136158e-15
+  },
+  {
+   "theta": 1.0,
+   "pairs": 72,
+   "peres_graph": true,
+   "max_overlap_change_vs_theta0": 0.21670357121097172,
+   "flexes": 1,
+   "sv_kept": 0.45030013963362786,
+   "sv_dropped": 1.1464289330293564e-15
+  },
+  {
+   "theta": 0.785398,
+   "pairs": 72,
+   "peres_graph": true,
+   "max_overlap_change_vs_theta0": 0.13807118745769842,
+   "flexes": 1,
+   "sv_kept": 0.4333225769094167,
+   "sv_dropped": 1.1993217184797388e-15
+  },
+  {
+   "theta": 1.047198,
+   "pairs": 72,
+   "peres_graph": true,
+   "max_overlap_change_vs_theta0": 0.22140452079103168,
+   "flexes": 1,
+   "sv_kept": 0.4543641468290893,
+   "sv_dropped": 1.17724658815717e-15
+  },
+  {
+   "theta": 1.570796,
+   "pairs": 72,
+   "peres_graph": true,
+   "max_overlap_change_vs_theta0": 0.22140452079103146,
+   "flexes": 1,
+   "sv_kept": 0.49219162003813854,
+   "sv_dropped": 1.2293328641612563e-15
+  }
+ ],
+ "velocity": [
+  {
+   "theta": 0.0,
+   "rank_trivial": 41,
+   "rank_with_velocity": 42,
+   "relative_distance_of_velocity_from_trivial": 0.3685138655950444,
+   "max_linearised_constraint_residual": 5.551115123125783e-17
+  },
+  {
+   "theta": 0.5,
+   "rank_trivial": 41,
+   "rank_with_velocity": 42,
+   "relative_distance_of_velocity_from_trivial": 0.3685138655950444,
+   "max_linearised_constraint_residual": 2.7755575615628914e-17
+  },
+  {
+   "theta": 1.570796,
+   "rank_trivial": 41,
+   "rank_with_velocity": 42,
+   "relative_distance_of_velocity_from_trivial": 0.3685138655950444,
+   "max_linearised_constraint_residual": 1.5078678455177003e-33
+  }
+ ]
+}

@@ -453,7 +453,7 @@ def certify(budget):
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "certify":
         certify(float(sys.argv[2]) if len(sys.argv) > 2 else 600.0)
-    elif sys.argv[1:2] != ["one"]:
+    elif sys.argv[1:2] not in (["one"], ["one4"]):
         scan()
 
 
@@ -484,6 +484,75 @@ def one(label, budget, floor=None):
     with (HERE / "results" / "conjugate_closed_reruns.jsonl").open("a", encoding="utf-8") as fh:
         fh.write(json.dumps(rec) + "\n")
 
+
+def symmetries(pt, reps):
+    """Ray permutations induced by coordinate permutations, sign changes and x <-> x*
+    (complex conjugation of every word).  All preserve orthogonality at every x; the
+    certifier checks each one against the graph anyway."""
+    cache = {ZERO6: True}
+
+    def van(c):
+        if c not in cache:
+            cache[c] = pt.vanishes(c)
+        return cache[c]
+
+    def rep_of(w):
+        for i, r in enumerate(reps):
+            if all(van(minor_vec(w, r, a, b)) for a, b in ((0, 1), (0, 2), (1, 2))):
+                return i
+        raise AssertionError("word outside the pool")
+
+    swap = {0: 0, 1: 2, 2: 1}
+    perms = set()
+    for sigma in itertools.permutations(range(3)):
+        for signs in itertools.product((1, -1), repeat=3):
+            for conj in (False, True):
+                def act(w):
+                    out = []
+                    for k in range(3):
+                        a = w[sigma[k]]
+                        if a is None:
+                            out.append(None)
+                        else:
+                            out.append((a[0] * signs[k], swap[a[1]] if conj else a[1]))
+                    return tuple(out)
+                perms.add(tuple(rep_of(act(w)) for w in reps))
+    return sorted(perms)
+
+
+def one4(label, budget, floor=None):
+    """As `one`, with ks_certify_fast4 (core reduction and orbit clauses)."""
+    import ks_certify_fast4 as F4
+    todo, graphs, lines, special, skipped = cases()
+    (kind, name, pt), = [t for t in todo if t[2].label() == label]
+    reps, pairs, triads = pool(pt)
+    n = len(reps)
+    perms = symmetries(pt, reps)
+    if floor is None:
+        ub = len(R.greedy_min(n, pairs, triads, 200, random.Random(7)))
+    else:
+        ub = floor
+    exact, ub2, best, info = F4.certify4(n, pairs, triads, ub, budget=budget, perms=perms,
+                                         verbose=True)
+    rec = {"x": label, "method": "certify4", "rays": n, "pairs": len(pairs),
+           "triads": len(triads), **info}
+    if floor is None:
+        rec.update(certified=exact, upper_bound=ub2)
+    else:
+        # exact == floor: nothing below floor.  exact < floor: a smaller set was found and
+        # certified minimum, so exact is the minimum.  None: undecided.
+        rec.update(threshold=floor, proven_lower_bound=exact)
+    if best is not None:
+        assert not R.colourable(best, pairs, triads)
+        rec["witness"] = [word_str(reps[i]) for i in sorted(best)]
+        rec["found_size"] = len(best)
+    print(json.dumps({k: v for k, v in rec.items() if k != "witness"}), flush=True)
+    with (HERE / "results" / "conjugate_closed_reruns.jsonl").open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(rec) + "\n")
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "one4":
+    one4(sys.argv[2], float(sys.argv[3]), int(sys.argv[4]) if len(sys.argv) > 4 else None)
 
 if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "one":
     one(sys.argv[2], float(sys.argv[3]), int(sys.argv[4]) if len(sys.argv) > 4 else None)

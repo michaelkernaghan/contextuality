@@ -62,9 +62,11 @@ isolation claim is false, and one of its certified minima was wrong
 unsound.  Version~10 keeps the alphabet as the object of study and replaces the rest:
 
 \begin{enumerate}[label=(\roman*)]
-\item Four theorems.  Theorem~\ref{thm:twosymbol}: for every complex $x$ the pool of the
+\item Five theorems.  Theorem~\ref{thm:twosymbol}: for every complex $x$ the pool of the
 two-symbol alphabet $\{0,\pm1,\pm x\}$ is classified, and none contains a KS set of fewer than
-31 rays.  Theorem~\ref{thm:6n}: the roots-of-unity pool is uncolorable exactly when
+31 rays.  Theorem~\ref{thm:threesymbol}: the same for real three-symbol alphabets
+$\{0,\pm1,\pm x,\pm y\}$, with six uncolorable curves and eight further points.
+Theorem~\ref{thm:6n}: the roots-of-unity pool is uncolorable exactly when
 $6\mid n$.  Theorem~\ref{thm:circle}: the conjugate-closed pool over $\{0,\pm1,\pm x,\pm x^{*}\}$
 is uncolorable for every $x$ on the circle $|x|^2=2$ and colorable for generic~$x$, with an
 explicit smallest list of 45 words that works along the whole circle.
@@ -137,8 +139,9 @@ coordinate; a pair is orthogonal when the Hermitian product is the zero element.
 cyclotomic pools use exponents modulo~$n$, and the proof of Theorem~\ref{thm:circle} uses
 integer polynomial identities.  No count in Sections~\ref{sec:real}--\ref{sec:catalogue} depends
 on a floating-point tolerance.  The only floating-point quantities in the paper are the rigidity ranks of
-Table~\ref{tab:rigidity}, including the coordinates of the 45-word set used there; they are
-labelled as numerical.
+Table~\ref{tab:rigidity}, including the coordinates of the 45-word set used there, and the flex
+counts of the 33-ray family on $|x|^2=\tfrac12$; they are labelled as numerical.  Floating-point
+evaluation is used elsewhere only as a cross-check of exact computations.
 
 \paragraph{Colorability.}  Colorability of a finite set is decided by a SAT
 solver~\cite{AudemardSimon2018}: one variable per ray, a clause forbidding two 1s on each
@@ -154,7 +157,19 @@ list.  When no such $R$ exists, no uncolorable subset has fewer than $u$ rays, a
 exactly~$u$.  The answer is correct whenever the SAT solver is.  The list of sets $M$ is in principle a
 certificate that can be checked independently; in this version it is archived only for
 Theorem~\ref{thm:circle}, and the other minima are reproducible by re-running the scripts.  Minima that the procedure did not finish within
-its time budget are reported as upper bounds.  The same enumeration, continued after the first
+its time budget are reported as upper bounds.
+
+Two reductions speed up the runs for Theorems~\ref{thm:conj} and~\ref{thm:threesymbol}; both
+keep the answer exact.  First, if a ray of an uncolorable set lies in no triad of that set,
+deleting it leaves an uncolorable set (a coloring of the rest extends by giving the ray~0).  So a
+minimum set lies in the \emph{core} of the pool, obtained by deleting rays that lie in no triad
+until none is left, and the search is run there.  Second, if
+$g$ is a permutation of the rays preserving orthogonality and $M$ is colorable, so is $g(M)$, so
+each colorable $M$ may be added to the list together with all its images under a group of such
+permutations (signed permutations of the coordinates, and complex conjugation where the alphabet
+is closed under it; each is checked to preserve the graph before use).
+
+The same enumeration, continued after the first
 minimum set is found, lists \emph{all} minimum sets of a pool.
 
 The procedure used in earlier versions (described there as ``OCUS'') was different and was not

@@ -189,7 +189,9 @@ uncolorable with certified minimum~33 (16 bases in the set found).
 Gould and Aravind~\cite{GouldAravind2010} exhibited a family of 33-ray sets with the
 orthogonality graph of Peres's set, depending on three phases, containing the sets of Peres and
 of Penrose; Flores Gordillo~\cite{FloresGordillo2026} reports that after removing diagonal
-unitaries the family is a circle (we have not audited that proof).  That family is different from the one in
+unitaries the family is a circle, and we confirm this in the second remark after
+Theorem~\ref{thm:conj}, where it appears as the circle $|x|^2=\tfrac12$ of the conjugate-closed
+alphabet.  That family is different from the one in
 Theorem~\ref{thm:circle}.  Its members have 33 rays and a constant graph.  Ours has 45 rays at a
 generic point and cannot contain a 33-ray KS set there: every orthogonality of $P(x)$ at a generic
 point of the circle is also one of $P(\alpha)$, whose minimum is~43, so no subset of $P(x)$ with
@@ -349,8 +351,31 @@ Second, the three curves behave differently.  On $|x|^2=2$ the minimum is 45 exc
 finitely many points.  On $|x|^2=\tfrac12$ it is 33 except possibly at the one class of
 points marked 32--33, and the smallest set found has the orthogonality graph of Peres's set at
 a generic point and at every special point of that circle.  So $|x|^2=\tfrac12$ carries a
-one-parameter family of 33-ray sets with Peres's graph.  We have not compared it with the family
-of Gould and Aravind discussed above.  Every point of the lines other than the origin has a
+one-parameter family of 33-ray sets with Peres's graph, joining Peres's set ($x=1/\sqrt2$) to
+the $\sqrt{-2}$ set ($x=i/\sqrt2$).  It is the family of Gould and
+Aravind~\cite{GouldAravind2010}.  The following are exact symbolic computations
+(\texttt{ks\_half\_circle\_family.py exact}), writing $x=e^{i\theta}/\sqrt2$.
+(a)~Exactly 72 inner products of the 33 words vanish identically in~$x$, no other inner product
+vanishes anywhere on the circle, and no two words become proportional; so the graph is Peres's
+along the whole circle, not only at the special points.
+(b)~Substituting $a=b=1$ and $c=1/x^{*}$ in Table~3 of Ref.~\cite{GouldAravind2010} gives our 33
+words, ray for ray; and for general $a,b$ (of modulus~1) the diagonal unitary
+$\mathrm{diag}(b,a,1)$ carries their set with parameters $(a,b,c)$ to their set with parameters
+$(1,1,ab^{*}c)$.  So up to unitary equivalence their three-parameter family is our circle,
+in agreement with Flores Gordillo's reduction to a circle~\cite{FloresGordillo2026}.
+(c)~The maps $x\mapsto-x$ and $x\mapsto x^{*}$ (the latter followed by exchanging the first two
+coordinates) carry the set of 33 rays to itself, so the members at $\theta$, $\theta+\pi$ and
+$-\theta$ are unitarily equivalent.  (d)~For unit vectors, $\sum_{i<j}|\braket{v_i}{v_j}|^4=
+\tfrac{37493}{432}+\tfrac{17}{2}\cos2\theta$, which is strictly decreasing on $[0,\pi/2]$.  Hence the
+members with $0\le\theta\le\pi/2$ are pairwise unitarily inequivalent, and every member is
+equivalent to one of them.  Gould and Aravind identify Penrose's 33 rays with the parameters
+$a=-i$, $b=-1$, $c=-\sqrt2$, which we have not re-derived.  These give $x=-i/\sqrt2$, so on that
+identification Penrose's set is unitarily equivalent to the $\sqrt{-2}$ set; consistently, the
+overlap of rays 9 and~14 is $(2-\sqrt2)/4$ at $\theta=0$ and $\sqrt6/4$ at $\theta=\pi/2$, the
+values they give for Peres's and Penrose's sets.  Numerically, each of nine sampled members has
+exactly one infinitesimal flex, and at three of them the velocity of the family satisfies the
+linearised orthogonality constraints (residual below $10^{-16}$) and is not a trivial motion.
+Every point of the lines other than the origin has a
 33-ray uncolorable set with the graph of the Eisenstein set of Section~\ref{sec:roots}, written
 in the letters $\{0,\pm x,\pm x^{*}\}$, by the last paragraph of the proof; it is a minimum set
 wherever the table certifies~33.
