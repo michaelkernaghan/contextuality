@@ -421,7 +421,9 @@ def subSys (rays : List R) (sel : List Nat) : Sys :=
   ⟨sel.length, fun i j =>
     orthB (rays.getD (sel.getD i 0) zero) (rays.getD (sel.getD j 0) zero)⟩
 
-/-- No ray is listed twice. -/
+/-- No vector is listed twice.  (Equality of coordinate tuples, not proportionality: that the
+listed vectors are pairwise non-proportional is checked by the export script, not here, and is
+not needed for either half of `minimum_eq`.) -/
 def distinctB (rays : List R) : Bool :=
   rangeAll rays.length fun i => rangeAll rays.length fun j =>
     decide (i = j) || decide (rays.getD i zero ≠ rays.getD j zero)

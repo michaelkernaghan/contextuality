@@ -56,6 +56,7 @@ def intpool():
     rays = R.build(alpha, F, complete=comp, cap=3000)
     coords = [primitive(r) for r in rays]
     index = {R.canon(r): i for i, r in enumerate(rays)}
+    assert len(index) == len(rays), "two listed vectors are proportional"
     wit, _, _ = B.load_set("ck31")
     sel = sorted(index[R.canon(r)] for r in wit)
     return coords, int_dot, 31, sel, lambda c: "(%d, %d, %d)" % c
@@ -92,6 +93,9 @@ def field_pool(pool_key, set_key, conv, dot, u):
     rays = R.build(alpha, F, complete=comp, cap=3000)
     coords = [scaled(r, conv) for r in rays]
     index = {R.canon(r): i for i, r in enumerate(rays)}
+    # one vector per ray: canon divides by the first nonzero coordinate in the exact field,
+    # so distinct canonical forms are pairwise non-proportional vectors
+    assert len(index) == len(rays), "two listed vectors are proportional"
     wit, _, _ = B.load_set(set_key)
     sel = sorted(index[R.canon(r)] for r in wit)
     return coords, dot, u, sel, lambda r: "(" + ", ".join(

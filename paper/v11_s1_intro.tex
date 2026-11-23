@@ -53,8 +53,9 @@ example $(x,1,1)\cdot(x,\bar1,\bar1)=x^2-1-1$, which vanishes only for $x^2=2$.}
 
 \paragraph{Results.}
 For a family of alphabets depending on parameters, the question is which parameter values give
-an uncolorable pool and how small a KS set the pool then contains.  We answer it completely
-for three families.
+an uncolorable pool and how small a KS set the pool then contains.  For three families we
+classify colorability completely and determine every minimum except at two classes of points of
+the third family.
 
 \begin{enumerate}[label=(\roman*)]
 \item \emph{Two-symbol alphabets $\{0,\pm1,\pm x\}$, $x$ complex} (Theorem~\ref{thm:twosymbol}).
@@ -62,12 +63,13 @@ The pool is uncolorable only at isolated points: $x$ or $1/x$ one of $\pm2$, $\p
 $\pm\sqrt{-2}$, or $x$ a primitive third or sixth root of unity.  No KS set with coordinates in
 a two-symbol alphabet has fewer than 31 rays.
 \item \emph{Real three-symbol alphabets $\{0,\pm1,\pm x,\pm y\}$} (Theorem~\ref{thm:threesymbol}).
-The pool is uncolorable on six curves, where two letters have ratio 2 or~$\sqrt2$, and at eight
-further points.  Again no KS set has fewer than 31 rays.
+After normalization to $1<x<y$, the pool is uncolorable on six curves, where two letters have
+ratio 2 or~$\sqrt2$, and at eight further points.  Again no KS set has fewer than 31 rays.
 \item \emph{Conjugate-closed alphabets $\{0,\pm1,\pm x,\pm x^{*}\}$, $x$ complex}
 (Theorem~\ref{thm:conj}, Fig.~\ref{fig:circle}).  The pool is uncolorable exactly on two
-circles, four lines through the origin and four further points.  On the circle $|x|^2=2$ one
-fixed list of 45 words is uncolorable at every point and no shorter list is
+circles, four lines through the origin with the origin removed, and four further points.  On
+the circle $|x|^2=2$ one fixed list of 45 words is uncolorable at every point and no shorter
+fixed list is
 (Theorem~\ref{thm:circle}); the circle $|x|^2=\tfrac12$ carries the 33-ray family of Gould and
 Aravind.
 \end{enumerate}
@@ -182,9 +184,10 @@ The same enumeration, continued after the first
 minimum set is found, lists \emph{all} minimum sets of a pool.
 
 \paragraph{Proofs checked in Lean.}  Three files in the repository are checked by the kernel of
-Lean~4 (with the mathlib library) and use no axioms beyond the standard three.  In each,
-coordinates are exact elements of a ring written as integer tuples, orthogonality is recomputed
-inside Lean, and nothing computed outside Lean is trusted.
+Lean~4 (with the mathlib library) and use no axioms beyond the standard three.  Where a proof
+rests on a finite set of rays, their coordinates are exact elements of a ring written as
+integer tuples, orthogonality is recomputed inside Lean, and the certificates, which are
+computed outside Lean, are checked there and not trusted.
 \texttt{Cyclotomic6n.lean} proves Theorem~\ref{thm:6n} for $n\ge3$.
 \texttt{NamedSets.lean} proves that the 43-ray set, the 47-ray set and, for every $x$ with
 $|x|^2=2$, the 45 words of Theorem~\ref{thm:circle} are uncolorable, each from a case-split
@@ -198,9 +201,13 @@ pools, those of $\{0,\pm1,\pm2\}$, $\{0,\pm1,\pm\sqrt2\}$, $\{0,\pm1,\pm\sqrt{-2
 Eisenstein alphabet, $\{0,\pm1,\pm\alpha,\pm\alpha^{*}\}$ with $\alpha=(1+\sqrt{-7})/2$, and
 $\{0,\pm1,\pm\psi,\pm\psi^2\}$ with $\psi^3=\psi^2+1$, is a theorem with two halves: some $u$ of
 the pool's vectors form an uncolorable set, and every set of fewer than $u$ of them has a
-coloring.  Two limits should be stated.  In Lean each pool is an explicit list of vectors; that
-the list consists of all rays with coordinates in the alphabet is not proved there.  And these
-are minima within a pool; they say nothing about KS sets outside it.
+coloring.  Three limits should be stated.  First, in Lean each pool is an explicit list of
+vectors; that the list consists of all rays with coordinates in the alphabet is not proved
+there.  Second, the Lean statements are about sets of vectors, not rays.  This loses nothing,
+by an argument that is not itself formalized: a coloring of rays gives a coloring of any choice
+of representative vectors and conversely, and each listed pool has one vector per ray (the
+export script checks this), so the minimum for vectors is the minimum for rays.  Third, these are minima within a pool; they
+say nothing about KS sets outside it.
 
 The procedure used in earlier versions (described there as ``OCUS'') was different and was not
 sound: when a candidate was colorable, it required the next candidate to contain a ray that

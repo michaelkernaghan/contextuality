@@ -1,0 +1,72 @@
+\section{Reproducibility}\label{app:repro}
+
+Code and data: \url{https://github.com/michaelkernaghan/contextuality}, release tag
+\texttt{v11.0}.  Scripts for this
+version, with the result files they write under \texttt{results/}:
+
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \texttt{ks\_recertify\_v10.py}: pools of Table~\ref{tab:catalogue}, with certified minima
+and witnesses, written to \texttt{recertify\_v10.jsonl}.  It uses the exact fields, pools and
+completion of \texttt{ks\_verify\_large\_minima.py} and the certifier
+\texttt{ks\_certify\_fast3.py}.
+\item \texttt{ks\_tables\_v10.py}: Table~\ref{tab:alphabets}, the survey of imaginary quadratic
+alphabets quoted in Section~\ref{sec:conjclosed}, and the three-symbol and completed pools
+quoted in the text (\texttt{tables\_v10.jsonl}).
+\item \texttt{ks\_zero\_sums\_v10.py}: Table~\ref{tab:zerosums}.
+\item \texttt{ks\_two\_symbol\_theorem.py}: Theorem~\ref{thm:twosymbol} and
+Table~\ref{tab:twosymbol} (\texttt{two\_symbol\_theorem.json}, with a witness for every
+uncolorable case); about five seconds.
+\item \texttt{ks\_conjugate\_closed\_theorem.py}: Theorem~\ref{thm:conj} and
+Table~\ref{tab:conj}.  The mode \texttt{scan} builds and colors the 68 cases in a few seconds.
+The mode \texttt{certify} adds the minima, written to
+\texttt{conjugate\_closed\_theorem.json}.  The mode \texttt{one} reruns a single case,
+optionally only to exclude sets below a given size; it appends to
+\texttt{conjugate\_closed\_reruns.jsonl}.  \texttt{ks\_conjugate\_closed\_identify.py}
+identifies the smallest sets.
+\item \texttt{ks\_three\_symbol\_real.py}: Theorem~\ref{thm:threesymbol} and
+Table~\ref{tab:threesymbol}.  The mode \texttt{scan} finds the curves and special points and
+colors the 162 cases in exact arithmetic, in under a minute; \texttt{check} rebuilds every
+graph from 60-digit coordinates; \texttt{certify} adds the minima and the runs excluding sets
+below~31; \texttt{witness} writes a checked minimum set for every case.  Results are in the
+files \texttt{three\_symbol\_real\_*} under \texttt{results/}.  It uses \texttt{ks\_certify\_fast4.py}, the
+certifier with the two reductions of Section~\ref{sec:methods}, which the mode \texttt{one4} of
+\texttt{ks\_conjugate\_closed\_theorem.py} also uses.
+\item \texttt{ks\_verify\_cyclotomic\_theorem.py}: Table~\ref{tab:cyc} and the structural
+statements of Theorem~\ref{thm:6n}, $n\le30$.
+\item \texttt{lean/}: the Lean proofs (Lean 4.30, mathlib; \texttt{lake build} checks all
+three files in about ten minutes).  \texttt{Cyclotomic6n.lean}: Theorem~\ref{thm:6n} for
+$n\ge3$.  \texttt{NamedSets.lean}: uncolorability of the 43- and 47-ray sets and of the 45
+words for every $x$ on the circle.  \texttt{Minimality.lean}: the six minima marked in
+Table~\ref{tab:catalogue}, with negative controls that are re-checked on every build.  The rays
+and certificates in these files are written by \texttt{ks\_lean\_export.py} and
+\texttt{ks\_lean\_minimality.py}.
+\item \texttt{ks\_modulus2\_circle.py}: Theorem~\ref{thm:circle}, Table~\ref{tab:words},
+Appendix~\ref{app:triads}.
+\item \texttt{ks\_extras\_v10.py}: Table~\ref{tab:profiles}, the isomorphism tests and the
+enumeration of all minimum sets (\texttt{extras\_v10.jsonl}).
+\item \texttt{ks\_rigidity\_v10.py}: the flex counts of Section~\ref{sec:rigidity}.
+\item \texttt{ks\_half\_circle\_family.py}: the 33-ray family on the circle
+$|x|^2=\tfrac12$.  The mode \texttt{exact} does the symbolic computations, including the
+identification with Gould and Aravind's Table~3 (\texttt{half\_circle\_family\_exact.json}); the
+default mode does the numerical flex counts (\texttt{half\_circle\_family.json}).
+\item \texttt{make\_alphabet\_cube\_figures.py}: Figs.~\ref{fig:triptych} and~\ref{fig:generic}.
+\end{itemize}
+
+Software: Python~3.13, PySAT (Glucose4, RC2), NetworkX (VF2), NumPy, SciPy (HiGHS), CVXPY
+(Clarabel).  Scripts from earlier versions remain in the repository and should not be used to
+reproduce this one.
+
+\section{How this version was produced}\label{app:produced}
+
+Computations, proofs and text were produced with a large language model (Claude, Anthropic)
+under the author's direction.  Version~9 was then reviewed in full by that model and, separately,
+by a second model (GPT, OpenAI) instructed to act as a hostile examiner with access to the
+repository; the two reviews agreed on the main defects and each found errors the other missed.
+Version~10 was written after those reviews, and its new theorems were each reviewed again in the
+same way.  Agreement between language models is not a
+proof.  The safeguards we rely on are the ones listed in the Conclusion: exact arithmetic, a
+certifier with a short soundness argument, kernel-checked proofs where we have them, positive
+controls (the pool counts reproduce those of earlier versions where
+those were right, and two independent constructions of the two-symbol pools agree), and an explicit list of what was not checked.  Theorem~\ref{thm:6n} has a
+proof that can be read in ten minutes, and independent checking of it and of
+Theorems~\ref{thm:twosymbol} and~\ref{thm:circle} is invited.

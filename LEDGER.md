@@ -1,7 +1,15 @@
 # Status ledger
 
 Every statement of *The Algebraic Landscape of Kochen-Specker Sets in Dimension Three*
-(version 10) with the standard of proof it currently meets.
+(version 11) with the standard of proof it currently meets.
+
+Version 11 (2026-11-23) restates version 10.4 in a new order; theorems, proofs and tables are
+unchanged. Review round 6 (`paper/reviews/codex-review-algebraic-islands-v11-round6.txt`)
+compared the two versions block by block, read the Lean statements and the checker's soundness
+proof, and found no mathematical repair needed; its wording objections (scope of "completely",
+the 1 < x < y normalisation in the abstract, origin removed from the four lines, n >= 3,
+vectors versus rays, a lost withdrawal of the cubic 58) were fixed the same day. The fixes were
+not re-reviewed. The reviewer did not run `lake build`.
 
 **Rule.** Nothing here is called machine-checked unless a Lean file proving exactly the
 recorded statement builds with no `sorry` and no axioms beyond `propext`, `Classical.choice`

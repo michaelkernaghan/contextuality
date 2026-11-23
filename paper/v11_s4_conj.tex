@@ -8,7 +8,8 @@ $x$ the alphabet that is closed under conjugation is
 \]
 For generic $x$ the pool $P(x)$ has 145 rays; at special $x$ some of them coincide (49 remain
 at $x=\sqrt{\pm2}$).  This section determines every $x$ at which $P(x)$ is uncolorable
-(Theorem~\ref{thm:conj}, Fig.~\ref{fig:circle}): two circles, four lines and four points.  It
+(Theorem~\ref{thm:conj}, Fig.~\ref{fig:circle}): two circles, four lines through the origin
+with the origin removed, and four points.  It
 then takes the two circles in turn.  On $|x|^2=2$ one fixed list of 45 words is uncolorable at
 every point (Theorem~\ref{thm:circle}).  On $|x|^2=\tfrac12$ the pool contains the 33-ray family
 of Gould and Aravind (Section~\ref{sec:halfcircle}).
@@ -201,11 +202,15 @@ Every point of the lines other than the origin has a
 in the letters $\{0,\pm x,\pm x^{*}\}$, by the last paragraph of the proof; it is a minimum set
 wherever the table certifies~33.
 
-Third, the theorem accounts for Table~\ref{tab:heegner} without reference to number fields:
-$d=2$ and $d=7$ are points of $|x|^2=2$, $d=3$ is the point $\zeta$ of the $60^\circ$ line, and
-for $d=11,19,43,67,163$ the generator lies on $\mathrm{Re}\,x=\tfrac12$ and on no uncolorable
-curve.  The row $(1+i)/2$ of Table~\ref{tab:conj} is the Gaussian alphabet
-$\{0,\pm1,\pm i,\pm(1+i)\}$ of Section~\ref{sec:circle}, after multiplying every letter by $1+i$.
+Third, earlier versions surveyed the alphabets $\{0,\pm1,\pm a,\pm a^{*}\}$ with $a$ the
+generator of the ring of integers of $\Q(\sqrt{-d})$, for the nine imaginary quadratic fields
+of class number one, and looked for an arithmetic reason why $d=2,3,7$ give uncolorable pools.
+The theorem accounts for the survey without reference to number fields: $d=2$ and $d=7$ are
+points of $|x|^2=2$; $d=3$ is the point $\zeta$ of the $60^\circ$ line; $d=1$ is $x=i$,
+colorable; and for $d=11,19,43,67,163$ the generator lies on $\mathrm{Re}\,x=\tfrac12$ and on no
+uncolorable curve (145 rays, 462 pairs, 30 triads, as in the table).  The row $(1+i)/2$ of
+Table~\ref{tab:conj} is the Gaussian alphabet $\{0,\pm1,\pm i,\pm(1+i)\}$ of
+Table~\ref{tab:catalogue}, after multiplying every letter by $1+i$.
 
 Fourth, the certified minima of Table~\ref{tab:conj} are 31, 33, 43 and 45.  The alphabet with
 the conjugate does not give a KS set smaller than that of Conway and Kochen at any point where
@@ -341,37 +346,6 @@ this point.  Theorem~\ref{thm:circle} proves that $P(\alpha)$ is uncolorable; th
 (\texttt{KSMin.HeegnerPool.minimum\_43}, Section~\ref{sec:methods}): some 43 of the 145 rays are
 uncolorable, and every set of fewer than 43 of them is colorable.
 
-Table~\ref{tab:heegner} puts this point in the setting in which earlier versions found it.  For
-each of the nine imaginary quadratic fields of class number one we take the generator $a$ of the
-ring of integers and the alphabet $\{0,\pm1,\pm a,\pm a^{*}\}$.  The uncolorable rows are
-$d=2$ (a point of the circle), $d=3$ (the roots-of-unity alphabet $S_6$ of
-Theorem~\ref{thm:6n}) and $d=7$ (a point of the circle).  Class number plays no role that we can
-see; Theorems~\ref{thm:6n} and~\ref{thm:circle} account for all three rows.
-
-\begin{table}[t]
-\centering
-\caption{Raw pools of $\{0,\pm1,\pm a,\pm a^{*}\}$, $a$ the generator of the ring of integers of
-$\Q(\sqrt{-d})$: $a=\sqrt{-d}$ for $d=1,2$ and $a=(1+\sqrt{-d})/2$ otherwise.  Minima are
-certified.  For $d=1$ version~9 printed a different, larger alphabet in this row; see the text.}
-\label{tab:heegner}
-\begin{tabular}{rcrrrcc}
-\toprule
-$d$ & $|a|^2$ & Rays & Pairs & Triads & Colorable & Min \\
-\midrule
-1 & 1 & 31 & 69 & 7 & yes & --- \\
-2 & 2 & 49 & 120 & 16 & \textbf{no} & \textbf{33} \\
-3 & 1 & 57 & 174 & 22 & \textbf{no} & \textbf{33} \\
-7 & 2 & 145 & 522 & 42 & \textbf{no} & \textbf{43} \\
-11, 19, 43, 67, 163 & $3,5,11,17,41$ & 145 & 462 & 30 & yes & --- \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-For $d=1$ the letters are $0,\pm1,\pm i$ and the pool is $S_4$, colorable by
-Theorem~\ref{thm:6n}.  The larger Gaussian alphabet $\{0,\pm1,\pm i,\pm(1+i)\}$, which contains
-the element $1+i$ of squared modulus~2, generates 127 rays, 465 pairs and 51 triads; that pool is
-uncolorable with certified minimum~33 (16 bases in the set found).
-
 \subsection{The circle $|x|^2=\tfrac12$: the family of Gould and Aravind}\label{sec:halfcircle}
 
 On $|x|^2=\tfrac12$ the smallest uncolorable set found has 33 rays and the orthogonality graph
@@ -408,21 +382,26 @@ values they give for Peres's and Penrose's sets.
 
 This family is different from the one in Theorem~\ref{thm:circle}.  Its members have 33 rays
 and a constant graph.  The family of Theorem~\ref{thm:circle} has 45 rays at a generic point and
-cannot contain a 33-ray KS set there, since the minimum on that circle is 45
-(Theorem~\ref{thm:conj}).  The two families meet in Peres's set: $P(\sqrt2)=P(1/\sqrt2)$.  We
+cannot contain a 33-ray KS set there, since the minimum at a generic point of that circle is 45
+(Theorem~\ref{thm:conj}).  The two families meet in Peres's set: $P(\sqrt2)=P(1/\sqrt2)$, a
+49-ray pool whose unique minimum subset is Peres's set.  We
 have not found the family of Theorem~\ref{thm:circle} in the literature, but we have not made a
 systematic search and make no claim of priority.
 
 \subsection{Rigidity}\label{sec:rigidity}
 
-For each minimum set we computed numerically the number of infinitesimal flexes in $\C^3$: the
+For the minimum sets and uncolorable witnesses named below we computed numerically the number
+of infinitesimal flexes in $\C^3$: the
 dimension of the null space of the Jacobian of the equations $|v_i|^2=1$,
 $\braket{v_i}{v_j}=0$ (one complex equation for each orthogonal pair), minus the $n+8$
 dimensions accounted for by a common unitary and a phase on each vector.  In every case the
 smallest retained singular value exceeds $0.2$ and the largest discarded one is below
-$2\times10^{-15}$.  The counts (\texttt{ks\_rigidity\_v10.py}) are: no flex for $\CK$, the
-Eisenstein 33-ray set, the 43-ray set, the 47-, 51- and 60-ray sets of
-Section~\ref{sec:catalogue}, and the 45 words at $x=(1+\sqrt{-7})/2$ with the 16 additional
+$2\times10^{-15}$.  The counts (\texttt{ks\_rigidity\_v10.py}, and
+\texttt{ks\_half\_circle\_family.py} for the family on $|x|^2=\tfrac12$) are: no flex for $\CK$,
+the Eisenstein 33-ray set, the 43-ray set, the two 47-ray supergolden sets (the minimum set of
+the raw three-symbol pool, and the witness in the completed pool of $\{0,\pm1,\pm\psi\}$), the
+51- and 60-ray witnesses of Section~\ref{sec:catalogue}, which are not known to be minimum sets,
+and the 45 words at $x=(1+\sqrt{-7})/2$ with the 16 additional
 orthogonalities of that point imposed; one flex for the Peres and $\sqrt{-2}$ sets and for each
 of nine sampled members of the family on $|x|^2=\tfrac12$; two flexes for the 45 words at each
 of the two generic phases tried ($\theta=0.3$ and $\theta=1.0$).  Zero flexes, if confirmed by

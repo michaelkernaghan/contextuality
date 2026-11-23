@@ -33,7 +33,7 @@
 
 \title{The Algebraic Landscape of Kochen--Specker Sets\\in Dimension Three}
 \author{Michael Kernaghan}
-\date{Version 11 (draft of 23 November 2026)}
+\date{Version 11 (23 November 2026)}
 
 \emergencystretch=3em
 
@@ -49,13 +49,13 @@ determine the uncolorable alphabets in three continuous families and one discret
 (A)~Two-symbol alphabets $\{0,\pm1,\pm x\}$, $x$ complex: the pool is uncolorable only when $x$
 or $1/x$ is one of $\pm2,\pm\sqrt2,\pm\sqrt{-2}$ or $x$ is a primitive third or sixth root of
 unity, and no KS set with coordinates in such an alphabet has fewer than the 31 rays of Conway
-and Kochen.  (B)~Real three-symbol alphabets $\{0,\pm1,\pm x,\pm y\}$: the pool is uncolorable
-exactly when two letters have ratio $2$ or $\sqrt2$, or at eight further points; again no KS
-set has fewer than 31 rays.  (C)~Conjugate-closed alphabets $\{0,\pm1,\pm x,\pm x^{*}\}$: the
+and Kochen.  (B)~Real three-symbol alphabets $\{0,\pm1,\pm x,\pm y\}$, normalized to $1<x<y$:
+the pool is uncolorable exactly when two letters have ratio $2$ or $\sqrt2$, or at eight
+further points; again no KS set has fewer than 31 rays.  (C)~Conjugate-closed alphabets $\{0,\pm1,\pm x,\pm x^{*}\}$: the
 pool is uncolorable exactly when $|x|^2=2$, or $|x|^2=\tfrac12$, or $x^{*}/x$ is a primitive
 third or sixth root of unity, or $x\in\{\pm2,\pm\tfrac12\}$.  The uncolorable alphabets are
 therefore not isolated.  On the circle $|x|^2=2$ a fixed list of 45 words is uncolorable at
-every point and no shorter list of words is; it collapses to Peres's 33 rays at $x=\sqrt2$, and
+every point and no shorter fixed list works at every point; it collapses to Peres's 33 rays at $x=\sqrt2$, and
 at $x=(1+\sqrt{-7})/2$ the pool contains a 43-ray KS set.  The circle $|x|^2=\tfrac12$ carries
 the 33-ray family of Gould and Aravind.  (D)~The pool of $0$ and the $n$th roots of unity is
 uncolorable if and only if $6\mid n$.  Minimum KS subsets are certified by exact computation
@@ -163,6 +163,7 @@ M.~D.~Schwartz, ``Vibe physics: the AI grad student,'' Anthropic Research (2026)
 
 \appendix
 \input{v11_app_corrections.tex}
+\input{v11_app_repro.tex}
 
 \section{The 22 triads of the 45 words}\label{app:triads}
 Numbers refer to Table~\ref{tab:words}.  These are the triads that hold at every point of the

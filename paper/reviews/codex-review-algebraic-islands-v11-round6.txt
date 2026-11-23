@@ -1,0 +1,412 @@
+Peer Review: algebraic_islands_v11.txt
+Date: 2026-11-23 15:22:19
+Reviewer: Codex (gpt-6-astra, reasoning high, CLI v0.153.4)
+Elapsed: 515.8s
+Tokens: 178,436 tokens used
+---
+
+1. **Up-front verdict**
+
+- **Lean claims — CORRECT WITH WORDING FIXES.** The statements and checker support the advertised uncolorability and six minima for explicit vector lists. The paper needs sharper wording about the passage to rays, the scope of tuple arithmetic, and the restriction \(n\ge3\).
+- **Restructure — CORRECT WITH WORDING FIXES.** All theorem statements and proofs survive unchanged. The compression loses one explicit withdrawal, obscures one rigidity result, and leaves a stale reference.
+- **New text — OVERCLAIMS.** “We answer it completely” includes two unresolved minima; the abstract’s eight-point classification drops its essential normalization; several summaries omit qualifications retained in the theorems.
+
+I inspected the sources and ran short, read-only calculations. **I did not run `lake build`. I take the successful build and the reported axiom lists—`propext`, `Classical.choice`, `Quot.sound`—on trust, as instructed.** I excluded the generated certificate payload in `Minimality.lean` from inspection.
+
+2. **Actionable issues**
+
+The following are demonstrated errors, contradictions, or losses in the restatement.
+
+| Priority | Step | Issue (quote the paper or the Lean) | Suggested fix |
+|---|---|---|---|
+| High | 3(a) | “The question is which parameter values give an uncolorable pool **and how small a KS set the pool then contains. We answer it completely for three families.**” This contradicts the two unresolved minima in `thm:conj`. | “We completely classify colorability in three families and determine all their minima except two conjugate-closed cases.” |
+| High | 3(a) | Abstract: real three-symbol pools are uncolorable “exactly when two letters have ratio \(2\) or \(\sqrt2\), **or at eight further points**.” The restriction \(1<x<y\), present in v10.4’s abstract, has disappeared. Literally there are additional parameter images under signs, interchange and rescaling. | Insert “after normalization to \(1<x<y\).” Use the same qualification in the Results paragraph. |
+| Med | 2–3 | Results and the conjugate-closed opening say “four lines through the origin” without removing the origin. At \(x=0\), the pool is the colorable 13-ray pool. | Say “four lines with the origin removed,” consistently. |
+| Med | 1(e), 3(d) | “The classification theorems are not formalized” includes the roots-of-unity classification, which **is** formalized for \(n\ge3\). Conversely, the Conclusion’s “Theorem `thm:6n` [is] checked by the Lean kernel” omits that restriction. | Specify “the three continuous-parameter classification theorems”; add “for \(n\ge3\)” in the Conclusion. |
+| Med | 2(e) | Rigidity begins “For each minimum set,” but includes the 51- and 60-ray witnesses and the completed-pool 47-ray witness, whose minimality is not established. The removed table explicitly distinguished the two supergolden sets. | Say “For the following minimum sets and uncolorable witnesses.” Explicitly include **both** supergolden 47-ray sets. |
+| Med | 2(a), 3(e) | Cutting the cubic subsection removes: “Version 9 reported 58 rays … we have not reproduced a 58-ray set and do not claim one.” This withdrawal appears nowhere in the new corrections appendix. | Move that sentence to the corrections appendix. Do not call 58 disproved; call it unsupported and withdrawn. |
+| Low | 2(b) | Open question 4 directs the Gould–Aravind discussion to `sec:conjclosed`, although its substantive discussion has moved to `sec:halfcircle`. | Change the reference to `sec:halfcircle`. |
+| Low | 3(e) | Corrections C11 says the CSW file covers “seven sets and five pools.” `results/csw_v10.jsonl` contains **nine sets and six pools**. | Update the counts. |
+| Low | 3(b) | Figure `fig:threesymbol` places the 42 and 57 markers only \(0.812\) mm apart, with marker diameter \(1.125\) mm. The two filled discs overlap. | Use smaller markers or a small inset. The coordinates themselves are correct. |
+| Low | 2(e) | “The counts (`ks_rigidity_v10.py`) are … each of nine sampled members…” The nine-member calculation comes from `ks_half_circle_family.py`, not that script. | Cite both scripts at this sentence. |
+
+These are unsupported or insufficiently qualified claims, rather than demonstrated failures of the mathematics.
+
+| Priority | Step | Issue (quote the paper or the Lean) | Suggested fix |
+|---|---|---|---|
+| Med | 3(d) | “We have no proof by hand … that **the minimum on this circle is 33**.” The exceptional class \(\zeta/\sqrt2\) still has minimum 32–33. Moreover, the outer circle’s minimum 45 is also computationally certified, not established by the symbolic orthogonality argument alone. | Ask for a conceptual explanation of the **generic** minima and explicitly retain the unresolved exceptional class. |
+| Low | 1(d–e) | “In each, coordinates are exact elements of a ring written as integer tuples.” This describes the finite certificate arithmetic, not the entire arbitrary-\(n\) cyclotomic development. “Nothing computed outside Lean is trusted” also needs its scope distinguished from identifying a list with the paper’s alphabet pool. | Say that **finite certificate coordinates and constraints** are checked internally; list-to-alphabet correspondence remains outside the formalization. |
+| Low | 1(d) | Lean uses sets of vectors, not projective rays. The paper states the explicit-list limitation but does not explain this second representation boundary. | Add the short representative-selection argument below. It resolves the issue; no new numerical certification is needed. |
+| Low | 3(d) | The first three pending tasks are described collectively as runs that “did not finish within the budgets.” The ledger says enumeration of all 45-word minima was **not run**. | Say “unfinished or not yet attempted.” |
+
+These checks were not independently performed:
+
+| Priority | Step | Issue (quote the paper or the Lean) | Suggested fix |
+|---|---|---|---|
+| Med | 1 | “Checked by the Lean kernel” and the three-axiom assertion: accepted on the author’s report, not rebuilt in this review. | Preserve the build/audit evidence with the release. This is a review limitation, not a detected defect. |
+| Low | 3(e) | Reproducibility names release tag `v11.0`; the local tag list ends at `v10.4`. I did not verify a remote release. | Ensure the published tag exists and identifies the reviewed sources before submission. |
+
+**Step 1: what the Lean theorems actually establish**
+
+**(a) Roots of unity.**
+
+The statement in [Cyclotomic6n.lean](</C:/Users/Michael Kernaghan/contextuality/lean/Cyclotomic6n.lean:2615>) is:
+
+```lean
+theorem six_divides_iff_ks_uncolorable (n : ℕ) (hn : 3 ≤ n) :
+    KSUncolorable (S n) ↔ 6 ∣ n := by
+```
+
+The paper says:
+
+> “For \(n\ge3\) the theorem is also proved in Lean 4…”
+
+**Match with the stated \(n\ge3\) caveat.** The abstract states that caveat correctly. The Conclusion should repeat it.
+
+The definition is genuinely the coordinate alphabet:
+
+```lean
+def rootAlphabet (n : ℕ) (x : ℂ) : Prop := x = 0 ∨ x ^ n = 1
+def S (n : ℕ) : Set (Fin 3 → ℂ) :=
+  { v | v ≠ 0 ∧ ∀ k, rootAlphabet n (v k) }
+```
+
+It is a set of all nonzero alphabet **vectors**, not a projective quotient. That representation difference is harmless for colorability, by the argument below. The \(S_6\) uncolorability proof recomputes its finite constraints and uses the checked refutation; it does not assume Cabello’s result.
+
+**(b) The three named sets.**
+
+The paper’s common assertion is:
+
+> “`NamedSets.lean` proves that the 43-ray set, the 47-ray set and, for every \(x\) with \(|x|^2=2\), the 45 words … are uncolorable…”
+
+The relevant source statements are:
+
+```lean
+-- KSNamed.Heegner43
+theorem uncolorable :
+    KSUncolorable (vset rays.length (fun i => vec (rays.getD i zero))) :=
+```
+
+```lean
+-- KSNamed.Supergolden47
+variable (ψ : ℝ) (hψ : ψ ^ 3 = ψ ^ 2 + 1)
+
+include hψ in
+theorem uncolorable :
+    KSUncolorable (vset rays.length (fun i => vec ψ (rays.getD i zero))) :=
+```
+
+```lean
+theorem exists_psi : ∃ ψ : ℝ, ψ ^ 3 = ψ ^ 2 + 1 := by
+```
+
+```lean
+-- KSNamed.Circle45
+variable (x : ℂ) (hx : x * (starRingEnd ℂ) x = 2)
+
+include hx in
+theorem uncolorable :
+    KSUncolorable (vset rays.length (fun i => vec x (rays.getD i zero))) :=
+```
+
+The `include` directives matter: the hypotheses really are parameters of the resulting theorems.
+
+**The uncolorability assertions match.** The separately unstated caveat is that these statements use vector sets; the theorem `uncolorable` alone does not assert a projective cardinality of 43 or 47. The exported representatives and the minimum theorems supply the relevant numerical identification.
+
+`exists_psi` is meaningful: it uses the intermediate value theorem on \(t^3-t^2-1\) between 1 and 2, where the values are \(-1\) and \(3\). Thus the parameterized theorem is not vacuous. No restriction to a complex root has accidentally replaced the required real root.
+
+For Circle45, every requested check passes:
+
+- **Hypothesis:** \(x\overline{x}=2\) is precisely \(|x|^2=2\), expressed as an equality in \(\mathbb C\).
+- **Words:** I parsed the 45 coordinate triples in `NamedSets.lean`, compared them with `ks_lean_export.circle45_coords()`, and decoded them against `paper/figures/modulus2_words.tex`. **All 45 match in order.**
+- **Graph:** The tuple arithmetic yields **98 pairs and 22 triads**, matching the archived graph. A fresh SAT check of those constraints returned UNSAT.
+- **Reduction:** Writing the two linear forms as \(a+bx+c\bar x\) and \(d+ex+f\bar x\), `lmul` returns coefficients
+  \[
+  (ad+2bf+2ce,\ ae+bd,\ af+cd,\ be,\ cf).
+  \]
+  Independently expanding gives
+  \[
+  (a+bx+c\bar x)(d+ex+f\bar x)-\operatorname{eval}(\mathrm{lmul})
+  =(bf+ce)(x\bar x-2).
+  \]
+  This is exactly the required identity.
+- **Zero test:** At a particular special \(x\), a nonzero coefficient tuple can evaluate to zero. The test is therefore only sufficient for pointwise orthogonality. That is enough: uncolorability of a subset of genuine constraints implies uncolorability after additional constraints are imposed.
+- **Coincidences:** `vset` is an image set:
+  ```lean
+  { v | ∃ i, i < n ∧ vecs i = v }
+  ```
+  It permits equal vectors. `uncolorable_of_check` pulls any putative coloring back to indices. Nonzero orthogonal vectors cannot coincide, which is proved when turning checked triples into triads. Proportional but unequal vectors are also harmless when passing from rays to vectors.
+
+The paper explicitly says parts (ii) and (iii) of the circle theorem are not formalized. That is correct.
+
+I also compared the Heegner43 and Supergolden47 Lean coordinate lists with their exporters. They match, with respectively **43/107/23** and **47/110/26** vectors/pairs/triads. Fresh SAT checks returned UNSAT for both.
+
+**(c) The six minimum statements.**
+
+The paper says:
+
+> “Some \(u\) of the pool’s vectors form an uncolorable set, and every set of fewer than \(u\) of them has a coloring.”
+
+Here are the statements, quoting the shared vector-set expression explicitly:
+
+```lean
+-- KSMin.IntPool.minimum_31
+(∃ T, T ⊆ vset rays.length (fun i => vec (rays.getD i zero)) ∧
+    T.ncard = 31 ∧ KSUncolorable T) ∧
+(∀ T, T ⊆ vset rays.length (fun i => vec (rays.getD i zero)) →
+    T.ncard < 31 → ¬ KSUncolorable T)
+```
+
+```lean
+-- KSMin.HeegnerPool.minimum_43
+(∃ T, T ⊆ vset rays.length (fun i => vec (rays.getD i zero)) ∧
+    T.ncard = 43 ∧ KSUncolorable T) ∧
+(∀ T, T ⊆ vset rays.length (fun i => vec (rays.getD i zero)) →
+    T.ncard < 43 → ¬ KSUncolorable T)
+```
+
+```lean
+-- KSMin.EisPool.minimum_33
+(∃ T, T ⊆ vset rays.length (fun i => vec (rays.getD i zeroE)) ∧
+    T.ncard = 33 ∧ KSUncolorable T) ∧
+(∀ T, T ⊆ vset rays.length (fun i => vec (rays.getD i zeroE)) →
+    T.ncard < 33 → ¬ KSUncolorable T)
+```
+
+```lean
+-- KSMin.PeresPool.minimum_33
+(∃ T, T ⊆ vset rays.length (fun i => vec (rays.getD i zero)) ∧
+    T.ncard = 33 ∧ KSUncolorable T) ∧
+(∀ T, T ⊆ vset rays.length (fun i => vec (rays.getD i zero)) →
+    T.ncard < 33 → ¬ KSUncolorable T)
+```
+
+```lean
+-- KSMin.Sqrtm2Pool.minimum_33
+(∃ T, T ⊆ vset rays.length (fun i => vec (rays.getD i zero)) ∧
+    T.ncard = 33 ∧ KSUncolorable T) ∧
+(∀ T, T ⊆ vset rays.length (fun i => vec (rays.getD i zero)) →
+    T.ncard < 33 → ¬ KSUncolorable T)
+```
+
+```lean
+-- KSMin.SupergoldenPool.minimum_47
+theorem minimum_47 (ψ : ℝ) (hψ : ψ ^ 3 = ψ ^ 2 + 1) :
+    (∃ T, T ⊆ vset rays.length (fun i => vec ψ (rays.getD i zero)) ∧
+        T.ncard = 47 ∧ KSUncolorable T) ∧
+    (∀ T, T ⊆ vset rays.length (fun i => vec ψ (rays.getD i zero)) →
+        T.ncard < 47 → ¬ KSUncolorable T) :=
+```
+
+**Each matches the quoted vector statement exactly, with the paper’s stated caveat that the pool is an explicit list whose alphabet completeness is not formalized.** Classical logic turns `¬ KSUncolorable T` into existence of a coloring.
+
+The definitions do not silently weaken the paper’s coloring convention:
+
+```lean
+def IsTriad ... :=
+  ↑t ⊆ R ∧ t.card = 3 ∧
+    ∀ a ∈ t, ∀ b ∈ t, a ≠ b → Orthogonal a b
+
+def IsColoring ... :=
+  (∀ v ∈ R, ∀ w ∈ R, Orthogonal v w →
+      ¬ (c v = true ∧ c w = true)) ∧
+  (∀ t, IsTriad R t →
+      (t.filter (fun v => c v = true)).card = 1)
+```
+
+An orthogonal pair outside every triad remains a constraint. `ValidOn` likewise has an unrestricted pair condition and an at-least-one condition on all mutually orthogonal triples; together these impose exactly one.
+
+The possible certificate loopholes listed in the question are closed:
+
+| Suspected loophole | What the source actually does |
+|---|---|
+| Incomplete pair or triad lists | `Pool.ok` exhaustively checks every in-range orthogonal \(i<j\), and every extension \(j<k\) to a triangle, for list membership. It also checks symmetry and irreflexivity. |
+| `colOK` checks only listed pairs | Completeness comes from `Pool.ok`. Extra listed constraints can make acceptance harder; they cannot admit a false coloring of the actual graph. |
+| The true mask need not lie inside the colored set | Harmless. The coloring is restricted to the complement of `C`. Every triad entirely inside it must obtain a true vertex inside that triad. Outside true bits cannot satisfy it. Pair checking is actually stronger than necessary. |
+| Out-of-range `BT.get` | It does **not** invent an unchecked default leaf. Every natural-number path reaches a real leaf; `BT.get_mem` proves this. All leaves are checked by `BT.all`. |
+| Bits at indices \(\ge n\) | Natural-number masks have no truncation or overflow. The actual candidate index set is restricted to indices below \(n\). The soundness proof works with arbitrary masks and cannot create extra candidate rays from high bits. |
+| `LB.dead` | It checks that some complement has no remaining element after exclusions. A hitting set avoiding excluded elements cannot meet that complement. This is a valid contradiction leaf. |
+| Repeated or inconsistent splits | The checker prevents counting an already included vertex again. The induction follows membership in the actual candidate set; impossible inclusion/exclusion combinations cannot falsify that argument. |
+| Infinite \(T\), for which `ncard` behaves differently | `colorable_of_index` first proves the image pool finite and then proves \(T\) finite from the subset hypothesis. No infinite-set loophole remains. |
+| Wrong direction of ring injectivity | Lower bounds use **actual orthogonality \(\Rightarrow\) tuple zero** through `h_exact`. Upper bounds use **tuple zero \(\Rightarrow\) actual orthogonality** through `h_sound`. The directions are correct. |
+
+The leaf argument is also correct. If \(I\) contains the already included rays, and \(C_1,\ldots,C_r\) miss \(I\) and become pairwise disjoint after exclusions, a hitting set must contain \(r\) **distinct additional** rays. Thus its size is at least \(|I|+r\). `pack_sound` constructs those additional witnesses; `LB_sound` adds their cardinality to the included set; `min_index` concludes that every smaller candidate lies inside a verified colorable set.
+
+`minimum_eq` proves both halves, rather than merely returning a lower bound. Its selected witness has at most \(u\) vectors; if it had fewer, the already established lower bound would make it colorable. This also explains why a separate no-duplicates condition on the selection is unnecessary.
+
+The injectivity proofs have the required content:
+
+- `not_real` excludes real values for the Heegner, Eisenstein and imaginary-\(\sqrt2\) generators.
+- `irrational_sqrt_two` supplies the missing implication for the real Peres field.
+- Supergolden `indep` proves independence of \(1,\psi,\psi^2\), using the absence of a rational root.
+
+The negative-control `example`s are meaningful. For each pool they reject the existing tree at \(u+1\), reject the whole pool offered with an all-false coloring, and reject a pair list with its first edge removed. They test actual failure paths. They are supplementary checks, not substitutes for the soundness theorem.
+
+**(d) Pools, scaling and rays.**
+
+`ks_lean_minimality.intpool()` produces **exactly 49 projectively distinct rays**. I independently enumerated all nonzero triples over \(\{0,\pm1,\pm2\}\), normalized them using rational arithmetic, and compared the resulting ray set with the exporter. The sets agree exactly.
+
+`primitive()` clears denominators and divides by the gcd. It does not enlarge the pool or drop a projective class. Its exported integer coordinates remain in the stated alphabet.
+
+The other exporter checks gave:
+
+| Pool | Exported vectors | Projectively distinct rays | Pairs | Triads |
+|---|---:|---:|---:|---:|
+| Heegner | 145 | 145 | 522 | 42 |
+| Eisenstein | 57 | 57 | 174 | 22 |
+| Peres | 49 | 49 | 120 | 16 |
+| \(\sqrt{-2}\) | 49 | 49 | 120 | 16 |
+| Supergolden | 109 | 109 | 348 | 40 |
+
+These are checks of the exporter output, not a manual audit of the generated `Minimality.lean` payload.
+
+For the Heegner conversion,
+\[
+a+b\sqrt{-7}=(a-b)+2b\alpha.
+\]
+Multiplying an entire representative by 1 or 2 is harmless: it preserves its ray and all orthogonality relations. In the current pool-export calculation, all scaling factors were actually 1.
+
+`distinctB` tests **vector equality**, not proportionality. Its comment “No ray is listed twice” is therefore stronger than the predicate itself. This does **not** undermine either minimum claim:
+
+1. A ray coloring pulls back to a coloring of any collection of nonzero representatives.
+2. Conversely, choose one representative per ray and restrict a vector coloring to those representatives. Every ray pair or triad lifts to the corresponding vector pair or triad.
+3. If a minimum uncolorable vector subset contained two proportional vectors, keeping only one representative of each ray would leave a smaller uncolorable vector subset, contradicting the lower bound.
+
+Thus vector minima and ray minima agree here. The paper should state this argument and acknowledge that this projective interpretation is not itself a theorem in the inspected Lean development. There is no need to suggest that proportional duplicates can defeat the certified minimum.
+
+**(e) Inventory of Lean claims.**
+
+| Location | Claim checked | Assessment |
+|---|---|---|
+| Abstract | (D) for \(n\ge3\), circle uncolorability, six minima | Correct, subject to the explicit-list interpretation explained in Methods. |
+| Introduction, “Standard of proof” | Same three groups | Correct. |
+| Methods, “Certified minima” | Six families of colorable sets are checked in Lean | Correct. |
+| Methods, “Proofs checked in Lean” | Three files; named uncolorability; checker soundness; two-part minima | Correct statements; qualify tuple-arithmetic and external-trust wording. Build/axioms accepted on report. |
+| Circle paragraph after its proof | `Circle45.uncolorable`; parts (ii), (iii) not formalized | Correct. |
+| Heegner paragraph | Both halves of minimum 43 | Correct with stated explicit-list caveat. |
+| Roots section | `thm:6n` for \(n\ge3\); \(S_6\) checked internally | Correct. |
+| “Other pools” introductory legend | \(L\) means minimum proved in Lean | Correct with Methods caveat. |
+| Catalogue caption | Same \(L\) legend | Correct. |
+| Six \(L\) entries | Integer 31; Peres 33; \(\sqrt{-2}\) 33; Eisenstein 33; Heegner 43; supergolden 47 | All six correspond to the named minimum theorems. No completion is incorrectly marked. |
+| Open questions, “Formalization” | Classifications not formalized | Overbroad: exclude the cyclotomic classification explicitly. |
+| Conclusion | “Six of the minima and Theorem `thm:6n`” kernel-checked | Six is correct; append \(n\ge3\). |
+| Reproducibility, `lean/` entry | Three targets, named theorem groups, negative controls | Source configuration agrees; runtime/build success taken on trust. |
+| “How this version was produced” | “Kernel-checked proofs where we have them” | Consistent with the preceding scope. |
+
+**Step 2: inventory and consequences of the move**
+
+I compared the expanded source documents. **All six proof environments are byte-for-byte unchanged.** This is stronger than finding only their conclusions unchanged.
+
+| v10.4 object | v11 status |
+|---|---|
+| `thm:twosymbol` | Present unchanged |
+| `thm:threesymbol` | Present unchanged; promoted to its own section |
+| `thm:6n` | Present unchanged |
+| `thm:circle` | Present unchanged |
+| `thm:conj` | Present unchanged; moved before the circle theorem |
+| `lem:restrict`, `lem:sums` | Both present unchanged |
+| `cor:points` | Present unchanged, including all four parts |
+| `fact:integer`, `fact:peres`, `fact:pools` | All present unchanged |
+| `fact:eisenstein`, `fact:heegner` | Both present unchanged |
+| `tab:zerosums`, `tab:alphabets`, `tab:twosymbol` | All present unchanged |
+| `tab:threesymbol`, `tab:cyc`, `tab:words`, `tab:conj` | All present unchanged |
+| `tab:catalogue` | Changed only by the Lean legend and six \(L\) superscripts; numerical entries unchanged |
+| `tab:profiles` | Changed caption; three intended rows and their qualification removed; retained numerical rows unchanged |
+| `tab:heegner` | Absent, intentionally |
+| `tab:rigidity` | Absent, intentionally; numerical content compressed into prose |
+| `fig:triptych`, `fig:generic`, `fig:circle` | All present unchanged |
+| `fig:threesymbol` | New |
+| Three definitions and the Cortez–Morales–Reyes remark | Present unchanged |
+| Appendix list of 22 circle triads | Present unchanged |
+
+`v10_s6_operational.tex` contains `tab:bpqs` and `tab:csw`, but **the v10.4 main file does not include that fragment**. Those tables were already absent from the assembled v10.4 paper; they are not new v11 deletions.
+
+The intended removals largely preserve their substance:
+
+- **Imaginary-quadratic table:** Its colorability conclusions and minima remain recoverable from `tab:conj`; the new third remark accurately summarizes the nine fields.
+- **Gaussian paragraph:** The replacement identification is correct. At \(x=(1+i)/2\),
+  \[
+  (1+i)\{1,x,\bar x\}=\{1+i,i,1\}.
+  \]
+  Including signs and zero gives precisely the catalogue alphabet.
+- **Golden and cubic subsections:** Pool sizes and current upper bounds survive in the catalogue/macros and completion paragraph. The explicit withdrawal of the old cubic 58-ray claim does not.
+- **Three profile rows:** Golden and cubic witness sizes/pair/base counts survive in prose. The completed-supergolden witness’s 108-pair structure and degree sequence disappear intentionally. No retained theorem depends on those invariants.
+- **Rigidity table:** All numerical flex claims are supported, but both supergolden witnesses should remain explicitly identifiable.
+
+There are **no unresolved `\ref` or `\eqref` labels** in the expanded v11 source. The remaining wrong destination is the Gould–Aravind reference noted above. “The previous subsection” has been removed from the Gaussian identification. The remaining “above” and “below” references checked retain their intended meaning.
+
+There is **no new logical circularity**. The conjugate-closed classification computes its finite cases independently; its line argument uses the earlier two-symbol theorem. The subsequent circle theorem gives its independent universal-word argument. Forward mentions of the later Eisenstein section identify configurations; they are not missing premises in the classification proof.
+
+The relocated half-circle assertions—constant graph, Gould–Aravind identification, diagonal-unitary reduction, symmetries, invariant and conditional Penrose identification—say what v10.4 already said.
+
+The two specifically questioned new sentences are sound, with a wording refinement:
+
+> “Cannot contain a 33-ray KS set **there**, since the minimum on that circle is 45.”
+
+“There” refers to a generic point. That is correct. Write “since the **generic** minimum on that circle is 45” to prevent the subordinate clause being read globally; the exceptional minima are 33 and 43, with another unresolved case.
+
+> “The two families meet in Peres’s set: \(P(\sqrt2)=P(1/\sqrt2)\).”
+
+The pool equality is correct by reciprocal rescaling. Both pools have 49 rays, not 33. Their unique minimum is Peres’s 33-ray set, and the stated endpoint identifications establish the meeting. For precision, append “whose unique minimum subset is Peres’s set.” The sentence does not claim this is their only meeting.
+
+For rigidity, the recorded results confirm:
+
+- Zero flexes: CK31; Eisenstein33; Heegner43; **both** supergolden47 witnesses; golden51; cubic60; specialized Circle45 at \((1+\sqrt{-7})/2\).
+- One flex: Peres33; \(\sqrt{-2}\)33; all nine half-circle samples.
+- Two flexes: Circle45 at phases 0.3 and 1.0.
+- Specialized Circle45 has 114 pairs versus 98 generically: exactly 16 extra constraints.
+
+The nine sample phases are \(0,0.05,0.2,0.5,0.8,1.0,0.785398,1.047198,1.570796\). Across the relevant stored records, the smallest retained singular value is approximately **0.20746**, and the largest discarded one approximately **\(1.5354\times10^{-15}\)**. Both stated thresholds hold.
+
+The removed numerical velocity check at three half-circle points is a real deletion, but no essential conclusion is lost: the retained exact family and inequivalence argument already establishes a genuine deformation.
+
+**Step 3: remaining new prose and figure checks**
+
+The abstract’s principal results otherwise track the theorems:
+
+- Its two-symbol lower bound remains restricted to the specified alphabet class.
+- It explicitly says **real** three-symbol alphabets.
+- Its conjugate-closed statement classifies colorability, without asserting a universal lower bound of 31.
+- Its 43-ray assertion is existence in the pool.
+- Its circle assertion concerns one fixed list working at every point. To eliminate quantifier ambiguity, change “no shorter list of words is” to “no shorter fixed list works at every point.”
+- “Eleven named pools” agrees with the catalogue’s eleven certified entries.
+
+The missing three-symbol normalization is substantive. For example,
+\[
+(x,y)=(\varphi,\sqrt\varphi)
+\]
+generates the same alphabet as the listed exceptional point \((\sqrt\varphi,\varphi)\), but is not one of the eight points in the normalized table and has no ratio-2 or ratio-\(\sqrt2\) pair. The abstract needs the normalization; a reader should not have to supply it.
+
+The new figure correctly draws the six loci:
+\[
+x=2,\quad y=2,\quad y=2x,\qquad
+x=\sqrt2,\quad y=\sqrt2,\quad y=\sqrt2\,x.
+\]
+Their displayed segments lie in the intended \(1<x<y\) region, understood with the boundary excluded. All eight plotted coordinate pairs and minimum labels match the rounded entries of `tab:threesymbol`.
+
+The caption’s
+
+> “31 where a light line meets a heavy one”
+
+is correct: the ratio-2 condition takes precedence at those intersections. The only demonstrated figure defect is the overlapping 42/57 markers, not misplaced mathematics.
+
+The completion paragraph preserves the raw/completed distinction and all quoted numerical values. Its three raw pools are explicitly colorable; the upper bounds belong to their completions. The supergolden paragraph retains the distinction between the raw three-symbol 47-ray minimum and Gonzalez’s completed two-symbol witness. “No product of two letters” should ideally retain the old explicit alphabet \(\{0,\pm1,\pm\psi\}\), but this deletion does not change the truth of the assertion here.
+
+The Conclusion’s mathematical summary is otherwise consistent. “Two degenerate points” means two alphabet types up to sign; the figure correctly identifies four axis parameter points. Saying “two degeneracies up to sign” would remove that minor ambiguity.
+
+The corrections appendix is mostly unchanged and still applicable. Besides the stale CSW counts and missing cubic withdrawal, C5’s “What survives is…” list should now include the conjugate-closed and real three-symbol theorems. It reads like an exhaustive replacement list but predates those additions.
+
+3. **Claims independently confirmed**
+
+- **Preservation of results:** source comparison found all five theorem statements, six proof blocks, two lemmas, five computed facts and the corollary unchanged.
+- **Circle45 identification:** exact comparison of the Lean list, exporter, JSON witness and printed table; all 45 words agree in order.
+- **Named uncolorability:** rebuilt exact tuple graphs and fresh SAT checks confirmed UNSAT for the 43-, 47- and universal 45-word configurations.
+- **Arithmetic and pool correspondence:** symbolic expansion verified `lmul`; independent rational enumeration verified the integer pool’s 49 rays; exact normalization verified projective distinctness of the other exporter pools.
+- **Checker soundness:** inspected the definitions and proofs outside generated blocks, including completeness checks, packing, dead leaves, index-to-vector transfer and both minimum halves.
+- **Restructure details:** checked reference resolution, all eight new figure points, Gaussian rescaling, reciprocal pool equality, and every retained flex count against the recorded outputs.
+
+4. **Is v11 fit to replace v10.4 on arXiv?**
+
+**Not as submitted.** Correct the complete-minima claim and restore the three-symbol normalization first. Then fix the formalization qualifications, origin exclusions, stale reference/counts, and lost cubic withdrawal.
+
+No inspected Lean theorem or certificate-checker argument needs mathematical repair. The replacement is blocked by inaccurate statements of scope and incomplete editing, not by a demonstrated failure of the retained results.
