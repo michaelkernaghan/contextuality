@@ -39,4 +39,7 @@ Target: about 20 pages.
   2026-11-23 09:17 PT, still running at the v10.4 release.
 - Fix in `ks_certify_fast4.py` first: the time budget is checked only between hitting-set
   solves (line ~105), and one solve can block for hours (eta/sqrt 2 validation, stopped).
-- Any Lean results (43-, 45-, 47-ray uncolourability; minimality checker).
+- Lean, done after v10.4 (`lean/NamedSets.lean`): uncolourability of the 43- and 47-ray
+  sets, and of the 45 words for every x with |x|^2 = 2. Say so where the paper states the
+  circle theorem and the catalogue minima, and add the file to the reproducibility list.
+- Lean minimality checker, if it exists by then.

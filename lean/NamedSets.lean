@@ -1,0 +1,556 @@
+/-
+Kochen-Specker uncolourability of three named sets, as sets of vectors in ℂ³.
+
+* `Heegner43.uncolorable`: the 43 rays over `ℤ[α]`, `α = (1 + √-7)/2`.
+* `Supergolden47.uncolorable`: the 47 rays over `ℤ[ψ]`, for every real `ψ` with
+  `ψ³ = ψ² + 1` (and `Supergolden47.exists_psi`: such a `ψ` exists).
+* `Circle45.uncolorable`: the 45 words over `{0, ±1, ±x, ±x*}`, for EVERY complex `x` with
+  `x * conj x = 2`.
+
+Method (as for `cabello_S6_uncolorable` in `Cyclotomic6n.lean`): coordinates are exact
+ring elements written as integer tuples; the Hermitian inner product is recomputed in the
+ring; a ring map `ι` to `ℂ` respecting products and conjugation carries a computed zero to a
+zero of `inner3`; a case-split certificate is checked by the kernel.  A zero test that is
+only sufficient (as for the circle, where it ignores relations holding at special `x`) is
+enough: every orthogonality the checker uses is a genuine one.
+
+Data between the GENERATED markers is written by `ks_lean_export.py`; nothing computed
+outside Lean is trusted.
+-/
+import Cyclotomic6n
+
+open scoped BigOperators
+
+namespace KSNamed
+
+open KSCyclotomic KSCyclotomic.Eis
+
+/-! ### The bridge from a checked index system to `KSUncolorable` -/
+
+/-- The set of vectors `vecs i`, `i < n`. -/
+def vset (n : Nat) (vecs : Nat → (Fin 3 → ℂ)) : Set (Fin 3 → ℂ) :=
+  { v | ∃ i, i < n ∧ vecs i = v }
+
+theorem triad_of_three {R : Set (Fin 3 → ℂ)} {c : (Fin 3 → ℂ) → Bool}
+    (hII : ∀ t : Finset (Fin 3 → ℂ), IsTriad R t → (t.filter (fun v => c v = true)).card = 1)
+    {a b d : Fin 3 → ℂ} (ha : a ∈ R) (hb : b ∈ R) (hd : d ∈ R)
+    (na : a ≠ 0) (nb : b ≠ 0)
+    (oab : Orthogonal a b) (oad : Orthogonal a d) (obd : Orthogonal b d) :
+    c a = true ∨ c b = true ∨ c d = true := by
+  have ne : ∀ {x y : Fin 3 → ℂ}, x ≠ 0 → Orthogonal x y → x ≠ y := by
+    intro x y hx hxy e
+    subst e
+    exact Eis.inner3_self_ne_zero hx hxy
+  have hab := ne na oab
+  have had := ne na oad
+  have hbd := ne nb obd
+  have ht : IsTriad R {a, b, d} := by
+    refine ⟨?_, Finset.card_eq_three.mpr ⟨a, b, d, hab, had, hbd, rfl⟩, ?_⟩
+    · intro x hx
+      simp only [Finset.coe_insert, Finset.coe_singleton, Set.mem_insert_iff,
+        Set.mem_singleton_iff] at hx
+      rcases hx with rfl | rfl | rfl <;> assumption
+    · intro x hx y hy hxy
+      simp only [Finset.mem_insert, Finset.mem_singleton] at hx hy
+      rcases hx with rfl | rfl | rfl <;> rcases hy with rfl | rfl | rfl <;>
+        first
+        | exact absurd rfl hxy
+        | assumption
+        | exact Orthogonal_symm ‹_›
+  obtain ⟨x, hx⟩ := Finset.card_eq_one.mp (hII _ ht)
+  have hxm : x ∈ ({a, b, d} : Finset (Fin 3 → ℂ)).filter (fun v => c v = true) := by
+    rw [hx]; exact Finset.mem_singleton_self x
+  rw [Finset.mem_filter] at hxm
+  obtain ⟨hxt, hcx⟩ := hxm
+  simp only [Finset.mem_insert, Finset.mem_singleton] at hxt
+  rcases hxt with rfl | rfl | rfl
+  · exact Or.inl hcx
+  · exact Or.inr (Or.inl hcx)
+  · exact Or.inr (Or.inr hcx)
+
+/-- A passing certificate for an index system whose orthogonality flags are genuine
+orthogonalities of nonzero vectors proves the vectors KS-uncolourable. -/
+theorem uncolorable_of_check (Q : Sys) (vecs : Nat → (Fin 3 → ℂ))
+    (hne : ∀ i, i < Q.n → vecs i ≠ 0)
+    (horth : ∀ i j, i < Q.n → j < Q.n → Q.orth i j = true → Orthogonal (vecs i) (vecs j))
+    (c : Cert) (hc : check Q [] c = true) :
+    KSUncolorable (vset Q.n vecs) := by
+  rintro ⟨col, hI, hII⟩
+  have mem : ∀ i, i < Q.n → vecs i ∈ vset Q.n vecs := fun i hi => ⟨i, hi, rfl⟩
+  refine no_valid_of_check Q c hc ⟨fun i => col (vecs i), ?_, ?_⟩
+  · intro i j hi hj ho
+    exact hI _ (mem i hi) _ (mem j hj) (horth i j hi hj ho)
+  · intro i j k hi hj hk oij oik ojk
+    exact triad_of_three hII (mem i hi) (mem j hj) (mem k hk) (hne i hi) (hne j hj)
+      (horth i j hi hj oij) (horth i k hi hk oik) (horth j k hj hk ojk)
+
+/-- A vector with a nonzero coordinate is nonzero. -/
+theorem vec_ne_zero_of {v : Fin 3 → ℂ} (h : v 0 ≠ 0 ∨ v 1 ≠ 0 ∨ v 2 ≠ 0) : v ≠ 0 := by
+  intro hv
+  subst hv
+  simp at h
+
+/-! ### 43 rays over `ℤ[α]`, `α = (1 + √-7)/2`, `α² = α - 2`, `conj α = 1 - α` -/
+
+namespace Heegner43
+
+/-- `(a, b)` stands for `a + b α`. -/
+abbrev Z := Int × Int
+abbrev R := Z × Z × Z
+
+def zadd (x y : Z) : Z := (x.1 + y.1, x.2 + y.2)
+/-- `(a + bα)(c + dα) = (ac - 2bd) + (ad + bc + bd) α`. -/
+def zmul (x y : Z) : Z := (x.1 * y.1 - 2 * (x.2 * y.2), x.1 * y.2 + x.2 * y.1 + x.2 * y.2)
+/-- `conj (a + bα) = a + b(1 - α) = (a + b) - b α`. -/
+def zconj (x : Z) : Z := (x.1 + x.2, -x.2)
+
+def dot (u v : R) : Z :=
+  zadd (zadd (zmul (zconj u.1) v.1) (zmul (zconj u.2.1) v.2.1)) (zmul (zconj u.2.2) v.2.2)
+
+def orth (u v : R) : Bool := decide (dot u v = (0, 0))
+
+/-- Some coordinate is a nonzero integer. -/
+def hasConst (r : R) : Bool :=
+  (r.1.2 == 0 && r.1.1 != 0) || (r.2.1.2 == 0 && r.2.1.1 != 0) ||
+  (r.2.2.2 == 0 && r.2.2.1 != 0)
+
+def zero : R := ((0, 0), (0, 0), (0, 0))
+
+-- BEGIN GENERATED (heegner43)
+/-- Generated by ks_lean_export.py: 43 rays, 107 orthogonal pairs, 23 triads; certificate
+    with 675 nodes. -/
+def rays : List R := [
+  ((0, 0), (0, 0), (1, 0)),
+  ((0, 0), (1, 0), (0, 0)),
+  ((0, 0), (1, 0), (1, 0)),
+  ((0, 0), (1, 0), (-1, 0)),
+  ((0, 0), (1, 0), (0, 1)),
+  ((0, 0), (1, 0), (0, -1)),
+  ((0, 0), (1, -1), (1, 0)),
+  ((0, 0), (1, -1), (-1, 0)),
+  ((1, 0), (0, 0), (0, 0)),
+  ((1, 0), (0, 0), (0, 1)),
+  ((1, 0), (0, 0), (0, -1)),
+  ((1, 0), (0, 0), (1, -1)),
+  ((1, 0), (0, 0), (-1, 1)),
+  ((1, 0), (1, 0), (0, 0)),
+  ((1, 0), (1, 0), (0, 1)),
+  ((1, 0), (1, 0), (0, -1)),
+  ((1, 0), (1, 0), (1, -1)),
+  ((1, 0), (1, 0), (-1, 1)),
+  ((1, 0), (-1, 0), (0, 0)),
+  ((1, 0), (-1, 0), (0, 1)),
+  ((1, 0), (-1, 0), (0, -1)),
+  ((1, 0), (-1, 0), (1, -1)),
+  ((1, 0), (-1, 0), (-1, 1)),
+  ((1, 0), (1, -1), (0, 0)),
+  ((1, 0), (1, -1), (1, 0)),
+  ((1, 0), (1, -1), (-1, 0)),
+  ((1, 0), (-1, 1), (0, 0)),
+  ((1, 0), (-1, 1), (1, 0)),
+  ((1, 0), (-1, 1), (-1, 0)),
+  ((0, 1), (0, 0), (1, 0)),
+  ((0, 1), (0, 0), (-1, 0)),
+  ((0, 1), (1, 0), (0, 0)),
+  ((0, 1), (1, 0), (1, 0)),
+  ((0, 1), (1, 0), (-1, 0)),
+  ((0, 1), (-1, 0), (0, 0)),
+  ((0, 1), (-1, 0), (1, 0)),
+  ((0, 1), (-1, 0), (-1, 0)),
+  ((1, -1), (0, 0), (1, 0)),
+  ((1, -1), (0, 0), (-1, 0)),
+  ((1, -1), (1, 0), (1, 0)),
+  ((1, -1), (1, 0), (-1, 0)),
+  ((1, -1), (-1, 0), (1, 0)),
+  ((1, -1), (-1, 0), (-1, 0))]
+
+def cert : Cert :=
+  (.split 1 (.split 0 (.pair 0 1) (.split 8 (.pair 1 8) (.split 9 (.pair 1 9) (.split 10 (.pair 1 10) (.split 11 (.pair 1 11) (.split 12 (.pair 1 12) (.split 29 (.pair 1 29) (.split 30 (.pair 1 30) (.split 37 (.pair 1 37) (.split 38 (.pair 1 38) (.split 2 (.split 3 (.pair 2 3) (.split 33 (.pair 2 33) (.split 35 (.pair 2 35) (.split 40 (.pair 2 40) (.split 41 (.pair 2 41) (.split 13 (.split 18 (.pair 13 18) (.split 19 (.pair 13 19) (.split 20 (.pair 13 20) (.split 21 (.pair 13 21) (.split 22 (.pair 13 22) (.split 24 (.split 5 (.pair 5 24) (.split 27 (.pair 24 27) (.split 34 (.pair 24 34) (.split 6 (.split 15 (.pair 6 15) (.split 14 (.split 7 (.pair 7 14) (.split 4 (.split 25 (.pair 4 25) (.split 23 (.split 36 (.pair 23 36) (.split 32 (.split 26 (.pair 26 32) (.split 31 (.split 28 (.pair 28 31) (.split 16 (.split 17 (.pair 16 17) (.split 39 (.split 42 (.pair 39 42) (.triad 17 27 42)) (.triad 21 25 39))) (.triad 16 28 41))) (.triad 0 26 31))) (.triad 3 32 36))) (.triad 0 23 34))) (.triad 4 7 8))) (.triad 14 15 18))) (.triad 5 6 8))))) (.triad 22 24 40))))))) (.split 18 (.split 14 (.pair 14 18) (.split 15 (.pair 15 18) (.split 16 (.pair 16 18) (.split 17 (.pair 17 18) (.split 28 (.split 5 (.pair 5 28) (.split 25 (.pair 25 28) (.split 31 (.pair 28 31) (.split 6 (.split 19 (.pair 6 19) (.split 20 (.split 7 (.pair 7 20) (.split 4 (.split 27 (.pair 4 27) (.split 26 (.split 32 (.pair 26 32) (.split 36 (.split 23 (.pair 23 36) (.split 34 (.split 24 (.pair 24 34) (.split 22 (.split 21 (.pair 21 22) (.split 39 (.split 42 (.pair 39 42) (.triad 17 27 42)) (.triad 21 25 39))) (.triad 22 24 40))) (.triad 0 23 34))) (.triad 3 32 36))) (.triad 0 26 31))) (.triad 4 7 8))) (.triad 13 19 20))) (.triad 5 6 8))))) (.triad 16 28 41)))))) (.triad 0 13 18)))))))) (.split 3 (.split 32 (.pair 3 32) (.split 36 (.pair 3 36) (.split 39 (.pair 3 39) (.split 42 (.pair 3 42) (.split 13 (.split 18 (.pair 13 18) (.split 19 (.pair 13 19) (.split 20 (.pair 13 20) (.split 21 (.pair 13 21) (.split 22 (.pair 13 22) (.split 25 (.split 4 (.pair 4 25) (.split 28 (.pair 25 28) (.split 34 (.pair 25 34) (.split 7 (.split 14 (.pair 7 14) (.split 15 (.split 6 (.pair 6 15) (.split 5 (.split 24 (.pair 5 24) (.split 23 (.split 35 (.pair 23 35) (.split 33 (.split 26 (.pair 26 33) (.split 31 (.split 27 (.pair 27 31) (.split 17 (.split 16 (.pair 16 17) (.split 40 (.split 41 (.pair 40 41) (.triad 16 28 41)) (.triad 22 24 40))) (.triad 17 27 42))) (.triad 0 26 31))) (.triad 2 33 35))) (.triad 0 23 34))) (.triad 5 6 8))) (.triad 14 15 18))) (.triad 4 7 8))))) (.triad 21 25 39))))))) (.split 18 (.split 14 (.pair 14 18) (.split 15 (.pair 15 18) (.split 16 (.pair 16 18) (.split 17 (.pair 17 18) (.split 27 (.split 4 (.pair 4 27) (.split 24 (.pair 24 27) (.split 31 (.pair 27 31) (.split 7 (.split 20 (.pair 7 20) (.split 19 (.split 6 (.pair 6 19) (.split 5 (.split 28 (.pair 5 28) (.split 26 (.split 33 (.pair 26 33) (.split 35 (.split 23 (.pair 23 35) (.split 34 (.split 25 (.pair 25 34) (.split 21 (.split 22 (.pair 21 22) (.split 40 (.split 41 (.pair 40 41) (.triad 16 28 41)) (.triad 22 24 40))) (.triad 21 25 39))) (.triad 0 23 34))) (.triad 2 33 35))) (.triad 0 26 31))) (.triad 5 6 8))) (.triad 13 19 20))) (.triad 4 7 8))))) (.triad 17 27 42)))))) (.triad 0 13 18))))))) (.triad 2 3 8))))))))))))) (.split 0 (.split 8 (.pair 0 8) (.split 13 (.pair 0 13) (.split 18 (.pair 0 18) (.split 23 (.pair 0 23) (.split 26 (.pair 0 26) (.split 31 (.pair 0 31) (.split 34 (.pair 0 34) (.split 2 (.split 3 (.pair 2 3) (.split 33 (.pair 2 33) (.split 35 (.pair 2 35) (.split 40 (.pair 2 40) (.split 41 (.pair 2 41) (.split 16 (.split 17 (.pair 16 17) (.split 28 (.pair 16 28) (.split 30 (.pair 16 30) (.split 11 (.split 36 (.pair 11 36) (.split 32 (.split 12 (.pair 12 32) (.split 19 (.pair 19 32) (.split 20 (.split 7 (.pair 7 20) (.split 37 (.pair 20 37) (.split 4 (.split 25 (.pair 4 25) (.split 27 (.pair 4 27) (.split 10 (.split 39 (.pair 10 39) (.split 21 (.split 22 (.pair 21 22) (.split 24 (.split 5 (.pair 5 24) (.split 6 (.split 15 (.pair 6 15) (.split 14 (.split 38 (.pair 14 38) (.split 9 (.split 42 (.pair 9 42) (.triad 3 39 42)) (.triad 1 9 38))) (.triad 14 15 18))) (.triad 5 6 8))) (.triad 22 24 40))) (.triad 21 25 39))) (.triad 1 10 37)))) (.triad 4 7 8)))) (.triad 13 19 20)))) (.triad 3 32 36))) (.triad 1 11 30))))) (.split 17 (.split 27 (.pair 17 27) (.split 29 (.pair 17 29) (.split 42 (.pair 17 42) (.split 12 (.split 32 (.pair 12 32) (.split 28 (.split 5 (.pair 5 28) (.split 25 (.pair 25 28) (.split 6 (.split 15 (.pair 6 15) (.split 19 (.pair 6 19) (.split 14 (.split 7 (.pair 7 14) (.split 38 (.pair 14 38) (.split 4 (.split 9 (.split 20 (.split 37 (.pair 20 37) (.split 10 (.split 39 (.pair 10 39) (.triad 3 39 42)) (.triad 1 10 37))) (.triad 13 19 20)) (.triad 1 9 38)) (.triad 4 7 8)))) (.triad 14 15 18)))) (.triad 5 6 8)))) (.triad 16 28 41))) (.triad 1 12 29))))) (.triad 16 17 18)))))))) (.split 3 (.split 32 (.pair 3 32) (.split 36 (.pair 3 36) (.split 39 (.pair 3 39) (.split 42 (.pair 3 42) (.split 16 (.split 17 (.pair 16 17) (.split 28 (.pair 16 28) (.split 30 (.pair 16 30) (.split 41 (.pair 16 41) (.split 11 (.split 33 (.pair 11 33) (.split 27 (.split 4 (.pair 4 27) (.split 24 (.pair 24 27) (.split 7 (.split 14 (.pair 7 14) (.split 20 (.pair 7 20) (.split 15 (.split 6 (.pair 6 15) (.split 37 (.pair 15 37) (.split 5 (.split 10 (.split 19 (.split 38 (.pair 19 38) (.split 9 (.split 40 (.pair 9 40) (.triad 2 40 41)) (.triad 1 9 38))) (.triad 13 19 20)) (.triad 1 10 37)) (.triad 5 6 8)))) (.triad 14 15 18)))) (.triad 4 7 8)))) (.triad 17 27 42))) (.triad 1 11 30)))))) (.split 17 (.split 27 (.pair 17 27) (.split 29 (.pair 17 29) (.split 12 (.split 35 (.pair 12 35) (.split 33 (.split 11 (.pair 11 33) (.split 20 (.pair 20 33) (.split 19 (.split 6 (.pair 6 19) (.split 38 (.pair 19 38) (.split 5 (.split 24 (.pair 5 24) (.split 28 (.pair 5 28) (.split 9 (.split 40 (.pair 9 40) (.split 22 (.split 21 (.pair 21 22) (.split 25 (.split 4 (.pair 4 25) (.split 7 (.split 14 (.pair 7 14) (.split 15 (.split 37 (.pair 15 37) (.split 10 (.split 41 (.pair 10 41) (.triad 2 40 41)) (.triad 1 10 37))) (.triad 14 15 18))) (.triad 4 7 8))) (.triad 21 25 39))) (.triad 22 24 40))) (.triad 1 9 38)))) (.triad 5 6 8)))) (.triad 13 19 20)))) (.triad 2 33 35))) (.triad 1 12 29)))) (.triad 16 17 18))))))) (.triad 2 3 8)))))))))) (.split 8 (.split 2 (.pair 2 8) (.split 3 (.pair 3 8) (.split 4 (.pair 4 8) (.split 5 (.pair 5 8) (.split 6 (.pair 6 8) (.split 7 (.pair 7 8) (.split 13 (.split 18 (.pair 13 18) (.split 19 (.pair 13 19) (.split 20 (.pair 13 20) (.split 21 (.pair 13 21) (.split 22 (.pair 13 22) (.split 16 (.split 17 (.pair 16 17) (.split 28 (.pair 16 28) (.split 30 (.pair 16 30) (.split 41 (.pair 16 41) (.split 11 (.split 33 (.pair 11 33) (.split 36 (.pair 11 36) (.split 32 (.split 12 (.pair 12 32) (.split 26 (.pair 26 32) (.split 29 (.split 31 (.split 27 (.pair 27 31) (.split 35 (.split 14 (.pair 14 35) (.split 23 (.pair 23 35) (.split 15 (.split 37 (.pair 15 37) (.split 10 (.split 39 (.pair 10 39) (.split 25 (.split 34 (.pair 25 34) (.triad 0 23 34)) (.triad 21 25 39))) (.triad 1 10 37))) (.triad 14 15 18)))) (.triad 2 33 35))) (.triad 0 26 31)) (.triad 1 12 29)))) (.triad 3 32 36)))) (.triad 1 11 30)))))) (.split 17 (.split 27 (.pair 17 27) (.split 29 (.pair 17 29) (.split 42 (.pair 17 42) (.split 12 (.split 32 (.pair 12 32) (.split 35 (.pair 12 35) (.split 33 (.split 11 (.pair 11 33) (.split 26 (.pair 26 33) (.split 30 (.split 31 (.split 28 (.pair 28 31) (.split 36 (.split 15 (.pair 15 36) (.split 23 (.pair 23 36) (.split 14 (.split 38 (.pair 14 38) (.split 9 (.split 40 (.pair 9 40) (.split 24 (.split 34 (.pair 24 34) (.triad 0 23 34)) (.triad 22 24 40))) (.triad 1 9 38))) (.triad 14 15 18)))) (.triad 3 32 36))) (.triad 0 26 31)) (.triad 1 11 30)))) (.triad 2 33 35)))) (.triad 1 12 29))))) (.triad 16 17 18)))))))) (.split 18 (.split 14 (.pair 14 18) (.split 15 (.pair 15 18) (.split 16 (.pair 16 18) (.split 17 (.pair 17 18) (.split 21 (.split 22 (.pair 21 22) (.split 25 (.pair 21 25) (.split 30 (.pair 21 30) (.split 39 (.pair 21 39) (.split 11 (.split 33 (.pair 11 33) (.split 36 (.pair 11 36) (.split 32 (.split 12 (.pair 12 32) (.split 19 (.pair 19 32) (.split 26 (.pair 26 32) (.split 20 (.split 37 (.pair 20 37) (.split 10 (.split 41 (.pair 10 41) (.split 28 (.split 31 (.pair 28 31) (.triad 0 26 31)) (.triad 16 28 41))) (.triad 1 10 37))) (.triad 13 19 20))))) (.triad 3 32 36)))) (.triad 1 11 30)))))) (.split 22 (.split 24 (.pair 22 24) (.split 29 (.pair 22 29) (.split 40 (.pair 22 40) (.split 12 (.split 32 (.pair 12 32) (.split 35 (.pair 12 35) (.split 33 (.split 11 (.pair 11 33) (.split 20 (.pair 20 33) (.split 26 (.pair 26 33) (.split 19 (.split 38 (.pair 19 38) (.split 9 (.split 42 (.pair 9 42) (.split 27 (.split 31 (.pair 27 31) (.triad 0 26 31)) (.triad 17 27 42))) (.triad 1 9 38))) (.triad 13 19 20))))) (.triad 2 33 35)))) (.triad 1 12 29))))) (.triad 13 21 22))))))) (.triad 0 13 18))))))))) (.triad 0 1 8))))
+-- END GENERATED (heegner43)
+
+def sys : Sys := ⟨rays.length, fun i j => orth (rays.getD i zero) (rays.getD j zero)⟩
+
+theorem check_ok : check sys [] cert = true := by decide +kernel
+
+theorem rays_ok : ∀ i, i < rays.length → hasConst (rays.getD i zero) = true := by
+  decide +kernel
+
+noncomputable def α₀ : ℂ := (1 + (Real.sqrt 7 : ℂ) * Complex.I) / 2
+
+theorem sqrt7_sq : (Real.sqrt 7 : ℂ) ^ 2 = 7 := by
+  rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num)]; norm_num
+
+theorem α₀_sq : α₀ ^ 2 = α₀ - 2 := by
+  unfold α₀
+  linear_combination (Complex.I ^ 2 / 4) * sqrt7_sq + (7 / 4 : ℂ) * Complex.I_sq
+
+theorem α₀_conj : (starRingEnd ℂ) α₀ = 1 - α₀ := by
+  unfold α₀
+  simp only [map_div₀, map_add, map_one, map_mul, Complex.conj_ofReal, Complex.conj_I,
+    map_ofNat]
+  ring
+
+noncomputable def ι (x : Z) : ℂ := (x.1 : ℂ) + (x.2 : ℂ) * α₀
+
+theorem ι_add (x y : Z) : ι (zadd x y) = ι x + ι y := by
+  simp only [ι, zadd]; push_cast; ring
+
+theorem ι_mul (x y : Z) : ι (zmul x y) = ι x * ι y := by
+  simp only [ι, zmul]; push_cast
+  linear_combination (-(x.2 : ℂ) * (y.2 : ℂ)) * α₀_sq
+
+theorem ι_conj (x : Z) : (starRingEnd ℂ) (ι x) = ι (zconj x) := by
+  simp only [ι, zconj, map_add, map_mul, map_intCast, α₀_conj]; push_cast; ring
+
+noncomputable def vec (r : R) : Fin 3 → ℂ := ![ι r.1, ι r.2.1, ι r.2.2]
+
+theorem inner3_vec (u v : R) : inner3 (vec u) (vec v) = ι (dot u v) := by
+  simp only [inner3, vec, dot, Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, ι_add, ι_mul, ι_conj]
+
+theorem orth_sound {u v : R} (h : orth u v = true) : Orthogonal (vec u) (vec v) := by
+  have h' : dot u v = (0, 0) := of_decide_eq_true h
+  unfold Orthogonal
+  rw [inner3_vec, h']
+  simp [ι]
+
+theorem ι_const {a : Int} (ha : a ≠ 0) : ι (a, 0) ≠ 0 := by
+  simp [ι, ha]
+
+theorem vec_ne_zero {r : R} (h : hasConst r = true) : vec r ≠ 0 := by
+  apply vec_ne_zero_of
+  obtain ⟨⟨a0, b0⟩, ⟨a1, b1⟩, ⟨a2, b2⟩⟩ := r
+  simp only [hasConst, Bool.or_eq_true, Bool.and_eq_true, beq_iff_eq, bne_iff_ne, ne_eq] at h
+  simp only [vec, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
+  rcases h with (⟨rfl, h⟩ | ⟨rfl, h⟩) | ⟨rfl, h⟩
+  · exact Or.inl (ι_const h)
+  · exact Or.inr (Or.inl (ι_const h))
+  · exact Or.inr (Or.inr (ι_const h))
+
+/-- **The 43 rays admit no Kochen-Specker colouring.** -/
+theorem uncolorable : KSUncolorable (vset rays.length (fun i => vec (rays.getD i zero))) :=
+  uncolorable_of_check sys _ (fun i hi => vec_ne_zero (rays_ok i hi))
+    (fun _ _ _ _ h => orth_sound h) cert check_ok
+
+end Heegner43
+
+/-! ### 47 rays over `ℤ[ψ]`, `ψ³ = ψ² + 1`, `ψ` real -/
+
+namespace Supergolden47
+
+/-- `(a, b, c)` stands for `a + b ψ + c ψ²`. -/
+abbrev Z := Int × Int × Int
+abbrev R := Z × Z × Z
+
+def zadd (x y : Z) : Z := (x.1 + y.1, x.2.1 + y.2.1, x.2.2 + y.2.2)
+
+/-- Product, reduced with `ψ³ = ψ² + 1` and `ψ⁴ = ψ² + ψ + 1`. -/
+def zmul (x y : Z) : Z :=
+  let p0 := x.1 * y.1
+  let p1 := x.1 * y.2.1 + x.2.1 * y.1
+  let p2 := x.1 * y.2.2 + x.2.1 * y.2.1 + x.2.2 * y.1
+  let p3 := x.2.1 * y.2.2 + x.2.2 * y.2.1
+  let p4 := x.2.2 * y.2.2
+  (p0 + p3 + p4, p1 + p4, p2 + p3 + p4)
+
+/-- The real inner product (all coordinates are real). -/
+def dot (u v : R) : Z := zadd (zadd (zmul u.1 v.1) (zmul u.2.1 v.2.1)) (zmul u.2.2 v.2.2)
+
+def orth (u v : R) : Bool := decide (dot u v = (0, 0, 0))
+
+def hasConst (r : R) : Bool :=
+  (r.1.2 == (0, 0) && r.1.1 != 0) || (r.2.1.2 == (0, 0) && r.2.1.1 != 0) ||
+  (r.2.2.2 == (0, 0) && r.2.2.1 != 0)
+
+def zero : R := ((0, 0, 0), (0, 0, 0), (0, 0, 0))
+
+-- BEGIN GENERATED (supergolden47)
+/-- Generated by ks_lean_export.py: 47 rays, 110 orthogonal pairs, 26 triads; certificate
+    with 499 nodes. -/
+def rays : List R := [
+  ((0, 0, 0), (0, 0, 0), (1, 0, 0)),
+  ((0, 0, 0), (1, 0, 0), (0, 0, 0)),
+  ((0, 0, 0), (1, 0, 0), (1, 0, 0)),
+  ((0, 0, 0), (1, 0, 0), (-1, 0, 0)),
+  ((0, 0, 0), (1, 0, 0), (0, 1, 0)),
+  ((0, 0, 0), (1, 0, 0), (0, -1, 0)),
+  ((0, 0, 0), (0, 1, 0), (1, 0, 0)),
+  ((0, 0, 0), (0, 1, 0), (-1, 0, 0)),
+  ((1, 0, 0), (0, 0, 0), (0, 0, 0)),
+  ((1, 0, 0), (0, 0, 0), (1, 0, 0)),
+  ((1, 0, 0), (0, 0, 0), (-1, 0, 0)),
+  ((1, 0, 0), (0, 0, 0), (0, 1, 0)),
+  ((1, 0, 0), (0, 0, 0), (0, 0, -1)),
+  ((1, 0, 0), (1, 0, 0), (0, 0, 0)),
+  ((1, 0, 0), (-1, 0, 0), (0, 0, 0)),
+  ((1, 0, 0), (0, 1, 0), (0, 1, 0)),
+  ((1, 0, 0), (0, 1, 0), (0, -1, 0)),
+  ((1, 0, 0), (0, 1, 0), (0, 0, 1)),
+  ((1, 0, 0), (0, 1, 0), (0, 0, -1)),
+  ((1, 0, 0), (0, -1, 0), (0, 0, 0)),
+  ((1, 0, 0), (0, -1, 0), (0, 1, 0)),
+  ((1, 0, 0), (0, -1, 0), (0, -1, 0)),
+  ((1, 0, 0), (0, -1, 0), (0, 0, 1)),
+  ((1, 0, 0), (0, -1, 0), (0, 0, -1)),
+  ((1, 0, 0), (0, 0, 1), (0, 0, 0)),
+  ((1, 0, 0), (0, 0, 1), (0, 1, 0)),
+  ((1, 0, 0), (0, 0, 1), (0, -1, 0)),
+  ((1, 0, 0), (0, 0, -1), (0, 1, 0)),
+  ((1, 0, 0), (0, 0, -1), (0, -1, 0)),
+  ((0, 1, 0), (0, 0, 0), (1, 0, 0)),
+  ((0, 1, 0), (0, 0, 0), (-1, 0, 0)),
+  ((0, 1, 0), (1, 0, 0), (0, 0, 0)),
+  ((0, 1, 0), (1, 0, 0), (0, 1, 0)),
+  ((0, 1, 0), (1, 0, 0), (0, -1, 0)),
+  ((0, 1, 0), (1, 0, 0), (0, 0, 1)),
+  ((0, 1, 0), (1, 0, 0), (0, 0, -1)),
+  ((0, 1, 0), (-1, 0, 0), (0, 0, 0)),
+  ((0, 1, 0), (0, 1, 0), (-1, 0, 0)),
+  ((0, 1, 0), (0, -1, 0), (-1, 0, 0)),
+  ((0, 1, 0), (0, 0, 1), (-1, 0, 0)),
+  ((0, 1, 0), (0, 0, -1), (-1, 0, 0)),
+  ((0, 0, 1), (0, 0, 0), (1, 0, 0)),
+  ((0, 0, 1), (-1, 0, 0), (0, 0, 0)),
+  ((0, 0, 1), (-1, 0, 0), (0, 1, 0)),
+  ((0, 0, 1), (-1, 0, 0), (0, -1, 0)),
+  ((0, 0, 1), (0, 1, 0), (1, 0, 0)),
+  ((0, 0, 1), (0, -1, 0), (1, 0, 0))]
+
+def cert : Cert :=
+  (.split 0 (.split 1 (.pair 0 1) (.split 8 (.pair 0 8) (.split 13 (.pair 0 13) (.split 14 (.pair 0 14) (.split 19 (.pair 0 19) (.split 24 (.pair 0 24) (.split 31 (.pair 0 31) (.split 36 (.pair 0 36) (.split 42 (.pair 0 42) (.split 11 (.split 30 (.pair 11 30) (.split 37 (.pair 11 37) (.split 38 (.pair 11 38) (.split 39 (.pair 11 39) (.split 40 (.pair 11 40) (.split 44 (.pair 11 44) (.split 4 (.split 7 (.pair 4 7) (.split 26 (.pair 4 26) (.split 27 (.pair 4 27) (.split 46 (.pair 4 46) (.split 15 (.split 3 (.pair 3 15) (.split 18 (.pair 15 18) (.split 2 (.split 16 (.pair 2 16) (.split 20 (.pair 2 20) (.split 17 (.split 23 (.split 41 (.pair 23 41) (.split 12 (.split 45 (.pair 12 45) (.split 5 (.split 6 (.pair 5 6) (.split 25 (.pair 5 25) (.triad 20 25 30))) (.triad 5 38 45))) (.triad 1 12 41))) (.triad 20 23 31)) (.triad 16 17 36)))) (.triad 2 3 8)))) (.triad 15 27 30)))))) (.split 7 (.split 17 (.pair 7 17) (.split 23 (.pair 7 23) (.split 32 (.pair 7 32) (.split 16 (.split 2 (.pair 2 16) (.split 28 (.pair 16 28) (.split 29 (.pair 16 29) (.split 3 (.split 15 (.pair 3 15) (.split 21 (.pair 3 21) (.split 18 (.split 6 (.pair 6 18) (.split 41 (.pair 18 41) (.split 5 (.split 25 (.pair 5 25) (.split 45 (.pair 5 45) (.split 12 (.split 46 (.pair 12 46) (.triad 4 37 46)) (.triad 1 12 41)))) (.triad 5 6 8)))) (.triad 15 18 36)))) (.triad 2 3 8))))) (.triad 16 17 36))))) (.triad 4 7 8))))))))) (.split 30 (.split 15 (.pair 15 30) (.split 20 (.pair 20 30) (.split 25 (.pair 25 30) (.split 27 (.pair 27 30) (.split 34 (.pair 30 34) (.split 18 (.split 6 (.pair 6 18) (.split 41 (.pair 18 41) (.split 5 (.split 28 (.pair 5 28) (.split 38 (.pair 5 38) (.split 45 (.pair 5 45) (.split 12 (.split 46 (.pair 12 46) (.split 23 (.split 7 (.pair 7 23) (.split 4 (.split 26 (.pair 4 26) (.split 37 (.pair 4 37) (.split 33 (.split 9 (.pair 9 33) (.split 43 (.pair 33 43) (.split 10 (.split 32 (.pair 10 32) (.split 35 (.split 29 (.pair 29 35) (.split 16 (.split 2 (.pair 2 16) (.split 17 (.pair 16 17) (.split 3 (.split 21 (.pair 3 21) (.triad 21 26 29)) (.triad 2 3 8)))) (.triad 16 28 29))) (.triad 19 32 35))) (.triad 1 9 10)))) (.triad 19 33 34)))) (.triad 4 7 8))) (.triad 20 23 31))) (.triad 1 12 41))))) (.triad 5 6 8)))) (.triad 15 18 36))))))) (.triad 1 11 30)))))))))))) (.split 1 (.split 8 (.pair 1 8) (.split 9 (.pair 1 9) (.split 10 (.pair 1 10) (.split 11 (.pair 1 11) (.split 12 (.pair 1 12) (.split 29 (.pair 1 29) (.split 30 (.pair 1 30) (.split 41 (.pair 1 41) (.split 19 (.split 31 (.pair 19 31) (.split 32 (.pair 19 32) (.split 33 (.pair 19 33) (.split 34 (.pair 19 34) (.split 35 (.pair 19 35) (.split 45 (.pair 19 45) (.split 4 (.split 7 (.pair 4 7) (.split 26 (.pair 4 26) (.split 27 (.pair 4 27) (.split 37 (.pair 4 37) (.split 46 (.pair 4 46) (.split 15 (.split 3 (.pair 3 15) (.split 18 (.pair 15 18) (.split 36 (.pair 15 36) (.split 2 (.split 16 (.pair 2 16) (.split 20 (.pair 2 20) (.split 17 (.split 21 (.split 22 (.pair 21 22) (.split 23 (.split 25 (.split 5 (.pair 5 25) (.split 42 (.pair 25 42) (.split 6 (.split 43 (.pair 6 43) (.split 24 (.split 44 (.pair 24 44) (.triad 7 32 44)) (.triad 0 24 42))) (.triad 5 6 8)))) (.triad 20 25 30)) (.triad 20 23 31))) (.triad 21 26 29)) (.triad 16 17 36)))) (.triad 2 3 8))))) (.triad 15 27 30))))))) (.split 7 (.split 17 (.pair 7 17) (.split 23 (.pair 7 23) (.split 44 (.pair 7 44) (.split 20 (.split 2 (.pair 2 20) (.split 25 (.pair 20 25) (.split 3 (.split 15 (.pair 3 15) (.split 21 (.pair 3 21) (.split 22 (.split 6 (.pair 6 22) (.split 5 (.split 28 (.pair 5 28) (.split 38 (.pair 5 38) (.split 16 (.split 36 (.pair 16 36) (.split 18 (.split 26 (.split 42 (.pair 26 42) (.split 24 (.split 43 (.pair 24 43) (.triad 6 33 43)) (.triad 0 24 42))) (.triad 21 26 29)) (.triad 15 18 36))) (.triad 16 28 29)))) (.triad 5 6 8))) (.triad 21 22 31)))) (.triad 2 3 8)))) (.triad 20 23 31))))) (.triad 4 7 8))))))))) (.split 31 (.split 20 (.pair 20 31) (.split 21 (.pair 21 31) (.split 22 (.pair 22 31) (.split 23 (.pair 23 31) (.split 40 (.pair 31 40) (.split 25 (.split 5 (.pair 5 25) (.split 42 (.pair 25 42) (.split 6 (.split 18 (.pair 6 18) (.split 33 (.pair 6 33) (.split 43 (.pair 6 43) (.split 24 (.split 44 (.pair 24 44) (.split 26 (.split 4 (.pair 4 26) (.split 7 (.split 17 (.pair 7 17) (.split 32 (.pair 7 32) (.split 34 (.split 35 (.split 37 (.split 14 (.pair 14 37) (.split 46 (.pair 37 46) (.split 13 (.split 38 (.pair 13 38) (.split 39 (.split 36 (.pair 36 39) (.split 15 (.split 3 (.pair 3 15) (.split 27 (.pair 15 27) (.split 2 (.split 16 (.pair 2 16) (.triad 16 17 36)) (.triad 2 3 8)))) (.triad 15 18 36))) (.triad 11 38 39))) (.triad 0 13 14)))) (.triad 11 37 40)) (.triad 19 32 35)) (.triad 19 33 34)))) (.triad 4 7 8))) (.triad 21 26 29))) (.triad 0 24 42))))) (.triad 5 6 8)))) (.triad 20 25 30))))))) (.triad 0 19 31))))))))))) (.split 8 (.split 2 (.pair 2 8) (.split 3 (.pair 3 8) (.split 4 (.pair 4 8) (.split 5 (.pair 5 8) (.split 6 (.pair 6 8) (.split 7 (.pair 7 8) (.split 11 (.split 30 (.pair 11 30) (.split 37 (.pair 11 37) (.split 38 (.pair 11 38) (.split 39 (.pair 11 39) (.split 40 (.pair 11 40) (.split 44 (.pair 11 44) (.split 32 (.split 10 (.pair 10 32) (.split 19 (.pair 19 32) (.split 35 (.pair 32 35) (.split 9 (.split 33 (.pair 9 33) (.split 31 (.split 20 (.pair 20 31) (.split 21 (.pair 21 31) (.split 22 (.pair 22 31) (.split 23 (.pair 23 31) (.split 25 (.split 42 (.pair 25 42) (.split 24 (.split 43 (.pair 24 43) (.triad 6 33 43)) (.triad 0 24 42))) (.triad 20 25 30)))))) (.triad 0 19 31))) (.triad 1 9 10))))) (.triad 7 32 44)))))))) (.split 30 (.split 15 (.pair 15 30) (.split 20 (.pair 20 30) (.split 25 (.pair 25 30) (.split 27 (.pair 27 30) (.split 34 (.pair 30 34) (.split 19 (.split 31 (.pair 19 31) (.split 32 (.pair 19 32) (.split 33 (.pair 19 33) (.split 35 (.pair 19 35) (.split 45 (.pair 19 45) (.split 23 (.split 41 (.pair 23 41) (.split 12 (.split 46 (.pair 12 46) (.split 37 (.split 14 (.pair 14 37) (.split 40 (.pair 37 40) (.split 13 (.split 38 (.pair 13 38) (.triad 5 38 45)) (.triad 0 13 14)))) (.triad 4 37 46))) (.triad 1 12 41))) (.triad 20 23 31))))))) (.split 31 (.split 21 (.pair 21 31) (.split 22 (.pair 22 31) (.split 23 (.pair 23 31) (.split 40 (.pair 31 40) (.split 33 (.split 9 (.pair 9 33) (.split 43 (.pair 33 43) (.split 10 (.split 32 (.pair 10 32) (.split 35 (.split 29 (.pair 29 35) (.split 26 (.split 42 (.pair 26 42) (.split 24 (.split 44 (.pair 24 44) (.triad 7 32 44)) (.triad 0 24 42))) (.triad 21 26 29))) (.triad 19 32 35))) (.triad 1 9 10)))) (.triad 19 33 34)))))) (.triad 0 19 31)))))))) (.triad 1 11 30))))))))) (.triad 0 1 8))))
+-- END GENERATED (supergolden47)
+
+def sys : Sys := ⟨rays.length, fun i j => orth (rays.getD i zero) (rays.getD j zero)⟩
+
+theorem check_ok : check sys [] cert = true := by decide +kernel
+
+theorem rays_ok : ∀ i, i < rays.length → hasConst (rays.getD i zero) = true := by
+  decide +kernel
+
+section
+variable (ψ : ℝ) (hψ : ψ ^ 3 = ψ ^ 2 + 1)
+
+noncomputable def ι (x : Z) : ℂ := (x.1 : ℂ) + (x.2.1 : ℂ) * (ψ : ℂ) + (x.2.2 : ℂ) * (ψ : ℂ) ^ 2
+
+theorem ι_add (x y : Z) : ι ψ (zadd x y) = ι ψ x + ι ψ y := by
+  simp only [ι, zadd]; push_cast; ring
+
+include hψ in
+theorem ι_mul (x y : Z) : ι ψ (zmul x y) = ι ψ x * ι ψ y := by
+  have h : (ψ : ℂ) ^ 3 = (ψ : ℂ) ^ 2 + 1 := by exact_mod_cast hψ
+  obtain ⟨a0, a1, a2⟩ := x
+  obtain ⟨b0, b1, b2⟩ := y
+  simp only [ι, zmul]; push_cast
+  linear_combination (-((a1 : ℂ) * b2 + (a2 : ℂ) * b1) - (a2 : ℂ) * b2 * ((ψ : ℂ) + 1)) * h
+
+theorem ι_conj (x : Z) : (starRingEnd ℂ) (ι ψ x) = ι ψ x := by
+  simp only [ι, map_add, map_mul, map_pow, map_intCast, Complex.conj_ofReal]
+
+noncomputable def vec (r : R) : Fin 3 → ℂ := ![ι ψ r.1, ι ψ r.2.1, ι ψ r.2.2]
+
+include hψ in
+theorem inner3_vec (u v : R) : inner3 (vec ψ u) (vec ψ v) = ι ψ (dot u v) := by
+  simp only [inner3, vec, dot, Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, ι_add, ι_mul ψ hψ, ι_conj]
+
+include hψ in
+theorem orth_sound {u v : R} (h : orth u v = true) : Orthogonal (vec ψ u) (vec ψ v) := by
+  have h' : dot u v = (0, 0, 0) := of_decide_eq_true h
+  unfold Orthogonal
+  rw [inner3_vec ψ hψ, h']
+  simp [ι]
+
+theorem ι_const {a : Int} (ha : a ≠ 0) : ι ψ (a, 0, 0) ≠ 0 := by
+  simp [ι, ha]
+
+theorem vec_ne_zero {r : R} (h : hasConst r = true) : vec ψ r ≠ 0 := by
+  apply vec_ne_zero_of
+  obtain ⟨⟨a0, b0⟩, ⟨a1, b1⟩, ⟨a2, b2⟩⟩ := r
+  simp only [hasConst, Bool.or_eq_true, Bool.and_eq_true, beq_iff_eq, bne_iff_ne, ne_eq] at h
+  simp only [vec, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
+  rcases h with (⟨rfl, h⟩ | ⟨rfl, h⟩) | ⟨rfl, h⟩
+  · exact Or.inl (ι_const ψ h)
+  · exact Or.inr (Or.inl (ι_const ψ h))
+  · exact Or.inr (Or.inr (ι_const ψ h))
+
+include hψ in
+/-- **The 47 rays admit no Kochen-Specker colouring**, for every real `ψ` with
+`ψ³ = ψ² + 1`. -/
+theorem uncolorable :
+    KSUncolorable (vset rays.length (fun i => vec ψ (rays.getD i zero))) :=
+  uncolorable_of_check sys _ (fun i hi => vec_ne_zero ψ (rays_ok i hi))
+    (fun _ _ _ _ h => orth_sound ψ hψ h) cert check_ok
+
+end
+
+/-- Such a `ψ` exists (so `uncolorable` is not vacuous): `t³ - t² - 1` is `-1` at `1` and
+`3` at `2`. -/
+theorem exists_psi : ∃ ψ : ℝ, ψ ^ 3 = ψ ^ 2 + 1 := by
+  have hc : ContinuousOn (fun t : ℝ => t ^ 3 - t ^ 2 - 1) (Set.Icc 1 2) := by fun_prop
+  obtain ⟨t, -, ht⟩ := intermediate_value_Icc (by norm_num : (1 : ℝ) ≤ 2) hc
+    (show (0 : ℝ) ∈ Set.Icc ((1 : ℝ) ^ 3 - 1 ^ 2 - 1) ((2 : ℝ) ^ 3 - 2 ^ 2 - 1) by norm_num)
+  exact ⟨t, by simp only at ht; linarith⟩
+
+end Supergolden47
+
+/-! ### The 45 words over `{0, ±1, ±x, ±x*}`, every `x` with `x * conj x = 2` -/
+
+namespace Circle45
+
+/-- `(a, b, c)` stands for `a + b x + c x*`. -/
+abbrev L := Int × Int × Int
+/-- `(q0, q1, q2, q3, q4)` stands for `q0 + q1 x + q2 x* + q3 x² + q4 x*²`. -/
+abbrev Q := Int × Int × Int × Int × Int
+abbrev R := L × L × L
+
+/-- `conj (a + b x + c x*) = a + c x + b x*`. -/
+def lconj (u : L) : L := (u.1, u.2.2, u.2.1)
+
+/-- Product of two linear forms, with `x x* = 2`. -/
+def lmul (u v : L) : Q :=
+  (u.1 * v.1 + 2 * (u.2.1 * v.2.2 + u.2.2 * v.2.1),
+   u.1 * v.2.1 + u.2.1 * v.1,
+   u.1 * v.2.2 + u.2.2 * v.1,
+   u.2.1 * v.2.1,
+   u.2.2 * v.2.2)
+
+def qadd (p q : Q) : Q :=
+  (p.1 + q.1, p.2.1 + q.2.1, p.2.2.1 + q.2.2.1, p.2.2.2.1 + q.2.2.2.1, p.2.2.2.2 + q.2.2.2.2)
+
+def dot (u v : R) : Q :=
+  qadd (qadd (lmul (lconj u.1) v.1) (lmul (lconj u.2.1) v.2.1)) (lmul (lconj u.2.2) v.2.2)
+
+def orth (u v : R) : Bool := decide (dot u v = (0, 0, 0, 0, 0))
+
+def hasConst (r : R) : Bool :=
+  (r.1.2 == (0, 0) && r.1.1 != 0) || (r.2.1.2 == (0, 0) && r.2.1.1 != 0) ||
+  (r.2.2.2 == (0, 0) && r.2.2.1 != 0)
+
+def zero : R := ((0, 0, 0), (0, 0, 0), (0, 0, 0))
+
+-- BEGIN GENERATED (circle45)
+/-- Generated by ks_lean_export.py: 45 rays, 98 orthogonal pairs, 22 triads; certificate
+    with 1359 nodes. -/
+def rays : List R := [
+  ((0, 0, 0), (0, 0, 0), (1, 0, 0)),
+  ((0, 0, 0), (1, 0, 0), (0, 0, 0)),
+  ((0, 0, 0), (1, 0, 0), (1, 0, 0)),
+  ((0, 0, 0), (1, 0, 0), (-1, 0, 0)),
+  ((0, 0, 0), (1, 0, 0), (0, 1, 0)),
+  ((0, 0, 0), (1, 0, 0), (0, -1, 0)),
+  ((0, 0, 0), (0, 0, 1), (1, 0, 0)),
+  ((0, 0, 0), (0, 0, 1), (-1, 0, 0)),
+  ((1, 0, 0), (0, 0, 0), (0, 0, 0)),
+  ((1, 0, 0), (0, 0, 0), (1, 0, 0)),
+  ((1, 0, 0), (0, 0, 0), (-1, 0, 0)),
+  ((1, 0, 0), (0, 0, 0), (0, 1, 0)),
+  ((1, 0, 0), (0, 0, 0), (0, -1, 0)),
+  ((1, 0, 0), (0, 0, 0), (0, 0, 1)),
+  ((1, 0, 0), (0, 0, 0), (0, 0, -1)),
+  ((1, 0, 0), (1, 0, 0), (0, 0, 0)),
+  ((1, 0, 0), (1, 0, 0), (0, 1, 0)),
+  ((1, 0, 0), (1, 0, 0), (0, -1, 0)),
+  ((1, 0, 0), (1, 0, 0), (0, 0, 1)),
+  ((1, 0, 0), (1, 0, 0), (0, 0, -1)),
+  ((1, 0, 0), (-1, 0, 0), (0, 0, 0)),
+  ((1, 0, 0), (-1, 0, 0), (0, 1, 0)),
+  ((1, 0, 0), (-1, 0, 0), (0, -1, 0)),
+  ((1, 0, 0), (-1, 0, 0), (0, 0, 1)),
+  ((1, 0, 0), (-1, 0, 0), (0, 0, -1)),
+  ((1, 0, 0), (0, 0, 1), (0, 0, 0)),
+  ((1, 0, 0), (0, 0, 1), (1, 0, 0)),
+  ((1, 0, 0), (0, 0, 1), (-1, 0, 0)),
+  ((1, 0, 0), (0, 0, -1), (0, 0, 0)),
+  ((1, 0, 0), (0, 0, -1), (1, 0, 0)),
+  ((1, 0, 0), (0, 0, -1), (-1, 0, 0)),
+  ((0, 1, 0), (0, 0, 0), (1, 0, 0)),
+  ((0, 1, 0), (0, 0, 0), (-1, 0, 0)),
+  ((0, 1, 0), (1, 0, 0), (0, 0, 0)),
+  ((0, 1, 0), (1, 0, 0), (1, 0, 0)),
+  ((0, 1, 0), (1, 0, 0), (-1, 0, 0)),
+  ((0, 1, 0), (-1, 0, 0), (0, 0, 0)),
+  ((0, 1, 0), (-1, 0, 0), (1, 0, 0)),
+  ((0, 1, 0), (-1, 0, 0), (-1, 0, 0)),
+  ((0, 0, 1), (0, 0, 0), (1, 0, 0)),
+  ((0, 0, 1), (0, 0, 0), (-1, 0, 0)),
+  ((0, 0, 1), (1, 0, 0), (1, 0, 0)),
+  ((0, 0, 1), (1, 0, 0), (-1, 0, 0)),
+  ((0, 0, 1), (-1, 0, 0), (1, 0, 0)),
+  ((0, 0, 1), (-1, 0, 0), (-1, 0, 0))]
+
+def cert : Cert :=
+  (.split 1 (.split 0 (.pair 0 1) (.split 8 (.pair 1 8) (.split 9 (.pair 1 9) (.split 10 (.pair 1 10) (.split 11 (.pair 1 11) (.split 12 (.pair 1 12) (.split 13 (.pair 1 13) (.split 14 (.pair 1 14) (.split 31 (.pair 1 31) (.split 32 (.pair 1 32) (.split 39 (.pair 1 39) (.split 40 (.pair 1 40) (.split 2 (.split 3 (.pair 2 3) (.split 35 (.pair 2 35) (.split 37 (.pair 2 37) (.split 42 (.pair 2 42) (.split 43 (.pair 2 43) (.split 15 (.split 20 (.pair 15 20) (.split 21 (.pair 15 21) (.split 22 (.pair 15 22) (.split 23 (.pair 15 23) (.split 24 (.pair 15 24) (.split 4 (.split 7 (.pair 4 7) (.split 27 (.pair 4 27) (.split 29 (.pair 4 29) (.split 26 (.split 5 (.pair 5 26) (.split 36 (.pair 26 36) (.split 6 (.split 17 (.pair 6 17) (.split 16 (.split 25 (.split 38 (.pair 25 38) (.split 30 (.split 33 (.pair 30 33) (.split 28 (.split 34 (.pair 28 34) (.triad 3 34 38)) (.triad 0 28 33))) (.triad 9 27 30))) (.triad 0 25 36)) (.triad 16 17 20))) (.triad 5 6 8)))) (.triad 10 26 29))))) (.split 7 (.split 16 (.pair 7 16) (.split 17 (.split 6 (.pair 6 17) (.split 5 (.split 26 (.pair 5 26) (.split 30 (.pair 5 30) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 38 (.pair 25 38) (.split 29 (.split 33 (.pair 29 33) (.split 28 (.split 34 (.pair 28 34) (.triad 3 34 38)) (.triad 0 28 33))) (.triad 10 26 29))) (.triad 0 25 36))) (.triad 9 27 30)))) (.triad 5 6 8))) (.triad 16 17 20))) (.triad 4 7 8)))))))) (.split 20 (.split 16 (.pair 16 20) (.split 17 (.pair 17 20) (.split 18 (.pair 18 20) (.split 19 (.pair 19 20) (.split 4 (.split 7 (.pair 4 7) (.split 27 (.pair 4 27) (.split 29 (.pair 4 29) (.split 26 (.split 5 (.pair 5 26) (.split 36 (.pair 26 36) (.split 6 (.split 21 (.pair 6 21) (.split 22 (.split 25 (.split 38 (.pair 25 38) (.split 30 (.split 33 (.pair 30 33) (.split 28 (.split 34 (.pair 28 34) (.triad 3 34 38)) (.triad 0 28 33))) (.triad 9 27 30))) (.triad 0 25 36)) (.triad 15 21 22))) (.triad 5 6 8)))) (.triad 10 26 29))))) (.split 7 (.split 22 (.pair 7 22) (.split 21 (.split 6 (.pair 6 21) (.split 5 (.split 26 (.pair 5 26) (.split 30 (.pair 5 30) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 38 (.pair 25 38) (.split 29 (.split 33 (.pair 29 33) (.split 28 (.split 34 (.pair 28 34) (.triad 3 34 38)) (.triad 0 28 33))) (.triad 10 26 29))) (.triad 0 25 36))) (.triad 9 27 30)))) (.triad 5 6 8))) (.triad 15 21 22))) (.triad 4 7 8))))))) (.triad 0 15 20)))))))) (.split 3 (.split 34 (.pair 3 34) (.split 38 (.pair 3 38) (.split 41 (.pair 3 41) (.split 44 (.pair 3 44) (.split 15 (.split 20 (.pair 15 20) (.split 21 (.pair 15 21) (.split 22 (.pair 15 22) (.split 23 (.pair 15 23) (.split 24 (.pair 15 24) (.split 4 (.split 7 (.pair 4 7) (.split 27 (.pair 4 27) (.split 29 (.pair 4 29) (.split 26 (.split 5 (.pair 5 26) (.split 36 (.pair 26 36) (.split 6 (.split 17 (.pair 6 17) (.split 16 (.split 25 (.split 37 (.pair 25 37) (.split 30 (.split 33 (.pair 30 33) (.split 28 (.split 35 (.pair 28 35) (.triad 2 35 37)) (.triad 0 28 33))) (.triad 9 27 30))) (.triad 0 25 36)) (.triad 16 17 20))) (.triad 5 6 8)))) (.triad 10 26 29))))) (.split 7 (.split 16 (.pair 7 16) (.split 17 (.split 6 (.pair 6 17) (.split 5 (.split 26 (.pair 5 26) (.split 30 (.pair 5 30) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 37 (.pair 25 37) (.split 29 (.split 33 (.pair 29 33) (.split 28 (.split 35 (.pair 28 35) (.triad 2 35 37)) (.triad 0 28 33))) (.triad 10 26 29))) (.triad 0 25 36))) (.triad 9 27 30)))) (.triad 5 6 8))) (.triad 16 17 20))) (.triad 4 7 8)))))))) (.split 20 (.split 16 (.pair 16 20) (.split 17 (.pair 17 20) (.split 18 (.pair 18 20) (.split 19 (.pair 19 20) (.split 4 (.split 7 (.pair 4 7) (.split 27 (.pair 4 27) (.split 29 (.pair 4 29) (.split 26 (.split 5 (.pair 5 26) (.split 36 (.pair 26 36) (.split 6 (.split 21 (.pair 6 21) (.split 22 (.split 25 (.split 37 (.pair 25 37) (.split 30 (.split 33 (.pair 30 33) (.split 28 (.split 35 (.pair 28 35) (.triad 2 35 37)) (.triad 0 28 33))) (.triad 9 27 30))) (.triad 0 25 36)) (.triad 15 21 22))) (.triad 5 6 8)))) (.triad 10 26 29))))) (.split 7 (.split 22 (.pair 7 22) (.split 21 (.split 6 (.pair 6 21) (.split 5 (.split 26 (.pair 5 26) (.split 30 (.pair 5 30) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 37 (.pair 25 37) (.split 29 (.split 33 (.pair 29 33) (.split 28 (.split 35 (.pair 28 35) (.triad 2 35 37)) (.triad 0 28 33))) (.triad 10 26 29))) (.triad 0 25 36))) (.triad 9 27 30)))) (.triad 5 6 8))) (.triad 15 21 22))) (.triad 4 7 8))))))) (.triad 0 15 20))))))) (.triad 2 3 8))))))))))))))) (.split 0 (.split 8 (.pair 0 8) (.split 15 (.pair 0 15) (.split 20 (.pair 0 20) (.split 25 (.pair 0 25) (.split 28 (.pair 0 28) (.split 33 (.pair 0 33) (.split 36 (.pair 0 36) (.split 2 (.split 3 (.pair 2 3) (.split 35 (.pair 2 35) (.split 37 (.pair 2 37) (.split 42 (.pair 2 42) (.split 43 (.pair 2 43) (.split 9 (.split 10 (.pair 9 10) (.split 27 (.pair 9 27) (.split 30 (.pair 9 30) (.split 4 (.split 7 (.pair 4 7) (.split 29 (.pair 4 29) (.split 26 (.split 5 (.pair 5 26) (.split 6 (.split 17 (.pair 6 17) (.split 21 (.pair 6 21) (.split 16 (.split 40 (.pair 16 40) (.split 11 (.split 44 (.pair 11 44) (.split 22 (.split 39 (.pair 22 39) (.split 12 (.split 41 (.pair 12 41) (.triad 3 41 44)) (.triad 1 12 39))) (.triad 15 21 22))) (.triad 1 11 40))) (.triad 16 17 20)))) (.triad 5 6 8))) (.triad 10 26 29)))) (.split 7 (.split 16 (.pair 7 16) (.split 22 (.pair 7 22) (.split 17 (.split 6 (.pair 6 17) (.split 39 (.pair 17 39) (.split 5 (.split 26 (.pair 5 26) (.split 12 (.split 41 (.pair 12 41) (.split 21 (.split 40 (.pair 21 40) (.split 11 (.split 44 (.pair 11 44) (.triad 3 41 44)) (.triad 1 11 40))) (.triad 15 21 22))) (.triad 1 12 39))) (.triad 5 6 8)))) (.triad 16 17 20)))) (.triad 4 7 8)))))) (.split 10 (.split 26 (.pair 10 26) (.split 29 (.pair 10 29) (.split 4 (.split 7 (.pair 4 7) (.split 27 (.pair 4 27) (.split 30 (.split 5 (.pair 5 30) (.split 6 (.split 17 (.pair 6 17) (.split 21 (.pair 6 21) (.split 16 (.split 40 (.pair 16 40) (.split 11 (.split 44 (.pair 11 44) (.split 22 (.split 39 (.pair 22 39) (.split 12 (.split 41 (.pair 12 41) (.triad 3 41 44)) (.triad 1 12 39))) (.triad 15 21 22))) (.triad 1 11 40))) (.triad 16 17 20)))) (.triad 5 6 8))) (.triad 9 27 30)))) (.split 7 (.split 16 (.pair 7 16) (.split 22 (.pair 7 22) (.split 17 (.split 6 (.pair 6 17) (.split 39 (.pair 17 39) (.split 5 (.split 30 (.pair 5 30) (.split 12 (.split 41 (.pair 12 41) (.split 21 (.split 40 (.pair 21 40) (.split 11 (.split 44 (.pair 11 44) (.triad 3 41 44)) (.triad 1 11 40))) (.triad 15 21 22))) (.triad 1 12 39))) (.triad 5 6 8)))) (.triad 16 17 20)))) (.triad 4 7 8))))) (.triad 1 9 10)))))))) (.split 3 (.split 34 (.pair 3 34) (.split 38 (.pair 3 38) (.split 41 (.pair 3 41) (.split 44 (.pair 3 44) (.split 9 (.split 10 (.pair 9 10) (.split 27 (.pair 9 27) (.split 30 (.pair 9 30) (.split 4 (.split 7 (.pair 4 7) (.split 29 (.pair 4 29) (.split 26 (.split 5 (.pair 5 26) (.split 6 (.split 17 (.pair 6 17) (.split 21 (.pair 6 21) (.split 16 (.split 40 (.pair 16 40) (.split 11 (.split 42 (.pair 11 42) (.split 22 (.split 39 (.pair 22 39) (.split 12 (.split 43 (.pair 12 43) (.triad 2 42 43)) (.triad 1 12 39))) (.triad 15 21 22))) (.triad 1 11 40))) (.triad 16 17 20)))) (.triad 5 6 8))) (.triad 10 26 29)))) (.split 7 (.split 16 (.pair 7 16) (.split 22 (.pair 7 22) (.split 17 (.split 6 (.pair 6 17) (.split 39 (.pair 17 39) (.split 5 (.split 26 (.pair 5 26) (.split 12 (.split 43 (.pair 12 43) (.split 21 (.split 40 (.pair 21 40) (.split 11 (.split 42 (.pair 11 42) (.triad 2 42 43)) (.triad 1 11 40))) (.triad 15 21 22))) (.triad 1 12 39))) (.triad 5 6 8)))) (.triad 16 17 20)))) (.triad 4 7 8)))))) (.split 10 (.split 26 (.pair 10 26) (.split 29 (.pair 10 29) (.split 4 (.split 7 (.pair 4 7) (.split 27 (.pair 4 27) (.split 30 (.split 5 (.pair 5 30) (.split 6 (.split 17 (.pair 6 17) (.split 21 (.pair 6 21) (.split 16 (.split 40 (.pair 16 40) (.split 11 (.split 42 (.pair 11 42) (.split 22 (.split 39 (.pair 22 39) (.split 12 (.split 43 (.pair 12 43) (.triad 2 42 43)) (.triad 1 12 39))) (.triad 15 21 22))) (.triad 1 11 40))) (.triad 16 17 20)))) (.triad 5 6 8))) (.triad 9 27 30)))) (.split 7 (.split 16 (.pair 7 16) (.split 22 (.pair 7 22) (.split 17 (.split 6 (.pair 6 17) (.split 39 (.pair 17 39) (.split 5 (.split 30 (.pair 5 30) (.split 12 (.split 43 (.pair 12 43) (.split 21 (.split 40 (.pair 21 40) (.split 11 (.split 42 (.pair 11 42) (.triad 2 42 43)) (.triad 1 11 40))) (.triad 15 21 22))) (.triad 1 12 39))) (.triad 5 6 8)))) (.triad 16 17 20)))) (.triad 4 7 8))))) (.triad 1 9 10))))))) (.triad 2 3 8)))))))))) (.split 8 (.split 2 (.pair 2 8) (.split 3 (.pair 3 8) (.split 4 (.pair 4 8) (.split 5 (.pair 5 8) (.split 6 (.pair 6 8) (.split 7 (.pair 7 8) (.split 15 (.split 20 (.pair 15 20) (.split 21 (.pair 15 21) (.split 22 (.pair 15 22) (.split 23 (.pair 15 23) (.split 24 (.pair 15 24) (.split 9 (.split 10 (.pair 9 10) (.split 27 (.pair 9 27) (.split 30 (.pair 9 30) (.split 11 (.split 40 (.pair 11 40) (.split 42 (.pair 11 42) (.split 44 (.pair 11 44) (.split 41 (.split 12 (.pair 12 41) (.split 39 (.split 17 (.pair 17 39) (.split 16 (.split 43 (.split 13 (.split 32 (.pair 13 32) (.split 35 (.pair 13 35) (.split 38 (.pair 13 38) (.split 34 (.split 14 (.pair 14 34) (.split 28 (.pair 28 34) (.split 31 (.split 19 (.pair 19 31) (.split 18 (.split 33 (.split 29 (.pair 29 33) (.split 26 (.split 36 (.pair 26 36) (.split 25 (.split 37 (.pair 25 37) (.triad 2 35 37)) (.triad 0 25 36))) (.triad 10 26 29))) (.triad 0 28 33)) (.triad 18 19 20))) (.triad 1 14 31)))) (.triad 3 34 38))))) (.split 32 (.split 18 (.pair 18 32) (.split 19 (.split 31 (.pair 19 31) (.split 14 (.split 34 (.pair 14 34) (.split 37 (.pair 14 37) (.split 35 (.split 28 (.pair 28 35) (.split 33 (.split 29 (.pair 29 33) (.split 26 (.split 36 (.pair 26 36) (.split 25 (.split 38 (.pair 25 38) (.triad 3 34 38)) (.triad 0 25 36))) (.triad 10 26 29))) (.triad 0 28 33))) (.triad 2 35 37)))) (.triad 1 14 31))) (.triad 18 19 20))) (.triad 1 13 32))) (.triad 2 42 43)) (.triad 16 17 20))) (.triad 1 12 39))) (.triad 3 41 44))))) (.split 40 (.split 16 (.pair 16 40) (.split 17 (.split 39 (.pair 17 39) (.split 12 (.split 41 (.pair 12 41) (.split 43 (.pair 12 43) (.split 42 (.split 44 (.split 13 (.split 32 (.pair 13 32) (.split 35 (.pair 13 35) (.split 38 (.pair 13 38) (.split 34 (.split 14 (.pair 14 34) (.split 28 (.pair 28 34) (.split 31 (.split 19 (.pair 19 31) (.split 18 (.split 33 (.split 29 (.pair 29 33) (.split 26 (.split 36 (.pair 26 36) (.split 25 (.split 37 (.pair 25 37) (.triad 2 35 37)) (.triad 0 25 36))) (.triad 10 26 29))) (.triad 0 28 33)) (.triad 18 19 20))) (.triad 1 14 31)))) (.triad 3 34 38))))) (.split 32 (.split 18 (.pair 18 32) (.split 19 (.split 31 (.pair 19 31) (.split 14 (.split 34 (.pair 14 34) (.split 37 (.pair 14 37) (.split 35 (.split 28 (.pair 28 35) (.split 33 (.split 29 (.pair 29 33) (.split 26 (.split 36 (.pair 26 36) (.split 25 (.split 38 (.pair 25 38) (.triad 3 34 38)) (.triad 0 25 36))) (.triad 10 26 29))) (.triad 0 28 33))) (.triad 2 35 37)))) (.triad 1 14 31))) (.triad 18 19 20))) (.triad 1 13 32))) (.triad 3 41 44)) (.triad 2 42 43)))) (.triad 1 12 39))) (.triad 16 17 20))) (.triad 1 11 40)))))) (.split 10 (.split 26 (.pair 10 26) (.split 29 (.pair 10 29) (.split 11 (.split 40 (.pair 11 40) (.split 42 (.pair 11 42) (.split 44 (.pair 11 44) (.split 41 (.split 12 (.pair 12 41) (.split 39 (.split 17 (.pair 17 39) (.split 16 (.split 43 (.split 13 (.split 32 (.pair 13 32) (.split 35 (.pair 13 35) (.split 38 (.pair 13 38) (.split 34 (.split 14 (.pair 14 34) (.split 28 (.pair 28 34) (.split 31 (.split 19 (.pair 19 31) (.split 18 (.split 33 (.split 30 (.pair 30 33) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 37 (.pair 25 37) (.triad 2 35 37)) (.triad 0 25 36))) (.triad 9 27 30))) (.triad 0 28 33)) (.triad 18 19 20))) (.triad 1 14 31)))) (.triad 3 34 38))))) (.split 32 (.split 18 (.pair 18 32) (.split 19 (.split 31 (.pair 19 31) (.split 14 (.split 34 (.pair 14 34) (.split 37 (.pair 14 37) (.split 35 (.split 28 (.pair 28 35) (.split 33 (.split 30 (.pair 30 33) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 38 (.pair 25 38) (.triad 3 34 38)) (.triad 0 25 36))) (.triad 9 27 30))) (.triad 0 28 33))) (.triad 2 35 37)))) (.triad 1 14 31))) (.triad 18 19 20))) (.triad 1 13 32))) (.triad 2 42 43)) (.triad 16 17 20))) (.triad 1 12 39))) (.triad 3 41 44))))) (.split 40 (.split 16 (.pair 16 40) (.split 17 (.split 39 (.pair 17 39) (.split 12 (.split 41 (.pair 12 41) (.split 43 (.pair 12 43) (.split 42 (.split 44 (.split 13 (.split 32 (.pair 13 32) (.split 35 (.pair 13 35) (.split 38 (.pair 13 38) (.split 34 (.split 14 (.pair 14 34) (.split 28 (.pair 28 34) (.split 31 (.split 19 (.pair 19 31) (.split 18 (.split 33 (.split 30 (.pair 30 33) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 37 (.pair 25 37) (.triad 2 35 37)) (.triad 0 25 36))) (.triad 9 27 30))) (.triad 0 28 33)) (.triad 18 19 20))) (.triad 1 14 31)))) (.triad 3 34 38))))) (.split 32 (.split 18 (.pair 18 32) (.split 19 (.split 31 (.pair 19 31) (.split 14 (.split 34 (.pair 14 34) (.split 37 (.pair 14 37) (.split 35 (.split 28 (.pair 28 35) (.split 33 (.split 30 (.pair 30 33) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 38 (.pair 25 38) (.triad 3 34 38)) (.triad 0 25 36))) (.triad 9 27 30))) (.triad 0 28 33))) (.triad 2 35 37)))) (.triad 1 14 31))) (.triad 18 19 20))) (.triad 1 13 32))) (.triad 3 41 44)) (.triad 2 42 43)))) (.triad 1 12 39))) (.triad 16 17 20))) (.triad 1 11 40))))) (.triad 1 9 10)))))))) (.split 20 (.split 16 (.pair 16 20) (.split 17 (.pair 17 20) (.split 18 (.pair 18 20) (.split 19 (.pair 19 20) (.split 9 (.split 10 (.pair 9 10) (.split 27 (.pair 9 27) (.split 30 (.pair 9 30) (.split 11 (.split 40 (.pair 11 40) (.split 42 (.pair 11 42) (.split 44 (.pair 11 44) (.split 41 (.split 12 (.pair 12 41) (.split 39 (.split 22 (.pair 22 39) (.split 21 (.split 43 (.split 13 (.split 32 (.pair 13 32) (.split 35 (.pair 13 35) (.split 38 (.pair 13 38) (.split 34 (.split 14 (.pair 14 34) (.split 28 (.pair 28 34) (.split 31 (.split 24 (.pair 24 31) (.split 23 (.split 33 (.split 29 (.pair 29 33) (.split 26 (.split 36 (.pair 26 36) (.split 25 (.split 37 (.pair 25 37) (.triad 2 35 37)) (.triad 0 25 36))) (.triad 10 26 29))) (.triad 0 28 33)) (.triad 15 23 24))) (.triad 1 14 31)))) (.triad 3 34 38))))) (.split 32 (.split 23 (.pair 23 32) (.split 24 (.split 31 (.pair 24 31) (.split 14 (.split 34 (.pair 14 34) (.split 37 (.pair 14 37) (.split 35 (.split 28 (.pair 28 35) (.split 33 (.split 29 (.pair 29 33) (.split 26 (.split 36 (.pair 26 36) (.split 25 (.split 38 (.pair 25 38) (.triad 3 34 38)) (.triad 0 25 36))) (.triad 10 26 29))) (.triad 0 28 33))) (.triad 2 35 37)))) (.triad 1 14 31))) (.triad 15 23 24))) (.triad 1 13 32))) (.triad 2 42 43)) (.triad 15 21 22))) (.triad 1 12 39))) (.triad 3 41 44))))) (.split 40 (.split 21 (.pair 21 40) (.split 22 (.split 39 (.pair 22 39) (.split 12 (.split 41 (.pair 12 41) (.split 43 (.pair 12 43) (.split 42 (.split 44 (.split 13 (.split 32 (.pair 13 32) (.split 35 (.pair 13 35) (.split 38 (.pair 13 38) (.split 34 (.split 14 (.pair 14 34) (.split 28 (.pair 28 34) (.split 31 (.split 24 (.pair 24 31) (.split 23 (.split 33 (.split 29 (.pair 29 33) (.split 26 (.split 36 (.pair 26 36) (.split 25 (.split 37 (.pair 25 37) (.triad 2 35 37)) (.triad 0 25 36))) (.triad 10 26 29))) (.triad 0 28 33)) (.triad 15 23 24))) (.triad 1 14 31)))) (.triad 3 34 38))))) (.split 32 (.split 23 (.pair 23 32) (.split 24 (.split 31 (.pair 24 31) (.split 14 (.split 34 (.pair 14 34) (.split 37 (.pair 14 37) (.split 35 (.split 28 (.pair 28 35) (.split 33 (.split 29 (.pair 29 33) (.split 26 (.split 36 (.pair 26 36) (.split 25 (.split 38 (.pair 25 38) (.triad 3 34 38)) (.triad 0 25 36))) (.triad 10 26 29))) (.triad 0 28 33))) (.triad 2 35 37)))) (.triad 1 14 31))) (.triad 15 23 24))) (.triad 1 13 32))) (.triad 3 41 44)) (.triad 2 42 43)))) (.triad 1 12 39))) (.triad 15 21 22))) (.triad 1 11 40)))))) (.split 10 (.split 26 (.pair 10 26) (.split 29 (.pair 10 29) (.split 11 (.split 40 (.pair 11 40) (.split 42 (.pair 11 42) (.split 44 (.pair 11 44) (.split 41 (.split 12 (.pair 12 41) (.split 39 (.split 22 (.pair 22 39) (.split 21 (.split 43 (.split 13 (.split 32 (.pair 13 32) (.split 35 (.pair 13 35) (.split 38 (.pair 13 38) (.split 34 (.split 14 (.pair 14 34) (.split 28 (.pair 28 34) (.split 31 (.split 24 (.pair 24 31) (.split 23 (.split 33 (.split 30 (.pair 30 33) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 37 (.pair 25 37) (.triad 2 35 37)) (.triad 0 25 36))) (.triad 9 27 30))) (.triad 0 28 33)) (.triad 15 23 24))) (.triad 1 14 31)))) (.triad 3 34 38))))) (.split 32 (.split 23 (.pair 23 32) (.split 24 (.split 31 (.pair 24 31) (.split 14 (.split 34 (.pair 14 34) (.split 37 (.pair 14 37) (.split 35 (.split 28 (.pair 28 35) (.split 33 (.split 30 (.pair 30 33) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 38 (.pair 25 38) (.triad 3 34 38)) (.triad 0 25 36))) (.triad 9 27 30))) (.triad 0 28 33))) (.triad 2 35 37)))) (.triad 1 14 31))) (.triad 15 23 24))) (.triad 1 13 32))) (.triad 2 42 43)) (.triad 15 21 22))) (.triad 1 12 39))) (.triad 3 41 44))))) (.split 40 (.split 21 (.pair 21 40) (.split 22 (.split 39 (.pair 22 39) (.split 12 (.split 41 (.pair 12 41) (.split 43 (.pair 12 43) (.split 42 (.split 44 (.split 13 (.split 32 (.pair 13 32) (.split 35 (.pair 13 35) (.split 38 (.pair 13 38) (.split 34 (.split 14 (.pair 14 34) (.split 28 (.pair 28 34) (.split 31 (.split 24 (.pair 24 31) (.split 23 (.split 33 (.split 30 (.pair 30 33) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 37 (.pair 25 37) (.triad 2 35 37)) (.triad 0 25 36))) (.triad 9 27 30))) (.triad 0 28 33)) (.triad 15 23 24))) (.triad 1 14 31)))) (.triad 3 34 38))))) (.split 32 (.split 23 (.pair 23 32) (.split 24 (.split 31 (.pair 24 31) (.split 14 (.split 34 (.pair 14 34) (.split 37 (.pair 14 37) (.split 35 (.split 28 (.pair 28 35) (.split 33 (.split 30 (.pair 30 33) (.split 27 (.split 36 (.pair 27 36) (.split 25 (.split 38 (.pair 25 38) (.triad 3 34 38)) (.triad 0 25 36))) (.triad 9 27 30))) (.triad 0 28 33))) (.triad 2 35 37)))) (.triad 1 14 31))) (.triad 15 23 24))) (.triad 1 13 32))) (.triad 3 41 44)) (.triad 2 42 43)))) (.triad 1 12 39))) (.triad 15 21 22))) (.triad 1 11 40))))) (.triad 1 9 10))))))) (.triad 0 15 20))))))))) (.triad 0 1 8))))
+-- END GENERATED (circle45)
+
+def sys : Sys := ⟨rays.length, fun i j => orth (rays.getD i zero) (rays.getD j zero)⟩
+
+theorem check_ok : check sys [] cert = true := by decide +kernel
+
+theorem rays_ok : ∀ i, i < rays.length → hasConst (rays.getD i zero) = true := by
+  decide +kernel
+
+section
+variable (x : ℂ) (hx : x * (starRingEnd ℂ) x = 2)
+
+noncomputable def ιL (u : L) : ℂ := (u.1 : ℂ) + (u.2.1 : ℂ) * x + (u.2.2 : ℂ) * (starRingEnd ℂ) x
+
+noncomputable def ιQ (q : Q) : ℂ :=
+  (q.1 : ℂ) + (q.2.1 : ℂ) * x + (q.2.2.1 : ℂ) * (starRingEnd ℂ) x + (q.2.2.2.1 : ℂ) * x ^ 2 +
+    (q.2.2.2.2 : ℂ) * (starRingEnd ℂ) x ^ 2
+
+theorem ιQ_add (p q : Q) : ιQ x (qadd p q) = ιQ x p + ιQ x q := by
+  simp only [ιQ, qadd]; push_cast; ring
+
+include hx in
+theorem ι_mul (u v : L) : ιQ x (lmul u v) = ιL x u * ιL x v := by
+  obtain ⟨a, b, c⟩ := u
+  obtain ⟨d, e, f⟩ := v
+  simp only [ιQ, ιL, lmul]; push_cast
+  linear_combination (-((b : ℂ) * f + (c : ℂ) * e)) * hx
+
+theorem ι_conj (u : L) : (starRingEnd ℂ) (ιL x u) = ιL x (lconj u) := by
+  simp only [ιL, lconj, map_add, map_mul, map_intCast, Complex.conj_conj]; ring
+
+noncomputable def vec (r : R) : Fin 3 → ℂ := ![ιL x r.1, ιL x r.2.1, ιL x r.2.2]
+
+include hx in
+theorem inner3_vec (u v : R) : inner3 (vec x u) (vec x v) = ιQ x (dot u v) := by
+  simp only [inner3, vec, dot, Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, ιQ_add, ι_mul x hx, ι_conj]
+
+include hx in
+theorem orth_sound {u v : R} (h : orth u v = true) : Orthogonal (vec x u) (vec x v) := by
+  have h' : dot u v = (0, 0, 0, 0, 0) := of_decide_eq_true h
+  unfold Orthogonal
+  rw [inner3_vec x hx, h']
+  simp [ιQ]
+
+theorem ι_const {a : Int} (ha : a ≠ 0) : ιL x (a, 0, 0) ≠ 0 := by
+  simp [ιL, ha]
+
+theorem vec_ne_zero {r : R} (h : hasConst r = true) : vec x r ≠ 0 := by
+  apply vec_ne_zero_of
+  obtain ⟨⟨a0, b0⟩, ⟨a1, b1⟩, ⟨a2, b2⟩⟩ := r
+  simp only [hasConst, Bool.or_eq_true, Bool.and_eq_true, beq_iff_eq, bne_iff_ne, ne_eq] at h
+  simp only [vec, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
+  rcases h with (⟨rfl, h⟩ | ⟨rfl, h⟩) | ⟨rfl, h⟩
+  · exact Or.inl (ι_const x h)
+  · exact Or.inr (Or.inl (ι_const x h))
+  · exact Or.inr (Or.inr (ι_const x h))
+
+include hx in
+/-- **For every complex `x` with `|x|² = 2`, the 45 words admit no Kochen-Specker
+colouring.** -/
+theorem uncolorable :
+    KSUncolorable (vset rays.length (fun i => vec x (rays.getD i zero))) :=
+  uncolorable_of_check sys _ (fun i hi => vec_ne_zero x (rays_ok i hi))
+    (fun _ _ _ _ h => orth_sound x hx h) cert check_ok
+
+end
+
+end Circle45
+
+end KSNamed

@@ -45,9 +45,20 @@ Second project: `cd lean && lake build` (Lean 4.30 + mathlib). Audit: a file con
 `import Cyclotomic6n` and `#print axioms KSCyclotomic.six_divides_iff_ks_uncolorable`, run with
 `lake env lean`, lists `propext`, `Classical.choice`, `Quot.sound` (checked 2026-11-23).
 
+`lean/NamedSets.lean` (2026-11-23) is not yet a `lake build` target: build it with
+`cd lean && lake env lean NamedSets.lean` (about 30 s after `Cyclotomic6n` is built). Data
+between its GENERATED markers comes from `python ks_lean_export.py named`, which also checks
+that the ring arithmetic gives the stored graphs (107, 110 and 98 pairs). Audit: the three
+`uncolorable` theorems and `exists_psi` depend on `propext`, `Classical.choice`, `Quot.sound`
+only. Negative control: moving ray 0 from (0,0,1) to (1,0,1) in any one of the three sets
+makes `decide` report `check_ok` false.
+
 | Statement | Lean | Notes |
 |---|---|---|
 | For n >= 3, the pool of 0 and the n-th roots of unity is KS-uncolourable iff 6 divides n | `KSCyclotomic.six_divides_iff_ks_uncolorable` in `lean/Cyclotomic6n.lean` | Complex vectors over mathlib's `ℂ`; colourings are on vectors, equivalent to rays. |
+| The 43 rays over Q(sqrt -7) admit no KS colouring | `KSNamed.Heegner43.uncolorable` in `lean/NamedSets.lean` | Vectors in `ℂ³` with coordinates in Z[alpha], alpha = (1 + i sqrt 7)/2 a specific complex number; alpha^2 = alpha - 2 and conj alpha = 1 - alpha proved. Certificate 675 nodes. |
+| The 47 rays over {0, +-1, +-psi, +-psi^2} admit no KS colouring, for every real psi with psi^3 = psi^2 + 1 | `KSNamed.Supergolden47.uncolorable`; `exists_psi` shows such psi exists (intermediate value theorem) | Certificate 499 nodes. |
+| For every complex x with x conj(x) = 2, the 45 words of the circle theorem admit no KS colouring | `KSNamed.Circle45.uncolorable` | The uncolourability half of Theorem (modulus-2 circle), for the whole circle. Inner products are reduced with x conj(x) = 2 only, so every orthogonality used holds at every x on the circle. Certificate 1359 nodes. Minimality of 45 is not in Lean. |
 | The pool for n = 6 is uncolourable | `KSCyclotomic.cabello_S6_uncolorable` | 33 rays over Z[omega] from `ks_lean_export.py eisenstein`; orthogonality recomputed in Z[omega] and carried to `ℂ` by a proved embedding; certificate 1035 nodes, `decide +kernel`. Negative control: moving ray 0 from (0,0,1) to (0,1,1) makes `decide` report the check false. (Moving it to (0,0,1+omega) does not: that is the same ray.) |
 
 ## Statements of the paper
@@ -59,7 +70,7 @@ Second project: `cd lean && lake build` (Lean 4.30 + mathlib). Audit: a file con
 | Theorem (Real three-symbol alphabets) | For real 1 < x < y the pool of {0, +-1, +-x, +-y} is uncolourable iff two letters have ratio 2 or sqrt 2, or at eight further points; minimum 31 (ratio 2), 33 (ratio sqrt 2 only), 42 to 57 at the eight points; no KS set with real coordinates in {0, +-a, +-b, +-c} has fewer than 31 rays | Paper + Certified | `ks_three_symbol_real.py`: scan in exact arithmetic (rational isolating intervals, prime components via a separating form), 162 cases from 125 irreducible factors, identical to the earlier floating-point scan; check: all 162 graphs (ray partition and edge set) rebuilt from 60-digit coordinates, 0 failures, with positive and negative controls; certify: all 71 uncolourable cases certified with `ks_certify_fast4.py`, each with a separate run excluding sets below 31; witness: a checked minimum set for every case. Review round 5 (2026-11-23): classification confirmed by an independent exact enumeration; its objections (floating-point decisions, check skipped 19 curves and compared counts only, no witnesses archived) fixed the same day. |
 | Lemma (vanishing sums of roots of unity) | Two n-th roots of unity sum to zero iff 2 divides n; three iff 3 divides n | Paper | |
 | Theorem (6 divides n) | The pool of 0 and the n-th roots of unity is uncolourable iff 6 divides n | Paper + Lean (n >= 3) | Explicit colourings in three cases; checked by SAT for n <= 30. `lean/Cyclotomic6n.lean` proves `six_divides_iff_ks_uncolorable` with no `sorry` (built 2026-11-23); see Lean-checked above. n = 1, 2: the pools are subsets of the colourable pool over {0, +-1}. |
-| Theorem (modulus-2 circle) | For every x with |x|^2 = 2 the pool of {0, +-1, +-x, +-x*} is uncolourable; a fixed list of 45 words suffices; no shorter list of words does; the generic pool is colourable | Paper + Certified | `ks_modulus2_circle.py`; certificate of 408 colourable sets archived in `results/modulus2_circle.json`, re-checked with a second solver in review round 2. |
+| Theorem (modulus-2 circle) | For every x with |x|^2 = 2 the pool of {0, +-1, +-x, +-x*} is uncolourable; a fixed list of 45 words suffices; no shorter list of words does; the generic pool is colourable | Paper + Certified; uncolourability of the 45 words also Lean | `ks_modulus2_circle.py`; certificate of 408 colourable sets archived in `results/modulus2_circle.json`, re-checked with a second solver in review round 2. Lean: `KSNamed.Circle45.uncolorable` (every x on the circle); "no shorter list" and "generic pool colourable" are not in Lean. |
 | Theorem (Conjugate-closed alphabets) | The pool of {0, +-1, +-x, +-x*} is uncolourable exactly when |x|^2 = 2, or |x|^2 = 1/2, or x*/x is a primitive third or sixth root of unity, or x = +-2, +-1/2. Minimum 45 on |x|^2 = 2 and 33 on the other curves away from special points | Paper + Certified | Reviewed in round 4 (correct with wording fixes; 14 pools rebuilt independently). Reduction to 68 cases in the paper; cases by `ks_conjugate_closed_theorem.py`; smallest sets identified by `ks_conjugate_closed_identify.py`. The lines also follow from the two-symbol theorem by Restriction. |
 | Same theorem, part (iii) | No uncolourable subset of fewer than 31 rays for any x other than +-1 +- i | Certified | Three of the cases by separate runs that only exclude sets below a given size (`results/conjugate_closed_reruns.jsonl`). |
 | Same theorem, x = eta/sqrt 2 and x = 2 zeta (zeta = exp(i pi/3), eta = exp(i pi/6)) | Minimum 33 | Certified | 33-ray witness plus a run excluding every set below 33 (2026-11-23). |
@@ -87,7 +98,7 @@ need time or faster solvers, not new ideas.
 | Minima of the six completed catalogue pools | Bounds 33, 43, 47, 47, 51, 60 (catalogue row above). |
 | All minimum sets on the circle |x|^2 = 2 | One 45-word set exhibited; enumeration not run. |
 | Certifier time budget | `ks_certify_fast4.py` checks the budget only between solver calls; the eta/sqrt 2 validation ran 3 h 20 min past its 1 h budget (stopped 2026-11-23 12:45 PT, never counted). Fix before any long run. |
-| Lean: uncolourability of the 43-, 45- and 47-ray sets; a minimality-certificate checker | Needs a Lean session, not compute. See "Next for Lean". |
+| Lean: a minimality-certificate checker | Needs a Lean session, not compute. See "Next for Lean". (Uncolourability of the 43-, 45- and 47-ray sets: done 2026-11-23.) |
 
 ## Open
 
@@ -105,6 +116,6 @@ No method in hand.
 ## Next for Lean
 
 1. Done 2026-11-23: `cabello_S6_uncolorable` discharged; the 6-divides-n theorem is kernel-checked for n >= 3.
-2. Uncolourability of the other named sets (the 43-, 45- and 47-ray sets).
+2. Done 2026-11-23: uncolourability of the 43- and 47-ray sets, and of the 45 words for every x on the circle (`lean/NamedSets.lean`).
 3. Minimality: a checker for the certificates (a list of colourable sets with their colourings, plus a refutation of a small hitting set).
 4. The classification theorems, where the finite cases are easy and the reduction over the complex numbers is the hard part.

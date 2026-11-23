@@ -8,6 +8,8 @@ Nothing computed here is trusted by Lean: a wrong tree simply fails to check.
 Usage:  python ks_lean_export.py              (CK31 and Peres33 into lean-ks/KS/)
         python ks_lean_export.py eisenstein   (33 Eisenstein rays into lean/Cyclotomic6n.lean,
                                                between the BEGIN/END GENERATED markers)
+        python ks_lean_export.py named        (43-, 47- and 45-ray sets into
+                                               lean/NamedSets.lean, same markers)
 """
 import sys
 from pathlib import Path
@@ -136,9 +138,157 @@ def cert : Cert :=
           % (len(coords), len(pairs), len(triads), nodes, path.name))
 
 
+# ---------------------------------------------------------------------------------------
+# lean/NamedSets.lean: the 43-, 47- and 45-ray sets.  Each ring's arithmetic below mirrors
+# the Lean definitions (zmul / lmul / dot) exactly, so the graph certified here is the graph
+# Lean recomputes; Lean trusts none of it.
+
+def h_mul(x, y):            # Z[alpha], alpha^2 = alpha - 2
+    return (x[0] * y[0] - 2 * x[1] * y[1], x[0] * y[1] + x[1] * y[0] + x[1] * y[1])
+
+
+def h_dot(u, v):
+    s = (0, 0)
+    for a, b in zip(u, v):
+        p = h_mul((a[0] + a[1], -a[1]), b)
+        s = (s[0] + p[0], s[1] + p[1])
+    return s
+
+
+def p_mul(x, y):            # Z[psi], psi^3 = psi^2 + 1
+    p0 = x[0] * y[0]
+    p1 = x[0] * y[1] + x[1] * y[0]
+    p2 = x[0] * y[2] + x[1] * y[1] + x[2] * y[0]
+    p3 = x[1] * y[2] + x[2] * y[1]
+    p4 = x[2] * y[2]
+    return (p0 + p3 + p4, p1 + p4, p2 + p3 + p4)
+
+
+def p_dot(u, v):
+    s = (0, 0, 0)
+    for a, b in zip(u, v):
+        s = tuple(i + j for i, j in zip(s, p_mul(a, b)))
+    return s
+
+
+def c_mul(u, v):            # linear forms a + b x + c x*, with x x* = 2
+    return (u[0] * v[0] + 2 * (u[1] * v[2] + u[2] * v[1]), u[0] * v[1] + u[1] * v[0],
+            u[0] * v[2] + u[2] * v[0], u[1] * v[1], u[2] * v[2])
+
+
+def c_dot(u, v):
+    s = (0, 0, 0, 0, 0)
+    for a, b in zip(u, v):
+        s = tuple(i + j for i, j in zip(s, c_mul((a[0], a[2], a[1]), b)))
+    return s
+
+
+def graph(coords, dot):
+    n = len(coords)
+    z = dot(coords[0], coords[0])
+    zero = tuple(0 for _ in z)
+    adj = [[dot(coords[i], coords[j]) == zero for j in range(n)] for i in range(n)]
+    for i in range(n):
+        assert not adj[i][i], "ray %d orthogonal to itself" % i
+        for j in range(n):
+            assert adj[i][j] == adj[j][i], "orthogonality not symmetric"
+    pairs = [(i, j) for i in range(n) for j in range(i + 1, n) if adj[i][j]]
+    triads = [(i, j, k) for i, j in pairs for k in range(j + 1, n) if adj[i][k] and adj[j][k]]
+    return pairs, triads
+
+
+def has_const(r):
+    return any(c[0] != 0 and all(v == 0 for v in c[1:]) for c in r)
+
+
+def heegner43_coords():
+    """Canonical rays (first nonzero coordinate 1) times the least s in {1, 2} that makes
+    every coordinate integral in Z[alpha].  F7 stores a + b sqrt(-7); sqrt(-7) = 2 alpha - 1."""
+    from fractions import Fraction
+    rays, orth, bases = B.load_set("heegner7-43")
+    out = []
+    for ray in rays:
+        for s in (1, 2):
+            row = []
+            for x in ray:
+                a, b = (Fraction(c) * s for c in x.c)
+                row.append((a - b, 2 * b))
+            if all(v.denominator == 1 for c in row for v in c):
+                out.append(tuple((int(c[0]), int(c[1])) for c in row))
+                break
+        else:
+            raise AssertionError("ray not integral after scaling by 2")
+    return out, orth, bases
+
+
+def supergolden47_coords():
+    rays, orth, bases = B.load_set("supergolden2-47")
+    out = []
+    for ray in rays:
+        assert all(v.denominator == 1 for x in ray for v in x.c), "non-integral in Z[psi]"
+        out.append(tuple(tuple(int(v) for v in x.c) for x in ray))
+    return out, orth, bases
+
+
+LETTERS = {"0": (0, 0, 0), "1": (1, 0, 0), "-1": (-1, 0, 0), "x": (0, 1, 0), "-x": (0, -1, 0),
+           "x*": (0, 0, 1), "-x*": (0, 0, -1)}
+
+
+def circle45_coords():
+    import json
+    d = json.loads((HERE / "results" / "modulus2_circle.json").read_text(encoding="utf-8"))
+    words = [d["words"][i] for i in d["W"]]
+    pos = {w: k for k, w in enumerate(d["W"])}
+    stored = {frozenset((pos[i], pos[j])) for i, j in d["W_pairs"]}
+    return [tuple(LETTERS[c] for c in w) for w in words], stored, None
+
+
+def fmt(c):
+    return "(" + ", ".join(str(v) for v in c) + ")"
+
+
+def emit_named(key):
+    """Fill one GENERATED block of lean/NamedSets.lean."""
+    get, dot = {"heegner43": (heegner43_coords, h_dot),
+                "supergolden47": (supergolden47_coords, p_dot),
+                "circle45": (circle45_coords, c_dot)}[key]
+    coords, stored, _ = get()
+    pairs, triads = graph(coords, dot)
+    mine = {frozenset(p) for p in pairs}
+    # Python's exact-field graph (or the stored 45-word list) must agree with the ring
+    # arithmetic Lean will use; a disagreement is reported, never papered over.
+    if mine != {frozenset(p) for p in stored}:
+        raise AssertionError("%s: ring graph %d pairs, stored graph %d pairs"
+                             % (key, len(mine), len(stored)))
+    assert all(has_const(r) for r in coords), "a ray has no nonzero integer coordinate"
+    cert, nodes = refute(len(coords), pairs, triads)
+    rays = ",\n  ".join("(" + ", ".join(fmt(c) for c in r) + ")" for r in coords)
+    begin, end = "-- BEGIN GENERATED (%s)" % key, "-- END GENERATED (%s)" % key
+    block = """%s
+/-- Generated by ks_lean_export.py: %d rays, %d orthogonal pairs, %d triads; certificate
+    with %d nodes. -/
+def rays : List R := [
+  %s]
+
+def cert : Cert :=
+  %s
+%s""" % (begin, len(coords), len(pairs), len(triads), nodes, rays, cert, end)
+    path = HERE / "lean" / "NamedSets.lean"
+    text = path.read_text(encoding="utf-8")
+    assert text.count(begin) == 1 and text.count(end) == 1
+    i, j = text.index(begin), text.index(end)
+    path.write_text(text[:i] + block + text[j + len(end):], encoding="utf-8", newline="\n")
+    print("%s: %d rays, %d pairs, %d triads, certificate %d nodes -> %s"
+          % (key, len(coords), len(pairs), len(triads), nodes, path.name))
+
+
 def main():
     if sys.argv[1:] == ["eisenstein"]:
         emit_eisenstein(HERE / "lean" / "Cyclotomic6n.lean")
+        return
+    if sys.argv[1:] == ["named"]:
+        for key in ("heegner43", "supergolden47", "circle45"):
+            emit_named(key)
         return
     c, p, t = from_set("ck31", False)
     emit("CK31", "The 31 rays of Conway and Kochen, integer coordinates.", 2, c, p, t)
