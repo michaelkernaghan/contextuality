@@ -42,4 +42,8 @@ Target: about 20 pages.
 - Lean, done after v10.4 (`lean/NamedSets.lean`): uncolourability of the 43- and 47-ray
   sets, and of the 45 words for every x with |x|^2 = 2. Say so where the paper states the
   circle theorem and the catalogue minima, and add the file to the reproducibility list.
-- Lean minimality checker, if it exists by then.
+- Lean minimality, done after v10.4 (`lean/Minimality.lean`): minimum 31 (integer pool), 43
+  (Q(sqrt -7)), 33 (Eisenstein), 33 (Peres), 47 (supergolden, every real root psi). The
+  catalogue table can mark these minima "Lean" and the methods paragraph can say the
+  certificate (colourable sets plus a lower-bound tree) is kernel-checked. State the limit:
+  each pool is an explicit list in the Lean file.

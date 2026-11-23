@@ -45,8 +45,19 @@ Second project: `cd lean && lake build` (Lean 4.30 + mathlib). Audit: a file con
 `import Cyclotomic6n` and `#print axioms KSCyclotomic.six_divides_iff_ks_uncolorable`, run with
 `lake env lean`, lists `propext`, `Classical.choice`, `Quot.sound` (checked 2026-11-23).
 
-`lean/NamedSets.lean` (2026-11-23) is not yet a `lake build` target: build it with
-`cd lean && lake env lean NamedSets.lean` (about 30 s after `Cyclotomic6n` is built). Data
+`lean/Minimality.lean` (2026-11-23): minimum sizes. `lake build` checks it (about 8 minutes).
+Certificates come from `python ks_lean_minimality.py`: a family of colourable sets with their
+colourings, and a branching tree proving that no set of fewer than u rays meets the complement
+of every one of them (`KSMin.min_index` is the soundness theorem). The five `minimum_*`
+theorems depend on `propext`, `Classical.choice`, `Quot.sound` only. Negative controls are
+`example`s in the file, re-checked on every build: for each pool the checker rejects the bound
+u + 1, rejects the whole pool offered as a colourable set, and rejects a pair list with one
+pair removed. Limits: (1) each pool is the explicit list of vectors in the file; that this
+list is every ray with coordinates in the alphabet is not proved in Lean; (2) "minimum of the
+pool", not "minimum in dimension three"; (3) the circle's "no shorter list than 45 words" is
+not formalised.
+
+`lean/NamedSets.lean` (2026-11-23) is a `lake build` target. Data
 between its GENERATED markers comes from `python ks_lean_export.py named`, which also checks
 that the ring arithmetic gives the stored graphs (107, 110 and 98 pairs). Audit: the three
 `uncolorable` theorems and `exists_psi` depend on `propext`, `Classical.choice`, `Quot.sound`
@@ -59,6 +70,11 @@ makes `decide` report `check_ok` false.
 | The 43 rays over Q(sqrt -7) admit no KS colouring | `KSNamed.Heegner43.uncolorable` in `lean/NamedSets.lean` | Vectors in `ℂ³` with coordinates in Z[alpha], alpha = (1 + i sqrt 7)/2 a specific complex number; alpha^2 = alpha - 2 and conj alpha = 1 - alpha proved. Certificate 675 nodes. |
 | The 47 rays over {0, +-1, +-psi, +-psi^2} admit no KS colouring, for every real psi with psi^3 = psi^2 + 1 | `KSNamed.Supergolden47.uncolorable`; `exists_psi` shows such psi exists (intermediate value theorem) | Certificate 499 nodes. |
 | For every complex x with x conj(x) = 2, the 45 words of the circle theorem admit no KS colouring | `KSNamed.Circle45.uncolorable` | The uncolourability half of Theorem (modulus-2 circle), for the whole circle. Inner products are reduced with x conj(x) = 2 only, so every orthogonality used holds at every x on the circle. Certificate 1359 nodes. Minimality of 45 is not in Lean. |
+| Integer pool {0, +-1, +-2} (49 rays): some 31 rays are uncolourable and every set of fewer than 31 is colourable | `KSMin.IntPool.minimum_31` in `lean/Minimality.lean` | 166 colourable sets, lower-bound tree 969 nodes. |
+| Q(sqrt -7) pool {0, +-1, +-alpha, +-alpha*} (145 rays): minimum 43, in the same two-part sense | `KSMin.HeegnerPool.minimum_43` | 476 colourable sets, tree 13187 nodes. |
+| Eisenstein pool {0, +-1, +-omega, +-omega^2} (57 rays): minimum 33 | `KSMin.EisPool.minimum_33` | 1082 colourable sets, tree 49307 nodes. |
+| Peres pool {0, +-1, +-sqrt 2} (49 rays): minimum 33 | `KSMin.PeresPool.minimum_33` | 33 colourable sets, tree 1 node; uses `irrational_sqrt_two`. |
+| Supergolden pool {0, +-1, +-psi, +-psi^2} (109 rays): minimum 47, for every real psi with psi^3 = psi^2 + 1 | `KSMin.SupergoldenPool.minimum_47` | 534 colourable sets, tree 35699 nodes; `indep`: 1, psi, psi^2 independent over Z (no rational root, via `isInteger_of_is_root_of_monic`). |
 | The pool for n = 6 is uncolourable | `KSCyclotomic.cabello_S6_uncolorable` | 33 rays over Z[omega] from `ks_lean_export.py eisenstein`; orthogonality recomputed in Z[omega] and carried to `ℂ` by a proved embedding; certificate 1035 nodes, `decide +kernel`. Negative control: moving ray 0 from (0,0,1) to (0,1,1) makes `decide` report the check false. (Moving it to (0,0,1+omega) does not: that is the same ray.) |
 
 ## Statements of the paper
@@ -76,7 +92,7 @@ makes `decide` report `check_ok` false.
 | Same theorem, x = eta/sqrt 2 and x = 2 zeta (zeta = exp(i pi/3), eta = exp(i pi/6)) | Minimum 33 | Certified | 33-ray witness plus a run excluding every set below 33 (2026-11-23). |
 | Same theorem, two special points | Minimum is 32 or 33 at x = zeta/sqrt 2; between 24 and 45 at x = 1 + i | Bound; Pending (resources) | Eight-hour runs on 2026-11-23 did not terminate. |
 | Corollary (points of the circle) | Collapse to Peres's 33 rays at sqrt 2 and sqrt -2; contains the 43-ray set at (1 + sqrt -7)/2; the family is not one unitary class | Paper + Certified | |
-| Computed fact (Integer pool) | Minimum 31; exactly six minimum sets, one symmetry class | Certified | `ks_recertify_v10.py`, `ks_extras_v10.py` |
+| Computed fact (Integer pool) | Minimum 31; exactly six minimum sets, one symmetry class | Certified; minimum 31 also Lean | `ks_recertify_v10.py`, `ks_extras_v10.py` |
 | Computed fact (Peres pool) | Minimum 33, unique minimum set; same for sqrt -2 | Certified | |
 | Computed fact (pools not isomorphic) | The sqrt 2 and sqrt -2 pools have isomorphic minimum sets and non-isomorphic pools | Certified | VF2 |
 | Computed fact (Eisenstein pool) | 57 rays, minimum 33, exactly three minimum sets | Certified | |
@@ -98,7 +114,7 @@ need time or faster solvers, not new ideas.
 | Minima of the six completed catalogue pools | Bounds 33, 43, 47, 47, 51, 60 (catalogue row above). |
 | All minimum sets on the circle |x|^2 = 2 | One 45-word set exhibited; enumeration not run. |
 | Certifier time budget | `ks_certify_fast4.py` checks the budget only between solver calls; the eta/sqrt 2 validation ran 3 h 20 min past its 1 h budget (stopped 2026-11-23 12:45 PT, never counted). Fix before any long run. |
-| Lean: a minimality-certificate checker | Needs a Lean session, not compute. See "Next for Lean". (Uncolourability of the 43-, 45- and 47-ray sets: done 2026-11-23.) |
+| Lean: minimality of the remaining certified pools (sqrt -2; the completed pools with certified minima) | Checker done 2026-11-23; these are further runs of `ks_lean_minimality.py` plus a ring model each. |
 
 ## Open
 
@@ -117,5 +133,5 @@ No method in hand.
 
 1. Done 2026-11-23: `cabello_S6_uncolorable` discharged; the 6-divides-n theorem is kernel-checked for n >= 3.
 2. Done 2026-11-23: uncolourability of the 43- and 47-ray sets, and of the 45 words for every x on the circle (`lean/NamedSets.lean`).
-3. Minimality: a checker for the certificates (a list of colourable sets with their colourings, plus a refutation of a small hitting set).
+3. Done 2026-11-23: minimality checker (`lean/Minimality.lean`) and the minima 31, 43, 33, 33, 47 of five pools. Still open here: the sqrt -2 pool (same shape as Peres), the circle's "no shorter list than 45 words", and proving each pool list complete for its alphabet.
 4. The classification theorems, where the finite cases are easy and the reduction over the complex numbers is the hard part.

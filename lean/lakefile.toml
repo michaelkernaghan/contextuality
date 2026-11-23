@@ -1,5 +1,5 @@
 name = "ksCyclotomic"
-defaultTargets = ["Cyclotomic6n"]
+defaultTargets = ["Cyclotomic6n", "NamedSets", "Minimality"]
 
 [[require]]
 name = "mathlib"
@@ -8,3 +8,9 @@ rev = "v4.30.0"
 
 [[lean_lib]]
 name = "Cyclotomic6n"
+
+[[lean_lib]]
+name = "NamedSets"
+
+[[lean_lib]]
+name = "Minimality"
