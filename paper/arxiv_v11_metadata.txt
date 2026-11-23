@@ -1,0 +1,14 @@
+TITLE
+The Algebraic Landscape of Kochen-Specker Sets in Dimension Three
+
+AUTHORS
+Michael Kernaghan
+
+ABSTRACT
+The classic three-dimensional Kochen-Specker (KS) proofs take their ray coordinates from a small set of numbers: {0, +-1, +-sqrt(2)} for the 33 rays of Peres and {0, +-1, +-2} for the 31 rays of Conway and Kochen. We treat that set, the coordinate alphabet, as a parameter. An alphabet generates a finite pool of rays, and the pool is or is not KS-uncolorable. We determine the uncolorable alphabets in four families. (A) Two-symbol alphabets {0, +-1, +-x}, x complex: uncolorable only when x or 1/x is +-2, +-sqrt(2), +-sqrt(-2), or x is a primitive third or sixth root of unity; no KS set with such coordinates has fewer than 31 rays. (B) Real three-symbol alphabets {0, +-1, +-x, +-y} with 1 < x < y: uncolorable exactly when two letters have ratio 2 or sqrt(2), or at eight further points; again no KS set has fewer than 31 rays. (C) Conjugate-closed alphabets {0, +-1, +-x, +-x*}: uncolorable exactly when |x|^2 = 2, or |x|^2 = 1/2, or x*/x is a primitive third or sixth root of unity, or x is +-2 or +-1/2. The uncolorable alphabets are therefore not isolated. On the circle |x|^2 = 2 a fixed list of 45 words is uncolorable at every point, and no shorter fixed list is; the circle |x|^2 = 1/2 carries the 33-ray family of Gould and Aravind. (D) The pool of 0 and the n-th roots of unity is uncolorable if and only if 6 divides n. Minimum KS subsets are certified by exact computation for eleven named pools. The Lean proof assistant checks (D) for n >= 3, the uncolorability of the 45 words at every point of the circle, and the minima 31, 33, 33, 33, 43 and 47 of six pools. This version replaces the classification by "cancellation mechanisms" and "islands" proposed in versions 1-9, which did not survive checking; an appendix lists the withdrawn claims, among them a golden-ratio minimum of 52 (a 51-ray set exists).
+
+COMMENTS
+27 pages, 4 figures, 9 tables. Version 11 withdraws the classification of versions 1-9 (Appendix A) and replaces it with exact classification theorems; several results are checked in Lean 4. Code, data and Lean proofs: https://github.com/michaelkernaghan/contextuality (tag v11.1)
+
+MSC CLASS
+81P13, 05C15, 68V20

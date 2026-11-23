@@ -15,6 +15,10 @@ statement about one says nothing about the other" for raw and completed pools; t
 the open questions), fixed in v11.1. The reviewer did not run `lake build`; a transcript of the
 build and of the axiom audit (`lean/Audit.lean`) is in `results/lean_audit_v11.txt`.
 
+arXiv: v11.1 submitted 2026-11-23 as a replacement of arXiv:2603.16988 (submission
+submit/8411593, status "submitted", not yet announced). Metadata used:
+`paper/arxiv_v11_metadata.txt`.
+
 **Rule.** Nothing here is called machine-checked unless a Lean file proving exactly the
 recorded statement builds with no `sorry` and no axioms beyond `propext`, `Classical.choice`
 and `Quot.sound`. A counterexample to any entry is recorded here with the same standing as a
