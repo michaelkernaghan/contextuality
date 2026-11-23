@@ -14,7 +14,7 @@
    "1/2",
    "2"
   ],
-  "seconds": 5.1
+  "seconds": 5.3
  },
  "types": [
   {
@@ -30,8 +30,10 @@
    "pairs": 60,
    "triads": 4,
    "orbit": [
-    -1.071428571,
-    1.437472271
+    "-1/3",
+    "0",
+    "1",
+    "1/5"
    ],
    "status": "COLOURABLE"
   },
@@ -48,8 +50,10 @@
    "pairs": 114,
    "triads": 10,
    "orbit": [
-    -3.333333333,
-    0.0
+    "-10/3",
+    "0",
+    "1",
+    "0"
    ],
    "status": "COLOURABLE",
    "curve": "Im x = 0"
@@ -67,8 +71,10 @@
    "pairs": 72,
    "triads": 8,
    "orbit": [
-    -0.666666667,
-    0.942809042
+    "-1/2",
+    "0",
+    "1",
+    "1/2"
    ],
    "status": "COLOURABLE",
    "curve": "|x + 1|^2 = 1"
@@ -86,8 +92,10 @@
    "pairs": 66,
    "triads": 10,
    "orbit": [
-    -0.666666667,
-    1.247219129
+    "-1/3",
+    "0",
+    "1",
+    "7/18"
    ],
    "status": "COLOURABLE",
    "curve": "|x|^2 = 1/2"
@@ -105,8 +113,10 @@
    "pairs": 114,
    "triads": 10,
    "orbit": [
-    -0.333333333,
-    0.942809042
+    "-1/3",
+    "0",
+    "1",
+    "8/9"
    ],
    "status": "COLOURABLE",
    "curve": "|x|^2 = 1"
@@ -124,8 +134,10 @@
    "pairs": 66,
    "triads": 10,
    "orbit": [
-    -0.333333333,
-    1.374368542
+    "-1/3",
+    "0",
+    "1",
+    "17/9"
    ],
    "status": "COLOURABLE",
    "curve": "|x|^2 = 2"
@@ -143,8 +155,10 @@
    "pairs": 72,
    "triads": 8,
    "orbit": [
-    -1.333333333,
-    0.942809042
+    "-1/2",
+    "0",
+    "1",
+    "1/8"
    ],
    "status": "COLOURABLE",
    "curve": "|x - 1|^2 = 1"
@@ -162,8 +176,10 @@
    "pairs": 72,
    "triads": 8,
    "orbit": [
-    -0.5,
-    1.825741858
+    "-1/2",
+    "0",
+    "1",
+    "10/3"
    ],
    "status": "COLOURABLE",
    "curve": "Re x = -1/2"
@@ -181,8 +197,10 @@
    "pairs": 114,
    "triads": 10,
    "orbit": [
-    0.0,
-    0.547722558
+    "0",
+    "0",
+    "1",
+    "10/3"
    ],
    "status": "COLOURABLE",
    "curve": "Re x = 0"
@@ -200,8 +218,10 @@
    "pairs": 72,
    "triads": 8,
    "orbit": [
-    -0.5,
-    1.825741858
+    "-1/2",
+    "0",
+    "1",
+    "10/3"
    ],
    "status": "COLOURABLE",
    "curve": "Re x = 1/2"
@@ -219,8 +239,10 @@
    "pairs": 138,
    "triads": 26,
    "orbit": [
-    -2.0,
-    0.0
+    "-1/2",
+    "0",
+    "1",
+    "0"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 31,
@@ -283,8 +305,10 @@
    "pairs": 138,
    "triads": 10,
    "orbit": [
-    -1.618033989,
-    0.0
+    "-1/2",
+    "-1/2",
+    "5",
+    "0"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -304,8 +328,10 @@
    "pairs": 120,
    "triads": 16,
    "orbit": [
-    -1.414213562,
-    0.0
+    "0",
+    "-1",
+    "2",
+    "0"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 33,
@@ -371,8 +397,10 @@
    "pairs": 24,
    "triads": 4,
    "orbit": [
-    -1.0,
-    0.0
+    "-1",
+    "0",
+    "1",
+    "0"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -393,8 +421,10 @@
    "pairs": 120,
    "triads": 16,
    "orbit": [
-    -1.414213562,
-    0.0
+    "0",
+    "-1",
+    "2",
+    "0"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 33,
@@ -460,8 +490,10 @@
    "pairs": 138,
    "triads": 10,
    "orbit": [
-    -1.618033989,
-    0.0
+    "-1/2",
+    "-1/2",
+    "5",
+    "0"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -481,8 +513,10 @@
    "pairs": 138,
    "triads": 26,
    "orbit": [
-    -2.0,
-    0.0
+    "-1/2",
+    "0",
+    "1",
+    "0"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 31,
@@ -545,8 +579,10 @@
    "pairs": 138,
    "triads": 26,
    "orbit": [
-    -2.0,
-    0.0
+    "-1/2",
+    "0",
+    "1",
+    "0"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 31,
@@ -609,8 +645,10 @@
    "pairs": 138,
    "triads": 10,
    "orbit": [
-    -1.618033989,
-    0.0
+    "-1/2",
+    "-1/2",
+    "5",
+    "0"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -630,8 +668,10 @@
    "pairs": 120,
    "triads": 16,
    "orbit": [
-    -1.414213562,
-    0.0
+    "0",
+    "-1",
+    "2",
+    "0"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 33,
@@ -697,8 +737,10 @@
    "pairs": 24,
    "triads": 4,
    "orbit": [
-    -1.0,
-    0.0
+    "-1",
+    "0",
+    "1",
+    "0"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -719,8 +761,10 @@
    "pairs": 120,
    "triads": 16,
    "orbit": [
-    -1.414213562,
-    0.0
+    "0",
+    "-1",
+    "2",
+    "0"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 33,
@@ -786,8 +830,10 @@
    "pairs": 138,
    "triads": 10,
    "orbit": [
-    -1.618033989,
-    0.0
+    "-1/2",
+    "-1/2",
+    "5",
+    "0"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -807,8 +853,10 @@
    "pairs": 138,
    "triads": 26,
    "orbit": [
-    -2.0,
-    0.0
+    "-1/2",
+    "0",
+    "1",
+    "0"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 31,
@@ -871,8 +919,10 @@
    "pairs": 78,
    "triads": 14,
    "orbit": [
-    -1.0,
-    1.0
+    "-1",
+    "0",
+    "1",
+    "1"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -893,8 +943,10 @@
    "pairs": 78,
    "triads": 14,
    "orbit": [
-    -1.0,
-    1.0
+    "-1",
+    "0",
+    "1",
+    "1"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -915,8 +967,10 @@
    "pairs": 78,
    "triads": 14,
    "orbit": [
-    -0.5,
-    1.322875656
+    "-1/2",
+    "0",
+    "1",
+    "7/4"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -937,8 +991,10 @@
    "pairs": 78,
    "triads": 14,
    "orbit": [
-    -0.5,
-    1.322875656
+    "-1/2",
+    "0",
+    "1",
+    "7/4"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -959,8 +1015,10 @@
    "pairs": 120,
    "triads": 16,
    "orbit": [
-    0.0,
-    0.707106781
+    "0",
+    "0",
+    "1",
+    "1/2"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 33,
@@ -1026,8 +1084,10 @@
    "pairs": 138,
    "triads": 18,
    "orbit": [
-    -0.5,
-    0.866025404
+    "-1/2",
+    "0",
+    "1",
+    "3/4"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 33,
@@ -1093,8 +1153,10 @@
    "pairs": 138,
    "triads": 18,
    "orbit": [
-    -0.5,
-    0.866025404
+    "-1/2",
+    "0",
+    "1",
+    "3/4"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 33,
@@ -1160,8 +1222,10 @@
    "pairs": 78,
    "triads": 14,
    "orbit": [
-    -1.0,
-    1.0
+    "-1",
+    "0",
+    "1",
+    "1"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -1182,8 +1246,10 @@
    "pairs": 69,
    "triads": 7,
    "orbit": [
-    0.0,
-    1.0
+    "0",
+    "0",
+    "1",
+    "1"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -1204,8 +1270,10 @@
    "pairs": 78,
    "triads": 14,
    "orbit": [
-    -1.0,
-    1.0
+    "-1",
+    "0",
+    "1",
+    "1"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -1226,8 +1294,10 @@
    "pairs": 78,
    "triads": 14,
    "orbit": [
-    -0.5,
-    1.322875656
+    "-1/2",
+    "0",
+    "1",
+    "7/4"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -1248,8 +1318,10 @@
    "pairs": 78,
    "triads": 14,
    "orbit": [
-    -0.5,
-    1.322875656
+    "-1/2",
+    "0",
+    "1",
+    "7/4"
    ],
    "status": "COLOURABLE",
    "curves_through": [
@@ -1270,8 +1342,10 @@
    "pairs": 120,
    "triads": 16,
    "orbit": [
-    0.0,
-    0.707106781
+    "0",
+    "0",
+    "1",
+    "1/2"
    ],
    "status": "CERTIFIED",
    "certified_minimum": 33,

@@ -123,8 +123,9 @@ class Pt:
         return Pt(self.p / n, -self.q / n, self.d, 0)
 
     def orbit_key(self):
+        """Exact key of the orbit under x -> -x, x -> 1/x (conjugation is built in)."""
         pts = [self, self.neg(), self.inv(), self.inv().neg()]
-        return min((round(z.approx().real, 9), round(z.approx().imag, 9)) for z in pts)
+        return min(tuple(str(v) for v in z.key()) for z in pts)
 
 
 # ---------------------------------------------------------------- loci of the 128 vectors

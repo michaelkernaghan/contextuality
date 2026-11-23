@@ -91,8 +91,9 @@ and Specker; the statement that the 43-ray and golden-ratio sets are new to the 
 \item \emph{Other loci.}  Table~\ref{tab:zerosums} has two circles and three lines.  For the
 two-symbol alphabet all of them are settled (Theorem~\ref{thm:twosymbol}): none is uncolorable
 away from isolated points.  For the conjugate-closed alphabet we have settled the circle
-$|x|^2=2$ only.  What happens along $\mathrm{Re}\,x=-\tfrac12$ (which contains $\omega$), along
-the unit circle and along the imaginary axis when $x^{*}$ is included is not known.
+$|x|^2=2$ only.  What happens along $\mathrm{Re}\,x=-\tfrac12$ (which contains $\omega$) and along
+the unit circle when $x^{*}$ is included is not known.  (On the imaginary axis $x^{*}=-x$, so
+the conjugate-closed alphabet is the two-symbol one and that case is settled.)
 \item \emph{Three symbols.}  The method of Theorem~\ref{thm:twosymbol} applies in principle to
 $\{0,\pm1,\pm x,\pm y\}$: the relations are again finitely many, but the parameter space has
 four real dimensions and we have not attempted the enumeration.  Could a three-symbol pool
@@ -121,9 +122,9 @@ catalogues of three-dimensional KS sets.
 
 Reading the coordinates off Peres's two cubes suggests a one-parameter question: for which $x$
 does the alphabet $\{0,\pm1,\pm x\}$ generate an uncolorable pool?  The answer is now complete
-(Theorem~\ref{thm:twosymbol}).  For real $x$ it is the two classical cases $x=\sqrt2$ and $x=2$
-and nothing else; for complex $x$ it adds only $\sqrt{-2}$ and the primitive third and sixth
-roots of unity; and in no case is there a KS set of fewer than 31 rays.  One unit and one
+(Theorem~\ref{thm:twosymbol}).  Up to the sign and inversion of $x$, which do not change the pool, it is the two classical cases
+$x=\sqrt2$ and $x=2$ and nothing else for real $x$; for complex $x$ it adds only $\sqrt{-2}$ and
+the primitive third and sixth roots of unity; and in no case is there a KS set of fewer than 31 rays.  One unit and one
 further number along each axis cannot improve on Conway and Kochen.  The more interesting
 structure appears when the alphabet is enlarged.  With the conjugate
 included, the pool is uncolorable on the entire circle $|x|^2=2$ and colorable off it for
@@ -142,7 +143,7 @@ listed.
 \subsection*{Reproducibility}
 
 Code and data: \url{https://github.com/michaelkernaghan/contextuality}, release tag
-\texttt{v10.0}.  Scripts for this
+\texttt{v10.1}.  Scripts for this
 version, with the result files they write under \texttt{results/}:
 
 \begin{itemize}\setlength{\itemsep}{0pt}

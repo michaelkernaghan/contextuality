@@ -1,0 +1,173 @@
+Peer Review: algebraic_islands_v10.txt
+Date: 2026-11-22 20:42:04
+Reviewer: Codex (gpt-6-astra, reasoning high, CLI v0.153.4)
+Elapsed: 395.9s
+Tokens: 115,857 tokens used
+---
+
+**CORRECT WITH WORDING FIXES — the theorem’s three parts, all table counts and all claimed minima survive independent checking; several surrounding statements need correction.**
+
+I read the new script and its certification dependencies. I independently rebuilt all 37 graphs using rational quadratic-field arithmetic and normalization by the first nonzero coordinate, checked every edge against the script, and independently recomputed the requested minima using MiniSat and a separately implemented hitting-set search.
+
+**Actionable issues**
+
+| Priority | Step | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|
+| Med | 4 | **Demonstrated error:** “For real \(x\) it is … \(x=\sqrt2\) and \(x=2\) and nothing else.” Literally false: \(-2,1/2,-1/2,-\sqrt2,\pm1/\sqrt2\) also work. The following complex-case sentence similarly omits equivalents of \(\sqrt{-2}\). | Add “up to sign and inversion” explicitly to the conclusion. |
+| Med | 4 | **Demonstrated error:** “along the imaginary axis when \(x^*\) is included is not known.” On that axis \(x^*=-x\), so the conjugate-closed alphabet is exactly the two-symbol alphabet already classified. | Remove the imaginary axis from this open question. Its uncolourable points are exactly \(\pm i\sqrt2,\pm i/\sqrt2\). |
+| Med | 1, 3 | **Demonstrated error:** “the cases grouped by the symmetries \(x\mapsto-x\) and \(x\mapsto1/x\).” This does not describe all grouping in the table. The generic real-axis, imaginary-axis and unit-circle graphs share a row but are **pairwise non-isomorphic**, independently checked by VF2. These symmetries cannot interchange those three loci. | Say rows combine symmetry-equivalent cases **and cases with matching reported counts and colourability**. State that sharing a row does not imply graph isomorphism. |
+| Med | 4 | **Demonstrated inconsistency:** “a generic two-symbol pool (138 against 114).” The new theorem gives **60** pairs for generic complex \(x\), not 114. | Change this to “a generic **real** two-symbol pool.” |
+| Low | 1 | **Counting clarification:** “There are 27 special points up to complex conjugation.” This counts only nonzero points. The stated geometric definition also produces \(0\), including as a tangency. | Write “27 **nonzero** special points up to conjugation”; there are 28 if \(0\) is included. |
+| Low | 2 | **Implementation hardening:** the proof says “exact arithmetic,” but `orbit_key()` groups points using rounded floating-point coordinates. This does **not** affect the verified graphs or minima: every case is analysed before grouping. | Use exact keys for the four representatives under sign/inversion. Keep approximations for display only. |
+| Med | 4 | **Literature comparison not completed:** “the answer is a theorem about every complex \(x\).” A directly relevant, uncited companion preprint by Flores Gordillo discusses classifications of these same alphabets and explicitly discusses the unclosed unit-circle case. | Cite and compare its precise statements before claiming priority. I inspected the public record but could not retrieve its attached manuscript through the browsing tool, so I have **not** established whether it already contains the entire present theorem. [Relevant preprint, v7](https://zenodo.org/records/21729524). |
+
+I found **no unsupported mathematical assertion in parts (i)–(iii)** after the checks below. The table’s witness-qualified last column is also appropriately limited. Archiving colourings and lower-bound certificates would improve reproducibility, but their current absence is not a demonstrated proof gap: the computations terminate and reproduce.
+
+**Claims independently confirmed**
+
+1. **The finite reduction is valid.**
+
+   There are
+   \[
+   8+32+88=128
+   \]
+   nonzero integer coefficient vectors of \(\ell^1\)-norm at most three. They cover every possible inner product.
+
+   A nonzero minor is a monomial, twice a monomial, or one of
+   \[
+   \pm(1\pm x),\qquad \pm(1\pm x^2),\qquad \pm x(1\pm x).
+   \]
+   Thus its only possible nonzero roots are \(\pm1,\pm i\). These exceptions genuinely occur: the minors of \((1,x,0)\) against \((x,1,0)\) and \((x,-1,0)\) include \(1-x^2\) and \(-1-x^2\).
+
+   Away from these exceptions, the generic ray count can also be obtained without the script:
+   \[
+   3\ \text{axis rays}
+   +3\cdot6\ \text{two-coordinate rays}
+   +(4+6\cdot4)\ \text{three-coordinate rays}
+   =49.
+   \]
+   The counts at \(\pm1\) and \(\pm i\) are respectively 13 and 31.
+
+   For \(x=a+ib\), the two equations
+   \[
+   (c_1-c_2)b=0,\qquad
+   c_0+(c_1+c_2)a+c_3(a^2+b^2)=0
+   \]
+   give exactly the claimed types of loci. An independent SymPy calculation of real roots and pairwise intersections reproduced the nine curves and all special points. Among the 128 vectors, 24 have empty loci, 86 have finite point loci, and 18 have curve loci.
+
+   The nine curves are precisely
+   \[
+   b=0;\quad a=0,\pm\tfrac12;\quad
+   a^2+b^2=\tfrac12,1,2;\quad
+   (a\pm1)^2+b^2=1.
+   \]
+
+   The 27 nonzero special points comprise **14 real points**
+   \[
+   \pm1,\ \pm2,\ \pm\tfrac12,\ \pm\sqrt2,\ \pm1/\sqrt2,\
+   \pm\varphi,\ \pm1/\varphi
+   \]
+   and **13 upper-half-plane representatives**
+   \[
+   i,\ i\sqrt2,\ i/\sqrt2,\quad
+   \pm1+i,\quad \frac{\pm1+i}{2},\quad
+   \frac{\pm1+i\sqrt7}{2},\quad
+   \frac{\pm1+i\sqrt7}{4},\quad
+   \frac{\pm1+i\sqrt3}{2}.
+   \]
+
+   This includes tangencies. For example, the circles centred at \(\pm1\), both of radius one, meet tangentially at \(0\); the script finds that point and subsequently excludes it from the nonzero domain.
+
+   Once proportionality and the vanishing coefficient vectors are fixed, the labelled quotient graph is fixed. Disconnected portions of a curve therefore need no separate cases. Conjugation preserves Hermitian orthogonality, so discarding the sign of \(b\) is legitimate.
+
+2. **The script implements that reduction correctly on every input it actually generates.**
+
+   In [ks_two_symbol_theorem.py](</C:/Users/Michael Kernaghan/contextuality/ks_two_symbol_theorem.py:134>):
+
+   - `locus()` handles the linear, quadratic, negative-discriminant, zero-radius and whole-real-axis cases correctly.
+   - `intersect()` handles real-axis/curve, vertical-line/circle and circle/circle intersections, including equality in its tangency tests. Distinct vertical lines and distinct concentric circles have no intersections.
+   - `sample()` accepts a point only when its complete vanishing-vector set equals the set prescribed by that curve. All nine samples passed.
+   - `Pt.vanishes()` and `Pt.poly_vanishes()` matched independent symbolic evaluation for every coefficient vector and possible minor at all 37 samples.
+
+   The arithmetic is straightforward: for \(a=p+q\sqrt d\),
+   \[
+   a^2=p^2+q^2d+2pq\sqrt d,
+   \]
+   while \(x^2=a^2-B+2ia\sqrt B\). The implemented rational and radical coefficients agree with these formulas.
+
+   There is one harmless-to-this-run limitation: `Pt` assumes canonical radical representations supplied by its helpers. Arbitrary construction such as `Pt(0,1,1)` violates that assumption. Canonicalizing or rejecting such inputs would make the class safer.
+
+   `inner_vec()` uses the correct conjugation convention: powers \((0,1)\) contribute \(x\), and \((1,0)\) contribute \(x^*\). Orthogonality survives replacing representatives because
+   \[
+   \langle\lambda u,\mu v\rangle=\bar\lambda\mu\langle u,v\rangle.
+   \]
+   The triangle enumeration includes every triangle exactly once; in positive-definite \(\mathbb C^3\), these are precisely the triads.
+
+   `certify3()` is sound **in this invocation**. It uses the default SAT-checked growth procedure, and every resulting colourable set supplies a valid complement-hitting constraint. All 12 uncolourable representatives recertified successfully; none ended with a budget-exhausted upper bound.
+
+3. **The requested independent recomputations match `tab:twosymbol`.**
+
+   These graphs were constructed without using the new script’s `pool()`, formal-minor identification, or formal inner-product routine.
+
+   | Parameter | Rays | Pairs | Triads | Colourable | Minimum |
+   |---|---:|---:|---:|:---:|---:|
+   | Generic sample \(1/3+i/\sqrt5\) | 49 | 60 | 4 | Yes | — |
+   | Generic real-axis sample \(10/3\) | 49 | 114 | 10 | Yes | — |
+   | \(2\) | 49 | 138 | 26 | No | 31 |
+   | \(\sqrt2\) | 49 | 120 | 16 | No | 33 |
+   | \(\sqrt{-2}\) | 49 | 120 | 16 | No | 33 |
+   | \((1+i\sqrt3)/2\) | 49 | 138 | 18 | No | 33 |
+   | \(1+i\) | 49 | 78 | 14 | Yes | — |
+   | \((1+i\sqrt7)/2\) | 49 | 78 | 14 | Yes | — |
+
+   The minima in this table were independently established using a separate implementation with MiniSat, fresh subset-colouring CNFs, and sequential-counter cardinality constraints. This was more than checking the archived witnesses.
+
+4. **Parts (i), (ii) and (iii) say what the computation establishes.**
+
+   Part (i) lists **16 actual parameter values**, represented by 12 cases after conjugation: four integer cases, four real square-root cases, four imaginary square-root cases, and four primitive third/sixth roots. There are no missing uncolourable curves or exceptional points.
+
+   Independently enumerating minimum subsets gave:
+
+   - Six at \(x=2\), all isomorphic to CK-31 and forming one signed-coordinate-permutation orbit.
+   - One at each of \(x=\sqrt2\) and \(x=\sqrt{-2}\).
+   - Two at a primitive sixth root, both isomorphic to the named Eisenstein 33-ray graph.
+
+   The six-set statement transfers to all four integer parameters because
+   \[
+   S(2)=S(-2)=S(1/2)=S(-1/2)
+   \]
+   as actual sets of rays.
+
+   Part (iii) is complete. If exactly one generator is nonzero, or \(a=\pm b\ne0\), rescaling representatives gives the colourable 13-ray pool. If both vanish, there are no nonzero words. Otherwise division by \(a\) gives \(S(b/a)\).
+
+   “Have coordinates in” naturally means **each ray admits a representative whose three entries belong to the same alphabet, in one common orthonormal coordinate system**. That is the paper’s pool definition. Making this explicit would prevent confusion with field-valued coordinates or independently chosen coordinate systems.
+
+   The last-column caption says “the graph of the minimum set found.” One-witness VF2 testing supports exactly that statement. It would not establish uniqueness or classify all minima, but the caption makes neither claim.
+
+5. **The internal consistency checks pass, with the wording corrections listed above.**
+
+   The two-symbol alphabet table and the zero-sum table agree with the new result. I also reproduced the 21 coefficient-vector orbits and eight surviving orbits. Eight orbit representatives and nine actual curves are compatible: symmetry images supply additional curves, and some rows describe isolated points.
+
+   There is no conflict with \(S_3\) being colourable: \(\{0,\pm1,\pm\omega\}\) includes minus signs absent from \(\{0,1,\omega,\omega^2\}\). Nor does the two-symbol pool equal \(S_6\): it has 49 rather than 57 rays. Its two minimum subsets are compatible with the three minima reported for the larger pool.
+
+   The Heegner and circle comparisons also agree. At \(\alpha=(1+i\sqrt7)/2\), the two-symbol pool has 49 rays and is colourable; adjoining \(\alpha^*\) produces the different 145-ray pool. At \(x=\sqrt{\pm2}\), the conjugate is already a signed letter.
+
+   The abstract and introduction correctly state the restricted lower bound. The first remark and the “gap” open question do not close, or purport to close, the general 24–31 gap. The cube statement is justified for the specified common-alphabet construction. The second remark correctly excludes completion. The third correctly distinguishes isolated uncolourable parameters from a whole uncolourable curve.
+
+6. **The Eisenstein existence statement is an easy consequence of Cabello’s published construction.**
+
+   “The last row did not appear in earlier versions” is a statement about this manuscript, not a defensible claim of mathematical novelty.
+
+   Let \(\omega=e^{2\pi i/3}\). Apply
+   \[
+   U=\operatorname{diag}(1,1,\omega)
+   \]
+   to Cabello’s published 33-ray realization. Its three all-nonzero phase patterns transform projectively as
+   \[
+   (1,1,1)\mapsto(1,1,\omega),\quad
+   (1,\omega,\omega^2)\mapsto(1,\omega,1),\quad
+   (\omega^2,\omega,1)\mapsto(\omega,1,1).
+   \]
+   Signs carry through. The two-coordinate rays also admit representatives over \(\{0,\pm1,\pm\omega\}\). I explicitly checked the transformed set: **33 rays, 78 pairs, 14 triads, uncolourable**, contained in the 49-ray pool. Thus the existence portion of this row follows directly from [Cabello’s published coordinates, Eqs. (1)–(2)](https://arxiv.org/html/2508.07335v2). The complete parameter classification and the pool-minimum certification are separate assertions.
+
+**Step 5.** The theorem is correct and its finite computational proof is adequate for a preprint. I found no mathematical gap requiring withdrawal or weakening of parts (i)–(iii). Before release, correct the conclusion’s missing symmetry qualifications, remove the already-settled imaginary-axis question, fix the misleading table-grouping sentence and the generic-pool comparison, and address the directly relevant prior alphabet-classification work. Preserve the narrow raw-pool scope: this theorem excludes two-symbol realizations below 31 rays; it does not settle the unrestricted minimum.

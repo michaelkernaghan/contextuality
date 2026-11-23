@@ -166,7 +166,7 @@ centred on the real axis.  Going through the 128 vectors gives nine curves,
 |x\pm1|=1,
 \]
 and finitely many real points.  Call a point \emph{special} if it is one of those real points, a
-point of intersection of two of the curves, or one of $\pm1,\pm i$.  There are 27 special points
+point of intersection of two of the curves, or one of $\pm1,\pm i$.  There are 27 nonzero special points
 up to complex conjugation.  At a point that is not special and lies on none of the curves, no
 vector vanishes.  At a point of a curve $C$ that is not special, the vectors that vanish are
 exactly those whose solution set is~$C$, since any other vector vanishes on a different curve or
@@ -178,8 +178,10 @@ preserves orthogonality, so $x$ and $x^{*}$ need not be distinguished.)
 \emph{Computation.}  The script \texttt{ks\_two\_symbol\_theorem.py} lists the curves and special
 points, takes an exact sample point on each curve, builds the 37 graphs in exact arithmetic, decides colorability of each, and runs the certification procedure of
 Section~\ref{sec:methods} on every uncolorable one; all terminate.
-Table~\ref{tab:twosymbol} is the result, with the cases grouped by the symmetries $x\mapsto-x$
-and $x\mapsto1/x$, which do not change the pool.  Parts (i) and (ii) are read off the table.  For
+Table~\ref{tab:twosymbol} is the result.  Special points are grouped by the symmetries $x\mapsto-x$
+and $x\mapsto1/x$, which do not change the pool; curves are listed on one row when their counts
+agree, which does not mean their graphs are isomorphic (the generic graphs of the real axis, the
+imaginary axis and the unit circle are pairwise non-isomorphic).  Parts (i) and (ii) are read off the table.  For
 (iii), if $a$ or $b$ is zero or $a=\pm b$ the rays lie in the 13-ray pool of $\{0,\pm1\}$, which
 is colorable; otherwise dividing all coordinates by $a$ puts the set inside $S(b/a)$.
 \end{proof}
@@ -236,4 +238,10 @@ conjugate letter $x^{*}$.
 Fourth, the last row did not appear in earlier versions.  At a primitive sixth root of unity three curves
 meet ($|x|=1$, $\mathrm{Re}\,x=\tfrac12$, $|x-1|=1$), and the 49 rays over $\{0,\pm1,\pm\omega\}$
 are already uncolorable, with a minimum set isomorphic to the Eisenstein 33-ray set of
-Section~\ref{sec:roots}.  The letter $\omega^2$ of the Eisenstein alphabet is not needed.
+Section~\ref{sec:roots}.  The letter $\omega^2$ of the Eisenstein alphabet is not needed.  We do
+not claim this set is new: it has the graph of Cabello's 33-ray set~\cite{Cabello2025simplest}.
+
+Here ``coordinates in an alphabet'' means, as throughout, that every ray has a representative
+whose three entries are letters, in one common orthonormal basis.  We have not compared
+Theorem~\ref{thm:twosymbol} with the discussion of alphabets in the preprints of Flores
+Gordillo~\cite{FloresGordillo2026} and make no claim of priority for the classification.
