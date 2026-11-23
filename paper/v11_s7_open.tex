@@ -1,0 +1,155 @@
+\section{Open questions}\label{sec:limitations}
+
+The questions fall into two kinds.  The first three are pending further resources: the method of
+Section~\ref{sec:methods} applies to them as it stands, and the runs did not finish within the
+budgets we gave them.  They need longer runs or faster solvers, not new ideas.  The remaining
+questions are open in the ordinary sense: we have no method that would settle them.
+
+\paragraph{Pending further resources.}
+\begin{enumerate}
+\item \emph{Two minima.}  Theorem~\ref{thm:conj} leaves the minimum undetermined at two
+classes of special points: it is 32 or 33 at $x=\zeta/\sqrt2$ ($\zeta=e^{i\pi/3}$),
+and at $x=1+i$ it lies between the general lower bound 24 and~45.  A set of fewer than 31 rays
+at $x=1+i$ is not excluded.
+\item \emph{Uncertified minima.}  The entries of Table~\ref{tab:catalogue} marked ``$\le$''.
+\item \emph{All minimum sets on the circle.}  We exhibit one 45-word minimum set; the others have
+not been enumerated.
+\end{enumerate}
+
+\paragraph{Open.}
+\begin{enumerate}[resume]
+\item \emph{The circle $|x|^2=\tfrac12$.}  Its family of 33-ray sets is that of Gould and
+Aravind (Section~\ref{sec:conjclosed}).  We have no proof by hand of the kind given for
+$|x|^2=2$ that the minimum on this circle is 33, and no explanation of why the two circles have
+different minima.
+\item \emph{Complex three-symbol alphabets.}  Theorem~\ref{thm:threesymbol} settles real
+$\{0,\pm1,\pm x,\pm y\}$.  For complex $x,y$ the relations are again finitely many, but the
+parameter space has four real dimensions and we have not attempted the enumeration.  Could a
+complex three-symbol pool contain a KS set of fewer than 31 rays?
+\item \emph{The second flex.}  Two infinitesimal flexes of the 45 words were found numerically
+at both phases tested (Section~\ref{sec:rigidity}).  Is the second one a genuine deformation, leading off the
+family of Theorem~\ref{thm:circle}?
+\item \emph{Completion.}  Is there a finiteness criterion for completed pools?  Why does
+completion make the golden-ratio and $\sqrt[3]2$ pools uncolorable but not those of $\sqrt3$ and
+$\sqrt5$?
+\item \emph{The gap.}  This paper does not close the gap between the lower bound 24 and
+the 31 rays of Conway and Kochen.  Theorems~\ref{thm:twosymbol} and~\ref{thm:threesymbol} exclude a
+smaller set with a two-symbol or a real three-symbol alphabet and nothing more; the other minima are certified within named finite pools
+only.  Earlier
+versions suggested that the alphabet analysis could prune the hypergraph searches
+of~\cite{LiBrightGanesh2024,KirchwegerPeitlSzeider2023}; we see no basis for that, since a
+hypothetical smaller set need not have a small alphabet.
+\item \emph{Catalogue comparison.}  Whether the 43-, 45- and 47-ray sets appear in the automated
+catalogues of three-dimensional KS sets.  (This needs reading, not computation, and has not been
+done.)
+\item \emph{Formalization.}  The classification theorems are not formalized: Lean checks the
+uncolorability and minimality statements listed in Section~\ref{sec:methods}, not the reductions
+to finitely many cases.  Nor does it check that each pool list is complete for its alphabet, or
+part~(iii) of Theorem~\ref{thm:circle}.
+\end{enumerate}
+
+\section{Conclusion}\label{sec:conclusion}
+
+Reading the coordinates off Peres's two cubes suggests a one-parameter question: for which $x$
+does the alphabet $\{0,\pm1,\pm x\}$ generate an uncolorable pool?  The answer is now complete
+(Theorem~\ref{thm:twosymbol}).  Up to the sign and inversion of $x$, which do not change the pool, it is the two classical cases
+$x=\sqrt2$ and $x=2$ and nothing else for real $x$; for complex $x$ it adds only $\sqrt{-2}$ and
+the primitive third and sixth roots of unity; and in no case is there a KS set of fewer than 31 rays.  One unit and one
+further number along each axis cannot improve on Conway and Kochen, and neither can two further
+real numbers (Theorem~\ref{thm:threesymbol}).  The more interesting
+structure appears when the alphabet is enlarged.  With the conjugate
+included, the uncolorable values of $x$ are no longer isolated: they are the two circles
+$|x|^2=2$ and $|x|^2=\tfrac12$, four lines through the origin (without the origin), and the points
+$\pm2,\pm\tfrac12$ (Theorem~\ref{thm:conj}).  On the circle $|x|^2=2$ twelve orthogonalities of the form $1+1-|x|^2=0$ make the difference; the Peres set
+and its imaginary twin are the two degenerate points of a 45-ray family; and the 43-ray set over
+$\Q(\sqrt{-7})$ sits at a point of the circle where one more relation holds.  For the
+roots-of-unity alphabets the answer is exact as well: uncolorable if and only if $6\mid n$, with
+the primes 2 and 3 doing different jobs.
+
+The earlier versions of this paper claimed more than this and were wrong in ways that matter.
+We have tried to make this version checkable instead: every number is produced by a named script
+in exact arithmetic or is labelled numerical, every minimum is either certified by a procedure
+whose soundness is argued in two paragraphs or reported as a bound, six of the minima and
+Theorem~\ref{thm:6n} are checked by the Lean kernel, and the withdrawn claims are listed in
+Appendix~\ref{sec:corrections}.
+
+\subsection*{Reproducibility}
+
+Code and data: \url{https://github.com/michaelkernaghan/contextuality}, release tag
+\texttt{v11.0}.  Scripts for this
+version, with the result files they write under \texttt{results/}:
+
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \texttt{ks\_recertify\_v10.py}: pools of Table~\ref{tab:catalogue}, with certified minima
+and witnesses, written to \texttt{recertify\_v10.jsonl}.  It uses the exact fields, pools and
+completion of \texttt{ks\_verify\_large\_minima.py} and the certifier
+\texttt{ks\_certify\_fast3.py}.
+\item \texttt{ks\_tables\_v10.py}: Tables~\ref{tab:alphabets} and~\ref{tab:heegner} and the
+three-symbol and completed pools quoted in the text (\texttt{tables\_v10.jsonl}).
+\item \texttt{ks\_zero\_sums\_v10.py}: Table~\ref{tab:zerosums}.
+\item \texttt{ks\_two\_symbol\_theorem.py}: Theorem~\ref{thm:twosymbol} and
+Table~\ref{tab:twosymbol} (\texttt{two\_symbol\_theorem.json}, with a witness for every
+uncolorable case); about five seconds.
+\item \texttt{ks\_conjugate\_closed\_theorem.py}: Theorem~\ref{thm:conj} and
+Table~\ref{tab:conj}.  The mode \texttt{scan} builds and colors the 68 cases in a few seconds.
+The mode \texttt{certify} adds the minima, written to
+\texttt{conjugate\_closed\_theorem.json}.  The mode \texttt{one} reruns a single case,
+optionally only to exclude sets below a given size; it appends to
+\texttt{conjugate\_closed\_reruns.jsonl}.  \texttt{ks\_conjugate\_closed\_identify.py}
+identifies the smallest sets.
+\item \texttt{ks\_three\_symbol\_real.py}: Theorem~\ref{thm:threesymbol} and
+Table~\ref{tab:threesymbol}.  The mode \texttt{scan} finds the curves and special points and
+colors the 162 cases in exact arithmetic, in under a minute; \texttt{check} rebuilds every
+graph from 60-digit coordinates; \texttt{certify} adds the minima and the runs excluding sets
+below~31; \texttt{witness} writes a checked minimum set for every case.  Results are in the
+files \texttt{three\_symbol\_real\_*} under \texttt{results/}.  It uses \texttt{ks\_certify\_fast4.py}, the
+certifier with the two reductions of Section~\ref{sec:methods}, which the mode \texttt{one4} of
+\texttt{ks\_conjugate\_closed\_theorem.py} also uses.
+\item \texttt{ks\_verify\_cyclotomic\_theorem.py}: Table~\ref{tab:cyc} and the structural
+statements of Theorem~\ref{thm:6n}, $n\le30$.
+\item \texttt{lean/}: the Lean proofs (Lean 4.30, mathlib; \texttt{lake build} checks all
+three files in about ten minutes).  \texttt{Cyclotomic6n.lean}: Theorem~\ref{thm:6n} for
+$n\ge3$.  \texttt{NamedSets.lean}: uncolorability of the 43- and 47-ray sets and of the 45
+words for every $x$ on the circle.  \texttt{Minimality.lean}: the six minima marked in
+Table~\ref{tab:catalogue}, with negative controls that are re-checked on every build.  The rays
+and certificates in these files are written by \texttt{ks\_lean\_export.py} and
+\texttt{ks\_lean\_minimality.py}.
+\item \texttt{ks\_modulus2\_circle.py}: Theorem~\ref{thm:circle}, Table~\ref{tab:words},
+Appendix~\ref{app:triads}.
+\item \texttt{ks\_extras\_v10.py}: Table~\ref{tab:profiles}, the isomorphism tests and the
+enumeration of all minimum sets (\texttt{extras\_v10.jsonl}).
+\item \texttt{ks\_rigidity\_v10.py}: the flex counts of Section~\ref{sec:rigidity}.
+\item \texttt{ks\_half\_circle\_family.py}: the 33-ray family on the circle
+$|x|^2=\tfrac12$.  The mode \texttt{exact} does the symbolic computations, including the
+identification with Gould and Aravind's Table~3 (\texttt{half\_circle\_family\_exact.json}); the
+default mode does the numerical flex counts (\texttt{half\_circle\_family.json}).
+\item \texttt{make\_alphabet\_cube\_figures.py}: Figs.~\ref{fig:triptych} and~\ref{fig:generic}.
+\end{itemize}
+
+Software: Python~3.13, PySAT (Glucose4, RC2), NetworkX (VF2), NumPy, SciPy (HiGHS), CVXPY
+(Clarabel).  Scripts from earlier versions remain in the repository and should not be used to
+reproduce this one.
+
+\subsection*{How this version was produced}
+
+Computations, proofs and text were produced with a large language model (Claude, Anthropic)
+under the author's direction.  Version~9 was then reviewed in full by that model and, separately,
+by a second model (GPT, OpenAI) instructed to act as a hostile examiner with access to the
+repository; the two reviews agreed on the main defects and each found errors the other missed.
+Version~10 was written after those reviews, and its new theorems were each reviewed again in the
+same way.  Agreement between language models is not a
+proof.  The safeguards we rely on are the ones listed in the Conclusion: exact arithmetic, a
+certifier with a short soundness argument, kernel-checked proofs where we have them, positive
+controls (the pool counts reproduce those of earlier versions where
+those were right, and two independent constructions of the two-symbol pools agree), and an explicit list of what was not checked.  Theorem~\ref{thm:6n} has a
+proof that can be read in ten minutes, and independent checking of it and of
+Theorems~\ref{thm:twosymbol} and~\ref{thm:circle} is invited.
+
+\subsection*{Acknowledgments}
+
+The author thanks Ad\'an Cabello for pointing out the connection between the Eisenstein alphabet
+and his 33-ray set; Manuel Flores Gordillo for finding the error in the rigidity computation of
+versions 1--7; Jorge Lucas Gonzalez for the supergolden construction and an exact verifier;
+Markus Frembs for the trace-zero relation and for engaging with the earlier classification; and
+Curtis Bright for a bibliographic correction.  The author accepts responsibility for the content,
+including the errors of the earlier versions.

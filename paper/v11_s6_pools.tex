@@ -1,0 +1,106 @@
+\section{Other pools}\label{sec:catalogue}
+
+Table~\ref{tab:catalogue} collects the named uncolorable pools, including those that lie outside
+the families of Sections~\ref{sec:real}--\ref{sec:roots}, with the standard of proof for each
+minimum.  ``Certified'' means the procedure of Section~\ref{sec:methods} terminated;
+``$\le$'' means an uncolorable subset of that size is in hand and nothing smaller was excluded;
+$^{\mathrm L}$ marks a minimum that is also proved in Lean.  A raw pool is contained in its
+completion, so a minimum set of the raw pool bounds the completed pool from above
+(Lemma~\ref{lem:restrict}); it need not be a minimum set of it.
+
+\begin{table}[t]
+\centering
+\caption{Uncolorable pools.  ``raw'': all words over the alphabet; ``compl.'': closure under
+third rays of orthogonal pairs.  Letters: $\omega=e^{2\pi i/3}$, $\alpha=(1+\sqrt{-7})/2$,
+$\varphi=(1+\sqrt5)/2$, $\psi^3=\psi^2+1$ ($\psi\approx1.4656$), $c=\sqrt[3]{2}$.  Bases: number
+of triads inside the minimum (or best) set found.  $^{\mathrm L}$: minimum also proved in Lean
+(Section~\ref{sec:methods}).}
+\label{tab:catalogue}
+\small
+\begin{tabular}{llrrrll}
+\toprule
+Alphabet & Pool & Rays & Pairs & Triads & Minimum KS subset & Bases \\
+\midrule
+$\{0,\pm1,\pm2\}$ & raw & 49 & 138 & 26 & 31, certified$^{\mathrm L}$ & 17 \\
+ & compl. & 109 & 258 & 86 & 31, certified & 17 \\
+$\{0,\pm1,\pm\sqrt2\}$ & raw & 49 & 120 & 16 & 33, certified$^{\mathrm L}$ & 16 \\
+ & compl. & 145 & 336 & 112 & 33, certified & 20 \\
+$\{0,\pm1,\pm\sqrt{-2}\}$ & raw & 49 & 120 & 16 & 33, certified$^{\mathrm L}$ & 16 \\
+ & compl. & 145 & 336 & 112 & 33, certified & 20 \\
+$\{0,\pm1,\pm\omega,\pm\omega^2\}$ & raw & 57 & 174 & 22 & 33, certified$^{\mathrm L}$ & 14 \\
+ & compl. & 165 & 390 & 130 & 33, certified & 14 \\
+$\{0,\pm1,\pm i,\pm(1+i)\}$ & raw & 127 & 465 & 51 & 33, certified & 16 \\
+ & compl. & 583 & 1521 & 507 & $\le33$ & \\
+$\{0,\pm1,\pm\alpha,\pm\alpha^{*}\}$ & raw & 145 & 522 & 42 & 43, certified$^{\mathrm L}$ & 23 \\
+ & compl. & 685 & 1746 & 582 & \heegnercompletedmin & \\
+$\{0,\pm1,\pm\psi,\pm\psi^2\}$ & raw & 109 & 348 & 40 & 47, certified$^{\mathrm L}$ & 26 \\
+ & compl. & \superfourcompleted & \superfourmin \\
+$\{0,\pm1,\pm\psi\}$ & compl. & \supercompleted & \supermin \\
+$\{0,\pm1,\pm\varphi\}$ & compl. & 205 & 498 & 166 & \goldenmin & \goldenbases \\
+$\{0,\pm1,\pm c,\pm c^2\}$ & compl. & \cubiccompleted & \cubicmin \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Completion.}  The last three rows come from a different construction.  The raw pools
+of $\{0,\pm1,\pm\varphi\}$ (49 rays, 10 triads), $\{0,\pm1,\pm\psi\}$ (49 rays, 10 triads) and
+$\{0,\pm1,\pm c,\pm c^2\}$ (109 rays, 28 triads) are colorable; uncolorability appears only
+after completion, which adds rays whose coordinates are not letters.  The completed pools of
+$\{0,\pm1,\pm\sqrt3\}$ and $\{0,\pm1,\pm\sqrt5\}$ (133 rays, 282 pairs, 94 triads each) remain
+colorable.  Since $\sqrt5$ and $\varphi$ generate the same field, this is the plainest evidence
+that the alphabet, and not the field, is the operative choice.  We have no account of why
+completion suffices in one case and not in the other.  (Earlier versions said that completion
+``generates the reciprocal $1/\varphi$''; that explains nothing, since
+$[\varphi:1:0]=[1:1/\varphi:0]$ is already in the raw pool.)  For these pools and for the other
+completions marked ``$\le$'' the certifier did not terminate, and the entries are upper bounds:
+a 51-ray subset for the golden ratio (118 pairs, 28 bases; coordinates in
+\texttt{golden\_51\_rays.txt}; version~9 claimed a certified minimum of 52, which is wrong); a
+60-ray subset for the cube root of two (144 pairs, 27 bases); and 47 for both supergolden
+completions.
+
+\paragraph{The supergolden alphabet.}  Let $\psi$ be the real root of $\psi^3=\psi^2+1$.  The
+raw pool of $\{0,\pm1,\pm\psi,\pm\psi^2\}$ is uncolorable without any completion, with certified
+minimum 47 (110 pairs, 26 bases); it is one of the eight points of Table~\ref{tab:threesymbol}.
+A 47-ray set over this field was first communicated to us by J.~L.~Gonzalez, extracted from the
+completed pool of $\{0,\pm1,\pm\psi\}$.  It refuted the classification of versions 1--8, because
+no product of two letters has squared modulus~2 and the field contains no roots of unity other
+than $\pm1$: the relation at work is the minimal polynomial of $\psi$ itself.  The conclusion we
+now draw is that any relation among the letters that makes enough inner products vanish may do.
+Theorem~\ref{thm:threesymbol} lists all such relations for three real letters; for larger
+alphabets we have no finite classification.
+
+\begin{table}[t]
+\centering
+\caption{The minimum sets of the certified raw pools and the 33-ray set of Sch\"utte (Conway
+and Kochen), which is critical but not a minimum set of its pool.  Degree sequences are written
+$d^{m}$ for $m$ rays orthogonal to $d$ others.  ``Indisp.'': number of bases whose ``exactly
+one'' rule cannot be dropped (all orthogonal-pair exclusions kept) without the set becoming
+colorable.  Every set is ray-critical.}
+\label{tab:profiles}
+\small
+\begin{tabular}{lrrrll}
+\toprule
+Set & Rays & Pairs & Bases & Degree sequence & Indisp. \\
+\midrule
+$\CK$ & 31 & 71 & 17 & $3^{4}4^{14}5^{8}6^{3}8^{2}$ & 17 of 17 \\
+Sch\"utte / Conway--Kochen 33 & 33 & 76 & 20 & $3^{8}4^{13}6^{10}8^{2}$ & 20 of 20 \\
+Peres 33 & 33 & 72 & 16 & $4^{30}8^{3}$ & 13 of 16 \\
+$\sqrt{-2}$, 33 & 33 & 72 & 16 & $4^{30}8^{3}$ & 13 of 16 \\
+Eisenstein 33 & 33 & 78 & 14 & $4^{18}5^{12}8^{3}$ & 13 of 14 \\
+$\Q(\sqrt{-7})$, 43 & 43 & 107 & 23 & $4^{16}5^{20}6^{4}8^{2}10^{1}$ & 18 of 23 \\
+Supergolden 47 & 47 & 110 & 26 & $3^{14}4^{12}5^{8}6^{6}7^{4}8^{1}9^{2}$ & 26 of 26 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:profiles} gives the basic invariants of the minimum sets.  The three 33-ray sets
+of Conway--Kochen, Peres and the Eisenstein alphabet have pairwise non-isomorphic orthogonality
+graphs (VF2, and visibly from the degree sequences).  The Eisenstein set is the 33-ray set of
+Cabello~\cite{Cabello2025simplest}, or one of its three images in the pool
+(Computed fact~\ref{fact:eisenstein}); we have matched the invariants he reports (33 rays, 14
+bases), and the explicit bijection has not been recorded in the repository.
+
+Whether the 43-ray and 47-ray sets, or the 45-ray family of Theorem~\ref{thm:circle}, appear in
+the published catalogues we do not know.  A proper comparison against the large automated
+catalogues of three-dimensional KS sets has not been done, and we make no claim that these
+configurations are new.

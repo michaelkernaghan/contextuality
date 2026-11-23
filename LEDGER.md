@@ -45,10 +45,10 @@ Second project: `cd lean && lake build` (Lean 4.30 + mathlib). Audit: a file con
 `import Cyclotomic6n` and `#print axioms KSCyclotomic.six_divides_iff_ks_uncolorable`, run with
 `lake env lean`, lists `propext`, `Classical.choice`, `Quot.sound` (checked 2026-11-23).
 
-`lean/Minimality.lean` (2026-11-23): minimum sizes. `lake build` checks it (about 8 minutes).
+`lean/Minimality.lean` (2026-11-23): minimum sizes of six pools. `lake build` checks it (about 9 minutes).
 Certificates come from `python ks_lean_minimality.py`: a family of colourable sets with their
 colourings, and a branching tree proving that no set of fewer than u rays meets the complement
-of every one of them (`KSMin.min_index` is the soundness theorem). The five `minimum_*`
+of every one of them (`KSMin.min_index` is the soundness theorem). The six `minimum_*`
 theorems depend on `propext`, `Classical.choice`, `Quot.sound` only. Negative controls are
 `example`s in the file, re-checked on every build: for each pool the checker rejects the bound
 u + 1, rejects the whole pool offered as a colourable set, and rejects a pair list with one
@@ -74,6 +74,7 @@ makes `decide` report `check_ok` false.
 | Q(sqrt -7) pool {0, +-1, +-alpha, +-alpha*} (145 rays): minimum 43, in the same two-part sense | `KSMin.HeegnerPool.minimum_43` | 476 colourable sets, tree 13187 nodes. |
 | Eisenstein pool {0, +-1, +-omega, +-omega^2} (57 rays): minimum 33 | `KSMin.EisPool.minimum_33` | 1082 colourable sets, tree 49307 nodes. |
 | Peres pool {0, +-1, +-sqrt 2} (49 rays): minimum 33 | `KSMin.PeresPool.minimum_33` | 33 colourable sets, tree 1 node; uses `irrational_sqrt_two`. |
+| sqrt -2 pool {0, +-1, +-sqrt -2} (49 rays): minimum 33 | `KSMin.Sqrtm2Pool.minimum_33` | 33 colourable sets, tree 1 node. |
 | Supergolden pool {0, +-1, +-psi, +-psi^2} (109 rays): minimum 47, for every real psi with psi^3 = psi^2 + 1 | `KSMin.SupergoldenPool.minimum_47` | 534 colourable sets, tree 35699 nodes; `indep`: 1, psi, psi^2 independent over Z (no rational root, via `isInteger_of_is_root_of_monic`). |
 | The pool for n = 6 is uncolourable | `KSCyclotomic.cabello_S6_uncolorable` | 33 rays over Z[omega] from `ks_lean_export.py eisenstein`; orthogonality recomputed in Z[omega] and carried to `ℂ` by a proved embedding; certificate 1035 nodes, `decide +kernel`. Negative control: moving ray 0 from (0,0,1) to (0,1,1) makes `decide` report the check false. (Moving it to (0,0,1+omega) does not: that is the same ray.) |
 
@@ -114,7 +115,7 @@ need time or faster solvers, not new ideas.
 | Minima of the six completed catalogue pools | Bounds 33, 43, 47, 47, 51, 60 (catalogue row above). |
 | All minimum sets on the circle |x|^2 = 2 | One 45-word set exhibited; enumeration not run. |
 | Certifier time budget | `ks_certify_fast4.py` checks the budget only between solver calls; the eta/sqrt 2 validation ran 3 h 20 min past its 1 h budget (stopped 2026-11-23 12:45 PT, never counted). Fix before any long run. |
-| Lean: minimality of the remaining certified pools (sqrt -2; the completed pools with certified minima) | Checker done 2026-11-23; these are further runs of `ks_lean_minimality.py` plus a ring model each. |
+| Lean: minimality of the remaining certified pools (the completed pools with certified minima; the Gaussian raw pool) | Checker done 2026-11-23; these are further runs of `ks_lean_minimality.py` plus a ring model each. |
 
 ## Open
 
@@ -133,5 +134,5 @@ No method in hand.
 
 1. Done 2026-11-23: `cabello_S6_uncolorable` discharged; the 6-divides-n theorem is kernel-checked for n >= 3.
 2. Done 2026-11-23: uncolourability of the 43- and 47-ray sets, and of the 45 words for every x on the circle (`lean/NamedSets.lean`).
-3. Done 2026-11-23: minimality checker (`lean/Minimality.lean`) and the minima 31, 43, 33, 33, 47 of five pools. Still open here: the sqrt -2 pool (same shape as Peres), the circle's "no shorter list than 45 words", and proving each pool list complete for its alphabet.
+3. Done 2026-11-23: minimality checker (`lean/Minimality.lean`) and the minima 31, 43, 33, 33, 33, 47 of six pools. Still open here: the circle's "no shorter list than 45 words", and proving each pool list complete for its alphabet.
 4. The classification theorems, where the finite cases are easy and the reduction over the complex numbers is the hard part.

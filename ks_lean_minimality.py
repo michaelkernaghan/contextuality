@@ -112,13 +112,26 @@ def perespool():            # F2 stores a + b sqrt 2
     return field_pool("peres-raw", "peres33", lambda c: c, s2_dot, 33)
 
 
+def m2_dot(u, v):           # Z[sqrt -2], Hermitian; mirrors Sqrtm2Pool.dot
+    s = (0, 0)
+    for a, b in zip(u, v):
+        x = (a[0], -a[1])
+        s = (s[0] + x[0] * b[0] - 2 * x[1] * b[1], s[1] + x[0] * b[1] + x[1] * b[0])
+    return s
+
+
+def sqrtm2pool():           # FM2 stores a + b sqrt(-2)
+    return field_pool("sqrtm2-raw", "sqrtm2-33", lambda c: c, m2_dot, 33)
+
+
 def supergoldenpool():      # FP stores a + b psi + c psi^2
     from ks_lean_export import p_dot
     return field_pool("supergolden2-raw", "supergolden2-47", lambda c: c, p_dot, 47)
 
 
 POOLS = {"intpool": intpool, "heegnerpool": heegnerpool, "eispool": eispool,
-         "perespool": perespool, "supergoldenpool": supergoldenpool}
+         "perespool": perespool, "sqrtm2pool": sqrtm2pool,
+         "supergoldenpool": supergoldenpool}
 
 
 def colouring(n, pairs, triads, M):
