@@ -1,0 +1,42 @@
+Peer Review: algebraic_islands_v11.txt
+Date: 2026-11-23 15:39:28
+Reviewer: Codex (gpt-6-astra, reasoning high, CLI v0.153.4)
+Elapsed: 129.0s
+Tokens: 91,519 tokens used
+---
+
+**FIT AFTER THE LISTED FIXES**
+
+| Round-6 issue | Current text (quoted) | Status |
+|---|---|---|
+| Complete-minima overclaim | Results: “classify colorability completely and determine every minimum except at two classes of points of the third family.” | FIXED |
+| Missing three-symbol normalization | Abstract: “normalized to \(1<x<y\)”; Results: “After normalization to \(1<x<y\)”. | FIXED |
+| Origin incorrectly included | Results and conjugate-closed opening: “four lines through the origin with the origin removed”. | FIXED |
+| Formalization scope; missing \(n\ge3\) | Open questions: “The three continuous-parameter classifications … are not formalized”; Conclusion: “Theorem~\ref{thm:6n} for \(n\ge3\)”. | FIXED |
+| Rigidity treats witnesses as minima; obscures second supergolden set | “For the minimum sets and uncolorable witnesses”; “the two 47-ray supergolden sets (the minimum set of the raw three-symbol pool, and the witness in the completed pool …)”. | FIXED |
+| Missing withdrawal of cubic 58-ray claim | C1: “We have not reproduced a 58-ray set and do not claim one; that figure is unsupported and withdrawn, not disproved.” | FIXED |
+| Wrong Gould–Aravind cross-reference | Open question 4: “Gould and Aravind (Section~\ref{sec:halfcircle})”. | FIXED |
+| Stale CSW counts | C11: “for nine sets and six pools”. | FIXED |
+| Overlapping 42/57 figure markers | Figure source: `circle (0.9pt)`. | FIXED — diameter approximately \(0.633\) mm, below the \(0.812\) mm separation. |
+| Missing rigidity-script attribution | “The counts (`ks_rigidity_v10.py`, and `ks_half_circle_family.py` for the family …)”. | FIXED |
+| Global inner-circle minimum; missing computational qualification for outer circle | “The minima at generic points, 33 on that circle and 45 on \(\lvert x\rvert^2=2\), are both results of the certifier”; “The class \(\zeta/\sqrt2\) … remains undetermined”. | FIXED |
+| Overbroad tuple-arithmetic and external-trust claims | “Where a proof rests on a finite set of rays”; “the certificates … are checked there and not trusted”; alphabet completeness “is not proved there”. | FIXED |
+| Missing vector-to-ray explanation | “a coloring of rays gives a coloring of any choice of representative vectors and conversely, and each listed pool has one vector per ray”. | FIXED — correct for a choice of one representative per ray. |
+| Unattempted enumeration described as timed out | “either did not finish within the budgets we gave them or have not yet been attempted”. | FIXED |
+| Build/axiom evidence not independently checked | “checked by the kernel … no axioms beyond the standard three”. | NOT FIXED as an evidence-archiving recommendation: the tag records the assertion, but contains no build/audit transcript. This remains a review limitation, not a detected proof defect. |
+| Missing `v11.0` tag | Reproducibility: “release tag `v11.0`”. | FIXED locally — tag resolves to `5599080`; inspected sources match it. Remote publication was not checked. |
+| “Generic minimum” wording | “since the minimum at a generic point of that circle is 45”. | FIXED |
+| \(P(\sqrt2)=P(1/\sqrt2)\) confused with the 33-ray set | “a 49-ray pool whose unique minimum subset is Peres’s set”. | FIXED |
+| “No shorter fixed list” quantifier | Abstract: “no shorter fixed list works at every point”. | FIXED |
+| C5’s incomplete replacement list | “Theorems~\ref{thm:twosymbol}, \ref{thm:threesymbol}, \ref{thm:conj}, \ref{thm:circle} and~\ref{thm:6n} and Table~\ref{tab:zerosums}”. | FIXED |
+| Supergolden “product of two letters” lacks alphabet | “no product of two letters of \(\{0,\pm1,\pm\psi\}\) has squared modulus~2”. | FIXED |
+| “Two degenerate points” | “the two degenerate members, up to sign”. | FIXED |
+| `distinctB` comment claims projective distinctness | “No vector is listed twice. (Equality of coordinate tuples, not proportionality …)”. | FIXED |
+
+| Priority | Where | Issue (quote) | Suggested fix |
+|---|---|---|---|
+| Medium | [Introduction, Standard of proof](</C:/Users/Michael Kernaghan/contextuality/paper/v11_s1_intro.tex:83>) | “Each classification reduces … to finitely many cases that are decided in exact arithmetic by named scripts.” This misdescribes the roots-of-unity classification: its arbitrary-\(n\) cases are settled by structural arguments, not finite numerical sampling. | Begin “Each of the three continuous-parameter classifications…” and state separately that the roots-of-unity theorem has a structural proof. |
+| Medium | [Three cautions on scope](</C:/Users/Michael Kernaghan/contextuality/paper/v11_s1_intro.tex:142>) | “a statement about one says nothing about the other”. False: raw-pool uncolorability implies completed-pool uncolorability, and a raw witness bounds the completed minimum from above—explicitly stated later. | “Their counts and minima need not agree; inclusion gives only the corresponding one-way implications.” |
+| Low | [Open questions, opening](</C:/Users/Michael Kernaghan/contextuality/paper/v11_s7_open.tex:6>) | “The remaining questions … we have no method that would settle them.” This contradicts the described finite approach to complex three-symbol classification and includes catalogue comparison, explicitly described as reading not yet done. | “The remaining items concern conceptual explanations, extensions, literature comparison, and further formalization.” |
+
+The vector-to-ray argument is correct as worded when “choice of representative vectors” means one nonzero representative per ray; arbitrary vector colorings need not themselves be constant on proportional vectors. The exporter really checks projective distinctness: both `intpool` and `field_pool` assert `len(index) == len(rays)` using `R.canon`, which divides by the first nonzero coordinate in exact arithmetic; the subsequent scaling and basis conversions preserve rays. The remaining blockers are the prose corrections above; I found no further overclaim in the abstract, Results, Relation to earlier versions, or Conclusion, and did not re-review the theorem mathematics or run `lake build`.

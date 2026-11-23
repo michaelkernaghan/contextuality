@@ -1,0 +1,23 @@
+Lean build and axiom audit for release v11.1 (2026-11-23), run on the files at commit 5599080.
+
+== cd lean && lake build (tail) ==
+  zero_mul
+  zero_mul
+  zero_mul
+  zero_mul
+✔ [8479/8480] Built Minimality (532s)
+Build completed successfully (8480 jobs).
+
+== cd lean && lake env lean Audit.lean ==
+'KSCyclotomic.six_divides_iff_ks_uncolorable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KSNamed.Heegner43.uncolorable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KSNamed.Supergolden47.uncolorable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KSNamed.Supergolden47.exists_psi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KSNamed.Circle45.uncolorable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KSMin.min_index' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KSMin.IntPool.minimum_31' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KSMin.PeresPool.minimum_33' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KSMin.Sqrtm2Pool.minimum_33' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KSMin.EisPool.minimum_33' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KSMin.HeegnerPool.minimum_43' depends on axioms: [propext, Classical.choice, Quot.sound]
+'KSMin.SupergoldenPool.minimum_47' depends on axioms: [propext, Classical.choice, Quot.sound]

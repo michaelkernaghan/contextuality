@@ -80,8 +80,10 @@ pools that lie outside these families, each with exact counts and either a certi
 a stated upper bound.
 
 \paragraph{Standard of proof.}
-Each classification reduces, by an argument given in the text, to finitely many cases that are
-decided in exact arithmetic by named scripts.  In addition the following are proved in the Lean
+Each of the three continuous-parameter classifications reduces, by an argument given in the
+text, to finitely many cases that are decided in exact arithmetic by named scripts.  The
+roots-of-unity theorem has a structural proof for every~$n$, with one finite computation at
+$n=6$.  In addition the following are proved in the Lean
 proof assistant and checked by its kernel (Section~\ref{sec:methods}): Theorem~\ref{thm:6n} for
 $n\ge3$; the uncolorability of the 45 words for every $x$ on the circle; and the minimum KS
 subsets of six pools (31, 33, 33, 33, 43 and 47 rays).
@@ -139,8 +141,10 @@ this paper contains $\Z$ and therefore contains the coordinates of $\CK$; the st
 field supports a KS set'' is true of all of them and distinguishes nothing.  (2)~The size of a
 generator is not an invariant of the pool: multiplying every word by $x^{-1}$ shows
 $S(\{0,\pm1,\pm x\})=S(\{0,\pm1,\pm x^{-1}\})$, and $S$ is also unchanged by $x\mapsto-x$.
-(3)~A raw pool and its completion are different objects; a statement about one says nothing about
-the other, and every count below says which is meant.
+(3)~A raw pool and its completion are different objects.  Their counts and minima need not
+agree; inclusion gives only one-way implications (if the raw pool is uncolorable so is its
+completion, and a KS subset of the raw pool bounds the minimum of the completion from above).
+Every count below says which pool is meant.
 
 \subsection{Methods}\label{sec:methods}
 

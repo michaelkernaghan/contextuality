@@ -8,8 +8,12 @@ unchanged. Review round 6 (`paper/reviews/codex-review-algebraic-islands-v11-rou
 compared the two versions block by block, read the Lean statements and the checker's soundness
 proof, and found no mathematical repair needed; its wording objections (scope of "completely",
 the 1 < x < y normalisation in the abstract, origin removed from the four lines, n >= 3,
-vectors versus rays, a lost withdrawal of the cubic 58) were fixed the same day. The fixes were
-not re-reviewed. The reviewer did not run `lake build`.
+vectors versus rays, a lost withdrawal of the cubic 58) were fixed the same day and released as
+v11.0. Round 7 (`...-v11-round7.txt`) confirmed every round-6 fix and raised three further
+wording points (the "standard of proof" sentence did not fit the roots-of-unity theorem; "a
+statement about one says nothing about the other" for raw and completed pools; the opening of
+the open questions), fixed in v11.1. The reviewer did not run `lake build`; a transcript of the
+build and of the axiom audit (`lean/Audit.lean`) is in `results/lean_audit_v11.txt`.
 
 **Rule.** Nothing here is called machine-checked unless a Lean file proving exactly the
 recorded statement builds with no `sorry` and no axioms beyond `propext`, `Classical.choice`

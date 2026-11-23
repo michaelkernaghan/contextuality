@@ -1,7 +1,7 @@
 \section{Reproducibility}\label{app:repro}
 
 Code and data: \url{https://github.com/michaelkernaghan/contextuality}, release tag
-\texttt{v11.0}.  Scripts for this
+\texttt{v11.1}.  Scripts for this
 version, with the result files they write under \texttt{results/}:
 
 \begin{itemize}\setlength{\itemsep}{0pt}
@@ -39,7 +39,9 @@ $n\ge3$.  \texttt{NamedSets.lean}: uncolorability of the 43- and 47-ray sets and
 words for every $x$ on the circle.  \texttt{Minimality.lean}: the six minima marked in
 Table~\ref{tab:catalogue}, with negative controls that are re-checked on every build.  The rays
 and certificates in these files are written by \texttt{ks\_lean\_export.py} and
-\texttt{ks\_lean\_minimality.py}.
+\texttt{ks\_lean\_minimality.py}.  \texttt{lean/Audit.lean} prints the axioms each theorem
+depends on; a transcript of the build and of that audit is in
+\texttt{results/lean\_audit\_v11.txt}.
 \item \texttt{ks\_modulus2\_circle.py}: Theorem~\ref{thm:circle}, Table~\ref{tab:words},
 Appendix~\ref{app:triads}.
 \item \texttt{ks\_extras\_v10.py}: Table~\ref{tab:profiles}, the isomorphism tests and the
