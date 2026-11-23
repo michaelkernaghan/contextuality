@@ -92,12 +92,13 @@ and Specker; the statement that the 43-ray and golden-ratio sets are new to the 
 \section{Open questions}\label{sec:limitations}
 
 \begin{enumerate}
-\item \emph{Other loci.}  Table~\ref{tab:zerosums} has two circles and three lines.  For the
-two-symbol alphabet all of them are settled (Theorem~\ref{thm:twosymbol}): none is uncolorable
-away from isolated points.  For the conjugate-closed alphabet we have settled the circle
-$|x|^2=2$ only.  What happens along $\mathrm{Re}\,x=-\tfrac12$ (which contains $\omega$) and along
-the unit circle when $x^{*}$ is included is not known.  (On the imaginary axis $x^{*}=-x$, so
-the conjugate-closed alphabet is the two-symbol one and that case is settled.)
+\item \emph{Two minima.}  Theorem~\ref{thm:conj} leaves the minimum undetermined at two
+classes of special points: it is 32 or 33 at $x=\zeta/\sqrt2$ ($\zeta=e^{i\pi/3}$),
+and at $x=1+i$ it lies between the general lower bound 24 and~45.  A set of fewer than 31 rays
+at $x=1+i$ is not excluded.
+\item \emph{The circle $|x|^2=\tfrac12$.}  Is its family of 33-ray sets with Peres's graph the
+family of Gould and Aravind?  We have a list of words for it but no proof by hand of the kind
+given for $|x|^2=2$, and no explanation of why the two circles have different minima.
 \item \emph{Three symbols.}  The method of Theorem~\ref{thm:twosymbol} applies in principle to
 $\{0,\pm1,\pm x,\pm y\}$: the relations are again finitely many, but the parameter space has
 four real dimensions and we have not attempted the enumeration.  Could a three-symbol pool
@@ -106,7 +107,7 @@ contain a KS set of fewer than 31 rays?
 at both phases tested (Table~\ref{tab:rigidity}).  Is the second one a genuine deformation, leading off the
 family of Theorem~\ref{thm:circle}?
 \item \emph{All minimum sets on the circle.}  We exhibit one 45-word minimum set; the others have
-not been enumerated, nor has the set of phases at which the pool gains orthogonalities.
+not been enumerated.
 \item \emph{Completion.}  Is there a finiteness criterion for completed pools?  Why does
 completion make the golden-ratio and $\sqrt[3]2$ pools uncolorable but not those of $\sqrt3$ and
 $\sqrt5$?
@@ -131,8 +132,9 @@ $x=\sqrt2$ and $x=2$ and nothing else for real $x$; for complex $x$ it adds only
 the primitive third and sixth roots of unity; and in no case is there a KS set of fewer than 31 rays.  One unit and one
 further number along each axis cannot improve on Conway and Kochen.  The more interesting
 structure appears when the alphabet is enlarged.  With the conjugate
-included, the pool is uncolorable on the entire circle $|x|^2=2$ and colorable off it for
-generic~$x$; twelve orthogonalities of the form $1+1-|x|^2=0$ make the difference; the Peres set
+included, the uncolorable values of $x$ are no longer isolated: they are the two circles
+$|x|^2=2$ and $|x|^2=\tfrac12$, four lines through the origin (without the origin), and the points
+$\pm2,\pm\tfrac12$ (Theorem~\ref{thm:conj}).  On the circle $|x|^2=2$ twelve orthogonalities of the form $1+1-|x|^2=0$ make the difference; the Peres set
 and its imaginary twin are the two degenerate points of a 45-ray family; and the 43-ray set over
 $\Q(\sqrt{-7})$ sits at a point of the circle where one more relation holds.  For the
 roots-of-unity alphabets the answer is exact as well: uncolorable if and only if $6\mid n$, with
@@ -147,7 +149,7 @@ listed.
 \subsection*{Reproducibility}
 
 Code and data: \url{https://github.com/michaelkernaghan/contextuality}, release tag
-\texttt{v10.1}.  Scripts for this
+\texttt{v10.2}.  Scripts for this
 version, with the result files they write under \texttt{results/}:
 
 \begin{itemize}\setlength{\itemsep}{0pt}
@@ -161,6 +163,13 @@ four-symbol and completed pools quoted in the text (\texttt{tables\_v10.jsonl}).
 \item \texttt{ks\_two\_symbol\_theorem.py}: Theorem~\ref{thm:twosymbol} and
 Table~\ref{tab:twosymbol} (\texttt{two\_symbol\_theorem.json}, with a witness for every
 uncolorable case); about five seconds.
+\item \texttt{ks\_conjugate\_closed\_theorem.py}: Theorem~\ref{thm:conj} and
+Table~\ref{tab:conj}.  The mode \texttt{scan} builds and colors the 68 cases in a few seconds.
+The mode \texttt{certify} adds the minima, written to
+\texttt{conjugate\_closed\_theorem.json}.  The mode \texttt{one} reruns a single case,
+optionally only to exclude sets below a given size; it appends to
+\texttt{conjugate\_closed\_reruns.jsonl}.  \texttt{ks\_conjugate\_closed\_identify.py}
+identifies the smallest sets.
 \item \texttt{ks\_verify\_cyclotomic\_theorem.py}: Table~\ref{tab:cyc} and the structural
 statements of Theorem~\ref{thm:6n}, $n\le30$.
 \item \texttt{ks\_modulus2\_circle.py}: Theorem~\ref{thm:circle}, Table~\ref{tab:words},

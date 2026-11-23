@@ -1,0 +1,153 @@
+Peer Review: algebraic_islands_v10.txt
+Date: 2026-11-23 00:34:51
+Reviewer: Codex (gpt-6-astra, reasoning high, CLI v0.153.4)
+Elapsed: 480.5s
+Tokens: 108,488 tokens used
+---
+
+**1. CORRECT WITH WORDING FIXES — the classification and stated computational bounds survive checking; the prose miscounts the special points, includes the colourable origin in the picture, and overstates several unresolved minima.**
+
+I ran `scan`, independently rebuilt all requested sample pools, checked the arrangement separately with SymPy, reread the certifier, and reran witness identification. I did **not** run `certify` or repeat the hours-long minimum searches. The scan reproduced the archived results exactly: **68 cases, 46 uncolourable**.
+
+**2. Actionable issues**
+
+Demonstrated errors and inconsistencies:
+
+| Priority | Step | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|
+| Med | 1 | “there are 53 special points” omits the quotient by conjugation. There are **92 nonzero special points in the full plane**, represented by 53 points with \(b\ge0\). | State explicitly that the enumeration uses \((a,B)=(\Re x,(\Im x)^2)\). Write “53 classes under conjugation, reduced to 28 under sign as well.” The 68-case computation remains valid. |
+| Med | 4 | “uncolorable exactly on the set drawn in black,” including “four lines through the origin.” The origin is drawn black, but \(P(0)\) is the colourable 13-ray pool. The introduction and conclusion repeat the omission. | Draw an open circle at zero and say **four punctured lines**. State \(x\ne0\) in abstract item (D), whose quotient \(x^*/x\) is otherwise undefined. |
+| Med | 3–4 | “at \(x=\pm1\pm i\) … we have no lower bound,” and “we know only that 45 rays suffice.” The paper itself states the general lower bound 24. | Say “we have not established the pool-specific lower bound 31”; report \(24\le m(P(1+i))\le45\), using the paper’s cited general result. |
+| Med | 4 | “nor has the set of phases at which the pool gains orthogonalities” been enumerated. The new arrangement does enumerate those exceptional points on the outer circle. | Remove that clause. Retain the question about enumerating all minimum sets. |
+| Med | 2 | Floor-run JSON records say `"certified": 31, "upper_bound": 31` although no 31-ray witness is supplied or established. | Record `threshold: 31` and `proven_lower_bound: 31`. Keep the genuine witness upper bound separately. The paper’s interpretation is sound; the metadata is misleading. |
+| Low | 1–2 | “coordinates in \(\mathbb Q(\sqrt d)\)” inaccurately describes the actual representation. For example, at \((\sqrt5+i\sqrt3)/2\), the two Cartesian coordinates do not belong to one quadratic field. | Say **\(a\) and \(B=b^2\) lie in one quadratic field**. That is what the script stores and needs. |
+| Low | 4 | “At the two axis points of the outer circle” describes a full-plane figure having four such points. | Say “the four axis points, representing two alphabets up to sign.” |
+
+Unsupported or overstated claims:
+
+| Priority | Step | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|
+| High | 3–4 | “On \(|x|^2=\tfrac12\) it is 33” asserts an exact minimum at \(\eta/\sqrt2\) and \(\zeta/\sqrt2\), where the table establishes only \(31\)–\(33\). Likewise, “On the lines the minimum set is the Eisenstein set” overstates what is known at the unresolved intersections and at \(2\zeta\). | Say “generically the minimum is 33.” Universally, the inner circle **contains a 33-ray Peres-graph set**, and the punctured lines **contain a 33-ray Eisenstein-graph set**. Preserve the unresolved bounds. |
+| Low | 4 | “absorbs Theorem … (i) and (ii)” is broader than the new theorem’s statement. Pool uncolourability does not itself establish the particular fixed list \(W\); generic colourability does not itself establish the earlier graph’s numerical counts. | Say “subsumes the pool-uncolourability consequence of (i) and sharpens the generic-colourability conclusion of (ii).” |
+| Med | 1 | “Two different curves … meet in at most two values of \(a\)” does not, by itself, explain why one sample covers both components of a reducible curve or disconnected hyperbola. | Add the polynomial argument below. The argument is valid; the missing explanation is short. |
+
+Limits of this review:
+
+| Priority | Step | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|
+| Med | 2–3 | “the certifier terminated” is supported by code and matching logs, but the new lower-bound exclusion certificates are not archived. I did not independently repeat the lengthy searches. | Archive the colourable-set exclusions and final hitting-set UNSAT certificates, especially for the three floor runs. This strengthens independent verification; their absence is disclosed and is not a demonstrated mathematical error. |
+| Low | 4 | “We have not compared it with the family of Gould and Aravind.” I established a continuous Peres-graph family, but did not derive an explicit equivalence with their parametrization. | Supply a coordinate correspondence before claiming identification or novelty. This comparison need not block release of the classification. |
+
+**3. Claims independently confirmed, with methods**
+
+- **The six monomials, coefficient bound and 376 vectors are correct.** A product of letters, with or without conjugating the first factor, is zero or a signed member of
+  \[
+  1,\ x,\ x^*,\ xx^*,\ x^2,\ x^{*2}.
+  \]
+  An inner product has three terms; a minor has two. Independently enumerating signed monomial products gave all **376** nonzero inner-product coefficient vectors:
+  \[
+  \#\{\|c\|_1=1\}=12,\qquad
+  \#\{\|c\|_1=2\}=72,\qquad
+  \#\{\|c\|_1=3\}=292.
+  \]
+  Their sum is 376. The minor coefficient family is smaller; the common bound \(\|c\|_1\le3\) is nevertheless correct.
+
+- **Both printed vanishing conditions and the stratification are correct.** Direct expansion gives
+  \[
+  \Im f=b[(c_1-c_2)+2(c_4-c_5)a],
+  \]
+  \[
+  \Re f=c_0+(c_1+c_2)a+(c_3+c_4+c_5)a^2
+             +(c_3-c_4-c_5)b^2.
+  \]
+  Put \(L(a)=(c_1-c_2)+2(c_4-c_5)a\) and write the real equation as \(p(a)+kB=0\). If \(L\not\equiv0\), a nonreal solution requires its single possible root; this produces an isolated point or a vertical line. Real solutions come from \(p(a)=0\), including the whole real axis when \(p\equiv0\). If \(L\equiv0\), the equation gives \(B=-p/k\), or vertical lines when \(k=0\).
+
+  **No line or hyperbola branch is missed.** On a nonvertical branch with \(b\ne0\), infinitely many vanishing points force \(L\equiv0\). Substitution of \(B=g(a)\) then gives a polynomial in \(a\); infinitely many roots force it to vanish identically. It therefore vanishes on the entire prescribed curve. Also, replacing \(b\) by \(-b\) leaves both zero conditions unchanged. This deals with all three reducible pairs \(b^2=a^2,a^2/3,3a^2\), and with disconnected hyperbola branches.
+
+- **The fourteen listed curve loci and the special-point coverage are correct.** The script produces eleven retained graphs in \((a,B)\) and three vertical lines. Its four discarded graphs are
+  \[
+  B=-2-a^2,\quad -1-a^2,\quad-\tfrac12-a^2,\quad-a^2;
+  \]
+  the first three have no real points and the last contributes only the excluded origin.
+
+  Independent SymPy intersection and isolated-root calculations reproduced exactly the same **53 upper-half-plane representatives**. Fourteen are real; the other 39 acquire distinct conjugates:
+  \[
+  14+2(39)=92.
+  \]
+  Further sign reduction gives **28 point classes and 12 curve classes**, hence 41 cases after both reductions. The advertised 68 cases already use conjugation.
+
+  Tangencies are included through repeated quadratic roots. Graph/vertical intersections and intersections with \(B=0\) are included. Word coincidences need not be isolated: they occur along entire loci such as the axes and unit circle. The stratification handles these through the minors; it does not need to declare every coincidence point special.
+
+- **The arithmetic and pool-construction code are sound on the enumerated domain.** `Q2.sign()` uses rational signs and the exact comparison \(p^2-q^2d\). In its actual normalized representations, the problematic equality case cannot occur with a nonzero irrational coefficient. Floating-point approximations are used for ordering and reporting, not vanishing decisions.
+
+  `Pt.vanishes()` correctly drops the imaginary restriction when \(B=0\). `decompose()` implements the cases above. `arrangement()` includes all relevant intersection types. Both sampling routines explicitly check that the vanishing-vector set equals the set expected for the whole curve. I additionally checked **120,320 vector/point incidences**, covering the computed strata and a rational grid, without a discrepancy.
+
+  `inner_vec()` correctly conjugates the first word; `minor_vec()` correctly uses ordinary, unconjugated products. All formal words remain nonzero when \(x\ne0\), so the minor test is valid. At zero that premise fails, but zero is excluded from the theorem and was checked separately by direct construction.
+
+- **Every requested independent pool count agrees with `tab:conj`.** I used the separate number-field implementation: enumerate numerical words, divide by the first nonzero coordinate, deduplicate normalized rays, and compute exact Hermitian products. I used **MiniSat22** for these colourability checks, independently of the scan’s Glucose calls.
+
+  | Sample \(x\) | Rays | Pairs | Triads | Colourable |
+  |---|---:|---:|---:|---|
+  | \(2+3i\), generic | 145 | 366 | 22 | Yes |
+  | \((1+i\sqrt{17})/3\), generic outer circle | 145 | 378 | 34 | No |
+  | \(1/3+i\sqrt{14}/6\), generic inner circle | 145 | 390 | 46 | No |
+  | \(3+i\sqrt3\), generic \(30^\circ\) line | 145 | 390 | 30 | No |
+  | \(3+3i\sqrt3\), generic \(60^\circ\) line | 145 | 390 | 30 | No |
+  | \(1/2+i\sqrt2\), colourable vertical curve | 145 | 462 | 30 | Yes |
+  | \((1+i)/2\) | 127 | 465 | 51 | No |
+  | \(1+i\) | 127 | 477 | 63 | No |
+  | \(\zeta\) | 57 | 174 | 22 | No |
+  | \(2\zeta\) | 145 | 438 | 62 | No |
+  | \(e^{i\pi/6}\) | 109 | 312 | 24 | No |
+  | \((1+\sqrt{-7})/4\) | 145 | 486 | 54 | No |
+  | \(e^{i\pi/4}\) | 91 | 231 | 13 | Yes |
+  | \(0\), additional boundary check | 13 | 24 | 4 | Yes |
+
+  These computations also settle inversion: \(1/(1+i)=(1-i)/2\), whose pool equals \(P((1+i)/2)\). The two pools have **477 versus 465 edges**, so inversion is not even a graph symmetry in general.
+
+- **Parts (i)–(iii) agree with the computations, subject to the wording corrections above.** Applying the proposed “if and only if” predicate to every scan case gave no discrepancy. In particular, every special point on an uncolourable curve remains uncolourable.
+
+  Since \(x^*/x=e^{-2i\arg x}\), the primitive third/sixth-root condition gives exactly the eight listed directions. The restriction argument is valid: multiplying every word over \(\{0,\pm1,\pm u\}\), \(u=x^*/x\), by \(x\) produces a word over \(\{0,\pm x,\pm x^*\}\). Thus **every ray of \(S(u)\)** belongs to \(P(x)\).
+
+  The archived generic-curve records report completed certificates for **45** on the outer circle and **33** on the inner circle and both line-pair loci. The four unresolved point classes are exactly those stated.
+
+  The floor device is logically sound. Every learned clause is the complement of a colourable set and must be hit by any uncolourable subset. UNSAT with cardinality at most 30 therefore excludes every uncolourable subset below 31. This reasoning does **not** require the dummy 31-element set to be uncolourable; it simply does not establish an upper bound of 31.
+
+  | Unresolved class | Archived floor-31 result | Supported statement |
+  |---|---|---|
+  | \(\eta/\sqrt2\) | Completed, 10,768 iterations | \(31\le m\le33\) |
+  | \(\zeta/\sqrt2\) | Completed, 9,707 iterations | \(31\le m\le33\) |
+  | \(2\zeta\) | Completed, 9,778 iterations | \(31\le m\le33\) |
+  | \(1+i\) | Budget exhausted | No pool-specific exclusion below 31 |
+
+  The later exact-search rerun finding only a 43-ray witness at \(2\zeta\) does not invalidate the earlier stored 33-ray witness. Bounds must be combined across runs, not taken from the last record.
+
+- **The symmetry shortcut and table’s witness column are supported.** \(P(-x)=P(x)=P(x^*)\) holds literally because the alphabets are equal. Copying minimum and count results is legitimate. I also evaluated all **19 copied witness records** at their destination points: their sizes, edge counts, triad counts and uncolourability agree.
+
+  Rerunning `ks_conjugate_closed_identify.py` reproduced the reported identifications for all **26 non-mirrored witnesses**. The table correctly says “graph of the smallest set found.” VF2 on one witness establishes neither uniqueness nor that every minimum has that graph; the table itself does not claim either.
+
+- **The inner-circle family exists, and the Gaussian and Heegner interpretations are correct.** More strongly than separate VF2 tests at individual points, the **same generic 33-word witness** retains 33 distinct rays and exactly 72 edges at every special point of the inner circle. Combined with the stratification, this establishes a constant Peres graph around the whole circle.
+
+  The deformation is nontrivial: that witness contains \((0,1,1)\) and \((0,1,x^*)\), whose normalized squared overlap on \(|x|^2=1/2\) is
+  \[
+  \frac{|1+x^*|^2}{2(1+|x|^2)}
+  =\frac12+\frac23\Re x.
+  \]
+  It varies continuously. This supports the family claim, **not** the unresolved minimum claims. Identification with Gould–Aravind is plausible: their Table 3 parametrizes realizations of this orthogonality graph. I have not established the explicit correspondence. [Gould and Aravind, original paper](https://arxiv.org/pdf/0909.4502).
+
+  For the Gaussian assertion, the calculation is immediate:
+  \[
+  (1+i)\{0,\pm1,\pm(1+i)/2,\pm(1-i)/2\}
+   =\{0,\pm(1+i),\pm i,\pm1\}.
+  \]
+  Common scalar multiplication preserves every ray.
+
+  The axis restrictions agree with `thm:twosymbol`; the outer circle agrees with `thm:circle`; \(\zeta\) reproduces the Eisenstein pool; and the Heegner rows agree. The Gould–Aravind subsection’s exclusion of a generic outer-circle 33-ray set remains correct—its lower bound 43 can now be strengthened to 45. I found no new contradiction with the rigidity discussion.
+
+**4. Step 5 verdict**
+
+The mathematical classification is correct on the evidence checked, and its finite reduction is sound. It is adequate for a computational preprint after the corrections above.
+
+Before release, fix the conjugation count, exclude zero visibly, qualify the unresolved minima in the second remark, correct “no lower bound,” remove the obsolete exceptional-phase question, and explain why disconnected branches require no extra samples. Correct the floor-result metadata as well.
+
+The four unresolved minima can remain unresolved. What cannot remain is prose that silently turns their upper bounds into exact minima.

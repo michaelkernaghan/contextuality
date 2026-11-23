@@ -1,0 +1,448 @@
+[
+ {
+  "kind": "curve",
+  "name": "b^2 = 0 + 0 a + 1/3 a^2",
+  "x": "a = -113/21, b^2 = 12769/1323",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 78,
+  "bases": 14,
+  "degrees": {
+   "4": 18,
+   "5": 12,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "eisenstein33"
+  ]
+ },
+ {
+  "kind": "curve",
+  "name": "b^2 = 0 + 0 a + 3 a^2",
+  "x": "a = -113/21, b^2 = 12769/147",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 78,
+  "bases": 14,
+  "degrees": {
+   "4": 18,
+   "5": 12,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "eisenstein33"
+  ]
+ },
+ {
+  "kind": "curve",
+  "name": "b^2 = 1/2 + 0 a + -1 a^2",
+  "x": "a = -2/3, b^2 = 1/18",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 72,
+  "bases": 16,
+  "degrees": {
+   "4": 30,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "peres33",
+   "sqrtm2-33"
+  ]
+ },
+ {
+  "kind": "curve",
+  "name": "b^2 = 2 + 0 a + -1 a^2",
+  "x": "a = -53/39, b^2 = 233/1521",
+  "status": "CERTIFIED",
+  "size": 45,
+  "pairs": 98,
+  "bases": 22,
+  "degrees": {
+   "3": 8,
+   "4": 30,
+   "6": 4,
+   "8": 2,
+   "12": 1
+  },
+  "isomorphic_to": []
+ },
+ {
+  "kind": "point",
+  "name": "-2",
+  "x": "-2",
+  "status": "CERTIFIED",
+  "size": 31,
+  "pairs": 71,
+  "bases": 17,
+  "degrees": {
+   "3": 4,
+   "4": 14,
+   "5": 8,
+   "6": 3,
+   "8": 2
+  },
+  "isomorphic_to": [
+   "ck31"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "-1*sqrt(2)",
+  "x": "-1*sqrt(2)",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 72,
+  "bases": 16,
+  "degrees": {
+   "4": 30,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "peres33",
+   "sqrtm2-33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "-1/2*sqrt(2)",
+  "x": "-1/2*sqrt(2)",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 72,
+  "bases": 16,
+  "degrees": {
+   "4": 30,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "peres33",
+   "sqrtm2-33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "-1/2",
+  "x": "-1/2",
+  "status": "CERTIFIED",
+  "size": 31,
+  "pairs": 71,
+  "bases": 17,
+  "degrees": {
+   "3": 4,
+   "4": 14,
+   "5": 8,
+   "6": 3,
+   "8": 2
+  },
+  "isomorphic_to": [
+   "ck31"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/2, b^2 = 1/12",
+  "x": "a = -1/2, b^2 = 1/12",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 78,
+  "bases": 14,
+  "degrees": {
+   "4": 18,
+   "5": 12,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "eisenstein33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/4*sqrt(6), b^2 = 1/8",
+  "x": "a = -1/4*sqrt(6), b^2 = 1/8",
+  "status": "UPPER_BOUND_ONLY",
+  "size": 33,
+  "pairs": 72,
+  "bases": 16,
+  "degrees": {
+   "4": 30,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "peres33",
+   "sqrtm2-33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/4, b^2 = 3/16",
+  "x": "a = -1/4, b^2 = 3/16",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 78,
+  "bases": 14,
+  "degrees": {
+   "4": 18,
+   "5": 12,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "eisenstein33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/2*sqrt(3), b^2 = 1/4",
+  "x": "a = -1/2*sqrt(3), b^2 = 1/4",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 78,
+  "bases": 14,
+  "degrees": {
+   "4": 18,
+   "5": 12,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "eisenstein33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/2, b^2 = 1/4",
+  "x": "a = -1/2, b^2 = 1/4",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 72,
+  "bases": 16,
+  "degrees": {
+   "4": 30,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "peres33",
+   "sqrtm2-33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/4*sqrt(2), b^2 = 3/8",
+  "x": "a = -1/4*sqrt(2), b^2 = 3/8",
+  "status": "UPPER_BOUND_ONLY",
+  "size": 33,
+  "pairs": 72,
+  "bases": 16,
+  "degrees": {
+   "4": 30,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "peres33",
+   "sqrtm2-33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/4, b^2 = 7/16",
+  "x": "a = -1/4, b^2 = 7/16",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 72,
+  "bases": 16,
+  "degrees": {
+   "4": 30,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "peres33",
+   "sqrtm2-33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/2*sqrt(6), b^2 = 1/2",
+  "x": "a = -1/2*sqrt(6), b^2 = 1/2",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 78,
+  "bases": 14,
+  "degrees": {
+   "4": 18,
+   "5": 12,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "eisenstein33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = 0, b^2 = 1/2",
+  "x": "a = 0, b^2 = 1/2",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 72,
+  "bases": 16,
+  "degrees": {
+   "4": 30,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "peres33",
+   "sqrtm2-33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -3/2, b^2 = 3/4",
+  "x": "a = -3/2, b^2 = 3/4",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 78,
+  "bases": 14,
+  "degrees": {
+   "4": 18,
+   "5": 12,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "eisenstein33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/2*sqrt(5), b^2 = 3/4",
+  "x": "a = -1/2*sqrt(5), b^2 = 3/4",
+  "status": "CERTIFIED",
+  "size": 45,
+  "pairs": 98,
+  "bases": 22,
+  "degrees": {
+   "3": 8,
+   "4": 30,
+   "6": 4,
+   "8": 2,
+   "12": 1
+  },
+  "isomorphic_to": []
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/2, b^2 = 3/4",
+  "x": "a = -1/2, b^2 = 3/4",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 78,
+  "bases": 14,
+  "degrees": {
+   "4": 18,
+   "5": 12,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "eisenstein33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1, b^2 = 1",
+  "x": "a = -1, b^2 = 1",
+  "status": "UPPER_BOUND_ONLY",
+  "size": 45,
+  "pairs": 98,
+  "bases": 22,
+  "degrees": {
+   "3": 8,
+   "4": 30,
+   "6": 4,
+   "8": 2,
+   "12": 1
+  },
+  "isomorphic_to": []
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/2*sqrt(3), b^2 = 5/4",
+  "x": "a = -1/2*sqrt(3), b^2 = 5/4",
+  "status": "CERTIFIED",
+  "size": 45,
+  "pairs": 98,
+  "bases": 22,
+  "degrees": {
+   "3": 8,
+   "4": 30,
+   "6": 4,
+   "8": 2,
+   "12": 1
+  },
+  "isomorphic_to": []
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/2*sqrt(2), b^2 = 3/2",
+  "x": "a = -1/2*sqrt(2), b^2 = 3/2",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 78,
+  "bases": 14,
+  "degrees": {
+   "4": 18,
+   "5": 12,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "eisenstein33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1/2, b^2 = 7/4",
+  "x": "a = -1/2, b^2 = 7/4",
+  "status": "CERTIFIED",
+  "size": 43,
+  "pairs": 107,
+  "bases": 23,
+  "degrees": {
+   "4": 16,
+   "5": 20,
+   "6": 4,
+   "8": 2,
+   "10": 1
+  },
+  "isomorphic_to": []
+ },
+ {
+  "kind": "point",
+  "name": "a = 0, b^2 = 2",
+  "x": "a = 0, b^2 = 2",
+  "status": "CERTIFIED",
+  "size": 33,
+  "pairs": 72,
+  "bases": 16,
+  "degrees": {
+   "4": 30,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "peres33",
+   "sqrtm2-33"
+  ]
+ },
+ {
+  "kind": "point",
+  "name": "a = -1, b^2 = 3",
+  "x": "a = -1, b^2 = 3",
+  "status": "UPPER_BOUND_ONLY",
+  "size": 33,
+  "pairs": 78,
+  "bases": 14,
+  "degrees": {
+   "4": 18,
+   "5": 12,
+   "8": 3
+  },
+  "isomorphic_to": [
+   "eisenstein33"
+  ]
+ }
+]

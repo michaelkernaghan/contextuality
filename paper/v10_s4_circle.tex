@@ -9,7 +9,9 @@ $x$ the alphabet that is closed under conjugation is
 For generic $x$ the pool $P(x)$ has 145 rays; at special $x$ some of them coincide (49 remain
 at $x=\sqrt{\pm2}$).  Versions 1--9 used this alphabet at one
 point, $x=(1+\sqrt{-7})/2$, found the pool uncolorable, and attributed that to the arithmetic of
-the ring of integers of $\Q(\sqrt{-7})$.  It is a property of the whole circle.
+the ring of integers of $\Q(\sqrt{-7})$.  It is a property of the whole circle.  This section
+proves that (Theorem~\ref{thm:circle}) and then determines every $x$ at which $P(x)$ is
+uncolorable (Theorem~\ref{thm:conj}).
 
 \begin{theorem}\label{thm:circle}
 Let $W$ be the list of 45 words in Table~\ref{tab:words}.
@@ -102,26 +104,35 @@ and 26 triads, and this set contains a 43-ray KS subset; 43 is the certified min
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}[scale=1.55]
-\draw[->,gray] (-1.9,0) -- (2.2,0) node[right] {$\mathrm{Re}\,x$};
-\draw[->,gray] (0,-1.75) -- (0,1.95) node[above] {$\mathrm{Im}\,x$};
+\draw[->,gray] (-2.45,0) -- (2.6,0) node[right] {$\mathrm{Re}\,x$};
+\draw[->,gray] (0,-2.1) -- (0,2.25) node[above] {$\mathrm{Im}\,x$};
+\foreach \t in {30,60,120,150} \draw[line width=0.9pt] (\t:-1.9) -- (\t:1.9);
 \draw[line width=0.9pt] (0,0) circle (1.4142);
-\draw[densely dotted] (0,0) circle (1);
-\node[font=\footnotesize,gray] at (-0.52,-0.52) {$|x|=1$};
-\fill (1.4142,0) circle (0.05) node[below right,font=\small] {$\sqrt2$: Peres, 33 rays};
+\draw[line width=0.9pt] (0,0) circle (0.7071);
+\foreach \p in {-2,-0.5,0.5,2} \fill (\p,0) circle (0.05);
+\draw[fill=white,line width=0.5pt] (0,0) circle (0.06);
+\node[font=\small,anchor=south] at (2,0.08) {$2$: $\CK$};
+\fill (1.4142,0) circle (0.05) node[below right,font=\small] {$\sqrt2$: Peres};
 \fill (0,1.4142) circle (0.05);
-\node[font=\small,anchor=south west] at (0.08,1.72) {$\sqrt{-2}$: 33 rays};
-\draw[gray,line width=0.3pt] (0.03,1.46) -- (0.12,1.74);
+\node[font=\small,anchor=south west] at (0.08,1.78) {$\sqrt{-2}$: 33 rays};
+\draw[gray,line width=0.3pt] (0.03,1.46) -- (0.12,1.8);
 \fill (0.5,1.3229) circle (0.05);
-\node[font=\small,anchor=west] at (1.0,1.5) {$\tfrac{1+\sqrt{-7}}{2}$: minimum 43};
-\draw[gray,line width=0.3pt] (0.55,1.35) -- (0.98,1.48);
-\node[font=\small,align=left] at (-1.45,1.45) {$|x|^2=2$:\\uncolorable};
-\node[font=\small,align=left] at (1.55,-1.2) {generic $x$:\\colorable};
+\node[font=\small,anchor=west] at (1.2,1.45) {$\tfrac{1+\sqrt{-7}}{2}$: minimum 43};
+\draw[gray,line width=0.3pt] (0.55,1.34) -- (1.18,1.44);
+\node[font=\small,anchor=east] at (-1.25,1.5) {$|x|^2=2$};
+\node[font=\small,anchor=east] at (-1.75,-0.5) {$|x|^2=\tfrac12$};
+\draw[gray,line width=0.3pt] (-0.69,-0.17) -- (-1.73,-0.48);
+\node[font=\small,anchor=west] at (1.68,-0.97) {$\arg x=-30^\circ$};
+\node[font=\small,anchor=north west] at (0.97,-1.66) {$\arg x=-60^\circ$};
+\node[font=\small,align=left,anchor=north east] at (-1.2,-1.5) {elsewhere:\\colorable};
 \end{tikzpicture}
-\caption{The alphabet $\{0,\pm1,\pm x,\pm x^{*}\}$.  Its pool is uncolorable at every point of the
-circle $|x|^2=2$ and colorable for generic~$x$.  The pool is unchanged by $x\mapsto-x$ and
-$x\mapsto x^{*}$, so one quadrant suffices.  At the two axis points the 45 words of
-Table~\ref{tab:words} collapse to 33 rays.  At $(1+\sqrt{-7})/2$ the additional relation
-$x+x^{*}=1$ adds orthogonalities and the minimum drops from 45 to~43.}
+\caption{The alphabet $\{0,\pm1,\pm x,\pm x^{*}\}$.  Its pool is uncolorable exactly on the set
+drawn in black: the circles $|x|^2=2$ and $|x|^2=\tfrac12$, the four lines through the origin at
+$\pm30^\circ$ and $\pm60^\circ$ to the real axis with the origin removed, and the points
+$\pm2,\pm\tfrac12$ (Theorem~\ref{thm:conj}).  The pool is unchanged by $x\mapsto-x$ and
+$x\mapsto x^{*}$, so one quadrant suffices.  At the four axis points of the outer circle, which
+are two alphabets up to sign, the 45 words of Table~\ref{tab:words} collapse to 33 rays.  At $(1+\sqrt{-7})/2$ the additional
+relation $x+x^{*}=1$ adds orthogonalities and the minimum drops from 45 to~43.}
 \label{fig:circle}
 \end{figure}
 
@@ -182,9 +193,187 @@ unitaries the family is a circle (we have not audited that proof).  That family 
 Theorem~\ref{thm:circle}.  Its members have 33 rays and a constant graph.  Ours has 45 rays at a
 generic point and cannot contain a 33-ray KS set there: every orthogonality of $P(x)$ at a generic
 point of the circle is also one of $P(\alpha)$, whose minimum is~43, so no subset of $P(x)$ with
-fewer than 43 rays is uncolorable.  The two families meet at $x=\sqrt2$, where both give Peres's
+fewer than 43 rays is uncolorable.  (Theorem~\ref{thm:conj} below gives 45.)  The two families meet at $x=\sqrt2$, where both give Peres's
 set.  We have not found the family of Theorem~\ref{thm:circle} in the literature, but we have not
 made a systematic search and make no claim of priority.
+
+\subsection{Every conjugate-closed alphabet}\label{sec:conjclosed}
+
+Theorem~\ref{thm:circle} settles one curve in the plane of~$x$.  The method of
+Theorem~\ref{thm:twosymbol} settles the plane.
+
+\begin{theorem}[Conjugate-closed alphabets]\label{thm:conj}
+Let $x$ be a nonzero complex number and $P(x)$ the pool of all words over
+$\{0,\pm1,\pm x,\pm x^{*}\}$.
+\begin{enumerate}[label=(\roman*)]
+\item $P(x)$ is uncolorable if and only if one of the following holds:
+\begin{enumerate}[label=(\alph*)]
+\item $|x|^2=2$;
+\item $|x|^2=\tfrac12$;
+\item $x^{*}/x$ is a primitive third or sixth root of unity, that is, $\arg x$ is one of
+$\pm30^\circ$, $\pm60^\circ$, $\pm120^\circ$, $\pm150^\circ$;
+\item $x\in\{\pm2,\pm\tfrac12\}$.
+\end{enumerate}
+\item At every point of the curves (a)--(c) other than the special points of
+Table~\ref{tab:conj}, the minimum uncolorable subset of $P(x)$ has 45 rays on $|x|^2=2$ and 33
+rays on $|x|^2=\tfrac12$ and on the four lines of~(c).  At the special points the minima are
+those of Table~\ref{tab:conj}; two of them are bounds and not certified values.
+\item For every $x$ other than $\pm1\pm i$, no uncolorable subset of $P(x)$ has fewer than 31
+rays, and 31 is attained at $x=\pm2,\pm\tfrac12$, where $P(x)$ is the integer pool.  At
+$x=\pm1\pm i$ the pool is uncolorable and we have not established the bound 31; there the
+minimum lies between the general lower bound 24 and~45.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The argument is that of Theorem~\ref{thm:twosymbol} with two more monomials.  An inner product of
+two words, and a $2\times2$ minor of two words, is an integer combination
+\[
+c_0+c_1x+c_2x^{*}+c_3|x|^2+c_4x^2+c_5x^{*2}
+\]
+with $\sum|c_k|\le3$; 376 nonzero coefficient vectors occur.  With $x=a+ib$ the combination
+vanishes when
+\[
+b\,\bigl[(c_1-c_2)+2(c_4-c_5)\,a\bigr]=0,\qquad
+c_0+(c_1+c_2)\,a+(c_3+c_4+c_5)\,a^2+(c_3-c_4-c_5)\,b^2=0 .
+\]
+Both conditions involve $b$ only through the factor $b$ and through $b^2$, and the second is
+linear in~$b^2$.  The solution set of one vector is therefore made up of finitely many points
+and of whole curves of three kinds: the real axis, a vertical line, and a curve
+$b^2=g_0+g_1a+g_2a^2$.  We work throughout in the coordinates $(a,b^2)$, which identifies $x$
+with $x^{*}$; this loses nothing, because $P(x^{*})=P(x)$.  Two different curves of these kinds
+meet in at most two values of~$a$.  A vector that vanishes at infinitely many points of a curve
+$b^2=g(a)$ with $b\ne0$ vanishes on all of it: the first condition then forces
+$(c_1-c_2)+2(c_4-c_5)a$ to be identically zero, and substituting $b^2=g(a)$ in the second
+gives a polynomial in $a$ with infinitely many roots.  So the two lines of a pair such as
+$b^2=3a^2$, and the two branches of a hyperbola, need not be treated separately.
+Going through the 376 vectors gives fourteen curves with points other than the origin:
+\[
+\mathrm{Im}\,x=0,\quad \mathrm{Re}\,x=0,\ \pm\tfrac12,\quad |x|^2=\tfrac12,\ 1,\ 2,\quad
+|x\pm1|=1,\quad \mathrm{Re}\,x^2=0,\ \pm\tfrac12,\quad x^2+x^{*2}=\pm|x|^2 .
+\]
+The last two are the pairs of lines $b^2=a^2/3$ and $b^2=3a^2$ of part~(c).  Call a nonzero point
+\emph{special} if it is an isolated solution of some vector or lies on two of the curves; there
+are 53 special points with $\mathrm{Im}\,x\ge0$ (92 in the plane, 14 of them real).  As in Theorem~\ref{thm:twosymbol}, the set of vectors that vanish at $x$,
+and with it the list of coinciding words and the orthogonality graph of $P(x)$, is the same at
+all points on no curve, and the same at all non-special points of any one curve.  That leaves
+$1+14+53=68$ cases.  The pool is also unchanged by $x\mapsto-x$, which reduces
+the special points to 28 classes and the curves to 12; unlike the two-symbol pool it is not
+unchanged by $x\mapsto1/x$.
+
+The script \texttt{ks\_conjugate\_closed\_theorem.py} lists the curves and the special points in
+exact arithmetic ($a$ and $b^2$ in one quadratic field $\Q(\sqrt d)$), builds the 68 graphs, decides colorability of
+each, and runs the certification procedure of Section~\ref{sec:methods} on the uncolorable ones.
+Table~\ref{tab:conj} is the result.  The uncolorable cases are the curves (a), (b) and (c), every
+special point on them, and the points $\pm2,\pm\tfrac12$; all other cases are colorable.  That
+is~(i).  Part~(ii) is the corresponding rows of the table.  For~(iii), the certifier terminated
+with a minimum of at least 31 in every uncolorable case except four.  For those four we made
+separate runs, each of which only decides whether an uncolorable subset of fewer than a given
+number of rays exists.  At $\eta/\sqrt2$ and at $2\zeta$
+(notation of Table~\ref{tab:conj}) there is none of fewer than 33 rays,
+which with the 33-ray sets found makes 33 the minimum.  At $\zeta/\sqrt2$ there is none of
+fewer than 32, and the run for 33 did not terminate in eight hours.  At $x=\pm1\pm i$ the run
+for 31 did not terminate in eight hours.  The
+witnesses are archived; the lists of colorable sets produced by these runs are not, so the
+lower bounds of this theorem can be reproduced only by rerunning the script.
+
+Part~(c) also has a proof that needs no new computation.  A word whose nonzero entries are all
+$\pm x$ or $\pm x^{*}$ is $x$ times a word over $\{0,\pm1,\pm u\}$ with $u=x^{*}/x$, so $P(x)$
+contains every ray of the two-symbol pool $S(u)$.  By Theorem~\ref{thm:twosymbol}, $S(u)$ is
+uncolorable when $u$ is a primitive third or sixth root of unity, with a 33-ray minimum set
+having the graph of the Eisenstein set, and Lemma~\ref{lem:restrict} carries this to $P(x)$.
+This argument gives nothing more, since $S(u)$ is colorable for every other $u$ on the unit
+circle.
+\end{proof}
+
+\begin{table}[t]
+\centering
+\caption{Every pool of the conjugate-closed alphabet $\{0,\pm1,\pm x,\pm x^{*}\}$
+(Theorem~\ref{thm:conj}).  A curve stands for its points other than the special points listed
+below it, and each special point stands for its images under $x\mapsto-x$ and
+$x\mapsto x^{*}$.  $\zeta=e^{i\pi/3}$, $\eta=e^{i\pi/6}$, $\varphi=(1+\sqrt5)/2$.  ``Min'' is
+the certified size of the smallest uncolorable subset; ``32--33'' means that 33 rays suffice
+and fewer than 32 do not; ``$\le45$'' is an upper bound only.  The last column gives the graph
+of the smallest set found (isomorphism by VF2).}
+\label{tab:conj}
+\small
+\begin{tabular}{@{}lrrrcl@{}}
+\toprule
+$x$ & Rays & Pairs & Triads & Min & Smallest set found \\
+\midrule
+on no curve & 145 & 366 & 22 & --- & colorable \\
+$\mathrm{Im}\,x=0$;\ \ $\mathrm{Re}\,x=0$ & 49 & 114 & 10 & --- & colorable \\
+$|x|=1$ & 109 & 276 & 16 & --- & colorable \\
+$\mathrm{Re}\,x^2=0$ & 127 & 321 & 19 & --- & colorable \\
+$\mathrm{Re}\,x=\pm\tfrac12$;\ \ $|x\pm1|=1$ & 145 & 462 & 30 & --- & colorable \\
+$\mathrm{Re}\,x^2=\pm\tfrac12$ & 145 & 378 & 22 & --- & colorable \\
+$|x|^2=2$ & 145 & 378 & 34 & \textbf{45} & 45 rays, 98 pairs \\
+$|x|^2=\tfrac12$ & 145 & 390 & 46 & \textbf{33} & Peres \\
+$\arg x=\pm30^\circ,\pm60^\circ,\pm120^\circ,\pm150^\circ$ & 145 & 390 & 30 & \textbf{33} & Eisenstein 33 \\
+\midrule
+$1$ & 13 & 24 & 4 & --- & colorable \\
+$i$ & 31 & 69 & 7 & --- & colorable \\
+$\varphi,\ 1/\varphi$ & 49 & 138 & 10 & --- & colorable \\
+$e^{i\pi/4}$ & 91 & 231 & 13 & --- & colorable \\
+$|x-1|=1$ and $\mathrm{Re}\,x^2=\tfrac12$ & 145 & 474 & 30 & --- & colorable \\
+\midrule
+$2,\ \tfrac12$ & 49 & 138 & 26 & \textbf{31} & $\CK$ \\
+$\sqrt2,\ 1/\sqrt2,\ \sqrt{-2},\ 1/\sqrt{-2}$ & 49 & 120 & 16 & \textbf{33} & Peres \\
+$(1+i)/2$ & 127 & 465 & 51 & \textbf{33} & Peres \\
+$(1+\sqrt{-7})/4$ & 145 & 486 & 54 & \textbf{33} & Peres \\
+$\eta/\sqrt2$ & 145 & 414 & 54 & \textbf{33} & Peres \\
+$\zeta/\sqrt2$ & 145 & 414 & 54 & 32--33 & Peres \\
+$\zeta$ & 57 & 174 & 22 & \textbf{33} & Eisenstein 33 \\
+$\eta$ & 109 & 312 & 24 & \textbf{33} & Eisenstein 33 \\
+$\zeta/2$ & 145 & 414 & 54 & \textbf{33} & Eisenstein 33 \\
+$\eta/\sqrt3,\ \sqrt3\,\eta$ & 145 & 486 & 38 & \textbf{33} & Eisenstein 33 \\
+$\sqrt2\,\eta,\ \sqrt2\,\zeta$ & 145 & 402 & 42 & \textbf{33} & Eisenstein 33 \\
+$2\zeta$ & 145 & 438 & 62 & \textbf{33} & Eisenstein 33 \\
+$(1+\sqrt{-7})/2$ & 145 & 522 & 42 & \textbf{43} & 43 rays, 107 pairs \\
+$(\sqrt5+\sqrt{-3})/2,\ (\sqrt3+\sqrt{-5})/2$ & 145 & 390 & 34 & \textbf{45} & 45 rays, 98 pairs \\
+$1+i$ & 127 & 477 & 63 & $\le45$ & 45 rays, 98 pairs \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Five remarks.
+
+First, the theorem contains the statement of Theorem~\ref{thm:circle}(i) that $P(x)$ is
+uncolorable on the circle, and sharpens the conclusion of~(ii): the
+``finite union of proper real algebraic subsets'' outside which $P(x)$ is colorable is two
+circles, four lines without the origin, and four points.  It does not replace part~(iii) or the explicit list of
+words, and the proof of Theorem~\ref{thm:circle}(i) by a fixed list remains the reason the
+circle is uncolorable.
+
+Second, the three curves behave differently.  On $|x|^2=2$ the minimum is 45 except at
+finitely many points.  On $|x|^2=\tfrac12$ it is 33 except possibly at the one class of
+points marked 32--33, and the smallest set found has the orthogonality graph of Peres's set at
+a generic point and at every special point of that circle.  So $|x|^2=\tfrac12$ carries a
+one-parameter family of 33-ray sets with Peres's graph.  We have not compared it with the family
+of Gould and Aravind discussed above.  Every point of the lines other than the origin has a
+33-ray uncolorable set with the graph of the Eisenstein set of Section~\ref{sec:roots}, written
+in the letters $\{0,\pm x,\pm x^{*}\}$, by the last paragraph of the proof; it is a minimum set
+wherever the table certifies~33.
+
+Third, the theorem accounts for Table~\ref{tab:heegner} without reference to number fields:
+$d=2$ and $d=7$ are points of $|x|^2=2$, $d=3$ is the point $\zeta$ of the $60^\circ$ line, and
+for $d=11,19,43,67,163$ the generator lies on $\mathrm{Re}\,x=\tfrac12$ and on no uncolorable
+curve.  The row $(1+i)/2$ of Table~\ref{tab:conj} is the Gaussian alphabet
+$\{0,\pm1,\pm i,\pm(1+i)\}$ of the previous subsection, after multiplying every letter by $1+i$.
+
+Fourth, the certified minima of Table~\ref{tab:conj} are 31, 33, 43 and 45.  The alphabet with
+the conjugate does not give a KS set smaller than that of Conway and Kochen at any point where
+the computation finished, and among the certified cases 31 is reached only by the integer pool.
+The statement is incomplete at $x=\pm1\pm i$, where the certifier did not terminate, and at the
+class marked 32--33, where the minimum is 32 or 33.
+
+Fifth, like Theorem~\ref{thm:twosymbol} this concerns raw pools.  Completed pools are not
+covered.
+
+The script asserts agreement with the number-field constructions of
+Section~\ref{sec:catalogue} at seven points, at a generic point and on the circle $|x|^2=2$;
+we also rebuilt six further cases with those constructions and found the same counts.  The
+graphs of the smallest sets are identified by \texttt{ks\_conjugate\_closed\_identify.py}.
 
 \subsection{Rigidity}
 
