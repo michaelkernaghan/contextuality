@@ -59,6 +59,13 @@ triads, with no other orthogonalities among them and none to a ray with a zero c
 the value~1 to one ray of each such triad and to $e_1$, and~0 to everything else.
 \end{proof}
 
+For $n\ge3$ the theorem is also proved in Lean~4 with the mathlib library, in the file
+\texttt{lean/Cyclotomic6n.lean} of the repository, with no unproved steps and no axioms
+beyond the standard three.  There the uncolorability of $S_6$ is checked rather than cited: 33 rays of $S_6$ are
+written over $\Z[\omega]$, their orthogonalities are recomputed in that ring, and a case-split
+refutation of every coloring is checked by the Lean kernel.  For $n=1,2$ the pool lies in
+$S(\{0,\pm1\})$, which is colorable.
+
 The two primes do different work.  Divisibility by~3 creates triads: at $n=9$ and $n=15$ the pool
 has 28 and 76 of them and is colorable because they are pairwise disjoint.  Divisibility by~2
 creates the two-term cancellations that couple triads.  Only together do the constraints

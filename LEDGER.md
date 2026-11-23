@@ -40,6 +40,15 @@ part of the Lean development.
 Negative control: changing one coordinate of one ray in `CK31.lean` makes `decide` report
 that the check is false.
 
+Second project: `cd lean && lake build` (Lean 4.30 + mathlib). Audit: a file containing
+`import Cyclotomic6n` and `#print axioms KSCyclotomic.six_divides_iff_ks_uncolorable`, run with
+`lake env lean`, lists `propext`, `Classical.choice`, `Quot.sound` (checked 2026-11-23).
+
+| Statement | Lean | Notes |
+|---|---|---|
+| For n >= 3, the pool of 0 and the n-th roots of unity is KS-uncolourable iff 6 divides n | `KSCyclotomic.six_divides_iff_ks_uncolorable` in `lean/Cyclotomic6n.lean` | Complex vectors over mathlib's `ℂ`; colourings are on vectors, equivalent to rays. |
+| The pool for n = 6 is uncolourable | `KSCyclotomic.cabello_S6_uncolorable` | 33 rays over Z[omega] from `ks_lean_export.py eisenstein`; orthogonality recomputed in Z[omega] and carried to `ℂ` by a proved embedding; certificate 1035 nodes, `decide +kernel`. Negative control: moving ray 0 from (0,0,1) to (0,1,1) makes `decide` report the check false. (Moving it to (0,0,1+omega) does not: that is the same ray.) |
+
 ## Statements of the paper
 
 | # | Statement | Status | Evidence |
@@ -47,7 +56,7 @@ that the check is false.
 | Lemma (Restriction) | A set containing an uncolourable set is uncolourable | Paper | One line. |
 | Theorem (Two-symbol alphabets) | For every nonzero complex x: which pools of {0, +-1, +-x} are uncolourable; minimum 31 only at x = +-2, +-1/2, otherwise 33; no KS set over {0, +-a, +-b} has fewer than 31 rays | Paper + Certified | Reduction to 37 cases proved in the paper; cases by `ks_two_symbol_theorem.py`; all 37 graphs rebuilt independently in review round 3. |
 | Lemma (vanishing sums of roots of unity) | Two n-th roots of unity sum to zero iff 2 divides n; three iff 3 divides n | Paper | |
-| Theorem (6 divides n) | The pool of 0 and the n-th roots of unity is uncolourable iff 6 divides n | Paper; Lean except one finite fact | Explicit colourings in three cases; checked by SAT for n <= 30. `lean/Cyclotomic6n.lean` (Lean 4.30 + mathlib) states and proves `six_divides_iff_ks_uncolorable` with a single remaining `sorry`, `cabello_S6_uncolorable`: that the 57-ray pool for n = 6 is uncolourable. Not rebuilt on 2026-11-22; status taken from the file and its last commit. |
+| Theorem (6 divides n) | The pool of 0 and the n-th roots of unity is uncolourable iff 6 divides n | Paper + Lean (n >= 3) | Explicit colourings in three cases; checked by SAT for n <= 30. `lean/Cyclotomic6n.lean` proves `six_divides_iff_ks_uncolorable` with no `sorry` (built 2026-11-23); see Lean-checked above. n = 1, 2: the pools are subsets of the colourable pool over {0, +-1}. |
 | Theorem (modulus-2 circle) | For every x with |x|^2 = 2 the pool of {0, +-1, +-x, +-x*} is uncolourable; a fixed list of 45 words suffices; no shorter list of words does; the generic pool is colourable | Paper + Certified | `ks_modulus2_circle.py`; certificate of 408 colourable sets archived in `results/modulus2_circle.json`, re-checked with a second solver in review round 2. |
 | Theorem (Conjugate-closed alphabets) | The pool of {0, +-1, +-x, +-x*} is uncolourable exactly when |x|^2 = 2, or |x|^2 = 1/2, or x*/x is a primitive third or sixth root of unity, or x = +-2, +-1/2. Minimum 45 on |x|^2 = 2 and 33 on the other curves away from special points | Paper + Certified | Reviewed in round 4 (correct with wording fixes; 14 pools rebuilt independently). Reduction to 68 cases in the paper; cases by `ks_conjugate_closed_theorem.py`; smallest sets identified by `ks_conjugate_closed_identify.py`. The lines also follow from the two-symbol theorem by Restriction. |
 | Same theorem, part (iii) | No uncolourable subset of fewer than 31 rays for any x other than +-1 +- i | Certified | Three of the cases by separate runs that only exclude sets below a given size (`results/conjugate_closed_reruns.jsonl`). |
@@ -77,7 +86,7 @@ that the check is false.
 
 ## Next for Lean
 
-1. Discharge `cabello_S6_uncolorable`: export the Eisenstein 33 rays over Z[omega] with a certificate, and connect the finite check to the complex-number statement in `lean/Cyclotomic6n.lean`. That would make the 6-divides-n theorem fully machine-checked.
+1. Done 2026-11-23: `cabello_S6_uncolorable` discharged; the 6-divides-n theorem is kernel-checked for n >= 3.
 2. Uncolourability of the other named sets (the 43-, 45- and 47-ray sets).
 3. Minimality: a checker for the certificates (a list of colourable sets with their colourings, plus a refutation of a small hitting set).
 4. The classification theorems, where the finite cases are easy and the reduction over the complex numbers is the hard part.

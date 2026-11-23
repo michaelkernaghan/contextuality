@@ -149,7 +149,7 @@ listed.
 \subsection*{Reproducibility}
 
 Code and data: \url{https://github.com/michaelkernaghan/contextuality}, release tag
-\texttt{v10.2}.  Scripts for this
+\texttt{v10.3}.  Scripts for this
 version, with the result files they write under \texttt{results/}:
 
 \begin{itemize}\setlength{\itemsep}{0pt}
@@ -172,6 +172,9 @@ optionally only to exclude sets below a given size; it appends to
 identifies the smallest sets.
 \item \texttt{ks\_verify\_cyclotomic\_theorem.py}: Table~\ref{tab:cyc} and the structural
 statements of Theorem~\ref{thm:6n}, $n\le30$.
+\item \texttt{lean/Cyclotomic6n.lean}: Lean proof of Theorem~\ref{thm:6n} for $n\ge3$ (Lean
+4.30, mathlib; \texttt{lake build}).  Its 33 rays and certificate are written by
+\texttt{ks\_lean\_export.py}.
 \item \texttt{ks\_modulus2\_circle.py}: Theorem~\ref{thm:circle}, Table~\ref{tab:words},
 Appendix~\ref{app:triads}.
 \item \texttt{ks\_extras\_v10.py}: Table~\ref{tab:profiles}, the isomorphism tests and the
