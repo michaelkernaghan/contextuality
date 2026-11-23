@@ -1,0 +1,239 @@
+\section{Two-symbol alphabets}\label{sec:real}
+
+The alphabets of Peres and of Conway and Kochen are both of the form $\{0,\pm1,\pm x\}$.  For any
+$x\notin\{0,\pm1\}$ this alphabet has $5^3-1=124$ words, the same list for every~$x$
+(Fig.~\ref{fig:generic}).  They give 49 rays for every $x$ other than $\pm i$, where more
+words coincide and 31 remain (Theorem~\ref{thm:twosymbol}).  What depends on $x$ is which
+inner products vanish.
+
+\subsection{Which inner products can vanish}
+
+A term of the inner product of two words is $a^{*}b$ with $a,b$ letters, so it is zero or one of
+$\pm1,\ \pm x,\ \pm x^{*},\ \pm|x|^2$.  An inner product is therefore
+\[
+c_0+c_1x+c_2x^{*}+c_3|x|^2,\qquad c_i\in\Z,\quad |c_0|+|c_1|+|c_2|+|c_3|\le 3 .
+\]
+Some of these vanish for every $x$ (all $c_i=0$: disjoint supports, or terms cancelling in
+pairs).  The others vanish only for special~$x$, and since there are finitely many coefficient
+vectors they can be listed completely.  There are 128 nonzero vectors.  The pool is unchanged by
+$x\mapsto-x$ and by $x\mapsto1/x$, and complex conjugation of all coordinates carries it to the
+pool of $x^{*}$, which has the same orthogonality graph.  Together with an overall sign these
+maps act on the coefficient vectors, inversion as
+$(c_0,c_1,c_2,c_3)\mapsto(c_3,c_2,c_1,c_0)$.  The 128 vectors fall into 21 orbits, of which 13
+have no solution other than $x\in\{0,\pm1\}$.  Table~\ref{tab:zerosums} lists the remaining
+eight.
+
+\begin{table}[t]
+\centering
+\caption{Every relation of at most three terms that can make an inner product of two words over
+$\{0,\pm1,\pm x\}$ vanish for some but not all $x$, up to the symmetries $x\mapsto-x$,
+$x\mapsto x^{*}$, $x\mapsto1/x$ and overall sign (computed by \texttt{ks\_zero\_sums\_v10.py}).
+The row $x-x^{*}=0$ is the reason real alphabets have orthogonalities that generic complex ones
+lack.
+The rows $2+x=0$ and $1+2x=0$ describe the same pool, since $S$ is unchanged by $x\mapsto 1/x$.
+A row says where extra orthogonalities appear; it says nothing by itself about colorability.}
+\label{tab:zerosums}
+\input{figures/zero_sums_table.tex}
+\end{table}
+
+Three remarks.  First, the solution sets are not isolated points in general: two of them are
+circles and three are lines in the complex plane.  Second, the two-term relations were missing
+from the corresponding table of earlier versions; the relation $x+x^{*}=0$ was pointed out to us
+by Frembs~\cite{Frembs2026}.  It holds on the imaginary axis, as $x-x^{*}=0$ holds on the real
+axis, and the two classical modulus-2 alphabets differ in exactly this.  Of the 120 orthogonal
+pairs of the $\sqrt{-2}$ pool (in the word representatives used here), 60 hold for every $x$, 54
+use $x+x^{*}=0$ and 6 use $|x|^2=2$; at $x=\sqrt2$ the 54 are replaced by pairs using
+$x-x^{*}=0$.  The difference is visible in the graphs (Computed fact~\ref{fact:pools}).  Third, the statement that an
+uncolorable pool must have some vanishing inner products of this kind is true by definition and
+has no content; versions 1--9 presented it as a finding.  The content is in which loci give
+uncolorable pools, and that has to be computed.
+
+\subsection{Real alphabets}
+
+\begin{table}[t]
+\centering
+\caption{Raw pools of two-symbol alphabets $\{0,\pm1,\pm x\}$, exact arithmetic.  ``Min'' is the
+certified size of the smallest uncolorable subset.  Every real $x=\sqrt d$ with $d$ a non-square
+integer, $3\le d\le30$, gives the same counts as $\sqrt3$, as do $x=3$, $x=4$ and
+$x=(1+\sqrt d)/2$ for $d=13,17,21,29$.}
+\label{tab:alphabets}
+\begin{tabular}{lrrrcc}
+\toprule
+Alphabet & Rays & Pairs & Triads & Colorable & Min \\
+\midrule
+$\{0,\pm1\}$ & 13 & 24 & 4 & yes & --- \\
+$\{0,\pm1,\pm2\}$ (also $\pm\tfrac12$) & 49 & 138 & 26 & \textbf{no} & \textbf{31} \\
+$\{0,\pm1,\pm\sqrt2\}$ & 49 & 120 & 16 & \textbf{no} & \textbf{33} \\
+$\{0,\pm1,\pm\sqrt3\}$ & 49 & 114 & 10 & yes & --- \\
+$\{0,\pm1,\pm\varphi\}$, $\varphi=(1+\sqrt5)/2$ & 49 & 138 & 10 & yes & --- \\
+\midrule
+$\{0,\pm1,\pm\sqrt{-1}\}$ & 31 & 69 & 7 & yes & --- \\
+$\{0,\pm1,\pm\sqrt{-2}\}$ & 49 & 120 & 16 & \textbf{no} & \textbf{33} \\
+$\{0,\pm1,\pm\sqrt{-d}\}$, $d=3,5,6,\dots,15$ & 49 & 114 & 10 & yes & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:alphabets} gives the raw pools.  The 13-ray pool of $\{0,\pm1\}$ is colorable, as
+it must be: 13 is below the lower bound of~24.  Among real two-symbol alphabets the
+only uncolorable raw pools are those of $x=2$ and $x=\sqrt2$ (and their negatives and
+reciprocals), the two alphabets of Peres's cubes; Theorem~\ref{thm:twosymbol} below proves this
+for every real~$x$ and settles the complex case as well.
+The row for $\sqrt{-1}$ corrects version~9, which printed 25 rays; every nonzero letter of that
+alphabet is a unit, the group $\{\pm1,\pm i\}$ acts freely on the 124 words, and $124/4=31$.
+
+\begin{fact}[Integer pool]\label{fact:integer}
+The 49-ray pool of $\{0,\pm1,\pm2\}$ has minimum uncolorable subsets of 31 rays, certified.  There
+are exactly six such subsets.  They form a single orbit under the 48 signed permutations of the
+coordinates, so all six are copies of $\CK$.  Together they use 37 of the 49 rays; the 12 unused
+rays are those of squared length~9, such as $(1,2,2)$; 13 rays, those of $\{0,\pm1\}$, lie in all
+six.  The completed pool has 109 rays, 258 pairs and 86 triads, and its minimum is also 31,
+certified.
+\end{fact}
+
+Version~9 stated that the pool contains 162 distinct minimal sets falling into six classes.  The
+exhaustive enumeration gives six sets in one class.  The pool also contains uncolorable subsets
+that are critical (no ray can be removed) but not of minimum size, among them the 33-ray set
+of Sch\"utte, also known as the Conway--Kochen 33-ray set and communicated by them to
+Peres~\cite{Peres1991} (the identification is made in~\cite{TrandafirCabello2025}), which has 76
+orthogonal pairs and
+20 bases and is contained in the 37 rays above.
+
+None of three enlargements we tried lowers the minimum: the raw pools of $\{0,\pm1,\pm2,\pm3\}$ (145 rays),
+$\{0,\pm1,\pm\sqrt2,\pm2\}$ (109 rays) and $\{0,\pm1,\pm\varphi,\pm2\}$ (145 rays) all have
+certified minimum 31, with 17 bases in the minimum set found, while
+$\{0,\pm1,\pm\varphi,\pm\varphi^2\}$ (109 rays, 24 triads) is colorable.  Each of the first three
+contains the integer pool, so 31 is an upper bound by Lemma~\ref{lem:restrict}; the content of
+the computation is that nothing smaller appears.
+
+\begin{fact}[Peres pool]\label{fact:peres}
+The 49-ray pool of $\{0,\pm1,\pm\sqrt2\}$ has a unique minimum uncolorable subset, the 33 rays of
+Peres (72 pairs, 16 bases).  The other 16 rays lie in no triad.  The completed pool has 145 rays,
+336 pairs and 112 triads, and its minimum is 33, certified.  The same statements hold for
+$\{0,\pm1,\pm\sqrt{-2}\}$.
+\end{fact}
+
+\begin{fact}[The two modulus-2 pools are not the same graph]\label{fact:pools}
+The minimum 33-ray sets of the $\sqrt2$ and $\sqrt{-2}$ pools have isomorphic orthogonality
+graphs.  The two 49-ray pools do not, although they agree in the number of rays, pairs, triads,
+in degree sequence and in spectrum; neither do the two 145-ray completed pools.  (Graph
+isomorphism was tested with VF2~\cite{Cordella2004VF2}; for the raw pools we also checked directly
+that none of the 48 isomorphisms between the two 33-ray cores carries the neighbourhoods of the
+other 16 rays of one pool onto those of the other.)
+\end{fact}
+
+Versions 1--9 called these two alphabets ``isomorphic islands''.  That is correct for the
+minimum sets and false for the pools.  The difference is the one Frembs identified: 54 of the 120
+orthogonalities of the $\sqrt{-2}$ pool use $x+x^{*}=0$, a relation that fails at $x=\sqrt2$, and
+he builds an arrangement on that relation~\cite{Frembs2026}.
+
+\subsection{All two-symbol alphabets}\label{sec:twosymbol}
+
+The completeness of Table~\ref{tab:zerosums} turns the question ``for which $x$ is the pool of
+$\{0,\pm1,\pm x\}$ uncolorable?'' into a finite computation, and the answer is a theorem about
+every complex~$x$.
+
+\begin{theorem}[Two-symbol alphabets]\label{thm:twosymbol}
+Let $x$ be a nonzero complex number and $S(x)$ the pool of all words over $\{0,\pm1,\pm x\}$.
+\begin{enumerate}[label=(\roman*)]
+\item $S(x)$ is uncolorable if and only if $x$ or $1/x$ is one of $\pm2$, $\pm\sqrt2$,
+$\pm\sqrt{-2}$, or $x$ is a primitive third or sixth root of unity.
+\item The minimum uncolorable subset of $S(x)$ has 31 rays for $x\in\{\pm2,\pm\tfrac12\}$, where
+the minimum sets are the six copies of $\CK$ of Computed fact~\ref{fact:integer}, and 33 rays in
+every other uncolorable case.
+\item Consequently, if all rays of a KS set have coordinates in $\{0,\pm a,\pm b\}$ for some
+complex numbers $a$ and $b$, the set has at least 31 rays.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Write $x=a+ib$.  The orthogonality graph of $S(x)$ depends on $x$ only through two finite pieces
+of data: which words are proportional, and which inner products vanish.
+
+\emph{Proportionality.}  Two words are proportional when their three $2\times2$ minors vanish.
+A minor is a difference of two products of two letters, and such a product is $0$, $\pm1$, $\pm x$ or $\pm x^2$.  So a minor is identically zero, or a
+monomial or twice a monomial (never zero), or one of $\pm(1\pm x)$, $\pm(1\pm x^2)$,
+$\pm x(1\pm x)$.  Away from $x\in\{\pm1,\pm i\}$
+the same words are proportional for every~$x$, and the pool has 49 rays.
+
+\emph{Orthogonality.}  An inner product is $c_0+c_1x+c_2x^{*}+c_3|x|^2$ for one of the 128
+coefficient vectors counted above, or is identically zero.  It vanishes when
+$(c_1-c_2)\,b=0$ and $c_0+(c_1+c_2)\,a+c_3(a^2+b^2)=0$.  For a given vector the solution set is
+therefore empty, a finite set of real points, the real axis, a vertical line, or a circle
+centred on the real axis.  Going through the 128 vectors gives nine curves,
+\[
+\mathrm{Im}\,x=0,\quad \mathrm{Re}\,x=0,\ \pm\tfrac12,\quad |x|^2=\tfrac12,\ 1,\ 2,\quad
+|x\pm1|=1,
+\]
+and finitely many real points.  Call a point \emph{special} if it is one of those real points, a
+point of intersection of two of the curves, or one of $\pm1,\pm i$.  There are 27 special points
+up to complex conjugation.  At a point that is not special and lies on none of the curves, no
+vector vanishes.  At a point of a curve $C$ that is not special, the vectors that vanish are
+exactly those whose solution set is~$C$, since any other vector vanishes on a different curve or
+on special points only.  Hence the graph of $S(x)$ is constant on the complement of the curves,
+constant on each curve away from the special points, and otherwise has to be computed at each
+special point: $1+9+27=37$ cases.  (Conjugating all coordinates carries $S(x)$ to $S(x^{*})$ and
+preserves orthogonality, so $x$ and $x^{*}$ need not be distinguished.)
+
+\emph{Computation.}  The script \texttt{ks\_two\_symbol\_theorem.py} lists the curves and special
+points, takes an exact sample point on each curve, builds the 37 graphs in exact arithmetic, decides colorability of each, and runs the certification procedure of
+Section~\ref{sec:methods} on every uncolorable one; all terminate.
+Table~\ref{tab:twosymbol} is the result, with the cases grouped by the symmetries $x\mapsto-x$
+and $x\mapsto1/x$, which do not change the pool.  Parts (i) and (ii) are read off the table.  For
+(iii), if $a$ or $b$ is zero or $a=\pm b$ the rays lie in the 13-ray pool of $\{0,\pm1\}$, which
+is colorable; otherwise dividing all coordinates by $a$ puts the set inside $S(b/a)$.
+\end{proof}
+
+\begin{table}[t]
+\centering
+\caption{Every pool of a two-symbol alphabet $\{0,\pm1,\pm x\}$, $x\in\mathbb{C}\setminus\{0\}$
+(Theorem~\ref{thm:twosymbol}).  A curve stands for its points other than the special points
+listed below it.  ``Min'' is the certified size of the smallest uncolorable subset, and the last
+column names the graph of the minimum set found (isomorphism by VF2).}
+\label{tab:twosymbol}
+\small
+\begin{tabular}{@{}lrrrcl@{}}
+\toprule
+$x$ & Rays & Pairs & Triads & Min & Minimum set \\
+\midrule
+on no curve & 49 & 60 & 4 & --- & colorable \\
+$\mathrm{Im}\,x=0$;\ \ $\mathrm{Re}\,x=0$;\ \ $|x|=1$ & 49 & 114 & 10 & --- & colorable \\
+$\mathrm{Re}\,x=\pm\tfrac12$;\ \ $|x\pm1|=1$ & 49 & 72 & 8 & --- & colorable \\
+$|x|^2=2$;\ \ $|x|^2=\tfrac12$ & 49 & 66 & 10 & --- & colorable \\
+\midrule
+$\pm1$ & 13 & 24 & 4 & --- & colorable \\
+$\pm i$ & 31 & 69 & 7 & --- & colorable \\
+$\pm\varphi,\ \pm1/\varphi$ & 49 & 138 & 10 & --- & colorable \\
+$\pm1\pm i,\ (\pm1\pm i)/2$ & 49 & 78 & 14 & --- & colorable \\
+$(\pm1\pm\sqrt{-7})/2,\ (\pm1\pm\sqrt{-7})/4$ & 49 & 78 & 14 & --- & colorable \\
+$\pm2,\ \pm\tfrac12$ & 49 & 138 & 26 & \textbf{31} & $\CK$ \\
+$\pm\sqrt2,\ \pm1/\sqrt2$ & 49 & 120 & 16 & \textbf{33} & Peres \\
+$\pm\sqrt{-2},\ \pm1/\sqrt{-2}$ & 49 & 120 & 16 & \textbf{33} & Peres \\
+$(\pm1\pm\sqrt{-3})/2$ & 49 & 138 & 18 & \textbf{33} & Eisenstein 33 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Four remarks on what the theorem does and does not say.
+
+First, it is a statement about a class of coordinate systems, not about KS sets in general.
+The minimum number of rays of a KS set in dimension three is known only to lie between 24
+and~31, and a set smaller than 31, if one exists, would need at least three nonzero letters up to
+sign.  What the theorem
+shows is that the construction read off Peres's cubes, one unit and one further number along
+each axis, cannot beat Conway and Kochen whatever the number is.
+
+Second, it concerns the raw pool.  Completion adds rays whose coordinates are not letters, and
+the completed pool of $\{0,\pm1,\pm\varphi\}$ is uncolorable although its raw pool is not
+(Section~\ref{sec:catalogue}).
+
+Third, the uncolorable cases are isolated points; no curve of Table~\ref{tab:zerosums} is
+uncolorable for a two-symbol alphabet.  In particular the two-symbol pool is colorable at a
+generic point of the circle $|x|^2=2$, and even at $x=1+i$ and $x=(1+\sqrt{-7})/2$, where it
+meets another curve.  The uncolorability of that whole circle (Theorem~\ref{thm:circle}) needs the
+conjugate letter $x^{*}$.
+
+Fourth, the last row did not appear in earlier versions.  At a primitive sixth root of unity three curves
+meet ($|x|=1$, $\mathrm{Re}\,x=\tfrac12$, $|x-1|=1$), and the 49 rays over $\{0,\pm1,\pm\omega\}$
+are already uncolorable, with a minimum set isomorphic to the Eisenstein 33-ray set of
+Section~\ref{sec:roots}.  The letter $\omega^2$ of the Eisenstein alphabet is not needed.

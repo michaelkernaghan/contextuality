@@ -1,0 +1,25 @@
+{"what": "profile", "set": "ck33", "rays": 33, "pairs": 76, "bases": 20, "degree_sequence": {"3": 8, "4": 13, "6": 10, "8": 2}, "uncolourable": true, "ray_critical": true, "date": "2026-11-22 13:37"}
+{"what": "profile", "set": "ck31", "rays": 31, "pairs": 71, "bases": 17, "degree_sequence": {"3": 4, "4": 14, "5": 8, "6": 3, "8": 2}, "uncolourable": true, "ray_critical": true, "date": "2026-11-22 13:37"}
+{"what": "profile", "set": "peres33", "rays": 33, "pairs": 72, "bases": 16, "degree_sequence": {"4": 30, "8": 3}, "uncolourable": true, "ray_critical": true, "date": "2026-11-22 13:37"}
+{"what": "profile", "set": "sqrtm2-33", "rays": 33, "pairs": 72, "bases": 16, "degree_sequence": {"4": 30, "8": 3}, "uncolourable": true, "ray_critical": true, "date": "2026-11-22 13:37"}
+{"what": "profile", "set": "eisenstein33", "rays": 33, "pairs": 78, "bases": 14, "degree_sequence": {"4": 18, "5": 12, "8": 3}, "uncolourable": true, "ray_critical": true, "date": "2026-11-22 13:37"}
+{"what": "profile", "set": "heegner7-43", "rays": 43, "pairs": 107, "bases": 23, "degree_sequence": {"4": 16, "5": 20, "6": 4, "8": 2, "10": 1}, "uncolourable": true, "ray_critical": true, "date": "2026-11-22 13:37"}
+{"what": "profile", "set": "supergolden2-47", "rays": 47, "pairs": 110, "bases": 26, "degree_sequence": {"3": 14, "4": 12, "5": 8, "6": 6, "7": 4, "8": 1, "9": 2}, "uncolourable": true, "ray_critical": true, "date": "2026-11-22 13:37"}
+{"what": "bases", "set": "ck33", "bases": 20, "individually_indispensable": 20, "date": "2026-11-22 13:37"}
+{"what": "bases", "set": "ck31", "bases": 17, "individually_indispensable": 17, "date": "2026-11-22 13:37"}
+{"what": "bases", "set": "peres33", "bases": 16, "individually_indispensable": 13, "date": "2026-11-22 13:37"}
+{"what": "bases", "set": "sqrtm2-33", "bases": 16, "individually_indispensable": 13, "date": "2026-11-22 13:37"}
+{"what": "bases", "set": "eisenstein33", "bases": 14, "individually_indispensable": 13, "date": "2026-11-22 13:37"}
+{"what": "bases", "set": "heegner7-43", "bases": 23, "individually_indispensable": 18, "date": "2026-11-22 13:37"}
+{"what": "bases", "set": "supergolden2-47", "bases": 26, "individually_indispensable": 26, "date": "2026-11-22 13:37"}
+{"what": "iso", "a": "peres33", "b": "sqrtm2-33", "isomorphic": true, "date": "2026-11-22 13:37"}
+{"what": "iso", "a": "peres-raw", "b": "sqrtm2-raw", "isomorphic": false, "date": "2026-11-22 13:37"}
+{"what": "iso", "a": "peres-completed", "b": "sqrtm2-completed", "isomorphic": false, "date": "2026-11-22 13:37"}
+{"what": "iso", "a": "peres33", "b": "eisenstein33", "isomorphic": false, "date": "2026-11-22 13:37"}
+{"what": "iso", "a": "peres33", "b": "ck33", "isomorphic": false, "date": "2026-11-22 13:37"}
+{"what": "iso", "a": "eisenstein33", "b": "ck33", "isomorphic": false, "date": "2026-11-22 13:37"}
+{"what": "census", "pool": "integer-raw", "minimum": 31, "minimum_sets": 6, "orbits_under_signed_permutations": 1, "rays_used": 37, "rays_in_every_set": 13, "basis_counts": [[17, 6]], "seconds": 0.1, "date": "2026-11-22 13:39"}
+{"what": "census", "pool": "peres-raw", "minimum": 33, "minimum_sets": 1, "orbits_under_signed_permutations": 1, "rays_used": 33, "rays_in_every_set": 33, "basis_counts": [[16, 1]], "seconds": 0.1, "date": "2026-11-22 13:39"}
+{"what": "census", "pool": "sqrtm2-raw", "minimum": 33, "minimum_sets": 1, "orbits_under_signed_permutations": 1, "rays_used": 33, "rays_in_every_set": 33, "basis_counts": [[16, 1]], "seconds": 0.1, "date": "2026-11-22 13:39"}
+{"what": "census", "pool": "eisenstein-raw", "minimum": 33, "minimum_sets": 3, "orbits_under_signed_permutations": 3, "rays_used": 57, "rays_in_every_set": 21, "basis_counts": [[14, 3]], "seconds": 1.6, "date": "2026-11-22 13:39"}
+{"what": "census", "pool": "heegner7-raw", "minimum": 43, "minimum_sets": 6, "orbits_under_signed_permutations": 2, "rays_used": 57, "rays_in_every_set": 3, "basis_counts": [[23, 6]], "seconds": 2.3, "date": "2026-11-22 13:39"}

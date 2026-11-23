@@ -1,0 +1,134 @@
+\section{Catalogue of pools}\label{sec:catalogue}
+
+Table~\ref{tab:catalogue} collects the named uncolorable pools of this version, with the
+standard of proof for each minimum.  (The three enlarged integer alphabets of
+Section~\ref{sec:real} are not repeated.)  ``Certified'' means the procedure of
+Section~\ref{sec:methods} terminated; ``$\le$'' means an uncolorable subset of that size is in
+hand and nothing smaller was excluded.  A raw pool is contained in its completion, so a minimum
+set of the raw pool bounds the completed pool from above (Lemma~\ref{lem:restrict}); it need not
+be a minimum set of it.
+
+\begin{table}[t]
+\centering
+\caption{Uncolorable pools.  ``raw'': all words over the alphabet; ``compl.'': closure under
+third rays of orthogonal pairs.  Letters: $\omega=e^{2\pi i/3}$, $\alpha=(1+\sqrt{-7})/2$,
+$\varphi=(1+\sqrt5)/2$, $\psi^3=\psi^2+1$ ($\psi\approx1.4656$), $c=\sqrt[3]{2}$.  Bases: number
+of triads inside the minimum (or best) set found.}
+\label{tab:catalogue}
+\small
+\begin{tabular}{llrrrll}
+\toprule
+Alphabet & Pool & Rays & Pairs & Triads & Minimum KS subset & Bases \\
+\midrule
+$\{0,\pm1,\pm2\}$ & raw & 49 & 138 & 26 & 31, certified & 17 \\
+ & compl. & 109 & 258 & 86 & 31, certified & 17 \\
+$\{0,\pm1,\pm\sqrt2\}$ & raw & 49 & 120 & 16 & 33, certified & 16 \\
+ & compl. & 145 & 336 & 112 & 33, certified & 20 \\
+$\{0,\pm1,\pm\sqrt{-2}\}$ & raw & 49 & 120 & 16 & 33, certified & 16 \\
+ & compl. & 145 & 336 & 112 & 33, certified & 20 \\
+$\{0,\pm1,\pm\omega,\pm\omega^2\}$ & raw & 57 & 174 & 22 & 33, certified & 14 \\
+ & compl. & 165 & 390 & 130 & 33, certified & 14 \\
+$\{0,\pm1,\pm i,\pm(1+i)\}$ & raw & 127 & 465 & 51 & 33, certified & 16 \\
+ & compl. & 583 & 1521 & 507 & $\le33$ & \\
+$\{0,\pm1,\pm\alpha,\pm\alpha^{*}\}$ & raw & 145 & 522 & 42 & 43, certified & 23 \\
+ & compl. & 685 & 1746 & 582 & \heegnercompletedmin & \\
+$\{0,\pm1,\pm\psi,\pm\psi^2\}$ & raw & 109 & 348 & 40 & 47, certified & 26 \\
+ & compl. & \superfourcompleted & \superfourmin \\
+$\{0,\pm1,\pm\psi\}$ & compl. & \supercompleted & \supermin \\
+$\{0,\pm1,\pm\varphi\}$ & compl. & 205 & 498 & 166 & \goldenmin & \goldenbases \\
+$\{0,\pm1,\pm c,\pm c^2\}$ & compl. & \cubiccompleted & \cubicmin \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Pools that are colorable.}  The raw pools of $\{0,\pm1,\pm\varphi\}$ (49 rays, 10
+triads), $\{0,\pm1,\pm\psi\}$ (49 rays, 10 triads) and $\{0,\pm1,\pm c,\pm c^2\}$ (109 rays, 28
+triads) are colorable; for these three alphabets uncolorability appears only after completion.
+The completed pools of $\{0,\pm1,\pm\sqrt3\}$ and $\{0,\pm1,\pm\sqrt5\}$ each have 133 rays, 282
+pairs and 94 triads and are colorable.  (Version~9 printed 145 rays for these two.)
+
+\paragraph{Same field, different alphabet.}  $\sqrt5$ and $\varphi$ generate the same field.  The
+completed pool of $\{0,\pm1,\pm\sqrt5\}$ is colorable and that of $\{0,\pm1,\pm\varphi\}$ is not.
+This is the plainest evidence that the alphabet, and not the field, is the operative choice.
+
+\subsection{The golden-ratio pool}
+
+The raw pool of $\{0,\pm1,\pm\varphi\}$ is one of the rows of Table~\ref{tab:zerosums}
+($1+x-|x|^2=0$): it has more orthogonal pairs than a generic two-symbol pool (138 against 114)
+but the same 10 triads, and it is colorable.  Its completion has 205 rays, 498 pairs and 166
+triads and is uncolorable.  Version~9 reported a certified minimum of 52 rays for it.  That
+is wrong.  A 51-ray uncolorable subset exists (118 pairs, 28 bases; every single-ray deletion is
+colorable); coordinates are in \texttt{golden\_51\_rays.txt}.  The status in this version is:
+minimum \goldenmin.
+
+Earlier versions explained the uncolorability of the completed pool by saying that completion
+``generates the reciprocal $1/\varphi$''.  That explains nothing, because $1/\varphi$ is already
+present projectively: $[\varphi:1:0]=[1:1/\varphi:0]$.  What completion adds is rays, not
+scalars, and we have no short account of why these 156 additional rays suffice.
+
+\subsection{Two cubic alphabets}
+
+\paragraph{Supergolden.}  Let $\psi$ be the real root of $\psi^3=\psi^2+1$.  The raw pool of the
+four-symbol alphabet $\{0,\pm1,\pm\psi,\pm\psi^2\}$ has 109 rays, 348 pairs and 40 triads and is
+uncolorable without any completion.  Its certified minimum is 47 rays (110 pairs, 26 bases).  A
+47-ray set over this field was first communicated to us by J.~L.~Gonzalez, extracted from the
+completed pool of the two-symbol alphabet $\{0,\pm1,\pm\psi\}$; it refuted the two-mechanism
+classification of versions 1--8, because no product of two letters of $\{0,\pm1,\pm\psi\}$ has squared
+modulus~2 and the field contains no roots of unity other than $\pm1$.  The relation at work is
+the minimal polynomial of $\psi$ itself.  Version~9 answered by adding a third ``mechanism''.  We
+now draw the simpler conclusion: any relation among the letters that makes enough inner products
+vanish may do, and we have not established a useful finite classification.
+
+\paragraph{Cube root of two.}  With $c=\sqrt[3]2$, the raw pool of $\{0,\pm1,\pm c,\pm c^2\}$ is
+colorable (109 rays, 300 pairs, 28 triads).  Its completion has 361 rays, 840 pairs and 280 triads and is
+uncolorable.  The smallest uncolorable subset we found has 60 rays (144 pairs, 27 bases) and the
+minimum is not certified.  Version~9 reported 58 rays for this pool from the unsound procedure;
+we have not reproduced a 58-ray set and do not claim one.
+
+For the completed pools of the two supergolden alphabets (157 and 601 rays) the certifier did not
+terminate within its budget; 47 is an upper bound for both, from Gonzalez's set and from the raw
+four-symbol pool respectively.
+
+\subsection{Structure of the minimum sets}
+
+\begin{table}[t]
+\centering
+\caption{Selected KS sets: the minimum sets used in Section~\ref{sec:operational} and the
+33-ray set of Conway and Kochen, which is critical but not a minimum set of its pool.  Degree sequences are written
+$d^{m}$ for $m$ rays orthogonal to $d$ others.  ``Indisp.'': number of bases whose ``exactly
+one'' rule cannot be dropped (all orthogonal-pair exclusions kept) without the set becoming
+colorable.  Every set is ray-critical.}
+\label{tab:profiles}
+\small
+\begin{tabular}{lrrrll}
+\toprule
+Set & Rays & Pairs & Bases & Degree sequence & Indisp. \\
+\midrule
+$\CK$ & 31 & 71 & 17 & $3^{4}4^{14}5^{8}6^{3}8^{2}$ & 17 of 17 \\
+Sch\"utte / Conway--Kochen 33 & 33 & 76 & 20 & $3^{8}4^{13}6^{10}8^{2}$ & 20 of 20 \\
+Peres 33 & 33 & 72 & 16 & $4^{30}8^{3}$ & 13 of 16 \\
+$\sqrt{-2}$, 33 & 33 & 72 & 16 & $4^{30}8^{3}$ & 13 of 16 \\
+Eisenstein 33 & 33 & 78 & 14 & $4^{18}5^{12}8^{3}$ & 13 of 14 \\
+$\Q(\sqrt{-7})$, 43 & 43 & 107 & 23 & $4^{16}5^{20}6^{4}8^{2}10^{1}$ & 18 of 23 \\
+Supergolden 47 & 47 & 110 & 26 & $3^{14}4^{12}5^{8}6^{6}7^{4}8^{1}9^{2}$ & 26 of 26 \\
+Supergolden 47, completed pool$^{\dagger}$ & 47 & 108 & 29 & $3^{16}4^{10}5^{11}6^{3}7^{3}8^{2}9^{2}$ & 29 of 29 \\
+Golden 51$^{\dagger}$ & 51 & 118 & 28 & $3^{18}4^{6}5^{12}6^{11}8^{4}$ & 26 of 28 \\
+Cube root of two, 60$^{\dagger}$ & 60 & 144 & 27 & $3^{9}4^{24}5^{14}6^{6}7^{3}8^{2}10^{1}12^{1}$ & 26 of 27 \\
+\midrule
+\multicolumn{6}{l}{$^{\dagger}$ Smallest set found; not certified to be a minimum of its pool.}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:profiles} gives the basic invariants.  The three 33-ray sets of Conway--Kochen,
+Peres and the Eisenstein alphabet have pairwise non-isomorphic orthogonality graphs (VF2, and
+visibly from the degree sequences).  The Eisenstein set is the 33-ray set of
+Cabello~\cite{Cabello2025simplest}, or one of its three images in the pool
+(Computed fact~\ref{fact:eisenstein}); we have matched the invariants he reports (33 rays, 14
+bases); the explicit bijection has not been recorded in the repository.
+
+Whether the 43-ray and 47-ray sets, or the 45-ray family of Theorem~\ref{thm:circle}, appear in
+the published catalogues we do not know.  Their graphs differ from the three 33-ray sets and
+from $\CK$ by ray count.  A proper comparison against the large automated
+catalogues of three-dimensional KS sets has not been done, and the statement of earlier versions
+that these configurations had ``not been previously reported'' is withdrawn.

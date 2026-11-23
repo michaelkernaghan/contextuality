@@ -1,0 +1,65 @@
+{"group": "two", "alphabet": "{0,+-1}", "completed": false, "rays": 13, "pairs": 24, "triads": 4, "colourable": true, "seconds": 0.0}
+{"group": "two", "alphabet": "{0,+-1,+-2}", "completed": false, "rays": 49, "pairs": 138, "triads": 26, "colourable": false, "upper_bound": 31, "certified_minimum": 31, "bases_in_witness": 17, "seconds": 0.3}
+{"group": "two", "alphabet": "{0,+-1,+-1/2}", "completed": false, "rays": 49, "pairs": 138, "triads": 26, "colourable": false, "upper_bound": 31, "certified_minimum": 31, "bases_in_witness": 17, "seconds": 0.3}
+{"group": "two", "alphabet": "{0,+-1,+-3}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "two", "alphabet": "{0,+-1,+-4}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt2}", "completed": false, "rays": 49, "pairs": 120, "triads": 16, "colourable": false, "upper_bound": 33, "certified_minimum": 33, "bases_in_witness": 16, "seconds": 0.2}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt3}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt5}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt6}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt7}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt8}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt10}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt11}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt12}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt13}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt14}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt15}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt17}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt18}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt19}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt20}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt21}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt22}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt23}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt24}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt26}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt27}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt28}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt29}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "real", "alphabet": "{0,+-1,+-sqrt30}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-1)}", "completed": false, "rays": 31, "pairs": 69, "triads": 7, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-2)}", "completed": false, "rays": 49, "pairs": 120, "triads": 16, "colourable": false, "upper_bound": 33, "certified_minimum": 33, "bases_in_witness": 16, "seconds": 0.2}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-3)}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-5)}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-6)}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-7)}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-8)}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-10)}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-11)}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-12)}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-13)}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-14)}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "complex", "alphabet": "{0,+-1,+-sqrt(-15)}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "ringgen", "alphabet": "{0,+-1,+-(1+sqrt5)/2}", "completed": false, "rays": 49, "pairs": 138, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "ringgen", "alphabet": "{0,+-1,+-(1+sqrt13)/2}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "ringgen", "alphabet": "{0,+-1,+-(1+sqrt17)/2}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "ringgen", "alphabet": "{0,+-1,+-(1+sqrt21)/2}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "ringgen", "alphabet": "{0,+-1,+-(1+sqrt29)/2}", "completed": false, "rays": 49, "pairs": 114, "triads": 10, "colourable": true, "seconds": 0.0}
+{"group": "heegner", "alphabet": "{0,+-1,+-a,+-a*}, d=1, a=sqrt(-d)", "completed": false, "rays": 31, "pairs": 69, "triads": 7, "colourable": true, "seconds": 0.0}
+{"group": "heegner", "alphabet": "{0,+-1,+-a,+-a*}, d=2, a=sqrt(-d)", "completed": false, "rays": 49, "pairs": 120, "triads": 16, "colourable": false, "upper_bound": 33, "certified_minimum": 33, "bases_in_witness": 16, "seconds": 0.2}
+{"group": "heegner", "alphabet": "{0,+-1,+-a,+-a*}, d=3, a=(1+sqrt(-d))/2", "completed": false, "rays": 57, "pairs": 174, "triads": 22, "colourable": false, "upper_bound": 33, "certified_minimum": 33, "bases_in_witness": 14, "seconds": 1.4}
+{"group": "heegner", "alphabet": "{0,+-1,+-a,+-a*}, d=7, a=(1+sqrt(-d))/2", "completed": false, "rays": 145, "pairs": 522, "triads": 42, "colourable": false, "upper_bound": 43, "certified_minimum": 43, "bases_in_witness": 23, "seconds": 3.6}
+{"group": "heegner", "alphabet": "{0,+-1,+-a,+-a*}, d=11, a=(1+sqrt(-d))/2", "completed": false, "rays": 145, "pairs": 462, "triads": 30, "colourable": true, "seconds": 0.2}
+{"group": "heegner", "alphabet": "{0,+-1,+-a,+-a*}, d=19, a=(1+sqrt(-d))/2", "completed": false, "rays": 145, "pairs": 462, "triads": 30, "colourable": true, "seconds": 0.2}
+{"group": "heegner", "alphabet": "{0,+-1,+-a,+-a*}, d=43, a=(1+sqrt(-d))/2", "completed": false, "rays": 145, "pairs": 462, "triads": 30, "colourable": true, "seconds": 0.2}
+{"group": "heegner", "alphabet": "{0,+-1,+-a,+-a*}, d=67, a=(1+sqrt(-d))/2", "completed": false, "rays": 145, "pairs": 462, "triads": 30, "colourable": true, "seconds": 0.2}
+{"group": "heegner", "alphabet": "{0,+-1,+-a,+-a*}, d=163, a=(1+sqrt(-d))/2", "completed": false, "rays": 145, "pairs": 462, "triads": 30, "colourable": true, "seconds": 0.2}
+{"group": "four", "alphabet": "{0,+-1,+-2,+-3}", "completed": false, "rays": 145, "pairs": 546, "triads": 50, "colourable": false, "upper_bound": 31, "certified_minimum": 31, "bases_in_witness": 17, "seconds": 6.9}
+{"group": "four", "alphabet": "{0,+-1,+-sqrt2,+-2}", "completed": false, "rays": 109, "pairs": 330, "triads": 38, "colourable": false, "upper_bound": 31, "certified_minimum": 31, "bases_in_witness": 17, "seconds": 3.4}
+{"group": "four", "alphabet": "{0,+-1,+-phi,+-2}", "completed": false, "rays": 145, "pairs": 450, "triads": 50, "colourable": false, "upper_bound": 31, "certified_minimum": 31, "bases_in_witness": 17, "seconds": 2.0}
+{"group": "four", "alphabet": "{0,+-1,+-phi,+-phi^2}", "completed": false, "rays": 109, "pairs": 396, "triads": 24, "colourable": true, "seconds": 0.1}
+{"group": "gaussian", "alphabet": "{0,+-1,+-i,+-(1+i)}", "completed": false, "rays": 127, "pairs": 465, "triads": 51, "colourable": false, "upper_bound": 33, "certified_minimum": 33, "bases_in_witness": 16, "seconds": 207.2}
+{"group": "completed", "alphabet": "{0,+-1,+-sqrt3}", "completed": true, "rays": 133, "pairs": 282, "triads": 94, "colourable": true, "seconds": 0.3}
+{"group": "completed", "alphabet": "{0,+-1,+-sqrt5}", "completed": true, "rays": 133, "pairs": 282, "triads": 94, "colourable": true, "seconds": 0.3}
+{"group": "completed", "alphabet": "{0,+-1,+-i,+-(1+i)}", "completed": true, "rays": 583, "pairs": 1521, "triads": 507, "colourable": false, "upper_bound": 65, "certified_minimum": null, "bases_in_witness": 33, "seconds": 329.8}

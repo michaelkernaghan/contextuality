@@ -1,0 +1,232 @@
+\section{The circle $|x|^2=2$}\label{sec:circle}
+
+The two uncolorable alphabets $\{0,\pm1,\pm\sqrt2\}$ and $\{0,\pm1,\pm\sqrt{-2}\}$ both have
+$|x|^2=2$, and in both the conjugate $x^{*}=\pm x$ is already a letter.  For a general complex
+$x$ the alphabet that is closed under conjugation is
+\[
+\mathcal A(x)=\{0,\pm1,\pm x,\pm x^{*}\},\qquad P(x)=S(\mathcal A(x)).
+\]
+For generic $x$ the pool $P(x)$ has 145 rays; at special $x$ some of them coincide (49 remain
+at $x=\sqrt{\pm2}$).  Versions 1--9 used this alphabet at one
+point, $x=(1+\sqrt{-7})/2$, found the pool uncolorable, and attributed that to the arithmetic of
+the ring of integers of $\Q(\sqrt{-7})$.  It is a property of the whole circle.
+
+\begin{theorem}\label{thm:circle}
+Let $W$ be the list of 45 words in Table~\ref{tab:words}.
+\begin{enumerate}
+\item[(i)] For every $x\in\C$ with $|x|^2=2$ the rays of $W$ form a KS-uncolorable set.
+Consequently $P(x)$ is uncolorable for every such~$x$.
+\item[(ii)] The orthogonalities among the 145 words that hold for every $x\in\C$ form a colorable
+configuration (366 pairs, 22 triads).  Hence $P(x)$ is colorable for every $x$ outside a finite
+union of proper real algebraic subsets of~$\C$.
+\item[(iii)] No list of fewer than 45 of the 145 words is uncolorable by virtue of the
+orthogonalities that hold along the whole circle.  Consequently no fixed list of fewer than 45
+words over $\mathcal A(x)$ is uncolorable at every point of the circle.
+\end{enumerate}
+Part~(iii) concerns fixed lists of words over this alphabet.  It says nothing about other
+parametrized families of KS sets.
+\end{theorem}
+
+\begin{proof}
+The inner product of two words is a polynomial in $x$ and $x^{*}$ with integer coefficients, of
+degree at most~2.
+
+(i)  On the circle, $xx^{*}=2$ reduces every such polynomial to an integer combination of
+$1,x,x^{*},x^2,x^{*2}$.  With $x=\sqrt2e^{i\theta}$ these are constant multiples of
+$e^{ik\theta}$, $k=0,\pm1,\pm2$, which are linearly independent functions of~$\theta$.  So an
+inner product vanishes at every point of the circle if and only if every reduced coefficient is
+zero, a finite check in integers.  It yields 98 pairs among the words of $W$ that are orthogonal
+at every point of the circle, forming the 22 triads listed in Appendix~\ref{app:triads}.  A SAT
+solver shows that the configuration with these 98 exclusions and 22 triads has no coloring.  Now
+fix $x$ on the circle.  If the 45 words give 45 distinct rays, the orthogonality graph at $x$
+contains the 98 pairs, and any further pairs or triads only add constraints, so there is no
+coloring.  If two words give the same ray, a coloring at $x$ assigns them the same value and so
+would also be a coloring of the 45-vertex configuration; there is none.  (Two words that are
+orthogonal for every $x$ on the circle cannot coincide at any point of it.)
+
+(ii)  Without the relation, the monomials $x^ax^{*b}$ are linearly independent functions
+on~$\C$, so an inner product vanishes for all $x$ iff all its coefficients vanish.  This yields
+366 pairs and 22 triads on the 145 words, and a SAT solver finds a coloring.  Each remaining
+inner product is a nonzero polynomial in $x,x^{*}$ and vanishes only on a proper real algebraic
+subset.  For each pair of the 145 words at least one $2\times2$ minor of the pair is a nonzero
+polynomial, so the set of $x$ at which the two words give the same ray is also a proper real
+algebraic subset.  Away from those finitely many subsets the 145 rays are distinct, no further
+pair is orthogonal, and the coloring found is a coloring of $P(x)$.
+
+(iii)  The 145 words with the pairs and triads that hold along the whole circle (378 pairs, 34
+triads) form a finite configuration, and the certifier of Section~\ref{sec:methods} returns 45 as
+its minimum, with a certificate of 408 colorable sets.  For the consequence: the exceptional
+points of the circle, at which some further inner product vanishes or two words coincide, are
+finite in number, since each such condition is a nonzero trigonometric polynomial in~$\theta$.
+A list uncolorable at every point of the circle is uncolorable at a non-exceptional point, where
+the configuration is exactly the one just described.
+
+The script \texttt{ks\_modulus2\_circle.py} carries out all three computations and writes the
+145 words, both graphs, the coloring of part~(ii) and the certificate of part~(iii) to
+\texttt{results/modulus2\_circle.json}.
+\end{proof}
+
+\begin{table}[t]
+\centering
+\caption{The 45 words of Theorem~\ref{thm:circle}.  A bar is a minus sign and $x^{*}$ is the
+complex conjugate, so $\bar x^{*}=-x^{*}$.  The list is one minimum set; we have not enumerated
+the others.}
+\label{tab:words}
+\small
+\input{figures/modulus2_words.tex}
+\end{table}
+
+Comparing (i) and (ii): of the 378 pairs present along the circle, 366 are present for every
+$x$, and the other 12 are all of the form $1+1-x^{*}x=0$, as in
+$(x,1,1)\perp(x,\bar1,\bar1)$.  With them come 12 further triads.  These 12 pairs are the
+difference between a colorable pool and an uncolorable one, and the relation behind them is the
+one Peres's cube uses at $x=\sqrt2$ (Fig.~\ref{fig:generic}).
+
+\begin{corollary}\label{cor:points}
+\begin{enumerate}
+\item[(a)] At $x=\sqrt2$ and at $x=\sqrt{-2}$ the 45 words give exactly 33 distinct rays.  By
+Computed fact~\ref{fact:peres} these are the unique minimum sets of those pools; at $x=\sqrt2$
+they are the 33 rays of Peres.
+\item[(b)] At $x=(1+\sqrt{-7})/2$, $P(x)$ is the 145-ray pool studied in earlier versions.  It is
+uncolorable because $|x|^2=2$.
+\item[(c)] The words $(1,1,x)$ and $(1,0,x^{*})$ of $W$ have squared overlap
+$|1+x^{*2}|^2/12=(5+4\cos2\theta)/12$, which is not constant.  The sets of part~(i) are therefore
+not all unitarily equivalent: the multiset of squared overlaps between rays is a unitary
+invariant that does not depend on labelling, and it takes infinitely many values along the
+circle.
+\item[(d)] At $x=(1+\sqrt{-7})/2$ the 45 words give 45 distinct rays with 114 orthogonal pairs
+and 26 triads, and this set contains a 43-ray KS subset; 43 is the certified minimum within it.
+\end{enumerate}
+\end{corollary}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[scale=1.55]
+\draw[->,gray] (-1.9,0) -- (2.2,0) node[right] {$\mathrm{Re}\,x$};
+\draw[->,gray] (0,-1.75) -- (0,1.95) node[above] {$\mathrm{Im}\,x$};
+\draw[line width=0.9pt] (0,0) circle (1.4142);
+\draw[densely dotted] (0,0) circle (1);
+\node[font=\footnotesize,gray] at (-0.52,-0.52) {$|x|=1$};
+\fill (1.4142,0) circle (0.05) node[below right,font=\small] {$\sqrt2$: Peres, 33 rays};
+\fill (0,1.4142) circle (0.05);
+\node[font=\small,anchor=south west] at (0.08,1.72) {$\sqrt{-2}$: 33 rays};
+\draw[gray,line width=0.3pt] (0.03,1.46) -- (0.12,1.74);
+\fill (0.5,1.3229) circle (0.05);
+\node[font=\small,anchor=west] at (1.0,1.5) {$\tfrac{1+\sqrt{-7}}{2}$: minimum 43};
+\draw[gray,line width=0.3pt] (0.55,1.35) -- (0.98,1.48);
+\node[font=\small,align=left] at (-1.45,1.45) {$|x|^2=2$:\\uncolorable};
+\node[font=\small,align=left] at (1.55,-1.2) {generic $x$:\\colorable};
+\end{tikzpicture}
+\caption{The alphabet $\{0,\pm1,\pm x,\pm x^{*}\}$.  Its pool is uncolorable at every point of the
+circle $|x|^2=2$ and colorable for generic~$x$.  The pool is unchanged by $x\mapsto-x$ and
+$x\mapsto x^{*}$, so one quadrant suffices.  At the two axis points the 45 words of
+Table~\ref{tab:words} collapse to 33 rays.  At $(1+\sqrt{-7})/2$ the additional relation
+$x+x^{*}=1$ adds orthogonalities and the minimum drops from 45 to~43.}
+\label{fig:circle}
+\end{figure}
+
+\subsection{The point $x=(1+\sqrt{-7})/2$}
+
+Let $\alpha=(1+\sqrt{-7})/2$, so $|\alpha|^2=2$ and $\alpha+\alpha^{*}=1$.
+
+\begin{fact}[The $\Q(\sqrt{-7})$ pool]\label{fact:heegner}
+$P(\alpha)$ has 145 rays, 522 orthogonal pairs and 42 triads, against 378 and 34 at a generic
+point of the circle.  Its minimum uncolorable subsets have 43 rays, certified.  There are exactly
+six of them, in two orbits under signed permutations of the coordinates, each with 23 bases; the
+one we use has 107 pairs and degree sequence $4^{16}5^{20}6^{4}8^{2}10^{1}$.  The completed pool
+has 685 rays, 1746 pairs and 582 triads; its minimum is \heegnercompletedmin.
+\end{fact}
+
+So the additional relation at this point is worth two rays: 43 against 45
+(Corollary~\ref{cor:points}d).  It is the pools $P(x)$ that form a continuous family through
+this point.  Theorem~\ref{thm:circle} proves that $P(\alpha)$ is uncolorable; that its minimum is
+43 is a separate computation.
+
+Table~\ref{tab:heegner} puts this point in the setting in which earlier versions found it.  For
+each of the nine imaginary quadratic fields of class number one we take the generator $a$ of the
+ring of integers and the alphabet $\{0,\pm1,\pm a,\pm a^{*}\}$.  The uncolorable rows are
+$d=2$ (a point of the circle), $d=3$ (the roots-of-unity alphabet $S_6$ of
+Theorem~\ref{thm:6n}) and $d=7$ (a point of the circle).  Class number plays no role that we can
+see; Theorems~\ref{thm:6n} and~\ref{thm:circle} account for all three rows.
+
+\begin{table}[t]
+\centering
+\caption{Raw pools of $\{0,\pm1,\pm a,\pm a^{*}\}$, $a$ the generator of the ring of integers of
+$\Q(\sqrt{-d})$: $a=\sqrt{-d}$ for $d=1,2$ and $a=(1+\sqrt{-d})/2$ otherwise.  Minima are
+certified.  For $d=1$ version~9 printed a different, larger alphabet in this row; see the text.}
+\label{tab:heegner}
+\begin{tabular}{rcrrrcc}
+\toprule
+$d$ & $|a|^2$ & Rays & Pairs & Triads & Colorable & Min \\
+\midrule
+1 & 1 & 31 & 69 & 7 & yes & --- \\
+2 & 2 & 49 & 120 & 16 & \textbf{no} & \textbf{33} \\
+3 & 1 & 57 & 174 & 22 & \textbf{no} & \textbf{33} \\
+7 & 2 & 145 & 522 & 42 & \textbf{no} & \textbf{43} \\
+11, 19, 43, 67, 163 & $3,5,11,17,41$ & 145 & 462 & 30 & yes & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For $d=1$ the letters are $0,\pm1,\pm i$ and the pool is $S_4$, colorable by
+Theorem~\ref{thm:6n}.  The larger Gaussian alphabet $\{0,\pm1,\pm i,\pm(1+i)\}$, which contains
+the element $1+i$ of squared modulus~2, generates 127 rays, 465 pairs and 51 triads; that pool is
+uncolorable with certified minimum~33 (16 bases in the set found).
+
+\subsection{Relation to the family of Gould and Aravind}
+
+Gould and Aravind~\cite{GouldAravind2010} exhibited a family of 33-ray sets with the
+orthogonality graph of Peres's set, depending on three phases, containing the sets of Peres and
+of Penrose; Flores Gordillo~\cite{FloresGordillo2026} reports that after removing diagonal
+unitaries the family is a circle (we have not audited that proof).  That family is different from the one in
+Theorem~\ref{thm:circle}.  Its members have 33 rays and a constant graph.  Ours has 45 rays at a
+generic point and cannot contain a 33-ray KS set there: every orthogonality of $P(x)$ at a generic
+point of the circle is also one of $P(\alpha)$, whose minimum is~43, so no subset of $P(x)$ with
+fewer than 43 rays is uncolorable.  The two families meet at $x=\sqrt2$, where both give Peres's
+set.  We have not found the family of Theorem~\ref{thm:circle} in the literature, but we have not
+made a systematic search and make no claim of priority.
+
+\subsection{Rigidity}
+
+Table~\ref{tab:rigidity} reports the number of infinitesimal flexes in $\C^3$ of each minimum
+set: the dimension of the null space of the Jacobian of the equations $|v_i|^2=1$,
+$\braket{v_i}{v_j}=0$ (one complex equation for each orthogonal pair), minus the $n+8$ dimensions
+accounted for by a common unitary and a phase on each vector.  The ranks are numerical; in every
+case the smallest retained singular value exceeds $0.2$ and the largest discarded one is below
+$2\times10^{-15}$.  Zero flexes, if confirmed by an exact rank computation, means the set is locally rigid.  It does
+not by itself mean the
+realization is unique up to unitary equivalence; for $\CK$ that stronger statement is the theorem
+of Trandafir and Cabello~\cite{TrandafirCabello2025}, and for the Eisenstein set it is asserted by
+Cabello~\cite{Cabello2025simplest}.
+
+\begin{table}[t]
+\centering
+\caption{Infinitesimal flexes in $\C^3$ (numerical ranks).}
+\label{tab:rigidity}
+\begin{tabular}{lrrrc}
+\toprule
+Set & Rays & Pairs & $\dim\ker J$ & Flexes \\
+\midrule
+$\CK$ & 31 & 71 & 39 & 0 \\
+Eisenstein, 33 rays & 33 & 78 & 41 & 0 \\
+Peres, 33 rays & 33 & 72 & 42 & 1 \\
+$\sqrt{-2}$, 33 rays & 33 & 72 & 42 & 1 \\
+$\Q(\sqrt{-7})$, 43 rays & 43 & 107 & 51 & 0 \\
+Supergolden, 47 rays & 47 & 110 & 55 & 0 \\
+Supergolden (completed pool), 47 rays & 47 & 108 & 55 & 0 \\
+Golden, 51 rays & 51 & 118 & 59 & 0 \\
+Cube root of two, 60 rays & 60 & 144 & 68 & 0 \\
+45 words at $\theta=0.3$ and at $\theta=1.0$ & 45 & 98 & 55 & 2 \\
+45 words at $x=(1+\sqrt{-7})/2$ & 45 & 114 & 53 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The single flex of the Peres set is the circle of Gould--Aravind and Flores Gordillo, and it is a
+genuine deformation, not merely an infinitesimal one.  Versions 1--7 of this paper claimed the
+opposite on the strength of a second-order computation that contained an indexing error, found
+by Flores Gordillo and corrected in version~8.  The 45 words have two flexes at each of the two phases we computed
+($\theta=0.3$ and $\theta=1.0$).  One of them is motion along the circle
+(Corollary~\ref{cor:points}c); we have not identified the other.  At $x=(1+\sqrt{-7})/2$, with
+the 16 additional orthogonalities imposed, the same 45 rays are numerically infinitesimally
+rigid.

@@ -1,0 +1,167 @@
+Peer Review: algebraic_islands_v10.txt
+Date: 2026-11-22 15:05:49
+Reviewer: Codex (gpt-6-astra, reasoning high, CLI v0.153.4)
+Elapsed: 710.7s
+Tokens: 191,977 tokens used
+---
+
+**1. MINOR REVISION — the two theorems and the replacement optimization procedures survive checking; the remaining problems concern scope, attribution and reproducibility, not another failed classification.**
+
+I checked the supplied text against the scripts, result files and the archived version-9 review. I independently reconstructed the circle configurations and checked their certificate using **MiniSat22 instead of Glucose4, with a different cardinality encoding**. I also reran ten catalogue minimum certifications, all five censuses, all nine bipartite optimizations, and the structural profiles. Pending entries are excluded from this assessment.
+
+**2. Actionable issues**
+
+*Demonstrated errors or inconsistencies in presentation*
+
+| Priority | Step | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|
+| Med | 2 | “For given rays \(v_1,\dots,v_n\)… the top eigenvalue of \(\sum_i|v_i\rangle\langle v_i|\).” This requires **unit representatives**, whereas the paper normally supplies unnormalised coordinate words. The code correctly divides by the squared norm. | Explicitly define \(P_i=v_iv_i^\dagger/(v_i^\dagger v_i)\), or state that every vector in this paragraph is normalised. Otherwise the displayed quantity changes under rescaling a ray. |
+| Med | 3–4 | “The 33-ray set that Conway and Kochen communicated to Peres” omits the historical identification with **Schütte-33**, already raised in the version-9 review. The communication claim can be true while the attribution remains incomplete. | Introduce it as “Schütte-33, also known as Conway–Kochen-33,” with the historical qualification. Trandafir–Cabello explicitly make this identification. [Source](https://arxiv.org/html/2501.11640v3). |
+| Low | 3 | “Table… collects every uncolorable pool established in this version.” It omits, among others, the three enlarged raw alphabets whose certified minimum 31 is reported earlier. | Say “selected named uncolorable pools,” or include those rows. |
+| Low | 2 | “Each took under a second.” The archived bipartite record for the cubic set reports **1.8 seconds**. That timer includes loading and construction, so it does not establish that the optimization itself exceeded a second. | Distinguish optimization time from end-to-end time; record the former if that is the intended claim. |
+| Low | 3 | “Every raw pool is invariant under signed permutations.” This is true for the raw pools in the CSW table, but not for arbitrary alphabets defined in the paper. For example, \(S_3\) does not contain \([-1:1:0]\). | Insert “in this table.” |
+| Low | 3 | Corrections item C11 contains malformed mathematics, “\(\backslash Z[\backslash sqrt\{-2]\),” and the supplied CSW table promises bold entries without marking them. | Repair the source and mark the two actual violations. |
+
+*Unsupported claims or insufficiently preserved evidence*
+
+| Priority | Step | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|
+| Med | 3–4 | “What is new in the table is the rows for the \(\mathbb Q(\sqrt{-7})\) and supergolden sets.” Elsewhere you correctly admit that catalogue comparison has not been done. Novelty of these operational results has not been established either. | Say “the additional computations reported here,” unless a documented literature comparison supports priority. |
+| Med | 3 | “Adding letters does not help.” The computation establishes this for three specified enlargements, not arbitrary alphabet enlargement. | Say “None of these three enlargements lowers the minimum below 31.” |
+| Med | 1, 3 | “The 45 words have two infinitesimal flexes at a generic point.” The archived evidence is numerical evaluation at two phases. That is not an exact generic-rank proof. | Retain the numerical qualification in the open question and table label: “Two flexes were found numerically at both tested phases.” |
+| Med | 2, 5 | “The list… is archived only for Theorem [circle].” This is candid, but leaves the other minima dependent on rerunning the search. Likewise, `fractional_packing()` verifies rational primal and dual vectors but saves only their objective and certification status. | Export the colourable sets and assignments, final hitting-set UNSAT instances/proofs, and rational LP vectors. Include a small independent checker. |
+| Med | 5 | “Code and data: [GitHub repository].” The inspected checkout lists the new scripts and `results/` as **untracked**. Local availability is not a versioned publication artifact. | Publish an immutable version-10 release with a manifest, dependency versions and hashes. Do this before treating the repository URL as sufficient reproducibility information. |
+
+*Things I could not independently establish*
+
+| Priority | Step | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|
+| Med | 4 | Flores Gordillo “reports that after removing diagonal unitaries the family is a circle (we have not audited that proof).” I verified the cited record and a later record, but could not inspect the full proof successfully. | Keep the qualification. Cite the precise version and proposition used. This uncertainty does **not** undermine your separate 45-word theorem. [Cited record](https://zenodo.org/records/21488474), [later record](https://zenodo.org/records/21680599). |
+| Med | 4 | “Whether the 43-ray and 47-ray sets, or the 45-ray family… appear in the published catalogues we do not know.” I did not establish their absence from those catalogues. | Preserve this limitation and complete the comparison before making journal-level novelty claims. |
+| Low | 2 | The enriched Gaussian raw-pool minimum 33 is supported by the inspected algorithm and a completed result record, but I did not rerun its longer lower-bound computation. | Include its certificate in the release. My fresh certification runs cover the other ten certified catalogue entries. |
+
+The substantive audit is as follows.
+
+**Step 1: both theorems survive.**
+
+For the \(6\mid n\) theorem, the two- and three-term vanishing-sum lemma is correct, including the alternatives obtained from the imaginary part.
+
+- **Case 1:** Every ray receives a value. Disjoint supports permit only the axis triad. Assigning only \(e_1\) the value 1 satisfies every edge and triad.
+- **Case 2:** The exclusion of all-nonzero rays from triads is valid. Two possible partners must have two-element supports; different such supports intersect in exactly one coordinate and therefore cannot be orthogonal. Equal supports would give a basis of a coordinate plane, forcing the original all-nonzero ray to vanish there—a contradiction. The matching construction colours all support-two rays, and the explicit assignment of 0 to all all-nonzero rays closes the gap in version 9. No selected rays in different support-two planes are orthogonal.
+- **Case 3:** A support-two ray has only its complementary axis as a neighbour. For all-nonzero rays, the two displayed neighbours are exhaustive and complete an isolated triangle. Assigning one 1 per such triangle, one axis 1, and everything else 0 satisfies **all** constraints, including axis–support-two edges.
+- **Sufficiency:** \(S_6\subseteq S_n\) is immediate when \(6\mid n\). The Cabello configuration supplies a valid uncolourable subset of \(S_6\).
+
+I implemented the manuscript’s colourings and checked every pair and triad for all applicable \(1\le n\le30\). They passed. As an additional arithmetic check,
+\[
+|S_n|=n^2+3n+3,\qquad
+T_n=1+\mathbf1_{2\mid n}\frac{3n}{2}
+       +\mathbf1_{3\mid n}\frac{n^2}{3},
+\]
+which reproduces the displayed triad counts.
+
+For the circle theorem:
+
+1. **Linear independence is correct.** On the circle, substitution \(x=\sqrt2e^{i\theta}\) turns the five reduced monomials into distinct Fourier modes. Off the circle, independence of monomials in \(x,\bar x\) follows by the invertible substitution \(x=u+iv,\bar x=u-iv\).
+2. **Special-point coincidences are handled correctly.** Every word remains nonzero on this circle. A colouring of coincident rays would pull back to a colouring of the word configuration. Universally orthogonal words cannot coincide, so its triads remain genuine triads.
+3. **Part (ii) proves generic colourability in the complex plane.** This does not mean generic colourability *on the circle*. The finite union of exceptional algebraic sets is the right formulation.
+4. **Part (iii) proves the stated minimum, including its consequence.** At a nonexceptional phase, all additional orthogonalities and coincidences disappear. Thus a fixed universally uncolourable list must already be uncolourable in the universal circle graph. This is not merely a lower bound on lists whose uncolourability happens to have a particular proof.
+
+My independent reconstruction found:
+
+| Configuration | Vertices | Pairs | Triads | Check |
+|---|---:|---:|---:|---|
+| Identities valid for every complex \(x\) | 145 | 366 | 22 | Stored colouring valid |
+| Identities valid throughout the circle | 145 | 378 | 34 | Uncolourable |
+| Displayed \(W\) | 45 | 98 | 22 | Uncolourable and ray-critical |
+
+I checked that the **342 nonzero formal words** reduce to exactly 145 projective classes both generically in the plane and generically on the circle. This matters because the script obtains representatives using circle identities before constructing the plane graph.
+
+For the lower bound, all **408 archived sets** were independently SAT-checked as colourable. I then checked
+\[
+\left(\bigwedge_M\ \bigvee_{i\notin M}s_i\right)
+\land\left(\sum_i s_i\le44\right),
+\]
+which is **UNSAT**. The claimed 45-word minimum is therefore supported by the actual archived certificate, not merely by a printed solver status. [Certificate](</C:/Users/Michael Kernaghan/contextuality/results/modulus2_circle.json>).
+
+The specialisations also check out. At \(\sqrt2\) and \(i\sqrt2\), \(W\) gives 33 rays, 72 pairs and 16 triads. At \(\alpha=(1+\sqrt{-7})/2\), it gives 45 rays, 114 pairs and 26 triads. **Deleting words 10 and 11 gives a 43-ray KS subset**, and recertification gives minimum 43 within this specialised \(W\). The full 145-ray pool’s minimum 43 was separately reproduced. The paper now correctly distinguishes these statements.
+
+The distinction from Gould–Aravind is sound. Indeed, your own circle minimum gives the stronger statement that a generic \(P(x)\) has minimum **45**, so it cannot contain their 33-ray KS configuration. The overlap calculation
+\[
+\frac{|1+\bar x^2|^2}{12}
+=\frac{5+4\cos2\theta}{12}
+\]
+is also correct and proves that the family is not contained in one unitary-equivalence class.
+
+**Step 2: the replacement computations are sound within their stated domains.**
+
+In [ks_certify_fast.py](</C:/Users/Michael Kernaghan/contextuality/ks_certify_fast.py>), selectors activate precisely the induced subset’s pair and triad constraints. The bulk growth pass checks only pair compatibility initially, but **then SAT-checks the entire grown set and falls back if necessary**. Subsequent additions are individually SAT-checked. Thus every complement clause used by the default version-10 procedure is valid.
+
+The optional model-only growth in `ks_certify_fast3.py` is also sound under its precondition: it removes vertices until every violated pair and all-zero triad has been destroyed, without removing the seed. It is witnessed by the satisfying assignment rather than independently SAT-checked. That distinction does not invalidate the default computations.
+
+The hitting-set cardinality bound is correctly indexed. Exhausting candidates below the current uncolourable upper bound proves minimality. Budget exhaustion is reported separately. I found no recurrence of the version-9 invalid refinement.
+
+The census is genuinely exhaustive **at the certified minimum size**. After finding a minimum set \(S\), its blocking clause requires a vertex outside \(S\). Under the at-most-\(m\) bound, this excludes \(S\) and its proper subsets, but no other \(m\)-element set. The proper subsets are already known colourable. The reproduced numbers are:
+
+- Integer: **6**, one signed-permutation orbit.
+- Peres and \(\sqrt{-2}\): **1 each**.
+- Eisenstein: **3**, in three signed-permutation orbits.
+- Heegner-7: **6**, in two signed-permutation orbits.
+
+For bipartite optimization, the monotonicity argument is correct. Inactive bases can have all their outcome variables false; their unguarded exclusion clauses therefore cause no spurious obstruction. The model chooses outcomes by **basis occurrence**, as required by Cabello’s Definition 2, rather than imposing an unjustified global ray valuation. Shared bases acquire the same choice through cross-party orthogonality. Exhausting smaller products justifies “exact” **for basis subsets of the named configuration**. [Cabello, Definition 2](https://arxiv.org/html/2311.17735v3).
+
+I reproduced products **45, 63, 63, 72, 108, 160, 168, 190 and 182** for the corresponding named sets.
+
+For CSW:
+
+- `alpha` is an exact maximum independent-set computation.
+- `attained` correctly normalises the coordinate vectors and computes the projector-sum eigenvalue.
+- The primal and dual SDPs implement \(\vartheta(G)\), and the paper appropriately labels their values numerical.
+- Edges and triangles supply all maximal-clique constraints for these three-dimensional orthogonality graphs. The rational primal/dual feasibility and equal-objective checks justify exact \(\alpha^*\).
+
+The distinction between \(\vartheta\) and the value attained by these rays is now correct. This matches CSW’s unrestricted representation optimization, not a fixed-qutrit realization or an arbitrary fixed Bell scenario. [CSW, Eqs. (3)–(4) and subsequent qualifications](https://arxiv.org/pdf/1401.7081).
+
+**Table comparisons:** I found no incorrect mathematical table entry in the sample checked. All structural profiles, indispensable-basis counts and bipartite entries reproduced. The displayed CSW entries agree with the archived values after rounding; I reran independence numbers, attained values and rational fractional-packing checks for all nine named sets.
+
+Three paper/result differences require explicit recognition, but are **valid improvements by containment**, not errors:
+
+| Completed pool | Stored search upper bound | Paper upper bound | Justification |
+|---|---:|---:|---|
+| Heegner-7 | 47 | 43 | Contains its raw 43-ray witness |
+| Four-symbol supergolden | 59 | 47 | Contains its raw 47-ray witness |
+| Enriched Gaussian | 65 | 33 | Contains its raw 33-ray witness |
+
+**Steps 3–4: the main withdrawals are real; the remaining literature claims are mostly correctly scoped.**
+
+The “Computed facts” now identify the intended raw or completed pool. I confirmed the supposedly suspicious non-isomorphism claim: the two raw modulus-2 graphs have equal characteristic polynomials, but **none of the 48 core isomorphisms extends to their auxiliary-ray neighbourhoods**. VF2 also reproduces non-isomorphism of the completed pools. Changing the trace relation alone would not prove this; the actual graph checks do.
+
+The zero-sum enumeration reproduces **128 vectors, 21 orbits and eight retained representatives**. The \(\sqrt{-2}\) edge decomposition also reproduces **60 universal, 54 trace-zero and six norm-two edges**.
+
+The literature checks give the following results:
+
+- **Trandafir–Cabello:** the revised CK-31 rigidity attribution is correctly restricted to its orthogonality relations. Their minimality theorem concerns the particular **13→25→97-ray construction**, not all rigid sets containing Yu–Oh and not unrestricted minimum 31. Your revised introduction respects that distinction, although naming the construction would improve precision. [Theorems 2–3](https://arxiv.org/html/2501.11640v3).
+- **Cabello’s simplest set:** 33 rays, 14 bases and \(5\times9\) are supported. I went beyond matching invariants: applying \(\operatorname{diag}(1,1,\omega)\) to the repository’s selected Eisenstein witness gives the ray set assembled from Cabello’s Eqs. (1)–(2). Archive that identification. His unitary-uniqueness claim is indeed stated, with an external proof reference. [Source](https://arxiv.org/html/2508.07335v3).
+- **Optimal conversion:** the published \(7\times9\) Peres and \(8\times9\) CK-31 values support your attribution. These are optima for conversion of the specified sets, not global optima over all qutrit strategies. [Source](https://arxiv.org/html/2410.17470v2).
+- **Gould–Aravind:** the three-phase 33-ray construction containing Peres and Penrose is supported. I do not certify Flores Gordillo’s full moduli-space argument; the stated limitation should remain. [Gould–Aravind](https://arxiv.org/pdf/0909.4502).
+- **Frembs:** the trace-zero identity and its use in his different arrangement are explicitly present in Appendix A. This supports the mathematical attribution; it does not independently establish the history of private communications. [Source](https://arxiv.org/html/2609.16490v2).
+- **Cortez–Morales–Reyes:** the \(\mathbb Z[1/6]\) result concerns algebraic hidden states on the partial ring of symmetric matrices. The revision correctly abandons the claimed identification with cyclotomic ray alphabets. [Source](https://arxiv.org/html/2211.13216v4).
+- **Li–Bright–Ganesh and Kirchweger–Peitl–Szeider:** the lower bound 24, the real/complex distinction, and the corrected IJCAI bibliographic information are supported. [LBG](https://ijcai.org/proceedings/2024/0210.pdf), [KPS](https://ijcai.org/proceedings/2023/0216.pdf).
+- **Kernaghan–Peres:** **36 vectors in dimension eight is correct**. It should not be “corrected” to 40. [Original abstract](https://arxiv.org/abs/quant-ph/9412006).
+
+Against the archived version-9 review, the major defects have been withdrawn or repaired: false minimum 52, invalid certification, incomplete colourings, isolated-island classification, norm threshold, Galois reformulation, completion errors, Hoffman argument, mislabelled operational values and unrestricted rigidity implications. The Corrections section is a principal-claims list, not a complete crosswalk of every earlier objection. It says so. The Schütte attribution remains an identifiable omission.
+
+**3. Claims independently confirmed**
+
+- The \(6\mid n\) proof assigns every ray and satisfies all required constraints.
+- The circle graphs, displayed words, triads, colouring and **408-set minimum certificate** check.
+- The specialised 43-ray subset at \(\alpha\) exists; its minimum and the full raw-pool minimum are 43.
+- Ten catalogue minimum certifications and all five minimum-set censuses reproduce.
+- All nine bipartite costs and all structural profiles reproduce.
+- The modulus-2 pools are genuinely non-isomorphic despite matching spectra.
+
+**4. Verdict on the revision**
+
+Yes: this can now be released as a corrected preprint after the listed fixes and publication of the versioned artifacts. The mathematical case no longer warrants rejection. For a journal, I would consider it for **Foundations of Physics**, subject to those revisions and adequate positioning of the actual contribution.
+
+The three priorities are: **publish independently checkable certificates and a frozen release; remove the remaining unsupported novelty and generic-rank wording; complete the literature comparison and historical attribution.**
+
+The production disclosure is adequate and substantially honest. It acknowledges LLM generation, an unsound algorithm, false conclusions and the limits of model agreement. The correction is substantive rather than cosmetic. What remains inadequate is the preservation of evidence: another reader should be able to check every claimed minimum without reconstructing this review’s computational work.

@@ -1,0 +1,1328 @@
+{
+ "summary": {
+  "types": 37,
+  "curves": 9,
+  "special_points": 27,
+  "uncolourable_types": 12,
+  "minima": [
+   31,
+   33
+  ],
+  "attaining_minimum": [
+   "-2",
+   "-1/2",
+   "1/2",
+   "2"
+  ],
+  "seconds": 5.1
+ },
+ "types": [
+  {
+   "type": "generic",
+   "kind": "generic",
+   "x": "1/3 + 1/5*i*sqrt(5)",
+   "x_approx": [
+    0.333333,
+    0.447214
+   ],
+   "relations_holding": 0,
+   "rays": 49,
+   "pairs": 60,
+   "triads": 4,
+   "orbit": [
+    -1.071428571,
+    1.437472271
+   ],
+   "status": "COLOURABLE"
+  },
+  {
+   "type": "Im x = 0",
+   "kind": "curve",
+   "x": "10/3",
+   "x_approx": [
+    3.333333,
+    0.0
+   ],
+   "relations_holding": 2,
+   "rays": 49,
+   "pairs": 114,
+   "triads": 10,
+   "orbit": [
+    -3.333333333,
+    0.0
+   ],
+   "status": "COLOURABLE",
+   "curve": "Im x = 0"
+  },
+  {
+   "type": "|x + 1|^2 = 1",
+   "kind": "curve",
+   "x": "-2/3 + 2/3*i*sqrt(2)",
+   "x_approx": [
+    -0.666667,
+    0.942809
+   ],
+   "relations_holding": 2,
+   "rays": 49,
+   "pairs": 72,
+   "triads": 8,
+   "orbit": [
+    -0.666666667,
+    0.942809042
+   ],
+   "status": "COLOURABLE",
+   "curve": "|x + 1|^2 = 1"
+  },
+  {
+   "type": "|x|^2 = 1/2",
+   "kind": "curve",
+   "x": "1/3 + 1/6*i*sqrt(14)",
+   "x_approx": [
+    0.333333,
+    0.62361
+   ],
+   "relations_holding": 2,
+   "rays": 49,
+   "pairs": 66,
+   "triads": 10,
+   "orbit": [
+    -0.666666667,
+    1.247219129
+   ],
+   "status": "COLOURABLE",
+   "curve": "|x|^2 = 1/2"
+  },
+  {
+   "type": "|x|^2 = 1",
+   "kind": "curve",
+   "x": "1/3 + 2/3*i*sqrt(2)",
+   "x_approx": [
+    0.333333,
+    0.942809
+   ],
+   "relations_holding": 2,
+   "rays": 49,
+   "pairs": 114,
+   "triads": 10,
+   "orbit": [
+    -0.333333333,
+    0.942809042
+   ],
+   "status": "COLOURABLE",
+   "curve": "|x|^2 = 1"
+  },
+  {
+   "type": "|x|^2 = 2",
+   "kind": "curve",
+   "x": "1/3 + 1/3*i*sqrt(17)",
+   "x_approx": [
+    0.333333,
+    1.374369
+   ],
+   "relations_holding": 2,
+   "rays": 49,
+   "pairs": 66,
+   "triads": 10,
+   "orbit": [
+    -0.333333333,
+    1.374368542
+   ],
+   "status": "COLOURABLE",
+   "curve": "|x|^2 = 2"
+  },
+  {
+   "type": "|x - 1|^2 = 1",
+   "kind": "curve",
+   "x": "4/3 + 2/3*i*sqrt(2)",
+   "x_approx": [
+    1.333333,
+    0.942809
+   ],
+   "relations_holding": 2,
+   "rays": 49,
+   "pairs": 72,
+   "triads": 8,
+   "orbit": [
+    -1.333333333,
+    0.942809042
+   ],
+   "status": "COLOURABLE",
+   "curve": "|x - 1|^2 = 1"
+  },
+  {
+   "type": "Re x = -1/2",
+   "kind": "curve",
+   "x": "-1/2 + 1/3*i*sqrt(30)",
+   "x_approx": [
+    -0.5,
+    1.825742
+   ],
+   "relations_holding": 2,
+   "rays": 49,
+   "pairs": 72,
+   "triads": 8,
+   "orbit": [
+    -0.5,
+    1.825741858
+   ],
+   "status": "COLOURABLE",
+   "curve": "Re x = -1/2"
+  },
+  {
+   "type": "Re x = 0",
+   "kind": "curve",
+   "x": "1/3*i*sqrt(30)",
+   "x_approx": [
+    0.0,
+    1.825742
+   ],
+   "relations_holding": 2,
+   "rays": 49,
+   "pairs": 114,
+   "triads": 10,
+   "orbit": [
+    0.0,
+    0.547722558
+   ],
+   "status": "COLOURABLE",
+   "curve": "Re x = 0"
+  },
+  {
+   "type": "Re x = 1/2",
+   "kind": "curve",
+   "x": "1/2 + 1/3*i*sqrt(30)",
+   "x_approx": [
+    0.5,
+    1.825742
+   ],
+   "relations_holding": 2,
+   "rays": 49,
+   "pairs": 72,
+   "triads": 8,
+   "orbit": [
+    -0.5,
+    1.825741858
+   ],
+   "status": "COLOURABLE",
+   "curve": "Re x = 1/2"
+  },
+  {
+   "type": "-2",
+   "kind": "point",
+   "x": "-2",
+   "x_approx": [
+    -2.0,
+    0.0
+   ],
+   "relations_holding": 12,
+   "rays": 49,
+   "pairs": 138,
+   "triads": 26,
+   "orbit": [
+    -2.0,
+    0.0
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 31,
+   "upper_bound": 31,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 188,
+   "bases_in_witness": 17,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,x)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(0,x,-1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,1,1)",
+    "(1,1,-1)",
+    "(1,1,x)",
+    "(1,1,-x)",
+    "(1,-1,0)",
+    "(1,-1,1)",
+    "(1,-1,-1)",
+    "(1,-1,x)",
+    "(1,-1,-x)",
+    "(1,x,0)",
+    "(1,x,1)",
+    "(1,x,-1)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,-1,0)",
+    "(x,-1,1)",
+    "(x,-1,-1)"
+   ],
+   "curves_through": [
+    "Im x = 0",
+    "|x + 1|^2 = 1"
+   ],
+   "witness_pairs": 71,
+   "witness_isomorphic_to": [
+    "ck31"
+   ]
+  },
+  {
+   "type": "-1/2-1/2*sqrt(5)",
+   "kind": "point",
+   "x": "-1/2-1/2*sqrt(5)",
+   "x_approx": [
+    -1.618034,
+    0.0
+   ],
+   "relations_holding": 6,
+   "rays": 49,
+   "pairs": 138,
+   "triads": 10,
+   "orbit": [
+    -1.618033989,
+    0.0
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "Im x = 0"
+   ]
+  },
+  {
+   "type": "-1*sqrt(2)",
+   "kind": "point",
+   "x": "-1*sqrt(2)",
+   "x_approx": [
+    -1.414214,
+    0.0
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 120,
+   "triads": 16,
+   "orbit": [
+    -1.414213562,
+    0.0
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 33,
+   "upper_bound": 33,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 34,
+   "bases_in_witness": 16,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,x)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(0,x,-1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,1,x)",
+    "(1,1,-x)",
+    "(1,-1,0)",
+    "(1,-1,x)",
+    "(1,-1,-x)",
+    "(1,x,0)",
+    "(1,x,1)",
+    "(1,x,-1)",
+    "(1,-x,0)",
+    "(1,-x,1)",
+    "(1,-x,-1)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,1,0)",
+    "(x,1,1)",
+    "(x,1,-1)",
+    "(x,-1,0)",
+    "(x,-1,1)",
+    "(x,-1,-1)"
+   ],
+   "curves_through": [
+    "Im x = 0",
+    "|x|^2 = 2"
+   ],
+   "witness_pairs": 72,
+   "witness_isomorphic_to": [
+    "peres33",
+    "sqrtm2-33"
+   ]
+  },
+  {
+   "type": "-1",
+   "kind": "point",
+   "x": "-1",
+   "x_approx": [
+    -1.0,
+    0.0
+   ],
+   "relations_holding": 12,
+   "rays": 13,
+   "pairs": 24,
+   "triads": 4,
+   "orbit": [
+    -1.0,
+    0.0
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "Im x = 0",
+    "|x|^2 = 1"
+   ]
+  },
+  {
+   "type": "-1/2*sqrt(2)",
+   "kind": "point",
+   "x": "-1/2*sqrt(2)",
+   "x_approx": [
+    -0.707107,
+    0.0
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 120,
+   "triads": 16,
+   "orbit": [
+    -1.414213562,
+    0.0
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 33,
+   "upper_bound": 33,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 34,
+   "bases_in_witness": 16,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,x)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(0,x,-1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,-1,0)",
+    "(1,x,0)",
+    "(1,x,x)",
+    "(1,x,-x)",
+    "(1,-x,0)",
+    "(1,-x,x)",
+    "(1,-x,-x)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,1,0)",
+    "(x,1,x)",
+    "(x,1,-x)",
+    "(x,-1,0)",
+    "(x,-1,x)",
+    "(x,-1,-x)",
+    "(x,x,1)",
+    "(x,x,-1)",
+    "(x,-x,1)",
+    "(x,-x,-1)"
+   ],
+   "curves_through": [
+    "Im x = 0",
+    "|x|^2 = 1/2"
+   ],
+   "witness_pairs": 72,
+   "witness_isomorphic_to": [
+    "peres33",
+    "sqrtm2-33"
+   ]
+  },
+  {
+   "type": "1/2-1/2*sqrt(5)",
+   "kind": "point",
+   "x": "1/2-1/2*sqrt(5)",
+   "x_approx": [
+    -0.618034,
+    0.0
+   ],
+   "relations_holding": 6,
+   "rays": 49,
+   "pairs": 138,
+   "triads": 10,
+   "orbit": [
+    -1.618033989,
+    0.0
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "Im x = 0"
+   ]
+  },
+  {
+   "type": "-1/2",
+   "kind": "point",
+   "x": "-1/2",
+   "x_approx": [
+    -0.5,
+    0.0
+   ],
+   "relations_holding": 12,
+   "rays": 49,
+   "pairs": 138,
+   "triads": 26,
+   "orbit": [
+    -2.0,
+    0.0
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 31,
+   "upper_bound": 31,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 166,
+   "bases_in_witness": 17,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,x)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(0,x,-1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,1,1)",
+    "(1,1,-1)",
+    "(1,-1,0)",
+    "(1,-1,1)",
+    "(1,-1,-1)",
+    "(1,x,0)",
+    "(1,x,x)",
+    "(1,x,-x)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,-1,0)",
+    "(x,-1,x)",
+    "(x,-1,-x)",
+    "(x,x,1)",
+    "(x,x,-1)",
+    "(x,-x,1)",
+    "(x,-x,-1)"
+   ],
+   "curves_through": [
+    "Im x = 0",
+    "Re x = -1/2"
+   ],
+   "witness_pairs": 71,
+   "witness_isomorphic_to": [
+    "ck31"
+   ]
+  },
+  {
+   "type": "1/2",
+   "kind": "point",
+   "x": "1/2",
+   "x_approx": [
+    0.5,
+    0.0
+   ],
+   "relations_holding": 12,
+   "rays": 49,
+   "pairs": 138,
+   "triads": 26,
+   "orbit": [
+    -2.0,
+    0.0
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 31,
+   "upper_bound": 31,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 164,
+   "bases_in_witness": 17,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,x)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(0,x,-1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,1,1)",
+    "(1,1,-1)",
+    "(1,-1,0)",
+    "(1,-1,1)",
+    "(1,-1,-1)",
+    "(1,x,0)",
+    "(1,x,x)",
+    "(1,x,-x)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,-1,0)",
+    "(x,-1,x)",
+    "(x,-1,-x)",
+    "(x,x,1)",
+    "(x,x,-1)",
+    "(x,-x,1)",
+    "(x,-x,-1)"
+   ],
+   "curves_through": [
+    "Im x = 0",
+    "Re x = 1/2"
+   ],
+   "witness_pairs": 71,
+   "witness_isomorphic_to": [
+    "ck31"
+   ]
+  },
+  {
+   "type": "-1/2+1/2*sqrt(5)",
+   "kind": "point",
+   "x": "-1/2+1/2*sqrt(5)",
+   "x_approx": [
+    0.618034,
+    0.0
+   ],
+   "relations_holding": 6,
+   "rays": 49,
+   "pairs": 138,
+   "triads": 10,
+   "orbit": [
+    -1.618033989,
+    0.0
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "Im x = 0"
+   ]
+  },
+  {
+   "type": "1/2*sqrt(2)",
+   "kind": "point",
+   "x": "1/2*sqrt(2)",
+   "x_approx": [
+    0.707107,
+    0.0
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 120,
+   "triads": 16,
+   "orbit": [
+    -1.414213562,
+    0.0
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 33,
+   "upper_bound": 33,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 34,
+   "bases_in_witness": 16,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,x)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(0,x,-1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,-1,0)",
+    "(1,x,0)",
+    "(1,x,x)",
+    "(1,x,-x)",
+    "(1,-x,0)",
+    "(1,-x,x)",
+    "(1,-x,-x)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,1,0)",
+    "(x,1,x)",
+    "(x,1,-x)",
+    "(x,-1,0)",
+    "(x,-1,x)",
+    "(x,-1,-x)",
+    "(x,x,1)",
+    "(x,x,-1)",
+    "(x,-x,1)",
+    "(x,-x,-1)"
+   ],
+   "curves_through": [
+    "Im x = 0",
+    "|x|^2 = 1/2"
+   ],
+   "witness_pairs": 72,
+   "witness_isomorphic_to": [
+    "peres33",
+    "sqrtm2-33"
+   ]
+  },
+  {
+   "type": "1",
+   "kind": "point",
+   "x": "1",
+   "x_approx": [
+    1.0,
+    0.0
+   ],
+   "relations_holding": 12,
+   "rays": 13,
+   "pairs": 24,
+   "triads": 4,
+   "orbit": [
+    -1.0,
+    0.0
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "Im x = 0",
+    "|x|^2 = 1"
+   ]
+  },
+  {
+   "type": "1*sqrt(2)",
+   "kind": "point",
+   "x": "1*sqrt(2)",
+   "x_approx": [
+    1.414214,
+    0.0
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 120,
+   "triads": 16,
+   "orbit": [
+    -1.414213562,
+    0.0
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 33,
+   "upper_bound": 33,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 34,
+   "bases_in_witness": 16,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,x)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(0,x,-1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,1,x)",
+    "(1,1,-x)",
+    "(1,-1,0)",
+    "(1,-1,x)",
+    "(1,-1,-x)",
+    "(1,x,0)",
+    "(1,x,1)",
+    "(1,x,-1)",
+    "(1,-x,0)",
+    "(1,-x,1)",
+    "(1,-x,-1)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,1,0)",
+    "(x,1,1)",
+    "(x,1,-1)",
+    "(x,-1,0)",
+    "(x,-1,1)",
+    "(x,-1,-1)"
+   ],
+   "curves_through": [
+    "Im x = 0",
+    "|x|^2 = 2"
+   ],
+   "witness_pairs": 72,
+   "witness_isomorphic_to": [
+    "peres33",
+    "sqrtm2-33"
+   ]
+  },
+  {
+   "type": "1/2+1/2*sqrt(5)",
+   "kind": "point",
+   "x": "1/2+1/2*sqrt(5)",
+   "x_approx": [
+    1.618034,
+    0.0
+   ],
+   "relations_holding": 6,
+   "rays": 49,
+   "pairs": 138,
+   "triads": 10,
+   "orbit": [
+    -1.618033989,
+    0.0
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "Im x = 0"
+   ]
+  },
+  {
+   "type": "2",
+   "kind": "point",
+   "x": "2",
+   "x_approx": [
+    2.0,
+    0.0
+   ],
+   "relations_holding": 12,
+   "rays": 49,
+   "pairs": 138,
+   "triads": 26,
+   "orbit": [
+    -2.0,
+    0.0
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 31,
+   "upper_bound": 31,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 184,
+   "bases_in_witness": 17,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,1,1)",
+    "(1,1,-1)",
+    "(1,1,-x)",
+    "(1,-1,0)",
+    "(1,-1,1)",
+    "(1,-1,-1)",
+    "(1,-1,x)",
+    "(1,x,0)",
+    "(1,x,1)",
+    "(1,-x,0)",
+    "(1,-x,-1)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,1,0)",
+    "(x,1,1)",
+    "(x,1,-1)",
+    "(x,-1,0)",
+    "(x,-1,1)",
+    "(x,-1,-1)"
+   ],
+   "curves_through": [
+    "Im x = 0",
+    "|x - 1|^2 = 1"
+   ],
+   "witness_pairs": 71,
+   "witness_isomorphic_to": [
+    "ck31"
+   ]
+  },
+  {
+   "type": "-1/2 + 1/2*i",
+   "kind": "point",
+   "x": "-1/2 + 1/2*i",
+   "x_approx": [
+    -0.5,
+    0.5
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 78,
+   "triads": 14,
+   "orbit": [
+    -1.0,
+    1.0
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "|x|^2 = 1/2",
+    "Re x = -1/2"
+   ]
+  },
+  {
+   "type": "1/2 + 1/2*i",
+   "kind": "point",
+   "x": "1/2 + 1/2*i",
+   "x_approx": [
+    0.5,
+    0.5
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 78,
+   "triads": 14,
+   "orbit": [
+    -1.0,
+    1.0
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "|x|^2 = 1/2",
+    "Re x = 1/2"
+   ]
+  },
+  {
+   "type": "-1/4 + 1/4*i*sqrt(7)",
+   "kind": "point",
+   "x": "-1/4 + 1/4*i*sqrt(7)",
+   "x_approx": [
+    -0.25,
+    0.661438
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 78,
+   "triads": 14,
+   "orbit": [
+    -0.5,
+    1.322875656
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "|x + 1|^2 = 1",
+    "|x|^2 = 1/2"
+   ]
+  },
+  {
+   "type": "1/4 + 1/4*i*sqrt(7)",
+   "kind": "point",
+   "x": "1/4 + 1/4*i*sqrt(7)",
+   "x_approx": [
+    0.25,
+    0.661438
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 78,
+   "triads": 14,
+   "orbit": [
+    -0.5,
+    1.322875656
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "|x|^2 = 1/2",
+    "|x - 1|^2 = 1"
+   ]
+  },
+  {
+   "type": "1/2*i*sqrt(2)",
+   "kind": "point",
+   "x": "1/2*i*sqrt(2)",
+   "x_approx": [
+    0.0,
+    0.707107
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 120,
+   "triads": 16,
+   "orbit": [
+    0.0,
+    0.707106781
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 33,
+   "upper_bound": 33,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 34,
+   "bases_in_witness": 16,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,x)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(0,x,-1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,-1,0)",
+    "(1,x,0)",
+    "(1,x,x)",
+    "(1,x,-x)",
+    "(1,-x,0)",
+    "(1,-x,x)",
+    "(1,-x,-x)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,1,0)",
+    "(x,1,x)",
+    "(x,1,-x)",
+    "(x,-1,0)",
+    "(x,-1,x)",
+    "(x,-1,-x)",
+    "(x,x,1)",
+    "(x,x,-1)",
+    "(x,-x,1)",
+    "(x,-x,-1)"
+   ],
+   "curves_through": [
+    "|x|^2 = 1/2",
+    "Re x = 0"
+   ],
+   "witness_pairs": 72,
+   "witness_isomorphic_to": [
+    "peres33",
+    "sqrtm2-33"
+   ]
+  },
+  {
+   "type": "-1/2 + 1/2*i*sqrt(3)",
+   "kind": "point",
+   "x": "-1/2 + 1/2*i*sqrt(3)",
+   "x_approx": [
+    -0.5,
+    0.866025
+   ],
+   "relations_holding": 6,
+   "rays": 49,
+   "pairs": 138,
+   "triads": 18,
+   "orbit": [
+    -0.5,
+    0.866025404
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 33,
+   "upper_bound": 33,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 301,
+   "bases_in_witness": 14,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,x)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(0,x,-1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,-1,0)",
+    "(1,x,0)",
+    "(1,x,x)",
+    "(1,x,-x)",
+    "(1,-x,0)",
+    "(1,-x,x)",
+    "(1,-x,-x)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,1,0)",
+    "(x,1,x)",
+    "(x,1,-x)",
+    "(x,-1,0)",
+    "(x,-1,x)",
+    "(x,-1,-x)",
+    "(x,x,1)",
+    "(x,x,-1)",
+    "(x,-x,1)",
+    "(x,-x,-1)"
+   ],
+   "curves_through": [
+    "|x + 1|^2 = 1",
+    "|x|^2 = 1",
+    "Re x = -1/2"
+   ],
+   "witness_pairs": 78,
+   "witness_isomorphic_to": [
+    "eisenstein33"
+   ]
+  },
+  {
+   "type": "1/2 + 1/2*i*sqrt(3)",
+   "kind": "point",
+   "x": "1/2 + 1/2*i*sqrt(3)",
+   "x_approx": [
+    0.5,
+    0.866025
+   ],
+   "relations_holding": 6,
+   "rays": 49,
+   "pairs": 138,
+   "triads": 18,
+   "orbit": [
+    -0.5,
+    0.866025404
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 33,
+   "upper_bound": 33,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 305,
+   "bases_in_witness": 14,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,x)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(0,x,-1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,1,x)",
+    "(1,1,-x)",
+    "(1,-1,0)",
+    "(1,-1,x)",
+    "(1,-1,-x)",
+    "(1,x,0)",
+    "(1,x,1)",
+    "(1,x,-1)",
+    "(1,-x,0)",
+    "(1,-x,1)",
+    "(1,-x,-1)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,1,0)",
+    "(x,1,1)",
+    "(x,1,-1)",
+    "(x,-1,0)",
+    "(x,-1,1)",
+    "(x,-1,-1)"
+   ],
+   "curves_through": [
+    "|x|^2 = 1",
+    "|x - 1|^2 = 1",
+    "Re x = 1/2"
+   ],
+   "witness_pairs": 78,
+   "witness_isomorphic_to": [
+    "eisenstein33"
+   ]
+  },
+  {
+   "type": "-1 + 1*i",
+   "kind": "point",
+   "x": "-1 + 1*i",
+   "x_approx": [
+    -1.0,
+    1.0
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 78,
+   "triads": 14,
+   "orbit": [
+    -1.0,
+    1.0
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "|x + 1|^2 = 1",
+    "|x|^2 = 2"
+   ]
+  },
+  {
+   "type": "1*i",
+   "kind": "point",
+   "x": "1*i",
+   "x_approx": [
+    0.0,
+    1.0
+   ],
+   "relations_holding": 4,
+   "rays": 31,
+   "pairs": 69,
+   "triads": 7,
+   "orbit": [
+    0.0,
+    1.0
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "|x|^2 = 1",
+    "Re x = 0"
+   ]
+  },
+  {
+   "type": "1 + 1*i",
+   "kind": "point",
+   "x": "1 + 1*i",
+   "x_approx": [
+    1.0,
+    1.0
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 78,
+   "triads": 14,
+   "orbit": [
+    -1.0,
+    1.0
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "|x|^2 = 2",
+    "|x - 1|^2 = 1"
+   ]
+  },
+  {
+   "type": "-1/2 + 1/2*i*sqrt(7)",
+   "kind": "point",
+   "x": "-1/2 + 1/2*i*sqrt(7)",
+   "x_approx": [
+    -0.5,
+    1.322876
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 78,
+   "triads": 14,
+   "orbit": [
+    -0.5,
+    1.322875656
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "|x|^2 = 2",
+    "Re x = -1/2"
+   ]
+  },
+  {
+   "type": "1/2 + 1/2*i*sqrt(7)",
+   "kind": "point",
+   "x": "1/2 + 1/2*i*sqrt(7)",
+   "x_approx": [
+    0.5,
+    1.322876
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 78,
+   "triads": 14,
+   "orbit": [
+    -0.5,
+    1.322875656
+   ],
+   "status": "COLOURABLE",
+   "curves_through": [
+    "|x|^2 = 2",
+    "Re x = 1/2"
+   ]
+  },
+  {
+   "type": "1*i*sqrt(2)",
+   "kind": "point",
+   "x": "1*i*sqrt(2)",
+   "x_approx": [
+    0.0,
+    1.414214
+   ],
+   "relations_holding": 4,
+   "rays": 49,
+   "pairs": 120,
+   "triads": 16,
+   "orbit": [
+    0.0,
+    0.707106781
+   ],
+   "status": "CERTIFIED",
+   "certified_minimum": 33,
+   "upper_bound": 33,
+   "reason": "optimal: no hitting set smaller than ub",
+   "iterations": 34,
+   "bases_in_witness": 16,
+   "witness": [
+    "(0,0,1)",
+    "(0,1,0)",
+    "(0,1,1)",
+    "(0,1,-1)",
+    "(0,1,x)",
+    "(0,1,-x)",
+    "(0,x,1)",
+    "(0,x,-1)",
+    "(1,0,0)",
+    "(1,0,1)",
+    "(1,0,-1)",
+    "(1,0,x)",
+    "(1,0,-x)",
+    "(1,1,0)",
+    "(1,1,x)",
+    "(1,1,-x)",
+    "(1,-1,0)",
+    "(1,-1,x)",
+    "(1,-1,-x)",
+    "(1,x,0)",
+    "(1,x,1)",
+    "(1,x,-1)",
+    "(1,-x,0)",
+    "(1,-x,1)",
+    "(1,-x,-1)",
+    "(x,0,1)",
+    "(x,0,-1)",
+    "(x,1,0)",
+    "(x,1,1)",
+    "(x,1,-1)",
+    "(x,-1,0)",
+    "(x,-1,1)",
+    "(x,-1,-1)"
+   ],
+   "curves_through": [
+    "|x|^2 = 2",
+    "Re x = 0"
+   ],
+   "witness_pairs": 72,
+   "witness_isomorphic_to": [
+    "peres33",
+    "sqrtm2-33"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,137 @@
+\section{Operational quantities}\label{sec:operational}
+
+Two kinds of numbers are attached to a KS set in the recent literature: the size of the smallest
+bipartite Bell scenario with a perfect quantum strategy that it yields, and the graph quantities
+of Cabello, Severini and Winter.  Earlier versions reported both with labels (``exact'',
+``verified'', ``quantum bound'') that the computations did not justify.  Both have been redone.
+
+\subsection{Bipartite perfect strategies}\label{sec:cabello}
+
+Cabello~\cite{Cabello2024bipartite} relates bipartite perfect quantum strategies to a bipartite
+form of KS-uncolorability, and Trandafir and Cabello~\cite{TrandafirCabello2025optimal} convert a
+KS set into a strategy with as few measurement settings as possible.  We use the following form.
+Let $\mathcal B$ be the set of bases (triads) of a KS set.  Alice holds $S_A\subseteq\mathcal B$,
+Bob holds $S_B\subseteq\mathcal B$.  A \emph{local assignment} chooses one vector in each basis
+of $S_A$ and one in each basis of $S_B$ such that no vector chosen for Alice is orthogonal to a
+vector chosen for Bob.  The pair $(S_A,S_B)$ is \emph{bipartite KS} (B-KS) if no local assignment
+exists; the scenario then has $|S_A|$ inputs for Alice and $|S_B|$ for Bob.  A basis held by both
+parties is forced to the same choice on both sides, so this agrees with the single-function form
+of the definition.
+
+The property is monotone: enlarging $S_A$ or $S_B$ only adds constraints.  The minimum of
+$|S_A|\cdot|S_B|$ can therefore be found exactly by the same device as in
+Section~\ref{sec:methods}.  A pair that admits a local assignment is enlarged to a maximal such
+pair $(M_A,M_B)$, and every B-KS pair must then contain a basis outside $M_A$ on Alice's side or
+outside $M_B$ on Bob's.  Sizes $(p,q)$ with $p\le q$ (the definition is symmetric in the
+parties) are tried in increasing order of $pq$; the first for which a B-KS pair with
+$|S_A|\le p$, $|S_B|\le q$ exists gives the minimum product, every smaller product having been
+refuted.  Table~\ref{tab:bpqs} gives the results.  Each run takes at most a few seconds.
+
+\begin{table}[t]
+\centering
+\caption{Minimum number of input pairs $|S_A|\times|S_B|$ over bipartite-KS pairs of basis
+subsets of each set.  Every entry is exact for the set named: all smaller products are excluded.
+The first two reproduce the values $5\times9$ and $7\times9$ reported
+in~\cite{Cabello2025simplest,TrandafirCabello2025optimal}.  $^{\dagger}$: smallest set found in its pool, not certified to be a minimum.}
+\label{tab:bpqs}
+\begin{tabular}{lrrcr}
+\toprule
+Set & Rays & Bases & $|S_A|\times|S_B|$ & Product \\
+\midrule
+Eisenstein 33 & 33 & 14 & $5\times9$ & 45 \\
+Peres 33 & 33 & 16 & $7\times9$ & 63 \\
+$\sqrt{-2}$, 33 & 33 & 16 & $7\times9$ & 63 \\
+$\CK$ & 31 & 17 & $8\times9$ & 72 \\
+$\Q(\sqrt{-7})$, 43 & 43 & 23 & $9\times12$ & 108 \\
+Supergolden 47 & 47 & 26 & $10\times16$ & 160 \\
+\bpqsextrarows
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three comments.  The values for $\CK$, the $\Q(\sqrt{-7})$ set and the supergolden set were
+upper bounds from a heuristic search in version~9; they are now exact.  For $\CK$ this is an
+independent reproduction: Trandafir and Cabello already report $8\times9$ as optimal
+(\cite{TrandafirCabello2025optimal}, Sec.~IV).  The equality of the
+Peres and $\sqrt{-2}$ rows is forced, since the quantity depends only on the orthogonality graph
+and the two graphs are isomorphic; it is not an independent observation.  And version~9's
+empirical rule $|S_A|+|S_B|\ge|\mathcal B|$ is false: for the $\Q(\sqrt{-7})$ set
+$9+12=21<23$, and for the supergolden set $10+16=26$ happens to equal $|\mathcal B|$.
+
+$\CK$ has the fewest rays and is not the cheapest scenario: the Eisenstein set, with two more
+rays and three fewer bases, needs 45 input pairs against~72.  That observation is
+Cabello's~\cite{Cabello2025simplest}.  The additional computations reported here are the rows below $\CK$; we
+have not checked whether any of them has been published.  Nothing
+here shows that the alphabet \emph{causes} the cost, and the
+statement of version~9 that the islands are ``the algebraic substrates of all perfect quantum
+strategies in dimension three'' is withdrawn: Cabello's theorem concerns the bipartite
+structure built from a strategy, not coordinate alphabets.
+
+\subsection{Cabello--Severini--Winter quantities}\label{sec:csw}
+
+For a graph $G$ on $n$ vertices, the sum of the probabilities of $n$ events whose exclusivity
+graph is $G$ is bounded by the independence number $\alpha(G)$ in noncontextual models, by the
+Lov\'asz number $\vartheta(G)$ in quantum theory, and by the fractional packing number
+$\alpha^{*}(G)$ under the exclusivity principle alone~\cite{CabelloSeveriniWinter2014}.  The
+quantum bound $\vartheta(G)$ is a maximum over \emph{all} sets of vectors with orthogonality
+graph containing $G$, in any dimension, and over all states.  It is not the value reached by a
+particular set of rays.  For given rays with unit representatives $v_1,\dots,v_n$ in $\C^3$ the largest value of
+$\sum_i|\braket{\psi}{v_i}|^2$ over states $\psi$ is the top eigenvalue of the sum of projectors
+$\sum_i|v_i\rangle\langle v_i|$, which we call the \emph{attained} value.  Always
+$\text{attained}\le\vartheta(G)$.
+
+\begin{table}[t]
+\centering
+\caption{CSW quantities for the unweighted sum over all rays of each set or pool.  $\alpha$:
+exact (MaxSAT).  Attained: top eigenvalue of the sum of the rays' projectors (double precision
+from exact coordinates).  $\vartheta$: semidefinite program; the primal and dual optimal values
+agree to the digits shown.  $\alpha^{*}$: exact, certified by rational primal and dual solutions
+of equal value.  Bold: the rays themselves exceed the noncontextual bound.  $^{\dagger}$: smallest set found in its pool, not certified to be a minimum.}
+\label{tab:csw}
+\begin{tabular}{lrrrrr}
+\toprule
+Object & $n$ & $\alpha$ & Attained & $\vartheta$ & $\alpha^{*}$ \\
+\midrule
+$\CK$ & 31 & 11 & \textbf{11.667} & 11.713 & 12 \\
+Peres 33 & 33 & 12 & 11.000 & 12.000 & 12 \\
+$\sqrt{-2}$, 33 & 33 & 12 & 11.000 & 12.000 & 12 \\
+Eisenstein 33 & 33 & 12 & 11.000 & 12.049 & 13 \\
+$\Q(\sqrt{-7})$, 43 & 43 & 16 & 15.000 & 16.000 & 16 \\
+Supergolden 47 & 47 & 19 & 15.895 & 19.000 & 19 \\
+\cswextrarows
+\midrule
+pool $\{0,\pm1,\pm2\}$ & 49 & 17 & 16.333 & 17.699 & 19 \\
+pool $\{0,\pm1,\pm\sqrt2\}$ & 49 & 23 & 16.333 & 23.000 & 23 \\
+pool $\{0,\pm1,\pm\sqrt{-2}\}$ & 49 & 23 & 16.333 & 23.000 & 23 \\
+pool $\{0,\pm1,\pm\omega,\pm\omega^2\}$ & 57 & 18 & \textbf{19.000} & 19.340 & 21 \\
+pool $\{0,\pm1,\pm\alpha,\pm\alpha^{*}\}$ & 145 & 50 & 48.333 & 55.893 & 66 \\
+pool $\{0,\pm1,\pm\psi,\pm\psi^2\}$ & 109 & 41 & 36.333 & 43.952 & 47 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:csw} reproduces the values of $\alpha$, $\vartheta$ and $\alpha^{*}$ printed in
+version~9 and adds the attained column, which changes the reading of them.  Every raw pool in this table is
+invariant under signed permutations of the coordinates, so the sum of its projectors is
+$(n/3)$ times the identity and the attained value is $n/3$ for every state.  For $\CK$ the sum is
+$\mathrm{diag}(35/3,29/3,29/3)$.
+
+\begin{itemize}
+\item Only two of the objects in the table violate the unweighted noncontextuality inequality with
+their own rays: $\CK$ ($35/3>11$, for a state along one coordinate axis) and the 57-ray Eisenstein pool
+($19>18$, for every state).
+\item The $\Q(\sqrt{-7})$ pool has the largest ratio $\vartheta/\alpha=1.118$, which version~9
+reported as its ``contextual advantage''.  Its own rays reach $145/3\approx48.3$, below
+$\alpha=50$.  The Lov\'asz number of that graph is attained by some other representation; in
+what dimension, we have not determined.
+\item A KS set violates \emph{some} noncontextuality inequality for every state; the point here
+is only that the unweighted sum over all its rays need not be one.
+\end{itemize}
+
+Version~9 built on these numbers an account in which ``auxiliary'' rays (those in no triad)
+``amplify'' the advantage, supported by a comparison with the Hoffman eigenvalue bound.  Both are
+withdrawn.  The Hoffman bound in the form used holds for regular graphs, and these graphs are not
+regular; the Peres pool, described there as disconnected, is connected; and the comparison of a
+pool with its minimum subset compares two different graphs.  We also avoid the term
+``$\vartheta$-perfect'' for a graph with $\vartheta=\alpha$ numerically, since perfection is a
+statement about all induced subgraphs.

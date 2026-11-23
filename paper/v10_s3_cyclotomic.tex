@@ -1,0 +1,108 @@
+\section{Roots of unity}\label{sec:roots}
+
+Let $\zeta_n=e^{2\pi i/n}$, let $\mu_n$ be the group of $n$th roots of unity, and put
+$S_n=S(\{0\}\cup\mu_n)$.  The case $n=6$ is the alphabet $\{0,\pm1,\pm\omega,\pm\omega^2\}$ with
+$\omega=e^{2\pi i/3}$, which contains the 33-ray set that Cabello calls the simplest KS
+set~\cite{Cabello2025simplest}.
+
+\begin{lemma}\label{lem:sums}
+A sum of two elements of $\mu_n$ can vanish if and only if $2\mid n$.  A sum of three can vanish
+if and only if $3\mid n$, and then the three terms are $\beta,\beta\omega,\beta\omega^2$ for some
+$\beta\in\mu_n$.
+\end{lemma}
+
+\begin{proof}
+$\zeta^a+\zeta^b=0$ iff $\zeta^{b-a}=-1$, and $-1\in\mu_n$ iff $2\mid n$.  For three terms divide
+by the first: $1+e^{i\theta}+e^{i\phi}=0$.  The imaginary part gives $\phi=-\theta$ or
+$\phi=\pi+\theta$; the second makes the real part equal to~1.  With $\phi=-\theta$ the real part
+gives $\cos\theta=-\tfrac12$, so the other two terms are $\omega$ and $\omega^2$, which lie in
+$\mu_n$ iff $3\mid n$.
+\end{proof}
+
+Hence two rays of $S_n$ are orthogonal only if the number of coordinates in which both are
+nonzero is~0, or~2 with $2\mid n$, or~3 with $3\mid n$.
+
+\begin{theorem}\label{thm:6n}
+$S_n$ is KS-uncolorable if and only if $6\mid n$.
+\end{theorem}
+
+\begin{proof}
+\emph{If.}  For $6\mid n$ we have $\mu_6\subseteq\mu_n$ and so $S_6\subseteq S_n$.  The pool
+$S_6$ is uncolorable (Table~\ref{tab:cyc}; it contains the 33-ray set
+of~\cite{Cabello2025simplest}).  Apply Lemma~\ref{lem:restrict}.
+
+\emph{Only if.}  Let $6\nmid n$ and write $e_1,e_2,e_3$ for the axis rays.
+
+\emph{Case 1: $2\nmid n$ and $3\nmid n$.}  Orthogonal rays have disjoint supports, so the only
+triad is $\{e_1,e_2,e_3\}$.  Give $e_1$ the value~1 and every other ray~0.
+
+\emph{Case 2: $2\mid n$, $3\nmid n$.}  Two rays with three common nonzero coordinates are never
+orthogonal.  No triad contains an all-nonzero ray~$a$: each of its two partners would share
+exactly two nonzero coordinates with~$a$ and so have support of size~2; two such supports meet,
+so the partners, being orthogonal to each other, would have the same support; and then $a$ would
+be orthogonal to a basis of that coordinate plane and vanish on it.  Rays whose supports are
+different two-element sets share one coordinate and are not orthogonal.  So every triad is
+$\{e_1,e_2,e_3\}$ or $\{e_k,v,v'\}$ with $v,v'$ in the coordinate plane orthogonal to~$e_k$.  In
+such a plane the rays are $(1,\zeta^p)$, and $(1,\zeta^p)\perp(1,\zeta^q)$ iff $q-p\equiv n/2$: a
+perfect matching.  Give $e_1$ the value~1 and $e_2,e_3$ the value~0; give~0 to every ray of the
+plane orthogonal to $e_1$; in each of the other two coordinate planes give~1 to one ray of each
+matched pair and~0 to the other; give~0 to every all-nonzero ray.  Rays in different coordinate
+planes are not orthogonal, and no ray with value~1 in those two planes is orthogonal to~$e_1$, so
+no two rays with value~1 are orthogonal, and each triad has exactly one~1.
+
+\emph{Case 3: $3\mid n$, $2\nmid n$.}  Orthogonality needs common support of size 0 or~3.  A ray
+with exactly one zero coordinate is therefore orthogonal only to the axis ray on that coordinate,
+and lies in no triad.  For an all-nonzero ray normalise $v=(1,a,b)$.  By Lemma~\ref{lem:sums} an
+all-nonzero $w$ is orthogonal to $v$ iff $w=w_{\pm}=(1,a\omega^{\pm1},b\omega^{\mp1})$, and
+$\braket{w_+}{w_-}=1+\omega^{-2}+\omega^{2}=0$.  So the all-nonzero rays fall into disjoint
+triads, with no other orthogonalities among them and none to a ray with a zero coordinate.  Give
+the value~1 to one ray of each such triad and to $e_1$, and~0 to everything else.
+\end{proof}
+
+The two primes do different work.  Divisibility by~3 creates triads: at $n=9$ and $n=15$ the pool
+has 28 and 76 of them and is colorable because they are pairwise disjoint.  Divisibility by~2
+creates the two-term cancellations that couple triads.  Only together do the constraints
+interlock.  The fields $\Q(\zeta_3)$ and $\Q(\zeta_6)$ coincide, while $S_3$ is colorable and
+$S_6$ is not: Theorem~\ref{thm:6n} is a statement about alphabets, not about fields, and it has
+no formulation in terms of the Galois group of the field (the one offered in version~9 was
+false).
+
+\begin{table}[t]
+\centering
+\caption{Cyclotomic pools, exact arithmetic (exponents modulo $n$), colorability by SAT.  The
+check was run for all $2\le n\le30$ and agrees with Theorem~\ref{thm:6n} in every case, as do the
+three structural statements used in Cases 1--3; a selection is shown.}
+\label{tab:cyc}
+\begin{tabular}{rrrrc@{\qquad\qquad}rrrrc}
+\toprule
+$n$ & Rays & Pairs & Triads & Colorable & $n$ & Rays & Pairs & Triads & Colorable\\
+\midrule
+3 & 21 & 21 & 4 & yes & 12 & 183 & 633 & 67 & \textbf{no}\\
+4 & 31 & 69 & 7 & yes & 15 & 273 & 273 & 76 & yes\\
+5 & 43 & 18 & 1 & yes & 16 & 307 & 843 & 25 & yes\\
+6 & 57 & 174 & 22 & \textbf{no} & 18 & 381 & 1380 & 136 & \textbf{no}\\
+9 & 111 & 111 & 28 & yes & 20 & 463 & 1293 & 31 & yes\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{fact}[Eisenstein pool]\label{fact:eisenstein}
+The 57-ray pool $S_6$ has 174 orthogonal pairs and 22 triads.  Its minimum uncolorable subsets
+have 33 rays, certified, and there are exactly three of them, each with 78 pairs and 14 bases.
+The pool is not closed under completion: $(1,1,0)$ and $(1,\bar1,1)$ are orthogonal and their
+third ray $(1,\bar1,\bar2)$ is not in $S_6$.  The completed pool has 165 rays, 390 pairs and 130
+triads, and its minimum is also 33, certified.
+\end{fact}
+
+Since every $S_n$ with $6\mid n$ contains $S_6$, its minimum is at most~33.  We have not
+certified the minimum for $n>6$.
+
+\begin{remark}
+Cortez, Morales and Reyes~\cite{CortezMoralesReyes2022} showed that $\Z[1/6]$ is the smallest
+ring $\Z[1/N]$ over which the partial ring of symmetric $3\times3$ matrices admits no algebraic
+hidden state.  The number~6 appears there
+and in Theorem~\ref{thm:6n}, but the two statements concern different objects (matrix entries of
+projectors in one, coordinates of rays in the other) and we know of no map from one to the
+other.  Version~9 presented this as a quantitative connection; it is a coincidence until someone
+proves otherwise.
+\end{remark}
