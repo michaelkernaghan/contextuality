@@ -27,7 +27,7 @@ The algebraic islands research programme produced one main paper. Five short let
 **Length**: ~39 pages
 **Venue**: Physical Review A (target)
 **Status**: Complete, pending arXiv submission
-**[Download PDF](../papers/algebraic_islands.pdf)**
+**[PDF of version 9 (archived, withdrawn)](https://github.com/michaelkernaghan/contextuality/blob/main/archive/paper/algebraic_islands.pdf)**
 
 The comprehensive paper presenting the full algebraic classification. Covers:
 

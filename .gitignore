@@ -11,6 +11,10 @@ __pycache__/
 # PDFs (papers are committed explicitly)
 *.pdf
 !paper/*.pdf
+!archive/**/*.pdf
+
+# Local intake folder for the wiki pipeline
+raw/
 
 # Editor/IDE
 .vscode/

@@ -91,11 +91,14 @@ pip install python-sat networkx numpy scipy sympy
 
 ## Older material
 
-- **Scripts from versions 1-9** (for example `ks_islands.py`, `ks_new_islands.py`,
-  `ks_ocus_all_pools.py`) remain in the repository. They should not be used to reproduce the
-  current paper. The certification procedure in `ks_ocus_all_pools.py` is unsound.
-- **Version 9 of the paper** is [`paper/algebraic_islands.tex`](paper/algebraic_islands.tex);
-  version 10 is `paper/algebraic_islands_v10.tex`. Both are kept for the record.
+Everything under [`archive/`](archive) is kept as a record and is not current.
+
+- **Scripts from versions 1-9** that nothing in the current paper uses are in
+  [`archive/scripts/`](archive/scripts). They should not be used to reproduce the current paper.
+  A few older scripts stay in the root because other scripts import them or this page names
+  them (for example `ks_islands.py`, `ks_new_islands.py`); the certification procedure in
+  `ks_ocus_all_pools.py` is unsound.
+- **Versions 9 and 10 of the paper** are in [`archive/paper/`](archive/paper).
 - **Archived letters.** Five short letters written alongside versions 1-9 are kept in
   [`archive/letters/`](archive/letters) as a record of earlier work. They have not been revised
   and are not current; the note in that folder says what stands and what does not.

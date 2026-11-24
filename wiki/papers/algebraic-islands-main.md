@@ -1,5 +1,5 @@
 ---
-source: paper/algebraic_islands.tex
+source: archive/paper/algebraic_islands.tex
 date_ingested: 2026-04-03
 type: paper
 ---
