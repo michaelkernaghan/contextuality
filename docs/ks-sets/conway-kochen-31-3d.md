@@ -23,7 +23,7 @@ The diagram below shows the cube construction with labeled vectors at vertices, 
 
 ## Diagram
 
-![Conway-Kochen 31-vector construction](scans/conway-kochen-31.jpg)
+*The diagram is Plate II, page 114, of A. Peres, Quantum Theory: Concepts and Methods (Kluwer, 1993). The scan of that page has been removed from this site; see the book.*
 
 **"Contextualism à la Conway et Kochen"**
 

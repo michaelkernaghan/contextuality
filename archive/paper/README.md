@@ -9,6 +9,8 @@ related draft. The current paper is version 11:
 | `algebraic_islands.tex`, `.pdf` | Version 9, the last of the withdrawn versions 1-9. `arxiv-submission/` and `arxiv-submission.tar.gz` are the bundle sent to arXiv for it. |
 | `algebraic_islands_v10.tex`, `.pdf`, `v10_s*.tex` | Version 10 (tags `v10.0` to `v10.4`), the first rewrite after the withdrawal. Superseded by version 11. |
 | `sub31_overview.tex`, `.pdf` | An overview draft on the search for a KS set with fewer than 31 rays, written alongside versions 1-9. Unrevised; it relies on the withdrawn "OCUS" certification. |
+| `algebraic_landscape_letter.tex`, `.pdf`, `algebraic_landscape_letter_v1_dense.tex` | Drafts of a short letter version from September 2026. Never released. |
+| `v10_revision_draft.tex`, `two_theorem_draft.tex`, `.pdf` | Working drafts from the rewrites of September and November 2026. Superseded by version 11. |
 | `v11_plan.md` | The plan for restructuring version 10 into version 11. Carried out. |
 
 Versions 1-9 are withdrawn: see Appendix A of version 11 and [`LEDGER.md`](../../LEDGER.md).

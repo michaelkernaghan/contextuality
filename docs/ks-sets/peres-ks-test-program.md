@@ -4,8 +4,6 @@
 
 Reconstructed from: A. Peres, *Quantum Theory: Concepts and Methods* (Kluwer, 1993), Appendix to Chapter 7, pages 209–211.
 
-Original scans: [page 209](scans/peres-appendix-page209.jpg) | [page 210](scans/peres-appendix-page210.jpg) | [page 211](scans/peres-appendix-page211.jpg)
-
 Fortran source: [peres-ks-test.f](peres-ks-test.f)
 
 The original program may have been distributed as `realks.f` but no copy has been located online.

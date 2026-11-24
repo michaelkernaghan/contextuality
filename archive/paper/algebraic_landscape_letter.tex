@@ -1,0 +1,309 @@
+\documentclass[twocolumn,prl,superscriptaddress,nofootinbib]{revtex4-2}
+
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\CK}{\mathrm{CK}\text{-}31}
+\newcommand{\braket}[2]{\langle#1|#2\rangle}
+
+\begin{document}
+
+\title{Kochen--Specker uncolorability for cyclotomic\\coordinate alphabets}
+
+\author{Michael Kernaghan}
+\affiliation{Pacific Quantum Systems, Vancouver, Canada}
+
+\date{\today}
+
+\begin{abstract}
+The classic three-dimensional Kochen--Specker (KS) proofs draw their ray
+coordinates from small sets of algebraic numbers.  Taking that set as the
+generating object, we ask which choices can support a KS proof, and answer it
+completely for the cyclotomic family: the ray pool generated in $\C^3$ by
+$\{0\}\cup\mu_n$ is KS-uncolorable if and only if $6\mid n$.  The two prime
+divisors play distinct roles---$3\mid n$ supplies the three-term cancellation
+that creates orthogonal triads, and $2\mid n$ supplies the two-term cancellation
+that couples them---so abundant triads without coupling leave the pool colorable.
+The smallest uncolorable member, $n=6$, is the Eisenstein pool containing
+Cabello's simplest KS set.  We verify the characterization exhaustively for
+$n\leq20$ and report what the same construction yields outside the cyclotomic
+family.
+\end{abstract}
+
+\maketitle
+
+\textit{Introduction.---}The Kochen--Specker (KS) theorem~\cite{KochenSpecker1967}
+forbids assigning context-independent definite values to quantum observables
+(for a review see Ref.~\cite{Budroni2022}).  It is proved by exhibiting a finite
+set of rays admitting no $\{0,1\}$ coloring in which orthogonal rays are never
+both~1 and every orthogonal triad carries exactly one~1.  Dimension three is the
+sharpest case: the smallest known set is the Conway--Kochen 31-ray configuration
+($\CK$), reported by Peres~\cite{Peres1993}, against a best lower bound of~24
+from SAT search with realizability
+checking~\cite{LiBrightGanesh2024,KirchwegerPeitlSzeider2023}.
+
+Searches for smaller sets are combinatorial: enumerate candidate orthogonality
+hypergraphs, then test whether rays realizing them exist.  A complementary
+question starts from the coordinates.  Read the distinct numbers off the vertices
+of Peres's cube diagrams~\cite{Peres1991,Peres1993} and one gets
+$\{0,\pm1,\pm2\}$ for $\CK$ and $\{0,\pm1,\pm\sqrt2\}$ for Peres-33.  Call such a
+set an \emph{alphabet} $\mathcal{A}$, and let it generate the finite ray pool
+\[
+S(\mathcal{A}) = \{\,[v] : v \in \mathcal{A}^3 \setminus \{0\}\,\},
+\]
+where $[v]$ is the projective class of~$v$.  Which alphabets generate pools that
+are KS-uncolorable?
+
+Stated for rings the question is empty: every coordinate ring here contains~$\Z$,
+hence the integer coordinates of $\CK$, so every one of them supports a KS set.
+Uncolorability is a property of a \emph{pool}, not of a ring or a field, and the
+pool depends on the alphabet rather than on the field it generates.  The
+question also has to survive a change of presentation: multiplying every word by
+$x^{-1}$ gives $S(\{0,\pm1,\pm x\}) = S(\{0,\pm1,\pm x^{-1}\})$, so
+$\{0,\pm1,\pm2\}$ and $\{0,\pm1,\pm\tfrac12\}$ are the same 49 rays, and any
+answer phrased in terms of the size of the generator is ill-posed.
+
+For one natural infinite family the question can be settled exactly.  Let
+$\zeta_n = e^{2\pi i/n}$, let $\mu_n = \{\zeta_n^k\}$ be the $n$th roots of
+unity, and take the alphabet $\mathcal{A}_n = \{0\}\cup\mu_n$, writing
+$S_n = S(\mathcal{A}_n)$.  This family is closed under the arithmetic that
+matters, is indexed by a single integer, and contains the known Eisenstein
+construction at $n=6$.
+
+\textit{Vanishing sums.---}Orthogonality of $v,w\in\mathcal{A}_n^3$ means
+$\sum_k \bar v_k w_k = 0$.  Each surviving term is a root of unity, so everything
+reduces to the question of when a short sum of roots of unity vanishes.
+
+\begin{lemma}\label{lem:sums}
+Let $\zeta=\zeta_n$.  A two-term sum $\zeta^a+\zeta^b$ vanishes for some $a,b$ if
+and only if $2\mid n$.  A three-term sum $\zeta^a+\zeta^b+\zeta^c$ vanishes for
+some $a,b,c$ if and only if $3\mid n$.  A single term never vanishes.
+\end{lemma}
+
+\begin{proof}
+For two terms, $\zeta^a+\zeta^b=0$ iff $\zeta^{b-a}=-1$, and $-1\in\mu_n$ iff
+$2\mid n$.  For three, divide by $\zeta^a$: we need $1+\alpha+\beta=0$ with
+$\alpha,\beta\in\mu_n$.  Writing $\alpha=e^{i\theta}$, $\beta=e^{i\phi}$, the
+imaginary part gives $\sin\theta=-\sin\phi$, so $\phi=-\theta$ or
+$\phi=\pi+\theta$; the latter makes the real part $0\neq-1$.  With $\phi=-\theta$
+the real part gives $2\cos\theta=-1$, so $\theta=\pm2\pi/3$ and
+$\{\alpha,\beta\}=\{\omega,\omega^2\}$ for $\omega$ a primitive cube root of
+unity.  Hence a three-term vanishing sum exists iff $\omega\in\mu_n$, i.e.\ iff
+$3\mid n$.
+\end{proof}
+
+\noindent Consequently two rays are orthogonal only when the size of their common
+support---the set of coordinates where both are nonzero---is $0$, or $2$ with
+$2\mid n$, or $3$ with $3\mid n$.
+
+\textit{The characterization.---}
+
+\begin{theorem}\label{thm:6n}
+$S_n$ is KS-uncolorable if and only if $6 \mid n$.
+\end{theorem}
+
+\begin{proof}
+\emph{Sufficiency.}  If $6\mid n$ then $\mu_6\subseteq\mu_n$, so
+$S_6\subseteq S_n$.  The pool $S_6$ is uncolorable: it contains the 33-ray
+Eisenstein set of Ref.~\cite{Cabello2025simplest}, whose coordinates are drawn
+from $\{0,\pm1,\pm\omega,\pm\omega^2\}\subset\mathcal{A}_6$.  Suppose $f$ were a
+KS coloring of $S_n$.  Every orthogonal pair of $S_6$ is an orthogonal pair of
+$S_n$, and every triad of $S_6$ is a triad of $S_n$, so the restriction
+$f|_{S_6}$ satisfies all constraints of $S_6$ and is a KS coloring of it.  The
+extra rays of $S_n\setminus S_6$ add variables but remove no constraint, so they
+cannot repair an unsatisfiable subsystem.  This contradicts uncolorability of
+$S_6$; hence $S_n$ is uncolorable.
+
+\emph{Necessity.}  Suppose $6\nmid n$.  Three cases exhaust the possibilities.
+
+\emph{Case A: $2\nmid n$ and $3\nmid n$.}  By Lemma~\ref{lem:sums} no two- or
+three-term sum vanishes, so orthogonal rays have disjoint support.  Three
+pairwise disjoint supports inside three coordinates force each ray to have a
+single nonzero entry, so the only triad is the axis triad
+$\{[1{:}0{:}0],[0{:}1{:}0],[0{:}0{:}1]\}$.  Color $[1{:}0{:}0]$ with~1 and every
+other ray~0.
+
+\emph{Case B: $2\mid n$, $3\nmid n$.}  Orthogonality requires common support of
+size $0$ or~$2$.  No triad contains an all-nonzero ray: if $a$ were one, its two
+partners would each have support of size~2, those two supports would have to
+agree, and $a$ would be orthogonal to a spanned coordinate plane, forcing $a$ to
+be an axis ray.  So every triad consists of rays of support size $1$ or~$2$,
+and is either the axis triad or has the form $\{e_k,v_1,v_2\}$ with $v_1,v_2$
+supported on the plane complementary to~$k$.  Within that plane the rays
+$(1,\zeta^p)$ satisfy $v_p\perp v_q$ iff $q-p\equiv n/2$, a perfect matching.
+Color $e_1$ with~1; set every ray meeting the $\{2,3\}$ plane, and $e_2,e_3$,
+to~0; and in each remaining plane choose one ray of each matched pair to be~1.
+Rays in different planes share a support of size~1 and are never orthogonal, so
+no two rays colored~1 conflict, and every triad carries exactly one~1.
+
+\emph{Case C: $3\mid n$, $2\nmid n$.}  Orthogonality requires common support of
+size $0$ or~$3$.  A ray with a zero coordinate therefore has only
+disjoint-support partners, and a triad containing it would need a third ray
+disjoint from both, which is impossible; so no triad contains such a ray.  For an
+all-nonzero ray, normalize to $v=(1,a,b)$.  An all-nonzero $w$ is orthogonal
+to~$v$ exactly when the three terms form an equilateral triple, and the six
+orderings collapse projectively to two rays,
+$w_\pm = (1,a\omega^{\pm1},b\omega^{\mp1})$ with $\omega=\zeta_n^{n/3}$.  Since
+$|a|=|b|=1$ we get $\braket{w_+}{w_-} = 1+\omega+\omega^2 = 0$, so
+$\{v,w_+,w_-\}$ is a triad and is the unique triad containing~$v$.  The
+all-nonzero orthogonality graph is thus a disjoint union of triangles.  Color one
+ray in each triangle~1, one axis ray~1, and everything else~0.
+\end{proof}
+
+\noindent The two primes do different work.  Divisibility by~3 creates triads and
+nothing else: at $n=9$ and $n=15$ the pool carries 28 and 76 triads
+respectively and remains colorable, because those triads are pairwise disjoint
+and the constraint system decomposes.  Divisibility by~2 creates the two-term
+cancellations that couple triads but, alone, too few of them.  Only together do
+the constraints interlock.  Abundance of triads is not what defeats a coloring;
+coupling is.
+
+\begin{table}[t]
+\caption{\label{tab:cyc}Cyclotomic pools $S_n$, computed in exact arithmetic with
+colorability decided by SAT.  Every row agrees with Theorem~\ref{thm:6n}.  The
+full check covers $2\leq n\leq20$ without exception; uncolorable rows are bold.}
+\begin{ruledtabular}
+\begin{tabular}{rrrrc}
+$n$ & Rays & Pairs & Triads & Colorable? \\
+\colrule
+3  & 21  & 21   & 4   & yes \\
+4  & 31  & 69   & 7   & yes \\
+5  & 43  & 18   & 1   & yes \\
+\textbf{6}  & \textbf{57}  & \textbf{174}  & \textbf{22}  & \textbf{no} \\
+9  & 111 & 111  & 28  & yes \\
+10 & 133 & 348  & 16  & yes \\
+\textbf{12} & \textbf{183} & \textbf{633}  & \textbf{67}  & \textbf{no} \\
+15 & 273 & 273  & 76  & yes \\
+16 & 307 & 843  & 25  & yes \\
+\textbf{18} & \textbf{381} & \textbf{1380} & \textbf{136} & \textbf{no} \\
+20 & 463 & 1293 & 31  & yes \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+\textit{Verification.---}Table~\ref{tab:cyc} reports an independent check.  Since
+every alphabet letter is a root of unity, a coordinate is either zero or an
+exponent modulo~$n$, and Lemma~\ref{lem:sums} decides vanishing in closed form;
+no floating-point arithmetic enters.  For each $n\leq20$ we build $S_n$, extract
+all orthogonal pairs and triads, and decide colorability with a SAT
+solver~\cite{AudemardSimon2018}.  Agreement with Theorem~\ref{thm:6n} is exact in
+every case.  We also check the three structural claims the necessity proof rests
+on---one triad in Case~A, no all-nonzero orthogonal pair in Case~B, and every
+all-nonzero ray in exactly one triad in Case~C---and each holds for every
+applicable $n$ in the range.
+
+\textit{The smallest uncolorable pool.---}Theorem~\ref{thm:6n} places $n=6$ at
+the bottom of the family, and that pool is already familiar.  Its 57 rays carry
+22 triads, and the 33-ray KS set Cabello identifies as the simplest known,
+built over the Eisenstein integers $\Z[\omega]$ via the Weyl--Heisenberg
+group~\cite{Cabello2025simplest}, has coordinates drawn from
+$\{0,\pm1,\pm\omega,\pm\omega^2\}$ and so lies in $S_6$ exactly, not by analogy.
+Because every bipartite perfect quantum strategy contains a KS
+set~\cite{Cabello2024bipartite}, that construction also gives the cheapest Bell
+scenario among the configurations of this type, needing $5\times9$ measurement
+settings~\cite{TrandafirCabello2025optimal} against $8\times9$ for $\CK$---which
+has fewer rays, but 17 bases against 14.  Ray economy and context economy are
+different things.
+
+\textit{Outside the cyclotomic family.---}The same construction applied to other
+alphabets produces further uncolorable pools, though without a comparable
+characterization.  Two are worth recording because we have not found them in the
+published catalogues.  The ring of integers of $\Q(\sqrt{-7})$ with alphabet
+$\{0,\pm1,\pm\alpha,\pm\bar\alpha\}$, $\alpha=(1+\sqrt{-7})/2$, generates 145
+rays carrying 42 triads; the pool is uncolorable and its minimum KS subset has
+43 rays in 23 bases, certified within the pool by exhausting all smaller
+candidates.  The golden-ratio alphabet $\{0,\pm1,\pm\varphi\}$ is colorable as it
+stands---49 rays and only 10 triads---and becomes uncolorable only after closure
+under cross products expands it to 205 rays, which shows that the raw alphabet
+can understate what its coordinates support.  That $\varphi$ behaves differently
+from $\sqrt5$, the same field under a different generator, is the clearest sign
+that the alphabet rather than the field is the operative choice.
+
+A survey of 39 two-letter alphabets $\{0,\pm1,\pm x\}$ suggests where the
+boundary lies: every uncolorable pool we found carries at least 16 triads and
+every colorable one at most~10, with nothing in between.  The observation is
+invariant under the $x\leftrightarrow x^{-1}$ ambiguity above, since it counts
+triads rather than measuring the generator.  We state it as a feature of the
+tested family and not as a law.
+
+\textit{Discussion.---}Theorem~\ref{thm:6n} is a complete answer for one family,
+and its interest is less the divisibility condition than the mechanism: the two
+prime factors of~6 contribute different ingredients, and a pool can be rich in
+triads yet colorable for want of coupling.  That distinction is what a
+lower-bound program has to respect.  The gap between the 31-ray construction and
+the 24-ray bound is being attacked by SMT search over candidate
+hypergraphs~\cite{LiBrightGanesh2024,KirchwegerPeitlSzeider2023}, where
+realizability testing is the expensive step; a necessary condition on triad
+coupling, if one could be proved, would prune candidates before that step.
+
+What is proved here is Theorem~\ref{thm:6n}.  What is measured is
+Table~\ref{tab:cyc} and the pool statistics quoted above, reproducible from
+seeded scripts.  Neither establishes that alphabets exhaust the sources of KS
+sets, nor that the triad threshold persists outside the family tested; a
+coordinate alphabet is a presentation, and these are results about presentations
+and the finite pools they generate.
+
+\begin{acknowledgments}
+The author thanks Ad\'an Cabello for the Eisenstein identification, Markus Frembs
+for correspondence on trace-zero cancellations in $\Z[\sqrt{-2}]$, Manuel Flores
+Gordillo for correcting an error in an earlier rigidity computation, and Jorge
+Lucas Gonzalez for a construction and an exact verifier that refuted an earlier
+conjecture of the author's.  Computational work and manuscript preparation used a
+large language model (Claude, Anthropic) under the author's direction, with
+adversarial review by a second model (GPT, OpenAI); the author is responsible for
+all scientific content.  Every numerical claim is reproducible from seeded
+scripts at \url{https://github.com/michaelkernaghan/contextuality}, including
+independent verifiers for the cyclotomic pools, the structural lemmas and the
+certified minimum.
+\end{acknowledgments}
+
+\begin{thebibliography}{99}
+
+\bibitem{KochenSpecker1967}
+S.~Kochen and E.~P.~Specker, J. Math. Mech. \textbf{17}, 59 (1967).
+
+\bibitem{Budroni2022}
+C.~Budroni, A.~Cabello, O.~G\"uhne, M.~Kleinmann, and J.-{\AA}.~Larsson,
+Rev. Mod. Phys. \textbf{94}, 045007 (2022).
+
+\bibitem{Peres1993}
+A.~Peres, \textit{Quantum Theory: Concepts and Methods}
+(Kluwer, Dordrecht, 1993).
+
+\bibitem{LiBrightGanesh2024}
+Z.~Li, C.~Bright, and V.~Ganesh, in \textit{Proc. 33rd Int. Joint Conf. on
+Artificial Intelligence (IJCAI-24)} (IJCAI, 2024), pp.~1898--1906.
+
+\bibitem{KirchwegerPeitlSzeider2023}
+M.~Kirchweger, T.~Peitl, and S.~Szeider, in \textit{Proc. 32nd Int. Joint Conf.
+on Artificial Intelligence (IJCAI-23)} (IJCAI, 2023), pp.~1944--1953;
+arXiv:2306.10427.
+
+\bibitem{Peres1991}
+A.~Peres, J. Phys. A \textbf{24}, L175 (1991).
+
+\bibitem{Cabello2025simplest}
+A.~Cabello, arXiv:2508.07335.
+
+\bibitem{AudemardSimon2018}
+G.~Audemard and L.~Simon, Int. J. Artif. Intell. Tools \textbf{27}, 1840001 (2018).
+
+\bibitem{Cabello2024bipartite}
+A.~Cabello, Phys. Rev. Lett. \textbf{134}, 010201 (2025); arXiv:2311.17735.
+
+\bibitem{TrandafirCabello2025optimal}
+S.~Trandafir and A.~Cabello, Phys. Rev. A \textbf{111}, 022408 (2025);
+arXiv:2410.17470.
+
+\end{thebibliography}
+
+\end{document}

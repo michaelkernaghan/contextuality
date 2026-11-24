@@ -143,7 +143,7 @@ The set is invariant under all permutations of the x, y, z axes and under revers
 
 ## Fig. 7.2 — The 33 Rays and the Cube Diagram (page 198)
 
-![Fig. 7.2: The 33 rays used in the proof of the Kochen-Specker theorem](scans/peres-33-page198-cube.jpg)
+*The figure is Fig. 7.2, page 198, of A. Peres, Quantum Theory: Concepts and Methods (Kluwer, 1993). The scan of that page has been removed from this site; see the book.*
 
 **Fig. 7.2.** The 33 rays used in the proof of the Kochen-Specker theorem are obtained by connecting the center of the cube to the black dots on its faces and edges. Compare this construction with Plate II, page 114.
 

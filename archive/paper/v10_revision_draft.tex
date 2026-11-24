@@ -1,0 +1,247 @@
+% =====================================================================
+% algebraic_islands.tex -- DRAFT v10 REVISION
+%
+% Prompted by Frembs, arXiv:2609.16490 (Leibniz Hannover), which cites this
+% paper as [17] and uses it substantively in its Appendix A.
+%
+% SCOPE OF THE CORRECTION
+% -----------------------
+% No computational result in the paper changes.  Orthogonality was always
+% decided by exact evaluation of the Hermitian product, never by reading the
+% enumeration in Table~\ref{tab:two-element}; every ray count, pair count,
+% triad count, island and OCUS-certified minimum stands.  What changes is the
+% CLASSIFICATION NARRATIVE: the enumeration covers three-term vanishing sums
+% only, while Definition~\ref{def:cancellation} admits sums of "at most three
+% terms".  Two-term sums were never enumerated, and one of them -- Tr(x) = 0 --
+% turns out to carry half the orthogonality structure of the Z[sqrt(-2)] pool.
+%
+% Verification for every number quoted below: ks_verify_two_term.py
+% (exact arithmetic in Q(sqrt(d)), no floating point).  Positive control: the
+% same script reproduces the published rows for sqrt(-2) (49/120/16),
+% sqrt(-3) and sqrt(-5) (49/114/10), and the enriched Gaussian pool (127 rays,
+% 51 triads) exactly.
+%
+% THREE ITEMS, in descending order of importance.
+% =====================================================================
+
+
+% ---------------------------------------------------------------------
+% ITEM 1.  REPLACE Table~\ref{tab:two-element} (currently ~line 552).
+% The table gains a two-term block; the three-term block is unchanged.
+% ---------------------------------------------------------------------
+
+\begin{table}[h]
+\centering
+\caption{All primitive vanishing sums from the product set $\bar{\mathcal{A}}
+\cdot \mathcal{A}$ of a two-element alphabet $\{0, \pm 1, \pm x\}$, listed by
+length.  A two-term sum suffices when one coordinate of the Hermitian product
+vanishes; otherwise three terms are needed.  Each row is an algebraic constraint
+on~$x$.  This classification applies to the raw alphabet before cross-product
+completion.}
+\label{tab:two-element}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Length & Zero-sum pattern & Identity on $x$ & Island / outcome \\
+\midrule
+2 & $x + \bar{x} = 0$        & $\mathrm{Tr}(x) = 0$   & structural$^\ddagger$ \\
+2 & $1 - |x|^2 = 0$          & $|x|^2 = 1$            & roots of unity \\
+2 & $1 - 1$, $x - x$, $|x|^2 - |x|^2$ & (none)        & trivial$^\S$ \\
+\midrule
+3 & $1 + 1 - x = 0$          & $x = 2$                & Integer \\
+3 & $1 + 1 - |x|^2 = 0$      & $|x|^2 = 2$            & Peres/$\Z[\!\sqrt{-2}]$/Heeg.-7 \\
+3 & $1 + x - |x|^2 = 0$      & $|x|^2 = 1 + x$        & Golden \\
+3 & $1 + x + \bar{x} = 0$    & $\mathrm{Tr}(x) = -1$  & Eisenstein \\
+3 & $1 - x - \bar{x} = 0$    & $\mathrm{Tr}(x) = +1$  & (colorable)$^\dagger$ \\
+3 & $2|x|^2 - 1 = 0$         & $|x|^2 = \tfrac{1}{2}$ & $\equiv$ Peres (rescaled) \\
+3 & $2x - |x|^2 = 0$         & $|x|^2 = 2x$           & $\equiv$ Integer \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\noindent $^\ddagger$\,Trace-zero cancellation is neither necessary nor sufficient
+for KS-uncolorability, so it creates no island of its own: $\Z[i]$
+($\mathrm{Tr}=0$, $|x|^2=1$) and $\Z[\sqrt{-3}]$, $\Z[\sqrt{-5}]$
+($\mathrm{Tr}=0$, $|x|^2=3,5$) are colorable, while $\Z[\sqrt{2}]$
+($\mathrm{Tr} = 2\sqrt2 \neq 0$) is not.  It nevertheless governs a large part of
+the internal structure of the complex pools; see
+Observation~\ref{obs:conjugation-dependence}.
+
+\noindent $^\S$\,Available to every alphabet and independent of~$x$.  The
+minimal alphabet $\{0,\pm1\}$ has only these, and generates 13 rays.
+
+\noindent $^\dagger$\,The zero-sum $1 - x - \bar{x} = 0$ holds for all imaginary
+quadratic generators with $d \equiv 1 \pmod{4}$.  It produces all-nonzero
+orthogonal pairs and triads, but these are structurally decoupled from the
+one-zero triads and the full ray set remains colorable.  The absence of type-B
+(mixed) triads is proved for all integer $N \geq 3$ by SMT
+verification~\cite{deMouraBjorner2008}.
+\end{table}
+
+
+% ---------------------------------------------------------------------
+% ITEM 1b.  REPLACE Observation~\ref{obs:two-element} (currently ~line 575)
+% and ADD the new Observation that carries the measurement.
+% ---------------------------------------------------------------------
+
+\begin{observation}\label{obs:two-element}
+For any two-element alphabet $\{0, \pm 1, \pm x\}$, every primitive vanishing sum
+in the product set $\bar{\mathcal{A}} \cdot \mathcal{A}$---of two terms or of
+three---is listed in Table~\ref{tab:two-element}.  Of these, the patterns that
+lead to KS-uncolorability reduce to one of the six non-cubic islands (up to
+scaling equivalence).  Two further patterns produce genuine orthogonalities
+without producing an island: $\mathrm{Tr}(x) = 1$ yields only colorable ray sets,
+and $\mathrm{Tr}(x) = 0$ modulates the internal structure of a pool without
+determining its colorability.
+\end{observation}
+
+\begin{observation}[Conjugation-dependence of the modulus-2 realizations]
+\label{obs:conjugation-dependence}
+The Peres, $\Z[\sqrt{-2}]$ and Gaussian realizations of modulus-2 cancellation
+have isomorphic minimal 33-ray graphs (Proposition~\ref{prop:isomorphism}), but
+they do not reach those graphs by the same arithmetic.  Call an orthogonality
+\emph{conjugation-dependent} if the Hermitian product $\sum_k \bar v_k w_k$
+vanishes while the bilinear product $\sum_k v_k w_k$ does not; such a pair exists
+only because $\bar x \neq x$, which for a two-letter alphabet means
+$\mathrm{Tr}(x) = 0$.  Counting exactly:
+
+\medskip
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+Pool & Pairs & Conj.-dependent & $\mathrm{Tr}$(gen.) \\
+\hline
+$\Z[\sqrt{2}]$, $\{0,\pm1,\pm\sqrt2\}$   & 120 & 0 \phantom{00}(0\%)  & $2\sqrt2$ \\
+$\Z[\sqrt{-2}]$, $\{0,\pm1,\pm\sqrt{-2}\}$ & 120 & 60 \phantom{0}(50\%) & $0$ \\
+$\Z[i]$, $\{0,\pm1,\pm i,\pm(1{+}i)\}$   & 465 & 327 (70\%) & $2$ \\
+\hline
+\end{tabular}
+\end{center}
+\medskip
+
+\noindent Exactly half the orthogonality of the $\Z[\sqrt{-2}]$ pool---60 of 120
+pairs, comprising 54 two-term and all 6 three-term cancellations---has no
+counterpart in the real Peres pool, where the count is zero.  In the Gaussian
+case the conjugation-dependence is supplied by the unit~$i$
+($\mathrm{Tr}(i) = 0$, $|i|^2 = 1$) rather than by the modulus-2 generator
+$1+i$, whose trace is~2.  The three rings therefore realize isomorphic graphs by
+disjoint arithmetic routes.
+\end{observation}
+
+
+% ---------------------------------------------------------------------
+% ITEM 2.  QUALIFY the "cancellation identity, not the ambient field" claim.
+% It appears in at least four places.  Suggested replacement sentence, to be
+% adapted at each site:
+%
+%   (i)   Prop.~\ref{prop:isomorphism}, closing sentence (~line 497)
+%   (ii)  Obs.~\ref{obs:gaussian} (~line 488)
+%   (iii) Sec.~\ref{sec:discussion}, end of the mechanism discussion (~line 523)
+%   (iv)  Limitations item "Classification scope" (~line 924)
+%
+% The claim is not false, but it is stronger than the evidence supports: the
+% identity determines the graph, while the ring retains arithmetic the graph
+% does not record.
+% ---------------------------------------------------------------------
+
+The cancellation identity, not the ambient field, determines which orthogonality
+\emph{graph} is realized.  It does not follow that the rings are interchangeable.
+Frembs~\cite{Frembs2026} observes that $\Z[\sqrt{-2}]$ additionally satisfies the
+two-term identity $\mathrm{Tr}(x) = 0$, which is unavailable at the real point
+$x = \sqrt2$ and is not implied by $|x|^2 = 2$, and that over $\Z[\sqrt{-2}]$ this
+relation generates an entire orbit of contexts and supports a 43-ray, 31-context
+arrangement whose associated linear constraint system carries an obstruction
+modulo~3 that the Peres geometry does not possess.  Observation
+\ref{obs:conjugation-dependence} quantifies the difference: half the
+orthogonality of the $\Z[\sqrt{-2}]$ pool is conjugation-dependent, against none
+of the Peres pool.  Ordinary KS-uncolorability is therefore a coarser invariant
+than the arithmetic of the coordinate ring, and graph isomorphism between two
+islands does not certify that they support the same constructions.
+
+
+% ---------------------------------------------------------------------
+% ITEM 3.  SUSPECT ROW -- please re-run before v10 ships.
+%
+% Table~\ref{tab:complex-quadratic} (~line 326) records for Z[i], d = 1,
+% alphabet {0, +-1, +-i}:   25 rays, 48 pairs, 6 triads.
+%
+% An independent reimplementation gives 31 rays, 69 pairs, 7 triads.
+% Argument: every nonzero letter of {0,+-1,+-i} is a unit of Z[i], so any
+% scalar carrying one alphabet word to another is a ratio of units, hence a
+% unit.  The unit group {+-1, +-i} acts freely on the 5^3 - 1 = 124 nonzero
+% words, giving 124/4 = 31 rays exactly.  (For d = 2,3,5 the generator is a
+% non-unit, extra identifications occur, and both counts agree at 49.)
+%
+% The row's VERDICT is unaffected -- the pool is colorable either way and is
+% not an island -- so this is a wrong number in a negative row, not a
+% structural error.  Note also that the d = 1 row of Table~\ref{tab:heegner}
+% uses the enriched alphabet {0,+-1,+-i,+-(1+i)} and its 127 rays / 51 triads
+% reproduce exactly; only tab:complex-quadratic is in question.
+% ---------------------------------------------------------------------
+
+
+% ---------------------------------------------------------------------
+% ITEM 4.  NEW "Note added in fourth revision", after the third-revision note.
+% ---------------------------------------------------------------------
+
+\subsection*{Note added in fourth revision}
+
+\begin{sloppypar}
+Frembs~\cite{Frembs2026}, in the course of classifying which inconsistent linear
+constraint systems admit finite-dimensional quantum solutions, points out that the
+enumeration of Table~\ref{tab:two-element} was confined to three-term vanishing
+sums, whereas Definition~\ref{def:cancellation} admits sums of at most three
+terms.  The omitted class is the two-term sums, and the productive member of that
+class is $x + \bar x = 0$, the condition $\mathrm{Tr}(x) = 0$.  The table and
+Observation~\ref{obs:two-element} have been extended accordingly.
+
+No computational result is affected.  Orthogonality was decided throughout by
+exact evaluation of the Hermitian product rather than by consulting the
+enumeration, so the trace-zero cancellations were always counted; they were simply
+not named.  Every ray count, pair count, triad count, island and OCUS-certified
+minimum stands.  What the omission concealed is how much of the structure they
+carry: exactly 60 of the 120 orthogonal pairs in the $\Z[\sqrt{-2}]$ pool vanish
+only under conjugation, against 0 of the 120 in the real Peres pool
+(Observation~\ref{obs:conjugation-dependence}).  The two pools have identical ray,
+pair and triad counts and isomorphic graphs, but they arrive at them through
+disjoint sets of identities.
+
+This tempers, without overturning, the claim that the cancellation identity rather
+than the ambient field controls the classification.  The claim holds for the
+orthogonality graph, which is what the claim was tested against.  It does not
+extend to everything a ring can support: Frembs exhibits a 43-ray, 31-context
+arrangement over $\Z[\sqrt{-2}]$ built from the trace-zero relation, whose
+associated constraint system is unsatisfiable over $\mathbb{F}_3$, while the
+corresponding Peres incidence system admits no such nontrivial relation.  Ordinary
+KS-uncolorability does not by itself produce that stronger obstruction.  We thank
+Markus Frembs for the observation.
+\end{sloppypar}
+
+
+% ---------------------------------------------------------------------
+% ITEM 5.  Bibliography, acknowledgments, reproducibility.
+% ---------------------------------------------------------------------
+
+\bibitem{Frembs2026}
+M.~Frembs,
+``A complete classification of the existence of finite-dimensional quantum
+solutions to inconsistent linear constraint systems,''
+arXiv:2609.16490 (2026).
+
+% Acknowledgments -- add after the Cabello clause:
+%   ``Markus Frembs for identifying the two-term omission in
+%    Table~\ref{tab:two-element};''
+
+% Reproducibility -- add to the script-to-table list:
+%   \item \texttt{ks\_verify\_two\_term.py} $\to$
+%         Obs.~\ref{obs:conjugation-dependence}, two-term rows of
+%         Table~\ref{tab:two-element}
+
+% ---------------------------------------------------------------------
+% ITEM 6.  Unrelated bibliography fix noticed while preparing this draft.
+%
+% \bibitem{KirchwegarPeitlSzeider2023} reads ``A.~Peitl''.  The AAAI-23 author
+% is Tom\'a\v{s} Peitl, so the initial should be ``T.''.  The citation key also
+% misspells Kirchweger as ``Kirchwegar'' (harmless, but worth renaming).
+% ---------------------------------------------------------------------

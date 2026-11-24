@@ -1,0 +1,423 @@
+\documentclass[twocolumn,prl,superscriptaddress,nofootinbib]{revtex4-2}
+
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\CK}{\mathrm{CK}\text{-}31}
+\newcommand{\Norm}{\mathrm{N}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\braket}[2]{\langle#1|#2\rangle}
+
+\begin{document}
+
+\title{The arithmetic of Kochen--Specker uncolorability\\in dimension three}
+
+\author{Michael Kernaghan}
+\affiliation{Pacific Quantum Systems, Vancouver, Canada}
+
+\date{\today}
+
+\begin{abstract}
+Kochen--Specker (KS) sets in dimension three are usually studied through their
+orthogonality graphs.  We show that their existence is instead governed by the
+arithmetic of the ring supplying their coordinates.  Over the alphabet
+$\{0,\pm1,\pm x\}$, orthogonality demands a vanishing three-term sum, and every
+such \emph{cancellation identity} can be enumerated: each is an algebraic
+constraint on~$x$, and each solution is a KS-supporting ring.  Three mechanisms
+occur---$|x|^2=2$, a vanishing sum of roots of unity, and the minimal polynomial
+of a cubic unit---while generators of squared modulus ${\geq}\,3$ that are not
+roots of unity yield triads but no uncolorability.  KS sets therefore occupy
+isolated algebraic islands; we exhibit eight, with certified pool minima
+$31 < 33 < 43 < 52 < 58$.  For cyclotomic alphabets the criterion is a theorem:
+the $n$th-root-of-unity ray family in~$\C^3$ is KS-uncolorable iff $6 \mid n$.
+\end{abstract}
+
+\maketitle
+
+\textit{Introduction.---}The Kochen--Specker (KS) theorem~\cite{KochenSpecker1967}
+forbids assigning context-independent definite values to quantum observables (for
+a review see Ref.~\cite{Budroni2022}).  It is proved by exhibiting a finite set of
+rays admitting no $\{0,1\}$ coloring in which orthogonal rays are never both~1 and
+every orthogonal triad carries exactly one~1.  Dimension three is the sharpest
+case.  The smallest known set is the Conway--Kochen 31-ray configuration
+($\CK$), reported by Peres~\cite{Peres1993}; the best lower bound is~24,
+established independently by SAT methods with algebraic realizability
+checking~\cite{LiBrightGanesh2024,KirchwegarPeitlSzeider2023}, improving the
+earlier bound of~22~\cite{UijlenWesterbaan2016}.  The intervening gap of seven
+rays is a central open problem, and Trandafir and Cabello~\cite{TrandafirCabello2025}
+have since proved $\CK$ rigid and conjectured it optimal.
+
+Searches for smaller sets have been combinatorial---enumerate candidate
+orthogonality hypergraphs, then test geometric realizability~\cite{LiBrightGanesh2024,KirchwegarPeitlSzeider2023}---or
+have fixed a coordinate alphabet by hand~\cite{Peres1991,Pavicic2004}.  We take
+the opposite route.  Two classic constructions, $\CK$ over $\{0,\pm1,\pm2\}$ and
+Peres-33 over $\{0,\pm1,\pm\sqrt2\}$, are displayed on the same cube
+diagram~\cite{Peres1993} and share the coordinate template $\{0,\pm1,\pm x\}$.
+They differ only in~$x$.  This invites a question whose answer is arithmetic:
+\emph{which $x$ support a KS set?}
+
+We find that a single local condition on the coordinate ring controls the answer,
+that the condition can be enumerated exhaustively for two-symbol alphabets, and
+that for cyclotomic alphabets it is a theorem.  KS sets do not populate the space
+of algebraic parameters densely; they sit on isolated islands, which we
+enumerate.
+
+\textit{The cancellation criterion.---}Let $\mathcal{A} \subset \C$ be a finite
+coordinate alphabet and let $S(\mathcal{A}) = \{[v] : v \in
+\mathcal{A}^3\setminus\{0\}\}$ be the induced ray set, $[v]$ denoting the
+projective class of~$v$.  Rays $v,w$ are orthogonal when
+$\sum_k \bar v_k w_k = 0$: a vanishing sum of at most three terms drawn from the
+product set $\bar{\mathcal{A}}\cdot\mathcal{A}$.  We call such a relation a
+\emph{cancellation identity}.  Without one there are no orthogonal triads, and
+without triads there is no KS set, so the search for KS-supporting alphabets is
+the search for cancellation identities---and, as it turns out, for identities of
+low norm.
+
+All coordinates are represented as exact algebraic numbers and every
+orthogonality is certified to vanish exactly, with no floating-point tolerance.
+Colorability is decided by SAT (Glucose4~\cite{AudemardSimon2018}): one Boolean
+per ray, an exactly-one clause group per triad, an at-most-one clause per
+orthogonal pair; UNSAT means KS-uncolorable.
+
+For $\mathcal{A} = \{0,\pm1,\pm x\}$ the product set is
+$\{0,\pm1,\pm x,\pm\bar x,\pm|x|^2\}$, and the primitive three-term vanishing
+sums admit a complete enumeration (Table~\ref{tab:zerosum}), certified with an
+SMT solver~\cite{deMouraBjorner2008}.  Each row is an algebraic constraint
+on~$x$; each solution is a coordinate ring.
+
+\begin{table}[b]
+\caption{\label{tab:zerosum}All primitive three-term zero-sums available to the
+product set of $\mathcal{A}=\{0,\pm1,\pm x\}$.  Every row is a constraint
+on~$x$; every solution yielding uncolorability is one of the islands of
+Table~\ref{tab:islands}.  The enumeration applies to the raw alphabet, before
+cross-product completion.}
+\begin{ruledtabular}
+\begin{tabular}{lll}
+Zero-sum & Constraint on $x$ & Outcome \\
+\colrule
+$1+1-x$            & $x=2$                    & Integer \\
+$1+1-|x|^2$        & $|x|^2=2$                & Peres, $\Z[\sqrt{-2}]$, Heeg.-7 \\
+$1+x-|x|^2$        & $|x|^2=1+x$              & Golden \\
+$1+x+\bar x$       & $\Tr(x)=-1$, $\Norm(x)=1$ & Eisenstein \\
+$1-x-\bar x$       & $\Tr(x)=+1$              & colorable\footnote{Holds for
+every imaginary quadratic generator with $d \equiv 1 \pmod 4$.  It produces
+all-nonzero triads, but these decouple from the one-zero triads and the ray set
+stays colorable; the obstruction is SMT-certified for all integer generator
+norms $N \geq 3$.} \\
+$2|x|^2-1$         & $|x|^2=\tfrac12$         & $\equiv$ Peres (rescaled) \\
+$2x-|x|^2$         & $|x|^2=2x$               & $\equiv$ Integer \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+Three mechanisms appear among the rows that produce uncolorability.
+\emph{Modulus-2 cancellation} ($|x|^2=2$) covers $\sqrt2$, $\sqrt{-2}$, $1+i$ and
+$\alpha=(1+\sqrt{-7})/2$; the integer case $1+1=2$ is the degenerate instance in
+which $x=2$ and the identity arises additively.  \emph{Phase cancellation} is the
+vanishing sum of unit-modulus terms $1+\omega+\omega^2=0$, $\omega=e^{2\pi i/3}$.
+In Galois terms the two are clean: modulus-2 is
+$|\Norm_{K/\Q}(x)|=2$, and phase is $\Norm_{K/\Q}(x)=1$ with
+$\Tr_{K/\Q}(x)=-1$, which characterizes the roots of $\Phi_3$.
+
+A third mechanism exists, and we record it as a correction.  Earlier versions of
+this work asserted that modulus-2 and phase cancellation exhaust the possibilities.
+That thesis was falsifiable---a KS set over an alphabet whose product set admits
+neither identity would refute it---and Gonzalez communicated exactly such a set:
+47~rays over $\Q(\psi)$, where $\psi \approx 1.4656$ is the supergolden ratio,
+$\psi^3=\psi^2+1$.  We reproduced it in exact arithmetic (47 rays, 107 orthogonal
+pairs, 29 triads, ray-critical).  Its raw product set $\{0,\pm1,\pm\psi,\pm\psi^2\}$
+contains no element of squared modulus~2; $\Q(\psi)$ is a real field of odd degree
+and so contains no root of unity but~$\pm1$; and no additive $1+1-2=0$ cancellation
+occurs anywhere in the critical set.  The operative relation is the minimal
+polynomial itself, giving a third mechanism: \emph{minimal-polynomial
+cancellation}, in which the defining relation of a cubic algebraic unit supplies
+the vanishing sum directly.
+
+The negative half of the criterion is equally sharp and, across our survey,
+without exception: an alphabet whose generator has $|x|^2 \geq 3$ and is not a
+root of unity produces orthogonal pairs and triads, but never enough interlocking
+triads for uncolorability.  Note that $|\psi|^2 \approx 2.148$ lies below~3, so
+the supergolden island respects this bound while violating the two-mechanism
+classification.
+
+One caveat is structural.  Closing a ray set under cross products---for each
+orthogonal pair $v \perp w$, adjoin $[v \times w]$, and in~$\C^3$ the Hermitian
+cofactor analogue---can introduce coordinates absent from $\mathcal{A}$, and hence
+cancellation identities the raw alphabet does not support.  The classification is
+therefore properly one of \emph{completed} coordinate algebras.  The golden ratio
+is the case in point: $\{0,\pm1,\pm\varphi\}$ is colorable, but completion
+generates $1/\varphi$ and the completed pool is not.
+
+\textit{Cyclotomic alphabets.---}For one family the criterion is not a survey
+finding but a theorem.
+
+\begin{theorem}
+The ray set generated in $\C^3$ by the alphabet $\{0\}\cup\{\zeta_n^k\}$,
+$\zeta_n=e^{2\pi i/n}$, is KS-uncolorable if and only if $6 \mid n$.
+\end{theorem}
+
+\noindent\emph{Sketch.}  Inner products in $\C^3$ involve at most three terms, so
+only short vanishing sums matter.  A three-term sum $\zeta^a+\zeta^b+\zeta^c=0$
+exists iff $3 \mid n$: dividing by $\zeta^a$ and requiring $|{-}1-\alpha|=1$ forces
+$\cos(2\pi p/n)=-1/2$.  A two-term sum requires $\zeta^{b-a}=-1$, hence $2\mid n$.
+Sufficiency then follows by embedding: if $6\mid n$ the sixth roots sit inside the
+$n$th roots, carrying the Eisenstein 33-ray set~\cite{Cabello2025simplest} with
+them.  Necessity splits into three cases.  With neither $2\mid n$ nor $3\mid n$ the
+only orthogonalities are axis-complementary and a single triad survives.  With
+$2\mid n$ alone, no pair of all-nonzero rays is orthogonal; every triad has the
+form $\{v_1,v_2,e_k\}$, each coordinate plane decomposes into a perfect matching,
+and an explicit coloring follows.  With $3\mid n$ alone---the principal
+case---each all-nonzero ray $v$ has exactly two projectively distinct orthogonal
+partners, $w_\pm$, and since $\braket{w_+}{w_-}=1+\omega+\omega^2=0$ the triple
+$\{v,w_+,w_-\}$ is the unique triad containing~$v$.  For odd~$n$ no ray with one
+zero coordinate joins any triad.  The triads are therefore isolated, the coloring
+problem decomposes into independent satisfiable subproblems, and the pool is
+colorable.\hfill$\square$
+
+The condition restates cleanly in Galois terms: $\mathrm{Gal}(\Q(\zeta_n)/\Q)
+\cong (\Z/n\Z)^*$ must surject onto $\Z/6\Z$, which holds iff $6\mid n$.  The
+prime~6 is not a coincidence of this family.  Cortez, Morales and
+Reyes~\cite{CortezMoralesReyes2022} show that $M_3(\Z[1/6])_\mathrm{sym}$ is the
+minimal ring extension of~$\Z$ admitting no algebraic hidden states.  Their
+invariant $N(S)=\mathrm{lcm}\{\|v\|^2\}$, which fixes the ring $\Z[1/N(S)]$ in
+which the projectors $P_v$ live, takes the value~6 exactly on the Eisenstein
+island, 12 on Peres, $\Z[\sqrt{-2}]$ and Heegner-7, and 30 on~$\CK$.  Every
+island needs the primes 2 and~3; only the integer island additionally needs~5.
+
+\textit{The islands.---}We call a KS-supporting pair (ring, alphabet) an
+\emph{algebraic island} because it is isolated in parameter space: perturbing the
+generator off its exact algebraic value destroys uncolorability immediately, and
+no continuous path joins one island to another.  A sweep of the one-parameter
+family $\{0,\pm1,\pm\cos\theta,\pm\sin\theta\}$ over 164 angles in $(0,\pi/2]$
+makes this concrete---exactly five angles are uncolorable, all reducing to known
+islands, and moving $1^\circ$ from any of them restores colorability.
+
+Table~\ref{tab:islands} lists the eight islands found across real quadratic fields
+$\Q(\sqrt d)$ for non-square $d \leq 30$, all nine imaginary quadratic fields of
+class number~1, cyclotomic fields for $n \leq 60$, and selected cubic and quartic
+extensions.  Each pool minimum is certified by an OCUS (optimal constrained
+unsatisfiable subset) procedure that exhausts all smaller candidates within the
+pool---a proof within each finite pool, not a heuristic upper bound.
+
+\begin{table*}[t]
+\caption{\label{tab:islands}The eight algebraic islands.  ``Pool'' is the ray count
+after completion where completion is required; ``Min'' is the OCUS-certified
+minimum KS subset within that pool and $|\mathcal{B}|$ its basis count.  Peres,
+$\Z[\sqrt{-2}]$ and the Gaussian realization $\{0,\pm1,\pm i,\pm(1{+}i)\}$ share a
+single orthogonality graph (VF2-verified), so the eight islands carry seven
+distinct graph types.}
+\begin{ruledtabular}
+\begin{tabular}{llllcccl}
+Island & Ring & Alphabet & Identity & Mechanism & Pool & Min & $|\mathcal{B}|$ \\
+\colrule
+Integer        & $\Z$                     & $\{0,\pm1,\pm2\}$                    & $1+1=2$                 & modulus-2          & 49  & \textbf{31} & 17 \\
+Peres          & $\Z[\sqrt2]$             & $\{0,\pm1,\pm\sqrt2\}$               & $(\sqrt2)^2=2$          & modulus-2          & 49  & 33 & 16 \\
+Eisenstein     & $\Z[\omega]$             & $\{0,\pm1,\pm\omega,\pm\bar\omega\}$ & $1+\omega+\omega^2=0$   & phase              & 57  & 33 & 14 \\
+$\Z[\sqrt{-2}]$& $\Z[\sqrt{-2}]$          & $\{0,\pm1,\pm\sqrt{-2}\}$            & $|\sqrt{-2}|^2=2$       & modulus-2          & 49  & 33 & 16 \\
+Heegner-7      & $\Z[\tfrac{1+\sqrt{-7}}2]$ & $\{0,\pm1,\pm\alpha,\pm\bar\alpha\}$ & $\alpha\bar\alpha=2$  & modulus-2          & 145 & 43 & 23 \\
+Golden         & $\Z[\varphi]$            & $\{0,\pm1,\pm\varphi\}$              & $\varphi^2=\varphi+1$   & modulus-2 (compl.) & 205 & 52 & 25 \\
+Cubic          & $\Z[\sqrt[3]2]$          & $\{0,\pm1,\pm\sqrt[3]2,\pm\sqrt[3]4\}$ & $\sqrt[3]2\cdot\sqrt[3]4=2$ & modulus-2 (compl.) & 361 & 58 & 26 \\
+Supergolden    & $\Z[\psi]$               & $\{0,\pm1,\pm\psi\}$                 & $\psi^3=\psi^2+1$       & min.\ polynomial   & 157 & $\leq 47$ & --- \\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+Two features of the table carry the argument.  First, the hierarchy tracks the
+algebraic complexity of the identity rather than the ambient field: the integer
+identity produces the densest triad network (26 triads from 49 rays) and the
+smallest set, while indirect and minimal-polynomial cancellations produce the
+sparsest and the largest.  Second, ambient field is genuinely not the invariant.
+The Peres and $\Z[\sqrt{-2}]$ islands have identical ray, pair and triad counts,
+and their orthogonality graphs are isomorphic at both the pair and the triad
+level; the Gaussian alphabet $\{0,\pm1,\pm i,\pm(1{+}i)\}$ reproduces the same
+graph again.  All three realize $|x|^2=2$ in different rings.  Of 28 two-generator
+alphabets tested, the 17 reaching minimum~33 fall into exactly two graph classes:
+13 containing a modulus-2 generator give the Peres graph, 4 containing $\omega$
+give the Eisenstein graph.  The cancellation identity, not the field, fixes the
+graph.
+
+The imaginary quadratic case is the cleanest illustration.  Among the nine
+Heegner numbers $d=1,2,3,7,11,19,43,67,163$, exactly four support KS sets---and
+they are exactly the four whose ring-of-integers generator has
+$|\alpha|^2=2$ ($d=1,2,7$) or is a primitive cube root of unity ($d=3$).  The
+remaining five have $|\alpha|^2 = 3,5,11,17,41$ and are colorable.  Extending
+beyond unique factorization changes nothing: across 26 imaginary quadratic fields
+of class number 2, 3 and~4, every field with $|\alpha|^2 \geq 8$ is colorable at
+both basic and enriched alphabets.  Class number does not predict uncolorability;
+generator norm does.
+
+\textit{New configurations.---}Two islands yield configurations we have not found
+in the published catalogues.  The Heegner-7 ring gives a 43-vector set in
+23~bases with degree sequence $\{4{:}16,\,5{:}20,\,6{:}4,\,8{:}2,\,10{:}1\}$,
+structurally richer than either the Eisenstein 33-set (three degree types) or the
+Peres 33-set (two).  The golden ratio field gives a 52-vector set that is
+invisible to raw-alphabet search: $\{0,\pm1,\pm\varphi\}$ yields only 10 triads
+and is colorable, and uncolorability appears only after completion expands the
+pool to 205 rays.  That $\varphi$ works where $\sqrt5$ does not---the same field,
+a different generator---is the sharpest single demonstration that the alphabet,
+not the field, is the carrier of the structure.
+
+Both new sets are infinitesimally rigid in~$\C^3$, tested by comparing the null
+space of the Jacobian of the normalization-and-orthogonality system against the
+symmetry dimension $n+8$.  Four of the six non-cubic islands are rigid on this
+test.  The two exceptions, Peres and $\Z[\sqrt{-2}]$, each carry exactly one
+deformation, and the flex is finite rather than infinitesimal: it integrates to
+the three-phase family of Gould and Aravind~\cite{GouldAravind2010}, whose gauge
+reduction is a single circle~\cite{FloresGordillo2026} carrying the two islands at
+antipodal parameter values.  Since Trandafir and Cabello~\cite{TrandafirCabello2025}
+classify known constructions into dimension-lifting and concatenation families and
+show that neither yields rigid sets, the algebraic-alphabet method falls outside
+both.
+
+\textit{Operational consequences.---}The substrate is not merely a bookkeeping
+device.  Every bipartite perfect quantum strategy---the maximum algebraic
+violation of a Bell inequality under projective measurement---contains a KS
+set~\cite{Cabello2024bipartite}, and face nonsignaling correlations, full Bell
+nonlocality, all-versus-nothing proofs and pseudotelepathy are manifestations of
+the same structure~\cite{Cabello2024equivalences}.  The islands are therefore the
+algebraic substrates of all perfect strategies in dimension three.  Cabello's
+``simplest KS set''~\cite{Cabello2025simplest}, built from the Weyl--Heisenberg
+group over $\Z[\omega]$, is the smallest member of our Eisenstein island; that an
+independently motivated construction lands on an island rather than between two is
+evidence the classification tracks real structure.
+
+Computing bipartite KS input counts by SAT across the islands, following the
+optimal conversion of Trandafir and Cabello~\cite{TrandafirCabello2025optimal},
+shows that the arithmetic, not the ray count, sets the cost of the resulting Bell
+scenario.
+Eisenstein achieves $5\times9$ (exhaustive), Peres and $\Z[\sqrt{-2}]$ both
+$7\times9$, while $\CK$---with the fewest rays of any island---needs at least
+8~Alice inputs and reaches only $8\times9$.  Heegner-7 and Golden cost
+$\leq 9\times12$ and $\leq 12\times13$.  $\CK$ is thus strictly dominated as a
+strategy engine by sets with more rays but fewer contexts.  The trade-off is
+genuinely three-way once Cabello--Severini--Winter invariants~\cite{CabelloSeveriniWinter2014}
+are included: $\CK$ alone retains a nontrivial sandwich
+$\alpha=11<\vartheta=11.71<\alpha^*=12$, while the strongest contextual advantage
+of any pool, $\vartheta/\alpha=1.118$, belongs to Heegner-7 and is destroyed by
+minimization---the rays that carry it participate in no basis, so cardinality
+minimization discards them first.  Three islands sit on the resulting Pareto
+frontier and none dominates on every axis.
+
+\textit{Discussion.---}The picture that emerges is that contextuality in dimension
+three is not a continuous geometric phenomenon but a discrete arithmetic one.  A
+coordinate ring either carries a low-norm cancellation identity or it does not,
+and the answer decides not only whether a KS set exists but how small it can be,
+how rigid it is, and how cheap a Bell scenario it generates.
+
+Two limits should be stated plainly.  First, the survey is finite.  The
+enumeration in Table~\ref{tab:zerosum} is complete for raw two-symbol alphabets,
+and the $6\mid n$ result is a theorem, but the eight islands are what a systematic
+search over low-degree extensions found, not a classification of all number
+fields.  Multi-generator alphabets and extensions of degree five and above remain
+the principal gaps.  Second, the completeness of the three-mechanism
+classification is open, and the history here is cautionary: the two-mechanism
+version survived eight revisions before the supergolden island refuted it, and it
+was refuted by an alphabet class we had surveyed but not surveyed far enough.
+
+The constraints are nonetheless directly usable by the lower-bound program.  The
+gap between the constructive bound~31 and the realizability bound~24 is being
+attacked by SMT search over candidate hypergraphs~\cite{LiBrightGanesh2024,KirchwegarPeitlSzeider2023},
+and a candidate graph must ultimately be realized over some coordinate ring.  The
+cancellation classification, the discrete jump from the 13-ray pool of
+$\{0,\pm1\}$ to the 49-ray pool of $\{0,\pm1,\pm2\}$, and the observation that
+every tested construction reaching 31~rays produces the same orthogonality
+graph---71 edges, 17 bases, degree sequence $(3^4,4^{14},5^8,6^3,8^2)$---are all
+algebraic filters on that search.  If $\CK$ is optimal, the reason is likely to be
+arithmetic: $1+1=2$ is the cheapest cancellation identity there is.
+
+\begin{acknowledgments}
+The author thanks Ad\'an Cabello for the connection between the Eisenstein island
+and the ``simplest KS set''; Manuel Flores Gordillo for identifying a
+constraint-ordering error in the rigidity computation; and Jorge Lucas Gonzalez
+for the supergolden construction that refuted the two-mechanism thesis, together
+with a verifier exact enough to be checked rather than believed.  Computational
+work, proof construction and manuscript preparation were carried out with a large
+language model (Claude, Anthropic) under the author's direction, with adversarial
+cross-review by a second model (GPT, OpenAI); all computational claims are
+reproducible from deterministically seeded scripts, and all claims about published
+results were checked against the cited papers.  The author directed the research,
+validated results against the literature, and accepts full responsibility for the
+scientific content.  Code and data:
+\url{https://github.com/michaelkernaghan/contextuality}.
+\end{acknowledgments}
+
+\begin{thebibliography}{99}
+
+\bibitem{KochenSpecker1967}
+S.~Kochen and E.~P.~Specker, J. Math. Mech. \textbf{17}, 59 (1967).
+
+\bibitem{Budroni2022}
+C.~Budroni, A.~Cabello, O.~G\"uhne, M.~Kleinmann, and J.-{\AA}.~Larsson,
+Rev. Mod. Phys. \textbf{94}, 045007 (2022).
+
+\bibitem{Peres1993}
+A.~Peres, \textit{Quantum Theory: Concepts and Methods}
+(Kluwer, Dordrecht, 1993).
+
+\bibitem{LiBrightGanesh2024}
+Z.~Li, C.~Bright, and V.~Ganesh, in \textit{Proc. 33rd Int. Joint Conf. on
+Artificial Intelligence (IJCAI-24)} (IJCAI, 2024), pp.~1898--1906.
+
+\bibitem{KirchwegarPeitlSzeider2023}
+M.~Kirchweger, T.~Peitl, and S.~Szeider, in \textit{Proc. AAAI-23} (2023),
+pp.~4119--4126.
+
+\bibitem{UijlenWesterbaan2016}
+S.~Uijlen and B.~Westerbaan, New Gener. Comput. \textbf{34}, 3 (2016).
+
+\bibitem{TrandafirCabello2025}
+S.~Trandafir and A.~Cabello, Phys. Rev. A \textbf{111}, 052204 (2025);
+arXiv:2501.11640.
+
+\bibitem{Peres1991}
+A.~Peres, J. Phys. A \textbf{24}, L175 (1991).
+
+\bibitem{Pavicic2004}
+M.~Pavi\v{c}i\'c, J.-P.~Merlet, B.~McKay, and N.~D.~Megill,
+J. Phys. A \textbf{38}, 1577 (2005).
+
+\bibitem{AudemardSimon2018}
+G.~Audemard and L.~Simon, Int. J. Artif. Intell. Tools \textbf{27}, 1840001 (2018).
+
+\bibitem{deMouraBjorner2008}
+L.~de~Moura and N.~Bj{\o}rner, in \textit{TACAS 2008}, LNCS \textbf{4963}
+(Springer, 2008), p.~337.
+
+\bibitem{Cabello2025simplest}
+A.~Cabello, arXiv:2508.07335.
+
+\bibitem{CortezMoralesReyes2022}
+I.~Cortez, C.~Morales, and M.~Reyes, arXiv:2211.13216.
+
+\bibitem{GouldAravind2010}
+E.~Gould and P.~K.~Aravind, Found. Phys. \textbf{40}, 1096 (2010).
+
+\bibitem{FloresGordillo2026}
+M.~Flores Gordillo, preprint (2026), Zenodo doi:10.5281/zenodo.21488474.
+
+\bibitem{Cabello2024bipartite}
+A.~Cabello, Phys. Rev. Lett. \textbf{134}, 010201 (2025); arXiv:2311.17735.
+
+\bibitem{TrandafirCabello2025optimal}
+S.~Trandafir and A.~Cabello, Phys. Rev. A \textbf{111}, 022408 (2025);
+arXiv:2410.17470.
+
+\bibitem{Cabello2024equivalences}
+Y.~Liu, H.~Y.~Chung, E.~Z.~Cruzeiro, J.~R.~Gonzales-Ureta, R.~Ramanathan, and
+A.~Cabello, Phys. Rev. Research \textbf{6}, L042035 (2024); arXiv:2310.10600.
+
+\bibitem{CabelloSeveriniWinter2014}
+A.~Cabello, S.~Severini, and A.~Winter, Phys. Rev. Lett. \textbf{112}, 040401 (2014).
+
+\end{thebibliography}
+
+\end{document}
