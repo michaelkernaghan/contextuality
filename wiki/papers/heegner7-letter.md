@@ -1,10 +1,12 @@
 ---
-source: paper/heegner7_letter.tex
+source: archive/letters/heegner7_letter.tex
 date_ingested: 2026-04-03
 type: paper
 ---
 
 # New Kochen-Specker Sets from Algebraic Number Fields: the Heegner-7 and Golden Ratio Constructions (Kernaghan, 2026)
+
+> **Archived, not current.** This letter was written alongside versions 1-9 of the main paper and has not been revised. See `archive/letters/README.md` for what stands against version 11.
 
 ## Summary
 

@@ -96,9 +96,9 @@ pip install python-sat networkx numpy scipy sympy
   current paper. The certification procedure in `ks_ocus_all_pools.py` is unsound.
 - **Version 9 of the paper** is [`paper/algebraic_islands.tex`](paper/algebraic_islands.tex);
   version 10 is `paper/algebraic_islands_v10.tex`. Both are kept for the record.
-- **Letters** (`paper/cyclotomic_letter.tex`, `paper/heegner7_letter.tex`,
-  `paper/sub31_letter.tex`, `paper/universality_letter.tex`) were written alongside versions
-  1-9 and have not been revised. Where they disagree with version 11, version 11 is intended.
+- **Archived letters.** Five short letters written alongside versions 1-9 are kept in
+  [`archive/letters/`](archive/letters) as a record of earlier work. They have not been revised
+  and are not current; the note in that folder says what stands and what does not.
 - **The pages under [`docs/`](docs)** (the "Contextuality & KS Set Atlas") include pages on the
   withdrawn classification. Those pages carry a notice at the top.
 - The complete development history is on the [`archive-full`](../../tree/archive-full) branch.

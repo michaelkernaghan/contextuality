@@ -1,10 +1,12 @@
 ---
-source: paper/cyclotomic_letter.tex
+source: archive/letters/cyclotomic_letter.tex
 date_ingested: 2026-04-03
 type: paper
 ---
 
 # Kochen-Specker Uncolorability in Root-of-Unity Coordinate Alphabets Requires Exactly 6|n (Kernaghan, 2026)
+
+> **Archived, not current.** This letter was written alongside versions 1-9 of the main paper and has not been revised. See `archive/letters/README.md` for what stands against version 11.
 
 ## Summary
 

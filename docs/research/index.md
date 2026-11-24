@@ -32,7 +32,7 @@ The central classification result. Documents all six islands with their rings, m
 
 ### [Papers](papers.md)
 
-Listing of all papers produced by this research programme: one main paper (~36 pages) and four PRL-style letters, each addressing a distinct aspect of the classification.
+Listing of all papers produced by this research programme: one main paper. Five letters written alongside versions 1-9 are archived, unrevised, in `archive/letters/`.
 
 ---
 

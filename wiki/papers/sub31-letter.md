@@ -1,10 +1,12 @@
 ---
-source: paper/sub31_letter.tex
+source: archive/letters/sub31_letter.tex
 date_ingested: 2026-04-03
 type: paper
 ---
 
 # Computational Evidence for the Optimality of Conway-Kochen's 31-Vector Kochen-Specker Set (Kernaghan, 2026)
+
+> **Archived, not current.** This letter was written alongside versions 1-9 of the main paper and has not been revised. See `archive/letters/README.md` for what stands against version 11.
 
 ## Summary
 
