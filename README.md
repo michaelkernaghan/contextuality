@@ -1,109 +1,121 @@
-# Algebraic Landscape of Kochen-Specker Sets in Dimension Three
+# The Algebraic Landscape of Kochen-Specker Sets in Dimension Three
 
-Computational companion to four papers on the number-theoretic structure of Kochen-Specker (KS) contextuality in three-dimensional Hilbert space. All scripts reproduce the tables and results cited in the papers.
+Code, data and machine-checked proofs for the paper of that name
+([arXiv:2603.16988](https://arxiv.org/abs/2603.16988)). The current version of the paper is
+**version 11** (release tag `v11.1`):
 
-## Papers
+- PDF: [`paper/algebraic_islands_v11.pdf`](paper/algebraic_islands_v11.pdf)
+- Source: [`paper/algebraic_islands_v11.tex`](paper/algebraic_islands_v11.tex) and `paper/v11_*.tex`
+- Standard of proof for every statement: [`LEDGER.md`](LEDGER.md)
 
-| Paper | Source | PDF |
-|-------|--------|-----|
-| The Algebraic Landscape of Kochen-Specker Sets in Dimension Three | [`paper/algebraic_islands.tex`](paper/algebraic_islands.tex) | [`paper/algebraic_islands.pdf`](paper/algebraic_islands.pdf) |
-| Cyclotomic Letter | [`paper/cyclotomic_letter.tex`](paper/cyclotomic_letter.tex) | [`paper/cyclotomic_letter.pdf`](paper/cyclotomic_letter.pdf) |
-| Heegner-7 Letter | [`paper/heegner7_letter.tex`](paper/heegner7_letter.tex) | [`paper/heegner7_letter.pdf`](paper/heegner7_letter.pdf) |
-| Sub-31 Letter | [`paper/sub31_letter.tex`](paper/sub31_letter.tex) | [`paper/sub31_letter.pdf`](paper/sub31_letter.pdf) |
-| Universality Letter | [`paper/universality_letter.tex`](paper/universality_letter.tex) | [`paper/universality_letter.pdf`](paper/universality_letter.pdf) |
+> **Versions 1-9 are withdrawn.** They proposed a classification of Kochen-Specker (KS) sets by
+> "cancellation mechanisms" and described the uncolourable coordinate alphabets as isolated
+> "algebraic islands". That classification did not survive checking. In particular the claimed
+> minimum of 52 rays for the golden-ratio pool is wrong (a 51-ray set exists), the "norm bound"
+> is false, and the alphabets are not isolated. Appendix A of the paper lists the withdrawn
+> claims. Material in this repository written for those versions is kept as history and is
+> marked as such; do not rely on it.
 
-## Main Results
+## What the paper proves
 
-- **Four algebraic islands** support KS sets: integers (min 31 vectors), Q(√2) (min 33), Eisenstein integers (min 33), and the golden ratio field Q(φ) (min 52).
-- **Golden ratio island** — newly discovered, invisible to raw alphabet searches, revealed only by cross-product completion.
-- **6|n conjecture** — nth roots of unity produce KS-uncolorable sets iff 6 divides n (verified for n ≤ 30).
-- **Realizability gap** — 49% of random abstract hypergraphs are KS-uncolorable, but 0% were found realizable in R³.
-- The Conway-Kochen 31-vector set is **destroyed by 1% coordinate perturbation**.
+A *coordinate alphabet* is the set of numbers allowed as ray coordinates, such as
+{0, ±1, ±√2} for the 33 rays of Peres and {0, ±1, ±2} for the 31 rays of Conway and Kochen. An
+alphabet generates a finite pool of rays, and the pool either has a KS colouring or does not.
 
-## Computational Scripts
+1. **Two-symbol alphabets {0, ±1, ±x}, x complex.** The pool is uncolourable only when x or
+   1/x is ±2, ±√2, ±√−2, or x is a primitive third or sixth root of unity. No KS set with
+   coordinates in such an alphabet has fewer than 31 rays.
+2. **Real three-symbol alphabets {0, ±1, ±x, ±y}, 1 < x < y.** Uncolourable exactly when two
+   letters have ratio 2 or √2, or at eight further points. Again no KS set has fewer than 31
+   rays.
+3. **Conjugate-closed alphabets {0, ±1, ±x, ±x\*}.** Uncolourable exactly when |x|² = 2, or
+   |x|² = 1/2, or x\*/x is a primitive third or sixth root of unity, or x is ±2 or ±1/2. On the
+   circle |x|² = 2 one fixed list of 45 words is uncolourable at every point; the circle
+   |x|² = 1/2 carries the 33-ray family of Gould and Aravind.
+4. **Roots of unity.** The pool of 0 and the n-th roots of unity is uncolourable if and only
+   if 6 divides n.
 
-### Core survey and verification
+Two minima in family 3 are not determined, and the gap between the known bounds 24 and 31 for
+the smallest KS set in dimension three is not closed. See "Open questions" in the paper and
+"Pending further resources" in the ledger.
 
-| Script | Purpose |
-|--------|---------|
-| `ks_islands.py` | Algebraic island survey — generates Tables 1–5 and 7 |
-| `ks_complex.py` | Roots of unity survey — generates Table 6 |
-| `ks_geometry.py` | Realizability gap experiments — generates Table 8 |
-| `ks_sat.py` | SAT-based KS coloring via PySAT/Glucose4 |
-| `ks_search.py` | Randomized greedy KS minimization |
-| `ks_ring_of_integers.py` | Ring-of-integers generator tests for d ≡ 1 mod 4 |
-| `ks_test.py` | Unit tests |
-| `find_peres33.py` | Peres 33-vector KS set finder |
-| `verify_peres33.py` | Verification of Peres 33-vector set |
-| `ks_spectral_filter.py` | Spectral prefilter for fast KS candidate screening |
+## Proofs checked in Lean
 
-### Extended analysis
+The folder [`lean/`](lean) holds three Lean 4 files (Lean 4.30 with mathlib). They use no axioms
+beyond `propext`, `Classical.choice` and `Quot.sound`.
 
-| Script | Purpose |
-|--------|---------|
-| `ks_new_islands.py` | Search for new algebraic islands |
-| `ks_new_island_analysis.py` | Analysis of newly discovered islands |
-| `ks_csw.py` | Cabello-Severini-Winter graph-theoretic contextuality |
-| `ks_csw_extended.py` | Extended CSW analysis |
-| `ks_graph_analysis.py` | Graph-theoretic properties of KS sets |
-| `ks_critical_bases.py` | Critical basis identification |
-| `ks_bpqs_sat.py` | SAT-based BPQS analysis |
-| `ks_trig.py` | Trigonometric coordinate analysis |
-| `ks_group_isomorphism.py` | Group isomorphism tests for KS symmetries |
-| `ks_literature_connections.py` | Cross-references with published KS results |
-
-### Optimization and proof
-
-| Script | Purpose |
-|--------|---------|
-| `ks_explore_new.py` | Exploratory search for novel KS constructions |
-| `ks_explore_new2.py` | Extended exploratory search |
-| `ks_ocus_all_pools.py` | Optimal constrained unsatisfiable subsets |
-| `ks_maxsat_optimal.py` | MaxSAT-based optimal KS minimization |
-| `ks_peres_merge.py` | Peres set merging strategies |
-| `ks_mus_landscape.py` | Minimal unsatisfiable subset landscape |
-| `ks_rigidity.py` | Rigidity analysis of KS sets |
-| `ks_rigidity_finite.py` | Finite-field rigidity analysis |
-| `ks_ck33_identify.py` | Conway-Kochen 33-vector set identification |
-
-### Number-theoretic extensions
-
-| Script | Purpose |
-|--------|---------|
-| `ks_quaternion.py` | Quaternion algebra KS constructions |
-| `ks_octonion.py` | Octonion algebra KS constructions |
-| `ks_6n_proof.py` | 6|n divisibility conjecture — proof framework |
-| `ks_6n_proof_theorem.py` | 6|n conjecture — theorem statements |
-
-## Requirements
-
-- Python 3.11+
-- [PySAT](https://pysathq.github.io/) 1.8+ (Glucose4 solver)
-- NumPy, SciPy
+| File | What it proves |
+|---|---|
+| `Cyclotomic6n.lean` | Result 4 for n ≥ 3 |
+| `NamedSets.lean` | The 43-ray set over Q(√−7) and the 47-ray supergolden set are uncolourable; the 45 words are uncolourable for every x with \|x\|² = 2 |
+| `Minimality.lean` | Minimum KS subsets of six pools: 31 (integer), 33 (√2), 33 (√−2), 33 (Eisenstein), 43 (Q(√−7)), 47 (supergolden) |
 
 ```bash
-pip install python-sat numpy scipy
+cd lean
+lake build                 # about ten minutes after mathlib is fetched
+lake env lean Audit.lean   # prints the axioms each theorem depends on
 ```
 
-## Reproducibility
+A transcript of the build and audit for this release is in
+[`results/lean_audit_v11.txt`](results/lean_audit_v11.txt). Limits, stated in the paper: each
+pool is an explicit list of vectors in the Lean file, and Lean does not prove that the list is
+every ray of the alphabet; the minima are minima within a pool; the three continuous
+classifications (results 1-3) are not formalised.
 
-All randomized experiments use `random.seed(42)`. Run individual scripts to regenerate tables:
+A second, smaller project, [`lean-ks/`](lean-ks), proves the uncolourability of the Conway-Kochen
+31 rays and the Peres 33 rays in core Lean 4 with no mathlib.
+
+## Reproducing the paper
+
+Appendix B of the paper lists the script behind every table. The main ones:
+
+| Script | Produces |
+|---|---|
+| `ks_two_symbol_theorem.py` | Two-symbol classification (about five seconds) |
+| `ks_three_symbol_real.py` | Real three-symbol classification, in exact arithmetic (`scan`, `check`, `certify`, `witness`) |
+| `ks_conjugate_closed_theorem.py` | Conjugate-closed classification (`scan`, `certify`, `one`, `one4`) |
+| `ks_modulus2_circle.py` | The 45 words on the circle \|x\|² = 2 |
+| `ks_half_circle_family.py` | The 33-ray family on \|x\|² = 1/2 and its identification with Gould and Aravind |
+| `ks_verify_cyclotomic_theorem.py` | Roots-of-unity pools, n ≤ 30 |
+| `ks_recertify_v10.py`, `ks_certify_fast3.py`, `ks_certify_fast4.py` | Certified minima of the named pools |
+| `ks_lean_export.py`, `ks_lean_minimality.py` | The rays and certificates inside the Lean files |
+
+Result files are under [`results/`](results). Reviews of the paper by a second language model
+acting as a hostile examiner are under [`paper/reviews/`](paper/reviews).
+
+Requirements: Python 3.13, [PySAT](https://pysathq.github.io/), NetworkX, NumPy, SciPy, SymPy.
 
 ```bash
-python ks_islands.py      # Tables 1-5, 7
-python ks_complex.py      # Table 6
-python ks_geometry.py     # Table 8
+pip install python-sat networkx numpy scipy sympy
 ```
 
-## Archive
+## Older material
 
-The complete development history including intermediate scripts is preserved on the [`archive-full`](../../tree/archive-full) branch.
+- **Scripts from versions 1-9** (for example `ks_islands.py`, `ks_new_islands.py`,
+  `ks_ocus_all_pools.py`) remain in the repository. They should not be used to reproduce the
+  current paper. The certification procedure in `ks_ocus_all_pools.py` is unsound.
+- **Version 9 of the paper** is [`paper/algebraic_islands.tex`](paper/algebraic_islands.tex);
+  version 10 is `paper/algebraic_islands_v10.tex`. Both are kept for the record.
+- **Letters** (`paper/cyclotomic_letter.tex`, `paper/heegner7_letter.tex`,
+  `paper/sub31_letter.tex`, `paper/universality_letter.tex`) were written alongside versions
+  1-9 and have not been revised. Where they disagree with version 11, version 11 is intended.
+- **The pages under [`docs/`](docs)** (the "Contextuality & KS Set Atlas") include pages on the
+  withdrawn classification. Those pages carry a notice at the top.
+- The complete development history is on the [`archive-full`](../../tree/archive-full) branch.
+
+## How this was produced
+
+Computations, proofs and text were produced with a large language model (Claude, Anthropic)
+under the author's direction, and reviewed by a second model (GPT, OpenAI) instructed to act as a
+hostile examiner. Agreement between language models is not a proof. The safeguards are exact
+arithmetic, a certifier with a short soundness argument, kernel-checked proofs where they exist,
+and an explicit list of what was not checked. Details are in Appendix C of the paper.
 
 ## References
 
-- M. Kernaghan, "Bell-Kochen-Specker theorem for 20 vectors," *J. Phys. A* **27**, L829–L830 (1994).
-- M. Kernaghan and A. Peres, "Kochen-Specker theorem for eight-dimensional space," *Phys. Lett. A* **198**, 1–5 (1995).
+- M. Kernaghan, "Bell-Kochen-Specker theorem for 20 vectors," *J. Phys. A* **27**, L829-L830 (1994).
+- M. Kernaghan and A. Peres, "Kochen-Specker theorem for eight-dimensional space," *Phys. Lett. A* **198**, 1-5 (1995).
 
 ## License
 
-This code is provided for academic reproducibility. See the papers for citation details.
+This code is provided for academic reproducibility. See the paper for citation details.

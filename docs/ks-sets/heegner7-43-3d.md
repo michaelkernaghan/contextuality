@@ -1,5 +1,16 @@
 # Heegner-7 43-Vector Kochen-Specker Set (3D)
 
+<!-- v11-notice -->
+!!! warning "Parts of this page predate version 11 of the paper"
+    This page was written for versions 1-9 of *The Algebraic Landscape of Kochen-Specker Sets in
+    Dimension Three*. That this pool contains an uncolourable set of this size stands (see the
+    ledger); the other details on this page have not been re-checked. Withdrawn or no longer
+    claimed: the "algebraic islands" classification and its "mechanisms"; BPQS and
+    contextual-advantage figures; claims that a set is new; and any minimum described as
+    "OCUS-certified" (minima were recomputed by a different, sound procedure, and several are
+    now proved in Lean). For current statements see [version 11 of the paper](https://github.com/michaelkernaghan/contextuality/blob/main/paper/algebraic_islands_v11.pdf) and the
+    [status ledger](https://github.com/michaelkernaghan/contextuality/blob/main/LEDGER.md).
+
 ## Basic Metadata
 
 | Property | Value |

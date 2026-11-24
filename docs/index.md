@@ -29,26 +29,26 @@ Contextuality is now understood to be a key **resource for quantum computation**
 
 ### Research (2026)
 
-- **[The Six Algebraic Islands](research/algebraic-islands.md)** — Classification of all KS-producing number rings in dimension 3
-- **[Research Papers](research/papers.md)** — One main paper and four PRL letters on the algebraic landscape of KS sets
-- **[Research Overview](research/index.md)** — The algebraic islands programme and key results
+- **[The Algebraic Landscape of Kochen-Specker Sets in Dimension Three, version 11](https://github.com/michaelkernaghan/contextuality/blob/main/paper/algebraic_islands_v11.pdf)** — The current paper: which coordinate alphabets give KS-uncolourable pools, in four families, with several results checked in Lean ([arXiv:2603.16988](https://arxiv.org/abs/2603.16988))
+- **[Status ledger](https://github.com/michaelkernaghan/contextuality/blob/main/LEDGER.md)** — Every statement of the paper with the standard of proof it meets
+- **Withdrawn (kept as history):** [The Six Algebraic Islands](research/algebraic-islands.md), [Research Papers](research/papers.md) and [Research Overview](research/index.md) describe the classification of versions 1–9, which did not survive checking
 
 ### Featured KS Sets
 
 **Classic Constructions:**
 
-- **[Conway-Kochen 31-Vector Set (3D)](ks-sets/conway-kochen-31-3d.md)** — The minimal known KS set in 3 dimensions (strong optimality evidence)
+- **[Conway-Kochen 31-Vector Set (3D)](ks-sets/conway-kochen-31-3d.md)** — The smallest known KS set in 3 dimensions (the best lower bound is 24)
 - **[Peres 33-Vector Set (3D)](ks-sets/peres-33-3d.md)** — The classic 33-vector construction with full proof
 - **[Kernaghan 20-Vector Set (4D)](ks-sets/kernaghan-20-4d.md)** — The first 20-vector KS set in 4 dimensions, a landmark construction from 1994
 - **[Kernaghan–Peres 40-Vector Set (8D)](ks-sets/kernaghan-peres-40-8d.md)** — A highly efficient 40-vector construction in 8 dimensions (three qubits), connected to GHZ-type paradoxes
 - **[Cabello 18-Vector Set (4D)](ks-sets/cabello-18-4d.md)** — The minimal known KS set in 4 dimensions
 
-**New Constructions (2026):**
+**Sets from the 2026 work** (pages written for versions 1–9; each carries a notice saying what no longer stands, and none is claimed to be new to the literature):
 
-- **[Eisenstein 33-Vector Set (3D)](ks-sets/eisenstein-33-3d.md)** — Rigid 33-vector set over $\mathbb{Z}[\omega]$, smallest known BPQS (45)
-- **[Heegner-7 43-Vector Set (3D)](ks-sets/heegner7-43-3d.md)** — First KS set from a Heegner number field, highest contextual advantage ($\theta/\alpha = 1.118$)
-- **[Golden Ratio 52-Vector Set (3D)](ks-sets/golden-52-3d.md)** — Discovered via cross-product completion, invisible to raw alphabet search
-- **[$\mathbb{Z}[\sqrt{-2}]$ 33-Vector Set (3D)](ks-sets/zsqrt2-neg-33-3d.md)** — Complex realization of the Peres graph, proving the flex belongs to the graph
+- **[Eisenstein 33-Vector Set (3D)](ks-sets/eisenstein-33-3d.md)** — 33-vector set over $\mathbb{Z}[\omega]$; it has the graph of Cabello's 33-ray set
+- **[43-Vector Set over $\mathbb{Q}(\sqrt{-7})$ (3D)](ks-sets/heegner7-43-3d.md)** — The minimum KS subset of the pool at one point of the circle $|x|^2=2$
+- **[$\mathbb{Z}[\sqrt{-2}]$ 33-Vector Set (3D)](ks-sets/zsqrt2-neg-33-3d.md)** — A complex realization of the Peres graph
+- **[Golden Ratio 52-Vector Set (3D)](ks-sets/golden-52-3d.md)** — **Withdrawn as a minimum:** a 51-ray set exists
 
 ### Key Topics
 

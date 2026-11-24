@@ -1,5 +1,17 @@
 # Papers
 
+<!-- v11-notice -->
+!!! warning "This page was written for versions 1-9 of the paper and is partly withdrawn"
+    The classification by "cancellation mechanisms" and "algebraic islands" described in
+    versions 1-9 of *The Algebraic Landscape of Kochen-Specker Sets in Dimension Three* did not
+    survive checking and has been withdrawn. Withdrawn claims include: the list of four, six or
+    eight "islands"; the "norm bound" (generator norm at most 2); the golden-ratio minimum of 52
+    (a 51-ray set exists); "merge saturation"; "graph universality"; the tables of BPQS and
+    Cabello-Severini-Winter quantities; and every statement that a set is "new" or "not
+    previously reported". This page has not been rewritten. For what is currently claimed, and
+    with what standard of proof, see [version 11 of the paper](https://github.com/michaelkernaghan/contextuality/blob/main/paper/algebraic_islands_v11.pdf) (Appendix A lists the
+    withdrawals) and the [status ledger](https://github.com/michaelkernaghan/contextuality/blob/main/LEDGER.md).
+
 ## Overview
 
 The algebraic islands research programme has produced one main paper and four PRL-style letters, each addressing a distinct aspect of the classification of Kochen-Specker sets in dimension three.

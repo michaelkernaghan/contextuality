@@ -1,5 +1,12 @@
 # Peres 33-Vector Kochen-Specker Set (3D)
 
+<!-- v11-notice -->
+!!! note "Mentions of the 2026 'algebraic islands' work on this page"
+    References on this page to "algebraic islands", to a 52-ray golden-ratio set, or to results
+    of versions 1-9 of *The Algebraic Landscape of Kochen-Specker Sets in Dimension Three*
+    describe a classification that has been withdrawn. See
+    [version 11 of the paper](https://github.com/michaelkernaghan/contextuality/blob/main/paper/algebraic_islands_v11.pdf) and the [status ledger](https://github.com/michaelkernaghan/contextuality/blob/main/LEDGER.md).
+
 ## Source
 
 Extracted from: A. Peres, *Quantum Theory: Concepts and Methods* (Kluwer, 1993), Chapter 7: Contextuality, pages 197–200.

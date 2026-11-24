@@ -1,5 +1,15 @@
 # Golden Ratio 52-Vector Kochen-Specker Set (3D)
 
+<!-- v11-notice -->
+!!! danger "Withdrawn: 52 is not the minimum"
+    Versions 1-9 of the paper claimed a certified minimum of 52 rays for the completed pool of
+    the golden-ratio alphabet. That is wrong: the pool contains an uncolourable subset of 51
+    rays (coordinates in `golden_51_rays.txt` in the repository), and the procedure that
+    "certified" 52 was unsound. The current status is: minimum at most 51, not certified. The
+    statement that this set is new to the literature is also withdrawn. The 52-ray set below is
+    not a minimum set, and the data on this page have not been re-checked. See
+    [version 11 of the paper](https://github.com/michaelkernaghan/contextuality/blob/main/paper/algebraic_islands_v11.pdf) and the [status ledger](https://github.com/michaelkernaghan/contextuality/blob/main/LEDGER.md).
+
 ## Basic Metadata
 
 | Property | Value |

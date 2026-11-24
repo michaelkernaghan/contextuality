@@ -46,14 +46,14 @@ nav:
       - Cabello 18 (4D): ks-sets/cabello-18-4d.md
       - Eisenstein 33 (3D): ks-sets/eisenstein-33-3d.md
       - Heegner-7 43 (3D): ks-sets/heegner7-43-3d.md
-      - Golden Ratio 52 (3D): ks-sets/golden-52-3d.md
+      - Golden Ratio 52 (3D, withdrawn as minimum): ks-sets/golden-52-3d.md
       - "Z[√-2] 33 (3D)": ks-sets/zsqrt2-neg-33-3d.md
       - KS Coloring Test Program: ks-sets/peres-ks-test-program.md
       - Computational Search Results: ks-sets/ks-search-results.md
   - Research:
-      - Overview: research/index.md
-      - The Six Algebraic Islands: research/algebraic-islands.md
-      - Papers: research/papers.md
+      - Overview (versions 1-9, withdrawn): research/index.md
+      - The Six Algebraic Islands (withdrawn): research/algebraic-islands.md
+      - Papers (versions 1-9): research/papers.md
   - History of Contextuality:
       - Introduction: history/index.md
       - Early Quantum Theory (1900–1930): history/early-quantum.md

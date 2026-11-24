@@ -1,5 +1,12 @@
 # Michael Kernaghan
 
+<!-- v11-notice -->
+!!! note "Mentions of the 2026 'algebraic islands' work on this page"
+    References on this page to "algebraic islands", to a 52-ray golden-ratio set, or to results
+    of versions 1-9 of *The Algebraic Landscape of Kochen-Specker Sets in Dimension Three*
+    describe a classification that has been withdrawn. See
+    [version 11 of the paper](https://github.com/michaelkernaghan/contextuality/blob/main/paper/algebraic_islands_v11.pdf) and the [status ledger](https://github.com/michaelkernaghan/contextuality/blob/main/LEDGER.md).
+
 ## Overview
 
 **Michael Kernaghan** is a physicist who made significant contributions to the study of Kochen–Specker sets in the 1990s. His work focused on finding compact, finite proofs of the Kochen–Specker theorem in various dimensions, resulting in landmark constructions that remain important today.

@@ -1,5 +1,17 @@
 # Research
 
+<!-- v11-notice -->
+!!! warning "This page was written for versions 1-9 of the paper and is partly withdrawn"
+    The classification by "cancellation mechanisms" and "algebraic islands" described in
+    versions 1-9 of *The Algebraic Landscape of Kochen-Specker Sets in Dimension Three* did not
+    survive checking and has been withdrawn. Withdrawn claims include: the list of four, six or
+    eight "islands"; the "norm bound" (generator norm at most 2); the golden-ratio minimum of 52
+    (a 51-ray set exists); "merge saturation"; "graph universality"; the tables of BPQS and
+    Cabello-Severini-Winter quantities; and every statement that a set is "new" or "not
+    previously reported". This page has not been rewritten. For what is currently claimed, and
+    with what standard of proof, see [version 11 of the paper](https://github.com/michaelkernaghan/contextuality/blob/main/paper/algebraic_islands_v11.pdf) (Appendix A lists the
+    withdrawals) and the [status ledger](https://github.com/michaelkernaghan/contextuality/blob/main/LEDGER.md).
+
 ## The Algebraic Islands Programme
 
 This section documents original research (2026) on the algebraic classification of Kochen-Specker sets in dimension three. The central discovery is that KS-uncolorable ray pools in $\mathbb{R}^3$ and $\mathbb{C}^3$ cluster into exactly **six algebraic islands** (six distinct graph families), each characterized by number rings whose generators satisfy norm-$\leq 2$ cancellation identities. Multiple rings can produce the same island when they yield isomorphic orthogonality graphs.
