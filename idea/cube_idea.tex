@@ -1,0 +1,310 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,graphicx,booktabs,array,fancyhdr}
+\usepackage[T1]{fontenc}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{\footnotesize\texttt{cube\_idea.pdf}}
+\fancyfoot[R]{\footnotesize\thepage}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[L]{\footnotesize\texttt{cube\_idea.pdf}}\fancyfoot[R]{\footnotesize\thepage}}
+
+\setlength{\parskip}{0.55em}
+\setlength{\parindent}{0pt}
+\makeatletter\let\primitiveinput\@@input\makeatother  % expandable, so a table row may start with \multicolumn
+\newcounter{fig}
+\newcommand{\fig}[3]{\refstepcounter{fig}\label{#1}%
+  \begin{center}\includegraphics[width=#2]{figures/#1.pdf}\\[0.5em]
+  \parbox{0.9\textwidth}{\small\textbf{Figure \thefig.} #3}\end{center}}
+
+\title{The idea behind the alphabet construction\\[0.3em]
+\large A companion to ``The Algebraic Landscape of Kochen--Specker Sets in Dimension Three''}
+\author{Michael Kernaghan}
+\date{24 November 2026 \quad\textperiodcentered\quad \texttt{cube\_idea.pdf}}
+
+\begin{document}
+\maketitle
+
+The paper this note accompanies has five theorems and many tables, but it grows from one idea
+that needs no more than a cube and a pencil.  This note sets the idea out in seven steps, one
+picture to a step.  It proves nothing new.  Every fact stated here is checked by a short
+program that accompanies the note, or is a result of the paper, or is taken from the literature
+listed at the end, and each place says which.
+
+\section{A ray is a point on a cube}
+
+A ray is a straight line through a fixed point $O$.  It has a direction but no length and no
+sense: the line through $O$ pointing north-east is the same ray as the line pointing south-west.
+
+Put $O$ at the centre of a cube.  Every ray leaves the cube at two points, $P$ and the point $P'$
+directly opposite.  Either of them tells us which ray we mean.  So a set of rays, which is hard
+to draw, becomes a set of points on the surface of a cube, which is easy to draw.
+
+\fig{fig1_ray}{0.36\textwidth}{A ray through the centre $O$ of a cube leaves it at $P$ and at the
+opposite point $P'$.  Either point names the ray.}
+
+The cube has an advantage over the sphere, which would serve the same purpose.  Let the edges of
+the cube run along three perpendicular axes and let the cube reach from $-x$ to $x$ on each.
+Then the coordinates of $P$ are three numbers of which the largest is exactly $x$ in size, and
+they can be read straight off the face on which $P$ lies.  A ray is a triple of numbers taken
+up to a common factor: $(1,0,1)$ and $(x,0,x)$ are the same ray.
+
+\section{The rule}
+
+Take three rays that are mutually orthogonal, such as the three axes.  We call such a set of
+three a \emph{triad}.  The rule of the game is:
+
+\begin{quote}
+In every triad exactly one ray is \emph{marked}.  Two orthogonal rays are never both marked.
+\end{quote}
+
+\fig{fig2_rule}{0.36\textwidth}{A triad: the three axes.  One ray is marked (filled point) and
+two are not (open points).  The point $(0,\bar1,0)$ names the same ray as $(0,1,0)$; a bar is a
+minus sign.}
+
+For a finite set of rays the rule is applied to the orthogonal pairs and the triads found
+within the set, and to no others.
+
+The rule comes from a prediction of quantum mechanics.  For a particle of spin one, the squares of the spin along three
+mutually orthogonal directions can be measured together.  Each square is found to be 0 or 1 (in units of
+$\hbar^2$), and the three always add up to~2.  So in every triad of directions exactly one square is~0, and
+that is the direction we mark.  If the particle carried these values with it before the
+measurement, and the value along a direction did not depend on which other two directions were
+measured with it, then every ray in space would be marked or unmarked once and for all, in
+agreement with the rule.
+
+Kochen and Specker showed in 1967 that this cannot be done.  One need not try every ray in
+space: there are finite sets of rays that cannot be marked in agreement with the rule.  Such a
+set is called a Kochen--Specker set, and the usual phrase is that it ``cannot be colored''.
+The first such set had 117 rays.  The smallest one known in three dimensions has 31.
+What such a set excludes should be stated exactly: values that are fixed beforehand \emph{and}
+do not depend on what else is measured.  A theory in which the value along a direction depends
+on the other two directions chosen is not touched by it.
+
+\section{The points form a grid}
+
+Peres drew his set of 33 rays as points on a cube, and he drew the 31 rays of Conway and Kochen
+the same way.  In both drawings the points do not lie anywhere on the faces.  They lie where
+five lines in one direction cross five lines in the other.  In Peres's drawing the lines sit at
+$0$, $\pm1$ and $\pm\sqrt2$.  In the drawing of Conway and Kochen they sit at $0$, $\pm1$
+and~$\pm2$.
+
+\fig{fig3_face}{0.6\textwidth}{One face of the cube, seen square-on: the face on which the third
+coordinate equals~$x$.  The grid lines sit at $0$, $\pm1$, $\pm x$.  Five of the 25 crossing
+points are named.  The points \textit{a}, \textit{d} and \textit{e} name rays that can also be
+written without the letter~$x$, because a common factor does not matter.}
+
+This is the observation on which everything else rests.  The two famous sets are built on
+\emph{the same grid}, except for the position of one pair of lines.  Write that position as a
+letter, $x$.  Then every point of the grid is a triple of the five symbols $0,\pm1,\pm x$.  We
+call the list $0,\pm1,\pm x$ an \emph{alphabet} and each triple a \emph{word}.  Counting
+opposite points once, the grid on the whole cube names 49 rays, and they are the same 49 words
+wherever the lines sit.  (The exceptions are a few values at which words coincide, such as
+$x=1$, where the inner lines fall on the rim.)
+
+\section{Orthogonality depends on where the lines sit}
+
+The words do not change with $x$.  What changes is which rays are orthogonal.  Two rays with real
+coordinates are orthogonal when the products of their coordinates add up to zero.  (With
+complex coordinates one factor of each product is conjugated.)  Take the two words $(x,1,1)$
+and $(x,\bar1,\bar1)$:
+\[
+(x,1,1)\cdot(x,\bar1,\bar1)=x^2-1-1=x^2-2 .
+\]
+These two rays are orthogonal when $x^2=2$, that is, when the lines sit at $\pm\sqrt2$, and
+for no other position.  Take
+instead $(1,\bar1,1)$ and $(x,1,\bar1)$:
+\[
+(1,\bar1,1)\cdot(x,1,\bar1)=x-1-1=x-2 .
+\]
+These are orthogonal when $x=2$ and not otherwise.
+
+\fig{fig4_slide}{0.92\textwidth}{One face (first coordinate equal to $x$) for three positions of the
+inner lines.  Squares: the rays $(x,1,1)$ and $(x,\bar1,\bar1)$.  Triangles: the rays
+$(1,\bar1,1)$, at the corner, and $(x,1,\bar1)$.  The squares are orthogonal only in the first
+panel and the triangles only in the third.  At $x=\sqrt3$ neither pair is.}
+
+A warning is needed here.  \emph{The picture shows where the rays are; it does not show which
+are orthogonal.}  Two points close together on a face are not ``nearly the same'', and nothing
+visible in Figure~\ref{fig4_slide} distinguishes the first panel from the second.
+Orthogonality has to be computed, as above.  The picture's service is a different one: it tells
+us that there is a single quantity, the position $x$ of a line, on which all the
+orthogonalities depend, and it invites us to slide that line and watch what happens.
+
+Some pairs are orthogonal wherever the line sits, for instance the three axes.  Others, like
+the two above, switch on at one special value.  Since the rule of Section~2 bites only on
+orthogonal rays, the grid is harder to mark at the special values than elsewhere.
+
+\section{Enough orthogonal pairs leave no way to mark}
+
+At $x=\sqrt2$ the 49 rays have enough orthogonal pairs that the rule cannot be obeyed.  Peres's
+33 rays already suffice.  They are the 49 with two kinds of word left out: those like $(1,1,1)$
+and those like $(1,x,x)$.  Among the 33 there are 72 orthogonal pairs and 16 triads.
+
+The argument uses the rule in two ways.  When a ray is marked, every ray orthogonal to it is
+unmarked.  When two rays of a triad are unmarked, the third is marked.  Here is the whole
+argument; in it $x$ stands for $\sqrt2$.
+
+{\small
+\begin{center}
+\begin{tabular}{@{}r@{\quad}l@{\quad}>{\raggedright\arraybackslash}p{4.9cm}@{\quad}>{\raggedright\arraybackslash}p{7.3cm}@{}}
+\toprule
+ & Marked & Why & Rays newly unmarked by it \\
+\midrule
+\primitiveinput forcing_table.tex
+\bottomrule
+\end{tabular}
+\end{center}
+}
+
+Read it as follows.  One of the three axes must be marked; say $(0,0,1)$.  That unmarks the
+eight rays whose third coordinate is~0 (Figure~\ref{fig5_forcing}a).  Two further choices are
+then made, and after each of them the rule forces more rays, until seven are marked.  At that
+point the triad $(1,\bar x,1)$, $(1,0,\bar1)$, $(1,x,1)$ has all three of its rays unmarked,
+which the rule forbids (Figure~\ref{fig5_forcing}b).  The choices not followed in the table are
+mirror images of the ones that are: the 33 rays are unchanged when the coordinates are permuted
+or their signs reversed, and each such case is the written case with the coordinates rearranged
+as stated.
+
+\fig{fig5_forcing}{0.84\textwidth}{The 33 rays of Peres on the cube with lines at $0,\pm1,\pm\sqrt2$.
+Black: marked, numbered as in the table.  Grey: unmarked.  White: not yet decided.  In (b) the
+three ringed rays form a triad and all are unmarked.  A ray on an edge between two visible faces
+appears twice.}
+
+The table was not written by hand.  A program found it, and a second, independent routine in
+the same program replays every row from the coordinates alone and checks that each rearrangement
+used really does map the 33 rays to themselves.  As a test of the checker, one entry of the
+table was altered, and separately one ray of the list was replaced; it refused both.  The same program confirms that all 33 rays are needed: delete any one, and the
+remaining 32 can be marked.
+
+\section{The question and its answer}
+
+We now have a machine with one dial.  Turn the dial $x$ and the 49 words stay fixed while the
+orthogonalities come and go.  The question asks itself:
+
+\begin{quote}
+For which positions $x$ of the lines can the grid not be marked, and how few of its rays are
+then needed?
+\end{quote}
+
+\fig{fig6_triptych}{0.84\textwidth}{The same grid at three positions.  Filled points: the 33 rays of
+Peres at $x=\sqrt2$ and the 31 rays of Conway and Kochen at $x=2$.  At $x=\sqrt3$ all 49 rays can
+be marked.}
+
+The answer is a theorem of the paper.  Two remarks first: replacing $x$ by $-x$ gives the same
+grid, and so does replacing $x$ by $1/x$, since a common factor does not change a ray.  Apart
+from these relabelings, the grid cannot be marked at exactly two real positions,
+\[
+x=\sqrt2 \qquad\text{and}\qquad x=2 ,
+\]
+the two that Peres drew.  At $\sqrt2$ the fewest rays that cannot be marked is 33; at $2$ it is
+31.  At every other real position, $\sqrt3$ for instance, all 49 rays can be marked.
+
+The coordinates of a ray in Hilbert space may be complex numbers, and the dial may be turned to
+complex values, although the cube can then no longer be drawn.  This adds only $x=\sqrt{-2}$
+and the complex cube roots of $1$ and of $-1$ (the primitive third and sixth roots of unity),
+each with 33 rays at fewest.
+
+\section{The ladder of grids}
+
+The grid of Section~3 is one of a family, and the family has an order.
+
+\fig{fig7_ladder}{0.84\textwidth}{Three rungs.  One face of each grid is shown; the number of rays is
+for the whole cube.}
+
+On the bottom rung the only letters are $0$ and $\pm1$.  Each face carries three lines each way
+and the cube names 13 rays.  These can be marked, so the bottom rung holds no Kochen--Specker
+set.  On the second rung one letter is added.  That is the grid of this note: 49 rays, and by
+the theorem just quoted no Kochen--Specker set on it has fewer than 31.  On the third rung two
+real letters $x$ and $y$ are added, giving 145 rays.  The paper proves that the same holds
+there: the grid cannot be marked when two of the letters $1,x,y$ are in the ratio $2$ or
+$\sqrt2$ and at eight further points, and never with fewer than 31 rays.  (A grid whose letters
+are $0,\pm a,\pm b$ can always be rescaled so that one letter is~1.  So the first two rungs
+cover every grid with one or two letters, counting a letter and its negative as one and
+allowing complex values, and the third covers every grid with three real letters.  A grid that
+lacks some of the minus signs is part of one of these and needs no separate treatment.)
+
+\paragraph{The hope.}
+The pattern of the rungs was the reason for climbing them.  The best set known, 31 rays, stands
+on the second rung.  Nobody has proved that 31 is the least possible; all that is proved in
+general is that a Kochen--Specker set in three dimensions needs at least 24 rays (Kirchweger,
+Peitl and Szeider; Li, Bright and Ganesh).  If the smallest set came from a grid on the second
+rung, it was natural to hope that the construction could be abstracted: that by following the
+rungs upward, or sideways into the complex numbers, one would either meet a grid carrying a
+smaller set or find a reason, visible in the pattern itself, why none exists.
+
+\paragraph{What was found.}
+Neither happened.  \emph{This work does not prove that 31 is the smallest Kochen--Specker set in
+three dimensions.}  It cannot, for a simple reason: every finite set of rays lies on \emph{some}
+grid, if enough lines are allowed, so ``lies on a grid'' excludes nothing until the number of
+lines is bounded.  What the rungs give is elimination.  A set of fewer than 31 rays, if there
+is one, is not on the first rung, not on the second with any real or complex $x$, and not on
+the third with real letters.  It must be sought on a grid outside these: one with more
+letters, or with complex letters on the third rung.  That is a disappointment measured against the hope.
+It is also progress of the eliminative kind: these families are crossed off.  The limit of that
+progress should be plain.  It does not shorten a search among sets with arbitrary coordinates,
+because a smaller set need not have few letters.
+
+\paragraph{One place still open, and what closing it needs.}
+One family of complex grids on the third rung was examined, and one member of it is not
+settled.  Take the letters $0$, $\pm1$, $\pm x$ and
+$\pm x^{*}$, where $x^{*}$ is the complex conjugate of $x$.  The paper determines every $x$ for
+which this grid cannot be marked, and the fewest rays needed in all cases but two.  One of the
+two is $x=1+i$.  That grid has 127 rays, 477 orthogonal pairs and 63 triads.  It contains a
+Kochen--Specker set of 45 rays, and nothing excludes a smaller one except the general bound of
+24.  So the fewest rays needed there lies between 24 and 45, and a set below 31 is not ruled
+out.  (At the other point, $x=e^{i\pi/3}/\sqrt2$, the answer is 32 or 33, so nothing below 31
+can occur.)
+
+The paper lists this among the questions that need longer runs or faster solvers and not new
+ideas.  The work is of three kinds.
+\begin{enumerate}
+\item \emph{Search downward.}  Start from all 127 rays and delete rays for as long as the rest
+still cannot be marked, many times over in different random orders.  This is cheap.  It either
+turns up a set below 45 or makes 45 more credible.  The point $1+i$ lies on the circle
+$|x|^2=2$, where 45 is the answer at a typical point.  At one special point of that circle,
+$x=(1+\sqrt{-7})/2$, an extra relation among the letters lowers the answer to~43.  Whether the
+extra relations at $1+i$ do the same is not known; a larger number of orthogonal pairs does not
+by itself predict it.
+\item \emph{Prove a floor.}  To show that no set of fewer than $N$ rays will do, the program
+collects subsets of the 127 that \emph{can} be marked.  A set that cannot be marked must
+contain a ray outside each of them, and when no set of fewer than $N$ rays can do that, $N$ is
+a floor.  This is the method by which the paper's certified minima were obtained.  At $1+i$ a
+run aimed at the floor 31 reached its limit of eight hours without an answer.  What is needed is a
+longer run, a faster solver, or a better use of the symmetries of this grid to cut the number
+of subsets that must be collected.
+\item \emph{Check the result independently.}  The list of markable subsets is a certificate that
+a proof assistant can verify, as was done in Lean for six of the paper's grids, each given
+as an explicit list of vectors.
+\end{enumerate}
+The first two steps, if the second can be brought to an end, decide whether the grid at $1+i$ holds a set smaller than 31.  If it does,
+the hope of this section is fulfilled after all.  If it does not, one more place has been
+crossed off.
+
+\subsection*{Sources}
+
+{\small
+S.~Kochen and E.~P.~Specker, ``The problem of hidden variables in quantum mechanics,''
+\textit{J. Math. Mech.} \textbf{17}, 59--87 (1967).
+
+A.~Peres, ``Two simple proofs of the Kochen--Specker theorem,'' \textit{J. Phys. A: Math. Gen.}
+\textbf{24}, L175--L178 (1991); \textit{Quantum Theory: Concepts and Methods} (Kluwer, 1993),
+Fig.~7.2 and Plate~II, for the two cube drawings and the 31 rays of Conway and Kochen.
+
+M.~Kirchweger, T.~Peitl and S.~Szeider, \textit{Proc.\ IJCAI-23}, pp.~1944--1953; Z.~Li,
+C.~Bright and V.~Ganesh, \textit{Proc.\ IJCAI-24}, pp.~1898--1906, for the lower bound 24.
+
+M.~Kernaghan, ``The Algebraic Landscape of Kochen--Specker Sets in Dimension Three,''
+arXiv:2603.16988, version 11.  The statements of Sections~6 and~7 are its theorems on
+two-symbol, real three-symbol and conjugate-closed alphabets, the table that accompanies the
+last of these (for the counts at $x=1+i$ and $(1+\sqrt{-7})/2$), and its first open question.
+
+The program \texttt{ks\_idea\_forcing.py} in the paper's repository checks, in exact arithmetic,
+the two inner products of Section~4, the counts 13, 49 and 145, that the 13 rays can be marked,
+the counts 33, 72 and 16, the table of Section~5, and the statements made about
+$x=\sqrt2$, $2$ and $\sqrt3$ for the 49 rays.  \texttt{make\_idea\_figures.py} draws the
+figures; Figure~\ref{fig5_forcing} is drawn from the program's output.
+}
+
+\end{document}

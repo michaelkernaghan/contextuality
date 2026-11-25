@@ -1,0 +1,29 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{amsmath,amssymb}
+\usetikzlibrary{arrows.meta}
+\begin{document}
+\begin{tikzpicture}[line cap=round,line join=round]
+\draw[line width=0.7pt] (-3.1693,-2.3988) -- (-3.1693,1.8035);
+\draw[densely dashed,gray,line width=0.3pt] (-3.1693,-2.3988) -- (-0.7317,-0.8121);
+\draw[line width=0.7pt] (-3.1693,-2.3988) -- (0.7317,-3.3902);
+\draw[line width=0.7pt] (-3.1693,1.8035) -- (-0.7317,3.3902);
+\draw[line width=0.7pt] (-3.1693,1.8035) -- (0.7317,0.8121);
+\draw[densely dashed,gray,line width=0.3pt] (-0.7317,-0.8121) -- (-0.7317,3.3902);
+\draw[densely dashed,gray,line width=0.3pt] (-0.7317,-0.8121) -- (3.1693,-1.8035);
+\draw[line width=0.7pt] (-0.7317,3.3902) -- (3.1693,2.3988);
+\draw[line width=0.7pt] (0.7317,-3.3902) -- (0.7317,0.8121);
+\draw[line width=0.7pt] (0.7317,-3.3902) -- (3.1693,-1.8035);
+\draw[line width=0.7pt] (0.7317,0.8121) -- (3.1693,2.3988);
+\draw[line width=0.7pt] (3.1693,-1.8035) -- (3.1693,2.3988);
+\draw[line width=0.5pt,densely dashed] (0.0000,0.0000) -- (1.9505,-0.4957);
+\draw[line width=0.8pt] (1.9505,-0.4957) -- (2.7307,-0.6940) node[right=1pt,font=\small,fill=white,inner sep=1.5pt] {$(1,0,0)$};
+\draw[fill=white,line width=0.4pt] (1.9505,-0.4957) circle (0.085);
+\draw[line width=0.5pt,densely dashed] (0.0000,0.0000) -- (-1.2188,-0.7933);
+\draw[line width=0.8pt] (-1.2188,-0.7933) -- (-1.7063,-1.1107) node[left=1pt,font=\small,fill=white,inner sep=1.5pt] {$(0,\bar 1,0)$};
+\draw[fill=white,line width=0.4pt] (-1.2188,-0.7933) circle (0.085);
+\draw[line width=0.5pt,densely dashed] (0.0000,0.0000) -- (0.0000,2.1012);
+\draw[line width=0.8pt] (0.0000,2.1012) -- (0.0000,2.9416) node[above=1pt,font=\small,fill=white,inner sep=1.5pt] {$(0,0,1)$};
+\fill (0.0000,2.1012) circle (0.085);
+\fill[gray] (0.0000,0.0000) circle (0.05);
+\end{tikzpicture}
+\end{document}
