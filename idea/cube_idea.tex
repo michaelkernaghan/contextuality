@@ -21,7 +21,7 @@
 \title{The idea behind the alphabet construction\\[0.3em]
 \large A companion to ``The Algebraic Landscape of Kochen--Specker Sets in Dimension Three''}
 \author{Michael Kernaghan}
-\date{24 November 2026 \quad\textperiodcentered\quad \texttt{cube\_idea.pdf}}
+\date{24 November 2026, corrected 25 November 2026 \quad\textperiodcentered\quad \texttt{cube\_idea.pdf}}
 
 \begin{document}
 \maketitle
@@ -100,14 +100,15 @@ written without~$x$, because a common factor does not matter.}
 This is the observation on which everything else rests.  The two famous sets are built on
 \emph{the same grid}, except for the position of one pair of lines.  Write that position
 as~$x$.  The numbers $0,\pm1,\pm x$ at which the lines sit are the \emph{coordinate values} of
-the grid: every coordinate of every point on it is one of them.  A crossing point of the lines
-is a \emph{grid point}, and it is written as a triple such as $(x,1,\bar1)$.  Counting opposite
+the grid: every coordinate of every point on it is one of them.  A triple of coordinate
+values, not all zero, such as $(x,1,\bar1)$, is a \emph{coordinate triple}.  It names a ray,
+and on this grid it is also a point where the lines cross.  Counting opposite
 points once, the grid on the whole cube names 49 rays, and they are written as the same 49
-triples wherever the lines sit.  (The exceptions are a few positions at which grid points
-coincide, such as $x=1$, where the inner lines fall on the rim.)
+triples wherever the lines sit.  (The exceptions are a few positions at which more triples name
+the same ray, such as $x=1$, where the inner lines fall on the rim.)
 
 The paper uses other names, chosen for its theorems.  There the list of coordinate values is an
-\emph{alphabet}, a single coordinate value is a \emph{letter} or \emph{symbol}, a grid point is
+\emph{alphabet}, a single coordinate value is a \emph{letter} or \emph{symbol}, a coordinate triple is
 a \emph{word}, and the grid is a \emph{pool}.  Since a value and its negative always occur
 together, the paper counts them as one: the grid above has a ``two-symbol alphabet'', $1$
 and~$x$.
@@ -116,7 +117,7 @@ and~$x$.
 
 The triples do not change with $x$.  What changes is which rays are orthogonal.  Two rays with real
 coordinates are orthogonal when the products of their coordinates add up to zero.  (With
-complex coordinates one factor of each product is conjugated.)  Take the two grid points $(x,1,1)$
+complex coordinates one factor of each product is conjugated.)  Take the two coordinate triples $(x,1,1)$
 and $(x,\bar1,\bar1)$:
 \[
 (x,1,1)\cdot(x,\bar1,\bar1)=x^2-1-1=x^2-2 .
@@ -148,7 +149,7 @@ orthogonal rays, the grid is harder to color at the special values than elsewher
 \section{Enough orthogonal pairs leave no way to color}
 
 At $x=\sqrt2$ the 49 rays have enough orthogonal pairs that the rule cannot be obeyed.  Peres's
-33 rays already suffice.  They are the 49 with two kinds of grid point left out: those like $(1,1,1)$
+33 rays already suffice.  They are the 49 with two kinds of coordinate triple left out: those like $(1,1,1)$
 and those like $(1,x,x)$.  Among the 33 there are 72 orthogonal pairs and 16 triads.
 
 The argument uses the rule in two ways.  When a ray is colored, every ray orthogonal to it is
@@ -219,8 +220,9 @@ each with 33 rays at fewest.
 
 The grid of Section~3 is one of a family, and the family has an order.
 
-\fig{fig7_ladder}{0.84\textwidth}{Three rungs.  One face of each grid is shown; the number of rays is
-for the whole cube.}
+\fig{fig7_ladder}{0.84\textwidth}{Three rungs.  One face of each cube is shown, with lines at the
+coordinate values; the number of rays is that of the grid.  On the first two rungs the points
+where the lines cross are all the rays of the grid.  On the third they are 109 of the 145.}
 
 Count the coordinate values of a grid leaving out zero and taking a value and its negative as
 one.  On the bottom rung there is one coordinate value,~$1$.  Each face carries three lines each
@@ -228,13 +230,18 @@ way and the cube names 13 rays.  These can be colored, so the bottom rung holds 
 Kochen--Specker set.  On the second rung there are two coordinate values, $1$ and~$x$.  That is
 the grid of this note: 49 rays, and by the theorem just quoted no Kochen--Specker set on it has
 fewer than 31.  On the third rung there are three real coordinate values, $1$, $x$ and~$y$,
-giving 145 rays.  The paper proves that the same holds there: the grid cannot be colored when
+giving 145 rays.  Here the drawing is no longer the whole grid: a ray is in the grid when its
+three coordinates can be written as coordinate values, and on the cube that reaches to~$y$ the
+ray $(1,x,0)$ leaves at $(y/x,\,y,\,0)$, where $y/x$ is in general not a coordinate value, so that
+point is not one where lines cross.  The crossings on the six faces are 109 rays of the 145.
+For this rung the paper proves what it proves for the second: the grid cannot be colored when
 two of $1,x,y$ are in the ratio $2$ or $\sqrt2$ and at eight further points, and never with
 fewer than 31 rays.  (A grid whose coordinate values are $0,\pm a,\pm b$ can always be rescaled
 so that one of them is~1.  So the first two rungs cover every grid with one or two coordinate
 values, complex ones included, and the third covers every grid with three real coordinate
-values.  A grid that lacks some of the minus signs is part of one of these and needs no
-separate treatment.)
+values.  A grid that lacks some of the minus signs is part of one of these.  Whether
+it can be colored is a separate matter, but a Kochen--Specker set on it is one on the larger
+grid, so for the question of how few rays are needed it brings nothing new.)
 
 \paragraph{The hope.}
 The pattern of the rungs was the reason for climbing them.  The best set known, 31 rays, stands
