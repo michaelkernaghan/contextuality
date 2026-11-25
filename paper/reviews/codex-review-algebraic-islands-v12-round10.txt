@@ -1,0 +1,39 @@
+Peer Review: algebraic_islands_v12.txt
+Date: 2026-11-25 08:56:54
+Reviewer: Codex (gpt-6-astra, reasoning high, CLI v0.153.4)
+Elapsed: 209.7s
+Tokens: 101,291 tokens used
+---
+
+**FIT AFTER THE LISTED FIXES**
+
+| Round-9 issue | Current text (quoted) | Status |
+|---|---|---|
+| New 1: lines versus crossings | “the crossings on the six faces are 109 rays”; script: “leaves the cube away from the crossings” | **FIXED.** |
+| New 2: scope of the 124-triple count | “For real \(x>1\) the coordinate values \(0,\pm1,\pm x\) give 124 coordinate triples” | **FIXED.** |
+| New 3: numerical triples described as fixed | “a coordinate triple is an expression in the parameter”; “‘the same triple’ … means the same expression” | **FIXED.** This convention also repairs “the same list” and “the same coordinate triples are proportional” in `v12_s2_two.tex`. |
+| New 4: fixed lists and the circle theorem | “Let \(W\) be the list of 45 coordinate triples …, expressions in \(x\) and \(x^{*}\)” | **FIXED.** Together with the formal convention, this covers every “fixed list,” “145 coordinate triples” and “the 45 coordinate triples” occurrence in `v12_s4_conj.tex`. |
+| New 5: polynomial and pointwise uses | “their colorability at a parameter value is that of the rays they name there” | **FIXED.** Polynomial identities concern expressions; specialization, collapse and rigidity concern their evaluations. No further rewording of those passages is required. |
+| New 6: generic 145 and whole-cube counting | “taken over all six faces with opposite points counted once”; “the grid has in general 145” | **FIXED.** The caption now distinguishes the unconditional crossing count from the generic grid count. |
+| New 7: real-axis caption | “At these three real values \(x^{*}=x\) and \(P(x)\) is the 49-ray grid” | **FIXED.** |
+| New 8: script tests ray membership instead of entries | `all(c in (0, 1, -1, 2, -2) for c in v + w) and any(v) and any(w)` | **FIXED.** Tests permitted entries and nonzero vectors. |
+| New 9: misleading helper name | `def at_crossing(...)` | **FIXED.** |
+| New 10: reproducibility additions | “v11.1 for the computations”; “ks_v12_prolegomena_checks.py (new in version 12)”; “for particular integer coordinate values” | **FIXED.** The ladder source is also listed. |
+| D3: orthogonality versus all exceptional changes | “Every such product …”; “Table … lists … those with a solution other than \(0\) and \(\pm1\)” | **FIXED.** The claim about all positions where anything changes has been removed. |
+| D7: circle theorem’s coordinate-set referent | “coordinate triples with coordinate values \(\mathcal A(x)\)” | **FIXED.** The expression convention supplies the previously missing interpretation. |
+| D8: selected 145 representatives | “145 coordinate triples, one naming each ray of \(P(x)\) at generic \(x\)” | **FIXED.** These are selected representative expressions, not all allowed triples. |
+| D14: nonzero normalization and empty grid | “dividing every coordinate triple by a nonzero coordinate value”; “one of the nonzero coordinate values can be taken to be 1” | **PARTLY FIXED.** Division is repaired. The Prolegomena still permits \(\mathcal A=\{0\}\), which has no nonzero value to normalize. Add “If there is a nonzero coordinate value”. |
+| D15: triples falsely said to stay fixed | “The coordinate triples, as expressions, do not change with \(x\)” | **FIXED.** |
+| D19: numbers called grids | “Conjugate-closed grids, with coordinate values …” | **FIXED.** |
+| U1: “harder to color” | “The picture shows where the rays are; it does not show which are orthogonal” | **FIXED.** The challenged assertion has been deleted. |
+| U2: methodological impossibility | “the classifications below exclude a smaller set only from the families they cover” | **FIXED.** This correctly limits these results. |
+| L2: release reference | “release tag v11.1 for the computations, which are unchanged in this version” | **FIXED.** The v12 additions are identified separately. |
+| Table-heading remark | “at most two coordinate values”; “Every grid with coordinate values \(\{0,\pm1,\pm x\}\)” | **FIXED.** Neither caption excludes its one-value cases. |
+| Nonzero-parameter remark | Abstract (C): “\(x\ne0\)”; Introduction (i): “\(x\ne0\) complex” | **FIXED.** |
+
+| Priority | Where (file and line) | Issue (quote) | Suggested fix |
+|---|---|---|---|
+| Medium | `paper/v12_s0_prolegomena.tex:123–125` | “With two, \(1\) and \(x\), it is the 49-ray grid”. The preceding definition explicitly admits complex coordinate values. At \(x=i\), there are two values modulo sign but **31 rays**, as Section 4 states. | Explicitly restrict these rung counts to the sign-symmetric **real** grids illustrated, with \(x>1\) and \(1<x<y\). |
+| Low | `paper/v12_s0_prolegomena.tex:75–76` | “A grid and its completed grid are different sets.” This asserts inequality universally. Under the permitted \(\mathcal A=\{0\}\), both are empty. | “A grid and its completed grid need not be equal.” This is a separate consequence of the unresolved empty-grid qualification in D14. |
+
+The shortening removed no required definition or label: all **181 reference occurrences resolve to 50 unique labels**, with the requested Prolegomena references still targeting the correct objects. Against tag **v11.1**, no theorem conclusion, proof argument, table datum or reported mathematical number changed beyond the terminology and convention clarifications; all nine table datasets, numerical macros and shared mathematical inputs are preserved. All **14 script checks pass**; no theorem mathematics or Lean proofs were re-reviewed, no `lake build` was run, and I found no additional replacement blocker beyond the wording fixes above.

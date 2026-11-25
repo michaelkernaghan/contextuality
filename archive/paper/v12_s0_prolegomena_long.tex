@@ -1,0 +1,233 @@
+% NOT CURRENT.  The long form of the Prolegomena of version 12, as it stood on 25 November 2026
+% after review round 9 and before it was shortened on the advice of rounds 8 and 9.
+% The paper uses paper/v12_s0_prolegomena.tex.  This file holds the passages that were cut:
+% the sphere-versus-cube comparison, the "machine with one dial", "The question of the minimum",
+% "What the results give", and the closing paragraph on the two circles through the set of Peres.
+% It is not compiled and its labels duplicate those of the current file.
+
+\section{Prolegomena}\label{sec:prolegomena}
+
+This section sets out the idea from which the paper grows and fixes the terms in which its
+results are stated.  It contains no theorem.  A reader who wants the results first will find
+them in Section~\ref{sec:intro} and can return here for the terms.
+
+\subsection{A ray is a point on a cube}
+
+Take first a ray with real coordinates: a straight line through a fixed point~$O$.  It has a
+direction but no length and no sense.  Put $O$ at the centre of a cube.  A ray leaves the cube
+at a point $P$ and at the opposite point~$P'$, and either point names the ray.  A set of rays,
+which is hard to draw, becomes a set of points on the surface of a cube, each opposite pair
+counted once.  (Rays with complex coordinates enter in Section~\ref{sec:grid}; they have no
+such picture.)
+
+A sphere would serve that purpose equally well.  The cube does one thing more.  Let its edges
+run along three perpendicular axes and let it reach from $-x$ to $x$ on each, with $x>0$.  A
+ray is a triple of numbers taken up to a common factor.  Choose the factor so that the
+coordinate of largest size has size~$x$: the triple is then the point~$P$, and its coordinates
+are read straight off the face on which $P$ lies.  Thus $(1,0,1)$ and $(x,0,x)$ are the same
+ray, and the second is the point at which it meets the cube.  The sphere fixes the common
+factor by the sum of the squares of the coordinates, the cube by the largest coordinate alone.
+It is the cube's way that keeps simple coordinates simple.
+
+\subsection{The rule}\label{sec:rule}
+
+Three mutually orthogonal rays form a \emph{triad}.  The rule is:
+
+\begin{quote}
+In every triad exactly one ray is \emph{colored}.  Two orthogonal rays are never both colored.
+\end{quote}
+
+A ray that is not colored is \emph{uncolored}.  To \emph{color a set} of rays is to decide, for
+every ray in it, whether it is colored or uncolored, in agreement with the rule.  For a finite
+set the rule is applied to the orthogonal pairs and the triads found within the set, and to no
+others.  The second sentence of the rule is then not idle.  Two orthogonal rays of the set
+belong to a triad of space whose third ray may be absent from the set, and they are forbidden
+to be both colored all the same.
+
+The rule is a prediction of quantum mechanics.  For a particle of spin one, the squares of the
+spin along three mutually orthogonal directions can be measured together.  Each square is
+found to be 0 or~1 (in units of $\hbar^2$), and the three add up to~2.  So in every triad of
+directions exactly one square is~0, and that direction is the one we color.  Suppose the
+particle carried these values before the measurement, and suppose the value along a direction
+did not depend on which two other directions were measured with it.  Then every ray in space
+would be colored or uncolored once and for all, in agreement with the rule.
+
+Kochen and Specker~\cite{KochenSpecker1967} showed that this cannot be done, and that one need
+not consider every ray in space: there are finite sets of rays that cannot be colored.  Such a
+set is \emph{uncolorable}, or a \emph{Kochen--Specker (KS) set}.  What it excludes should be
+stated exactly: values that are fixed beforehand \emph{and} do not depend on what else is
+measured.  A theory in which the value along a direction depends on the other two directions
+chosen is not touched by it.
+
+\subsection{The grid}\label{sec:grid}
+
+Peres drew his set of 33 rays as points on a cube, and he drew the 31 rays of Conway and
+Kochen the same way~\cite{Peres1991,Peres1993}.  In both drawings the points do not lie just
+anywhere on the faces.  They lie where five lines in one direction cross five lines in the
+other.  In the first drawing the lines sit at $0$, $\pm1$ and $\pm\sqrt2$.  In the second they
+sit at $0$, $\pm1$ and~$\pm2$.
+
+This is the observation on which the paper rests.  The two sets are built on \emph{the same
+grid}, except for the position of one pair of lines.  Write that position as~$x$
+(Fig.~\ref{fig:generic}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/alphabet_cube_generic.pdf}
+\caption{Coordinate triples as rays, for real $x>1$.  The cube reaches from $-x$ to $x$ on each
+axis and the lines on its faces sit at $0,\pm1,\pm x$.  A bar is a minus sign.  Triples written
+without~$x$, such as $(1,0,0)$ and $(1,\bar1,1)$, reach the surface after scaling by~$x$.  The
+49 rays are named by the same coordinate triples for every such~$x$; which pairs are orthogonal
+depends on~$x$.}
+\label{fig:generic}
+\end{figure}
+
+The numbers at which the lines sit are the \emph{coordinate values}.  A \emph{coordinate
+triple} is a triple of coordinate values, not all zero, such as $(x,1,\bar1)$, where a bar is a
+minus sign.  Every coordinate triple names a ray, and proportional triples name the same ray.
+The \emph{grid} is the set of rays so named.  Where a coordinate value is a parameter, as $x$
+is here, a coordinate triple is an expression in the parameter, to be evaluated at each value
+of it, and ``the same triple'' at two positions of the lines means the same expression.  For
+real $x>1$ the coordinate values $0,\pm1,\pm x$ give 124 coordinate triples, and they name 49
+rays.  Each of the 49 leaves the cube at a point where the lines cross, and every such point
+is one of the 49: the drawing is the grid.  (For other real or complex $x$ the triples again
+name 49 rays, except at a few values such as $x=1$, where fewer remain.)
+
+The same terms are used for any finite list of numbers that contains~$0$.  The numbers may be
+complex, although the cube can then no longer be drawn.  In counting coordinate values we
+leave out $0$ and take a value and its negative as one, so the grid above has two coordinate
+values, $1$ and~$x$.  Since a common factor does not change a ray, one of the nonzero coordinate
+values can be taken to be~$1$.
+
+Two orthogonal rays fix a third, the ray orthogonal to both, and it need not belong to the
+grid.  With coordinate values $0,\pm1,\pm2$ the triples $(1,1,2)$ and $(2,0,\bar1)$ are
+orthogonal, and the ray orthogonal to both is $(1,\bar5,2)$, which no coordinate triple names.
+The \emph{completed grid} is the smallest set of rays that contains the grid and contains,
+with every two orthogonal rays, the third ray of their triad.  A grid and its completed grid
+are different sets, and every count in this paper says which is meant.
+
+Earlier versions of this paper, and the programs that accompany it, use other names.  There
+the list of coordinate values is an \emph{alphabet}, a coordinate value is a \emph{letter} or
+\emph{symbol}, a coordinate triple is a \emph{word}, a grid is a \emph{pool} or \emph{raw
+pool}, and a completed grid is a \emph{completed pool}.
+
+\subsection{Orthogonality depends on where the lines sit}
+
+The coordinate triples, as expressions, do not change with~$x$.  What changes is which rays
+are orthogonal.
+Two rays are orthogonal when the products of their coordinates add up to zero (with complex
+coordinates one factor of each product is conjugated).  Take $x$ real and the triples
+$(x,1,1)$ and $(x,\bar1,\bar1)$:
+\[
+(x,1,1)\cdot(x,\bar1,\bar1)=x^2-1-1=x^2-2 .
+\]
+These two rays are orthogonal when the lines sit at $\pm\sqrt2$ and at no other position.
+Take instead $(1,\bar1,1)$ and $(x,1,\bar1)$:
+\[
+(1,\bar1,1)\cdot(x,1,\bar1)=x-1-1=x-2 .
+\]
+These are orthogonal when $x=2$ and not otherwise.
+
+A warning is needed.  \emph{The picture shows where the rays are; it does not show which are
+orthogonal.}  The cube with lines at $\sqrt2$ looks like the cube with lines a little to one
+side, and no drawing can show that two rays are exactly orthogonal.  That has to be computed.
+The picture's service is a different one.  It shows that there is a single quantity, the
+position $x$ of a line, on which every orthogonality depends, and it invites us to slide that
+line and watch what happens.
+
+The computation is always of the kind just made.  The product of two coordinate triples is a
+sum of at most three terms, and each term is a product of two coordinate values.  Either it
+vanishes for every~$x$, as it does for the three axes, or it is an equation for~$x$ with small
+whole numbers as coefficients, like the two above.  There are finitely many such equations.
+Table~\ref{tab:zerosums} lists, up to the symmetries stated there, those with a solution other
+than $0$ and~$\pm1$.  It is at the solutions of these equations that orthogonal pairs are
+gained.  For real $x$ an equation that is not an identity has at most two solutions, so the
+positions at which anything changes are finite in number.  More orthogonal pairs put more
+constraints on a coloring.  Whether they leave none has to be computed in each case.
+
+\subsection{The question}
+
+We now have a machine with one dial.  Turn the dial and the coordinate triples stay the same
+while the orthogonalities come and go (Fig.~\ref{fig:triptych}).  The question asks itself:
+
+\begin{quote}
+For which positions of the lines can the grid not be colored, and how few of its rays are
+then needed?
+\end{quote}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/alphabet_cube_triptych.pdf}
+\caption{One grid at three positions of its inner lines.  Each of the 49 rays leaves the centre
+of the cube through a point where the lines cross; opposite points are the same ray.  Filled
+points: the 33 rays of Peres at $x=\sqrt2$ and the 31 rays of Conway and Kochen at $x=2$.  At
+$x=\sqrt3$ the whole grid of 49 rays has a coloring.  Only the two inner lines move with~$x$.
+The three cubes are the points \textit{A}, \textit{B} and \textit{C} of Fig.~\ref{fig:circle}.}
+\label{fig:triptych}
+\end{figure}
+
+The dial need not be real, and there need not be only one.  The same question is asked of
+every grid, whatever its coordinate values, and the theorems of this paper are answers to it
+for particular families of grids.
+
+\subsection{The ladder of grids}\label{sec:ladder}
+
+The grid of Section~\ref{sec:grid} is one of a family, and the family has an order
+(Fig.~\ref{fig:ladder}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.84\textwidth]{figures/fig7_ladder.pdf}
+\caption{Three rungs.  One face of each cube is shown, with lines at the coordinate values; the
+number of rays is that of the grid.  On the first two rungs the points where the lines cross,
+taken over all six faces with opposite points counted once, are all the rays of the grid.  On
+the third they are 109 rays, and the grid has in general 145.}
+\label{fig:ladder}
+\end{figure}
+
+On the bottom rung there is one coordinate value,~$1$.  Each face carries three lines each way
+and the grid has 13 rays.  It has a coloring, so the bottom rung holds no KS set.  On the
+second rung there are two coordinate values, $1$ and~$x$.  That is the grid of the two
+classical sets, with 49 rays.  On the third rung there are three, $1$, $x$ and~$y$, and in
+general 145 rays.  Here the drawing is no longer the whole grid.  On the cube that reaches
+to~$y$, with $1<x<y$, the ray $(1,x,0)$ leaves at $(y/x,\,y,\,0)$, and $y/x$ is in general not a
+coordinate value, so that point is not one where lines cross.  The crossings on the six faces
+are 109 rays of the 145.  From the third rung on,
+the grid is what its coordinate triples say it is, and the cube is an illustration of part of
+it.
+
+A grid that lacks some of the minus signs is a subset of one of these.  Its coloring is a
+separate matter, but a KS set on it is a KS set on the larger grid, so for the question of how
+few rays are needed it brings nothing new.
+
+\paragraph{The question of the minimum.}
+The best set known, of 31 rays, stands on the second rung.  Nobody has proved that 31 is the
+least possible.  All that is proved in general is that a KS set in three dimensions needs at
+least 24 rays~\cite{KirchwegerPeitlSzeider2023,LiBrightGanesh2024}.  The smallest set known
+comes from a grid on the second rung, so the ladder poses a definite question.  Does some grid
+higher up, or to the side among the complex numbers, carry a smaller set?  Or does the pattern
+of the rungs show a reason why none exists?
+
+\paragraph{What the results give.}
+They do neither.  They find no smaller set, and they give no reason why there is none.
+\emph{This paper does not prove that 31 is the smallest KS set in three dimensions.}  These classifications do not establish it, and the reason is simple.
+Every finite set of rays lies on \emph{some} grid if enough coordinate values are allowed, so
+``lies on a grid'' excludes nothing until their number is bounded.  What the rungs give is
+elimination.  A KS set of fewer than 31 rays, if there is one, is not on the first rung, not
+on the second for any real or complex~$x$ (Theorem~\ref{thm:twosymbol}), and not on the third
+with real coordinate values (Theorem~\ref{thm:threesymbol}).  These statements are about
+grids, not completed grids.  A smaller set must be sought outside them: on a grid with more
+coordinate values, or with complex ones on the third rung.  The limit of this progress should
+be plain.  It does not shorten a search among sets with arbitrary coordinates, because a
+smaller set need not have few coordinate values.
+
+The classification also shows something else.  On the second rung the positions at which
+the grid cannot be colored are separate points.  With three coordinate values they need not
+be.  For the complex grids with coordinate values $1$, $x$ and the conjugate $x^{*}$ they are
+two circles, four straight lines through the origin with the origin removed, and four further
+points in the plane of~$x$ (Theorem~\ref{thm:conj}).  One fixed list of 45 coordinate triples
+cannot be colored at any point of the circle $|x|^2=2$ (Theorem~\ref{thm:circle}).  At a
+typical point of that circle the 45 triples name 45 rays and no fewer will do.  At $x=\sqrt2$
+they name only 33, the rays of Peres.  A second circle, $|x|^2=\tfrac12$, also passes through
+his set, and on it the sets have 33 rays throughout (Section~\ref{sec:halfcircle}).  His set
+is thus not an isolated curiosity.  It lies on two continuous families.

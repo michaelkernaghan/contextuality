@@ -1,0 +1,232 @@
+Peer Review: algebraic_islands_v12.txt
+Date: 2026-11-25 08:21:12
+Reviewer: Codex (gpt-6-astra, reasoning high, CLI v0.153.4)
+Elapsed: 543.3s
+Tokens: 156,621 tokens used
+---
+
+1. **Up-front verdict**
+
+- **Prolegomena — WRONG.** The cube-face definition fails on the third rung; the real-equation claim is false as written; and the closing classification omits four exceptional points.
+- **Renaming — WRONG.** Several replacements confuse coordinate sets, triples and rays. “Eleven named grids” also incorrectly absorbs four completed grids.
+- **“Nothing else changed” — CORRECT WITH WORDING FIXES.** The numerical results, table data and proof arguments survive. Literal preservation is false: definitions and captions were rewritten, and the circle theorem changes \(\mathcal A(x)\) to \(P(x)\), creating an object-type error.
+
+I compared every v12 source with tag **v11.1 (`a2a75fd`)**, including shared table inputs and numerical macros. All local v11 counterparts match that tag. I read rounds 6 and 7. I did not re-review the accepted theorem mathematics, rerun certifications, or run `lake build`.
+
+2. **Actionable issues**
+
+Locations below are under `paper/`.
+
+**Demonstrated errors and ambiguities**
+
+| Priority | Step | Where | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|---|
+| High | 1(c), 1(e) | `v12_s0_prolegomena.tex:75–87, 163–175`; Fig. `fig:ladder` | “A point at which the lines cross is a grid point”; “One face of each grid is shown; the number of rays is for the whole cube.” This does **not** agree with the later definition \(v\in\mathcal A^3\setminus\{0\}\). For three coordinate values, some interior triples project onto points outside the displayed face lines. Seven lines on each face account for **109**, not 145, rays. | Define grid points as triples first. Explain that the cube-face construction represents the entire grid for the two-value family, but not generally for larger coordinate sets. Redraw or remove the third panel. Calculation below. |
+| High | 1(d) | `v12_s0_prolegomena.tex:124–130` | “On the real line each equation has at most two solutions.” The cited table includes \(x-x^{*}=0\), which holds at **every real \(x\)**. | First restrict to real \(x\), substitute \(x^{*}=x\), and discard identically zero polynomials. Every remaining polynomial has degree at most two. |
+| Med | 1(d) | `v12_s0_prolegomena.tex:127–130` | “They can be listed in full (Table …)”; “the positions at which anything can happen.” The table lists the eight retained symmetry orbits after discarding thirteen others with solutions confined to \(0,\pm1\). The prose also neglects proportionality changes. | Say the table lists the nondegenerate orthogonality relations up to the stated symmetries. Include proportionality conditions when identifying all exceptional parameters. |
+| High | 1(e) | `v12_s0_prolegomena.tex:175–176` | “A grid that lacks some of the minus signs … needs no separate treatment.” Inclusion transfers lower bounds and colorability of the larger grid; it does **not** transfer the larger grid’s uncolorability or exact minimum. For example, \(S(\{0,1,2\})\) is colorable, whereas \(S(\{0,\pm1,\pm2\})\) is not. | “For excluding KS subsets below a given size, it suffices to treat the sign-completed coordinate sets, since every smaller grid is a subset.” |
+| High | 1(f) | `v12_s0_prolegomena.tex:200–203` | “They fill two circles and four straight lines … (Theorem …).” This omits \(x=\pm2,\pm\tfrac12\) and does not remove the origin from the lines. | Give the complete locus: two circles, four lines **with the origin removed**, and four additional points. |
+| High | 2(a), 4 | `algebraic_islands_v12.tex:60–61` | “Minimum KS subsets are certified … for eleven named grids.” The eleven certified rows comprise **seven grids and four completed grids**. The number survived; its meaning did not. | “For eleven named grids or completed grids,” or explicitly “seven grids and four completed grids.” |
+| High | 2(a), 3 | `v12_s4_conj.tex:245–249` | “No fixed list of fewer than 45 grid points of \(P(x)\)…” replaces “words over \(\mathcal A(x)\).” But \(P(x)\) contains **rays**, not grid points. The replacement changes the mathematical referent. | “No fixed list of fewer than 45 coordinate-triple expressions over \(\mathcal A(x)\)…” Preserve the restriction to this prescribed coordinate family. |
+| Med | 2(a) | `v12_s4_conj.tex:241–287` | Repeated references to “the 145 grid points” suggest these are all grid points. Generically there are \(7^3-1=342\) nonzero triples. The 145 are a selected list representing the generic projective classes. | Introduce “a fixed list of 145 representative triple expressions, one for each generic ray.” Subsequently refer to “these representatives.” |
+| Med | 1(c), 2(a) | `v12_s0_prolegomena.tex:79–81`; `v12_s2_two.tex:4–7`; `v12_s4_conj.tex:107, 280` | “Grid points coincide.” At \(x=i\), all **124 triples remain distinct**; the number of rays falls because additional triples become proportional. Coincidence of points is not proportionality. | Say “additional grid points represent the same ray” or “become proportional.” Distinguish actual equality where that also occurs. |
+| Med | 1(c), 2(a) | `v12_s0_prolegomena.tex:89–94`; `v12_s2_two.tex:224–225`; `v12_s6_pools.tex:49` | “The ray … need not be a grid point”; “completion adds rays that are not grid points.” A ray is never a triple under the formal definitions. This obscures the substantive assertion that no allowed representative exists. | “The third ray need not belong to the grid”; “completion can add rays with no representative in \(\mathcal A^3\setminus\{0\}\).” |
+| Med | 1(a–b) | `v12_s0_prolegomena.tex:9–20, 38–44` | “A ray is a straight line…” is the real picture, not the definition of an arbitrary complex ray used later. Likewise, physical spin directions do not represent every complex projective ray. | Begin “First consider real rays.” Introduce complex rays separately and explain that their quantum interpretation uses rank-one projectors. |
+| Low | 1(a) | `v12_s0_prolegomena.tex:15–20` | “The largest coordinate has size \(x\).” The intended normalization is correct, but requires \(x>0\) and “largest **absolute value**.” | Write \(P=xv/\max_k|v_k|\), for real nonzero \(v\) and \(x>0\). |
+| Med | 1(c), 2(c) | `v12_s0_prolegomena.tex:75, 83–87`; `v12_s1_intro.tex:94–95`; family headings and captions | “Coordinate values” means actual elements of \(\mathcal A\), including zero and signs, but “two coordinate values” counts nonzero classes modulo sign. Thus a five-element set is repeatedly said to have two values. The convention makes this decipherable, but the formal definition does not repeat it. | Prefer “two nonzero coordinate values up to sign.” Define the count explicitly as \(\#((\mathcal A\setminus\{0\})/\{\pm1\})\), without silently adding missing negatives. |
+| Low | 1(c), 2(a) | `v12_s0_prolegomena.tex:86–87`; `v12_s3_three.tex:3–4` | “One coordinate value can always be taken to be 1”; “dividing … by a coordinate value.” The permitted coordinate set includes zero, and the formal definition permits \(\mathcal A=\{0\}\). | Specify a **nonzero** coordinate value and exclude the empty grid when making the normalization statement. |
+| Med | 1(c–e) | `v12_s0_prolegomena.tex:68–81, 103, 136, 173–175` | “The 49 rays are the same list of triples for every \(x\)”; “the 49 triples stay fixed.” Numerical triples vary with \(x\); only their expressions remain fixed. There are not 49 distinct rays at every parameter. | Use “49 representative expressions, yielding distinct rays away from the exceptional parameters.” For the drawing explicitly impose real \(x>1\). |
+| Med | 1(e), 2(a) | `v12_s0_prolegomena.tex:149–150` | “At \(x=\sqrt3\) all 49 rays can be colored.” With “colored” explicitly meaning \(f=1\), this invites the false reading that all 49 receive 1. The three axes alone forbid that. | “At \(x=\sqrt3\) the 49-ray grid admits a coloring.” |
+| Med | 2(a–b) | `v12_s1_intro.tex:61` | “Alphabets, as grids were then called.” This contradicts the mapping in §1.3. **Alphabets were coordinate sets; pools were ray sets.** | “Described the coordinate alphabets generating uncolorable pools as isolated ‘islands’.” |
+| Med | 2(a–b) | `v12_app_corrections.tex:10–11` | “An alphabet is a list of coordinate values and a grid is a grid.” This is a replacement accident, not an explanation. | “…an alphabet is a set of coordinate values and a pool is a grid or completed grid, as specified.” |
+| Med | 2(a), 2(c) | `algebraic_islands_v12.tex:53–54`; `v12_s4_conj.tex:140, 212–213` | “Conjugate-closed grids \(\{0,\pm1,\pm x,\pm x^{*}\}\)”; “the Gaussian grid \(\{0,\pm1,\pm i,\pm(1+i)\}\).” These displayed sets contain numbers, not rays. | Consistently write “the grid with coordinate set …” or \(S(\mathcal A)\). |
+| Med | 2(a), 2(c) | `v12_s1_intro.tex:47`; `v12_s6_pools.tex:1–3`; `v12_s7_open.tex:39–40`; `v12_app_repro.tex:8–9` | “Other grids”; “collects the named uncolorable grids”; “other minima … within named finite grids only.” These umbrella descriptions also encompass completed grids. Under the new strict definition, bare “grid” no longer safely covers both. | Use “grids and completed grids” where both occur. Keep bare “grid” for \(S(\mathcal A)\). |
+| Low | 2(c) | `v12_s1_intro.tex:178` | “The Eisenstein values” is less explicit than every adjacent coordinate set. | Give \(\{0,\pm1,\pm\omega,\pm\omega^2\}\), or refer explicitly to the previously defined coordinate set. |
+
+**Unsupported or overstated claims**
+
+| Priority | Step | Where | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|---|
+| Med | 1(d) | `v12_s0_prolegomena.tex:131–132` | “The grid is harder to color at these positions than elsewhere.” Additional constraints need not change colorability or computational difficulty. The table expressly says that a relation alone says nothing about colorability. | “Additional orthogonality constraints occur there; whether they make the grid uncolorable must be determined separately.” |
+| Med | 1(e) | `v12_s0_prolegomena.tex:188–191` | “It cannot, for a simple reason. Every finite set of rays lies on some grid…” The second sentence is true; it does not prove that a grid-based method **cannot** establish the global minimum. It explains why the presently bounded families are insufficient. | “These classifications do not establish the global minimum, because they cover only restricted coordinate families.” |
+| Med | 1(f) | `v12_s0_prolegomena.tex:200–201` | “On the third they are not.” As an unrestricted classification of the third rung this exceeds the results. The real family also contains eight isolated exceptional points, and arbitrary complex three-value grids have not been classified. | “With three coordinate values, uncolorable loci can include curves.” Then identify the particular classified family. |
+| Med | 1(f) | `v12_s0_prolegomena.tex:205–206` | “His set … is one point of a circle.” Defensible as a parametrization, but liable to suggest a circle of 33-ray configurations or a unique circle through Peres’s set. Neither describes the outer-circle result. | “Peres’s set occurs as a degenerate 33-ray specialization of this generically 45-ray family.” Mention that the distinct inner-circle family has 33 rays throughout. |
+| Low | 1(d) | `v12_s0_prolegomena.tex:118–120` | “Nothing visible distinguishes” nearby line positions; nearby points are “not close in any sense that matters.” Position and angular separation plainly vary. The relevant distinction is exact orthogonality, not absence of geometric information. | “The drawing alone does not certify exact orthogonality.” |
+| Low | 1(e) | `v12_s0_prolegomena.tex:191–197` | The elimination statements are correct for grids, but the paragraph does not restate their exclusion of completion. It also omits the stronger partial exclusion in `thm:conj(iii)`. | Add “These exclusions concern the original grids, not their completions.” Optionally note that the conjugate-closed family is also excluded below 31 except at \(x=\pm1\pm i\). |
+| Low | 3–4 | `v12_s1_intro.tex:64–65` | “No theorem, proof or number is changed” is too absolute for a version that rewrites theorem terminology and changes a mathematical referent. | After fixing the referent: “The theorem conclusions, proof arguments and numerical results are unchanged from v11.1.” |
+
+**Limits of this review**
+
+| Priority | Step | Where | Issue (quote the paper) | Suggested fix |
+|---|---|---|---|---|
+| Low | 1(e–f) | “The hope”; “Something was found that had not been looked for” | These are assertions about the author’s intentions and discovery history. The mathematics cannot verify them. | Treat them as autobiographical exposition, or cut them. |
+| Low | 3 | `v12_app_repro.tex:3–4` | The reproducibility reference remains “release tag v11.1.” That tag supplies the computational baseline, not the new v12 document and ladder figure. Remote publication was not checked. | Distinguish the computational baseline from the eventual document-release tag. |
+| Low | 3–4 | Lean and certification claims | Accepted from the previous reviews and preserved sources, as instructed; not rebuilt or recertified here. | No new mathematical check is required by the changes identified in this review. |
+
+The remaining requested terminology checks have the following dispositions:
+
+- **“Coordinates in an alphabet” → “a set on a grid”: correct.** The sentence in `v12_s2_two.tex:241–244` explicitly retains a representative for every ray and **one common orthonormal basis**. No scope is lost.
+- **The two-value and three-real-value proofs:** replacing words by triples preserves their proportionality and inner-product arguments. The difficulty is the conflicting geometric definition in §1.3, not a new proof defect.
+- **The conjugate-closed proof:** its scaling argument remains correct. The expressions “coinciding grid points” need the proportionality correction listed above.
+- **The circle proof and Corollary `cor:points`:** the distinction between list entries and resulting rays remains present in the proof. Explicitly defining formal triple expressions and the selected 145 representatives will preserve it throughout.
+- **Certified minima:** “Let \(P\) be an uncolorable grid or completed grid,” “the core of \(P\),” and “all minimum sets of \(P\)” are correct replacements. They avoid the very ambiguity the user identified.
+- **“Theorem `thm:6n` is a statement about grids”: correct.** Its subject is \(S_n\), and the contrast with fields remains valid.
+- **“The list of coordinate values, and not the field, is the operative choice”: correct.**
+- **The Gaussian rescaling is correct despite its nomenclature:** with \(x=(1+i)/2\),
+  \[
+  (1+i)x=i,\qquad (1+i)x^{*}=1.
+  \]
+  Thus multiplying the coordinate set by \(1+i\) gives exactly the displayed Gaussian coordinate set and leaves its ray grid unchanged.
+- **“The case of CK-31”: not false or ungrammatical.** “The coordinate set supporting CK-31” would be more informative.
+- **Table headings:** “Coordinate values” is appropriate for lists of numbers. “Set” in `tab:catalogue` correctly accommodates “grid” and “compl.”; “Construction” would be clearer. “Set” in `tab:profiles` correctly names KS configurations. The `tab:alphabets` and `tab:twosymbol` captions should say **at most two** values up to sign if they include the one-value degeneracies. The `tab:threesymbol` caption preserves the grid/completion distinction. The `tab:profiles` caption correctly concerns the original grids.
+- Ordinary uses of **“value”** for coloring values, polynomial values, parameter values or singular values are not inconsistent renamings. “The Eisenstein values” is the only conspicuously weakened coordinate-set description.
+
+The surviving old terminology is accounted for:
+
+| Location | Survival | Disposition |
+|---|---|---|
+| `v12_s0_prolegomena.tex:97–99` | alphabet, letter, symbol, word, pool | Intended historical mapping. Clarify raw versus completed pool if giving a complete mapping. |
+| `v12_s1_intro.tex:61` | “alphabets, as grids were then called” | Intended survival, **incorrect explanation**. |
+| `v12_app_corrections.tex:10–11` | alphabet | Intended explanatory note; repair “a grid is a grid.” |
+| `v12_app_corrections.tex:24–25` | “KS-supporting alphabet” | Intended quotation. |
+| `v12_app_corrections.tex:90–93` | two-generator alphabets, quartic alphabets, mixed alphabets, quaternionic and octonionic alphabets | Intended names of old surveys. |
+| Labels and references | `tab:alphabets`, `tab:words`, `fact:pools`, `sec:twosymbol`, `thm:twosymbol`, and corresponding three-symbol identifiers | Intended stable identifiers. |
+| Scripts, result files and included filenames | `ks_two_symbol_theorem.py`, `ks_three_symbol_real.py`, their result names; `make_alphabet_cube_figures.py`; `alphabet_cube_*.pdf`; `modulus2_words.tex`; `v12_s6_pools.tex` | Intended technical names. |
+| `v12_s4_conj.tex:346` | `KSMin.HeegnerPool.minimum_43` | Intended Lean identifier. |
+| `v12_s1_intro.tex:66` | “the word ‘island’” | Ordinary English, not a surviving technical use. |
+| Shared `v10_numbers.tex` | “two-letter completed pool,” “completed pool” | Present only in two **unused macros**. They do not appear in v12’s rendered text. |
+
+I found no additional unintended surviving technical use of the old vocabulary in the rendered paper.
+
+3. **Independently confirmed claims and the calculations that settle them**
+
+**Section 1.1: normalization is sound, once scoped to real rays.** For any nonzero real vector \(v\) and cube half-width \(L>0\),
+\[
+P=\frac{L}{\|v\|_\infty}v,\qquad \|v\|_\infty=\max_k|v_k|.
+\]
+Then \(\max_k|P_k|=L\), so \(P\) lies on the cube. Its opposite represents the same real ray.
+
+There is **no requirement that the original representative already contain \(L\)**. For example, \((1,0,1)\) becomes \((L,0,L)\). “Size” allows the extremal coordinate to be \(-L\). Sphere normalization similarly uses the Euclidean norm. Those factual claims are correct; “keeps simple coordinates simple” is an informal advantage, not preservation of the original coordinate set.
+
+**Section 1.2: the rule and spin-one calculation are correct.** An orthogonal pair in three dimensions has a unique complementary ray. Its absence from the finite set does not remove the pair exclusion. This agrees exactly with §3.
+
+In the Cartesian spin-one representation, for a real unit direction \(n\),
+\[
+\frac{S_n^2}{\hbar^2}=I-nn^{T}.
+\]
+For an orthonormal triad \(n_1,n_2,n_3\), the projectors \(n_jn_j^{T}\) are mutually orthogonal, so
+\[
+[S_{n_i}^2,S_{n_j}^2]=0,\qquad
+\sum_j S_{n_j}^2=2\hbar^2 I.
+\]
+Each squared component has eigenvalues \(0,1\) in the stated units. Thus exactly one outcome is zero. Taking that direction to be colored gives
+\[
+f(n)=1-\frac{s_n^2}{\hbar^2},
+\]
+which matches \(f=1\) in the formal coloring definition.
+
+The sentences about predetermined, context-independent values and finite KS contradictions are correct under the quantum constraints just stated. Context dependence is not excluded by this contradiction. The only needed bridge is from real spin directions to general complex-ray projectors.
+
+**Section 1.3: the worked completion example is correct.**
+\[
+(1,1,2)\cdot(2,0,-1)=2-2=0,
+\]
+and
+\[
+(1,1,2)\times(2,0,-1)=(-1,5,-2)=-(1,-5,2).
+\]
+Also,
+\[
+(1,-5,2)\cdot(1,1,2)=0,\qquad
+(1,-5,2)\cdot(2,0,-1)=0.
+\]
+The first two triples belong to \(\{0,\pm1,\pm2\}^3\). No nonzero multiple of \((1,-5,2)\) belongs to that Cartesian product: the ratio of its second and first nonzero coordinates has magnitude \(5\), whereas allowable nonzero coordinate ratios have magnitudes only \(1/2,1,2\).
+
+Thus the third **ray lies outside the grid**. That is stronger and more precise than saying its displayed vector is not a grid point.
+
+The two definitions of **completed grid** agree. The completion is iterative closure, not merely one round of adding third rays. Statements about points on a cube must remain restricted to the real picture.
+
+I also inspected the local scans of Peres’s Fig. 7.2 and Plate II. They support the historical cube descriptions and their respective coordinate patterns.
+
+**The counts 13, 49 and generically 145 are correct—but the third cube picture is not.** For a generic sign-symmetric coordinate set with \(m\) nonzero values up to sign, there are
+\[
+(2m+1)^3-1
+\]
+nonzero triples. Dividing by sign alone is insufficient: the \(m\) scaled copies of each of the 13 \(\{0,\pm1\}\) directions must also be identified. Generically this gives
+\[
+\frac{(2m+1)^3-1}{2}-13(m-1).
+\]
+For \(m=1,2,3\), this is \(13,49,145\).
+
+By contrast, seven prescribed coordinate positions on each face of the outer cube give
+\[
+\frac{7^3-5^3}{2}=109
+\]
+surface rays. A concrete missing ray is \([1,2,0]\) for
+\[
+\mathcal A=\{0,\pm1,\pm2,\pm3\}.
+\]
+On the cube of half-width \(3\), it meets the surface at
+\[
+(3/2,3,0),
+\]
+whose first coordinate is not an allowed face-line position. Exact rational enumeration confirmed **145 total rays, 109 represented by the displayed face intersections, and 36 missing**.
+
+For the two-value family, the exceptional nonzero parameters \(\pm1,\pm i\) agree with the theorem: 13 rays at \(\pm1\), 31 at \(\pm i\), and 49 otherwise. At \(x=0\), there are also 13. “Such as \(x=1\)” is therefore a valid example, but the universal figure captions need the domain restriction.
+
+The counting convention is mathematically usable for missing negatives: for roots of unity it counts \(n\) nonzero sign classes when \(n\) is odd and \(n/2\) when \(n\) is even. It does **not** justify identifying the corresponding grids. In particular, \(S_3\) and \(S_6\) both have three classes under this convention, but their colorabilities differ.
+
+**Section 1.4: both displayed real inner products are correct.**
+\[
+(x,1,1)\cdot(x,-1,-1)=x^2-2,\qquad
+(1,-1,1)\cdot(x,1,-1)=x-2.
+\]
+For real \(x\), the first vanishes at \(\pm\sqrt2\); the second at \(2\). For complex \(x\), the first Hermitian product is \(|x|^2-2\), so label the displayed calculation as real before writing it.
+
+The “at most three terms” assertion is correct. In the two-value family its general form is
+\[
+c_0+c_1x+c_2x^{*}+c_3|x|^2.
+\]
+There are finitely many coefficient choices. On restriction to the real line, this becomes
+\[
+c_0+(c_1+c_2)x+c_3x^2.
+\]
+Only after removing identities does the two-root argument apply. With proportionality conditions included, the real family does have finitely many exceptional parameters. The conclusion is sound; the present explanation is not.
+
+**Sections 1.5–1.6: the question and lower-bound exclusions are correctly scoped by the formal definition of grid.** The first rung is colorable. Theorems `thm:twosymbol(iii)` and `thm:threesymbol(iii)` give exactly the advertised exclusions of a sub-31 KS subset for two complex values and three real values, respectively. They do not establish those exclusions for completed grids.
+
+The statement that every finite ray set fits some finite coordinate set is also correct: choose one representative per ray in a common basis and collect their finitely many entries together with zero. Add negatives if desired. This establishes containment in a sign-symmetric grid.
+
+The cited general lower bound of 24 is supported by [Li, Bright and Ganesh](https://arxiv.org/abs/2306.13319). The distinction between the known 31-ray example and the restricted construction theorem is maintained in [Trandafir and Cabello](https://arxiv.org/html/2501.11640v3).
+
+The closing paragraph’s claims about the fixed 45-entry family and its specialization to Peres’s 33 rays match `thm:circle` and `cor:points`. They do not establish a circle of 33-ray sets on the outer circle. The separate inner-circle family is essential context if the closing sentence is retained.
+
+**Step 3: preservation audit.**
+
+- Every numerical entry in the nine tables is unchanged, including the shared zero-sum and 45-representative tables.
+- All proof formulas, numerical constants, signs and exponents are unchanged.
+- All numerical macros in `v10_numbers.tex` are unchanged.
+- The bibliography is unchanged.
+- Both moved cube PDFs are byte-for-byte identical to those at v11.1. Their **captions were rewritten**, not merely moved.
+- Outside the new section and Introduction restructuring, the mathematical-expression differences found were the harmless explicit addition of \(a,b,c\) in the three-real-value opening and the problematic replacement \(\mathcal A(x)\to P(x)\) in the circle theorem.
+- Expected metadata changes are version 11→12 and 23→25 November.
+- Six labels were added: `sec:prolegomena`, `sec:rule`, `sec:grid`, `sec:ladder`, `sec:intro`, `fig:ladder`. No existing label was removed.
+- All **181 cross-reference occurrences resolve**, with no duplicate labels.
+- Introduction is now §2; Definitions and methods is §3; Methods is §3.1. Subsequent numbered sections shift by one.
+- `fig:generic` changes from Figure 2 to Figure 1; `fig:triptych` from Figure 1 to Figure 2; the new ladder is Figure 3. The later figures shift accordingly. References still target the correct objects.
+- The hard-coded references found—Gould–Aravind’s Table 3 and Peres’s Fig. 7.2—are external references and should not change.
+- The existing v12 compilation log reports no undefined references. I did not rebuild the document.
+
+Thus **preservation of the accepted results is confirmed**. Preservation of every expression or every sentence’s meaning is not.
+
+**Step 4: abstract and Introduction.** Clauses A–D retain the accepted theorem conclusions, including the real normalization \(1<x<y\), the two unresolved minima being absent from claims of complete minimality, and the Lean restriction \(n\ge3\). The 43-ray statement and the Gould–Aravind identification retain their previous scope.
+
+The abstract nevertheless needs three fixes: “eleven grids or completed grids”; explicit distinction between a coordinate set and its grid; and “fixed coordinate-triple expressions from this family” for the 45-entry statement. State \(x\ne0\) when using \(1/x\) or \(x^{*}/x\). There is no new false classification in the abstract.
+
+4. **Step 5: publication verdict**
+
+**Version 12 is not fit to replace v11.1 as submitted.** Correct the conflicting grid-point definitions, the third-rung figure, the real-equation argument, the incomplete closing locus, the eleven-object description, and the circle theorem’s \(\mathcal A(x)\to P(x)\) substitution first. These are editorial defects with mathematical consequences; none requires reopening the accepted proofs.
+
+The Prolegomena is about 2,000 words and occupies roughly four pages before the Introduction. It repeats the motivation, definitions, results and limitations subsequently stated more precisely. Cut the “machine with one dial” transition, most of “The hope,” the claim of impossibility in “What was found,” and the closing discovery narrative. Retain a short cube explanation, the coloring rule, the correct completion example and one precise paragraph defining the objects.
+
+“Coordinate values” is a reasonable replacement for “alphabet” when referring to numbers. “Grid” is serviceable for the projectivized Cartesian product if consistently defined. “Grid point” is the costly replacement: the current text uses it for a face intersection, an actual triple, a symbolic expression and a chosen representative. A specialist reader would be better served by **coordinate set, coordinate triple, ray grid, and completed grid**.

@@ -1,0 +1,98 @@
+\section{Corrections to versions 1--9}\label{sec:corrections}
+
+This appendix lists the principal claims of versions 1--9 that were withdrawn or changed in
+version~10, so that a reader of an earlier version can see which statements should no longer be
+relied on.  It is not guaranteed
+complete: where an earlier version and this one disagree, this one is intended.  Items marked \emph{wrong} are
+contradicted by a computation or an argument in this version; items marked \emph{not
+re-verified} may be right but were not recomputed with the exact methods of
+Section~\ref{sec:methods} and are therefore no longer claimed.  Quotations from earlier
+versions, and the names of their surveys, keep the terms of those versions: an \emph{alphabet}
+is a list of coordinate values and a \emph{pool} is a grid or, where it says so, a completed
+grid (Section~\ref{sec:grid}).
+
+\paragraph{Withdrawn as wrong.}
+\begin{enumerate}[label=C\arabic*.,leftmargin=2.6em]
+\item \emph{Golden-ratio minimum 52.}  A 51-ray uncolorable subset exists
+(Section~\ref{sec:catalogue}).  Version~9 also reported a 58-ray set for the completed grid of
+$\{0,\pm1,\pm\sqrt[3]2,\pm\sqrt[3]4\}$, from the same unsound procedure.  We have not reproduced
+a 58-ray set and do not claim one; that figure is unsupported and withdrawn, not disproved.  The
+smallest set we have is 60 rays.
+\item \emph{``OCUS-certified'' minima.}  The certification code was unsound
+(Section~\ref{sec:methods}).  All minima in this version were recomputed with a different
+procedure.  The values 31, 33, 33, 33 and 43 for the integer, Peres, $\sqrt{-2}$, Eisenstein and
+$\Q(\sqrt{-7})$ grids survive; 52 does not.
+\item \emph{``Islands are isolated; no continuous path connects one KS-supporting alphabet to
+another.''}  The grid of $\{0,\pm1,\pm x,\pm x^{*}\}$ is uncolorable along the whole circle
+$|x|^2=2$, which joins the Peres, $\sqrt{-2}$ and $\Q(\sqrt{-7})$ grids
+(Theorem~\ref{thm:circle}).  The sweep of 164 angles offered as evidence could not have
+established isolation in any case.
+\item \emph{The norm bound}: ``generators with $|x|^2\ge3$ that are not roots of unity produce no
+KS sets.''  It fails for $x=2$, the case of $\CK$; $|x|^2$ is not an invariant of the grid
+($x$ and $1/x$ give the same rays); and version~9 itself reported uncolorable grids from
+generators of squared modulus 4, 5 and~6.
+\item \emph{The two- and three-mechanism classifications} (``modulus-2'', ``phase'',
+``minimal-polynomial'', ``indirect modulus-2'').  The statement that an uncolorable grid requires
+a cancellation identity is true by definition.  The list of mechanisms was extended after each
+counterexample and made no prediction.  What replaces it is
+Theorems~\ref{thm:twosymbol}, \ref{thm:threesymbol}, \ref{thm:conj}, \ref{thm:circle}
+and~\ref{thm:6n} and Table~\ref{tab:zerosums}.
+\item \emph{Completeness of the table of three-term zero-sums.}  The earlier table was compiled
+by inspection, its justification miscounted the cases, it omitted two-term sums, and it described
+solution sets that are circles or lines as isolated points.  Table~\ref{tab:zerosums} is the
+complete enumeration.  The accompanying claim that an SMT solver had certified completeness
+overstated what was run.
+\item \emph{``Universal merge saturation''} and the conjecture built on it.  Identifying two
+non-orthogonal rays of any uncolorable configuration gives an uncolorable configuration: a
+coloring of the quotient pulls back to the original by giving the two rays the same value.  The
+3{,}756 SAT calls verified this lemma; nothing about minimal KS sets follows.  (The printed
+definition also described deletion of a ray, not identification.)
+\item \emph{The Galois-theoretic reformulation.}  The statement that $(\Z/n\Z)^{*}$ surjects onto
+$\Z/6\Z$ if and only if $6\mid n$ is false in both directions ($n=6$, $n=7$); the conductor of
+$\Q(\zeta_6)$ is 3, not 6; the norm characterization fails for real quadratic generators; and the
+list of ``KS-supporting'' imaginary quadratic fields contradicted the paper's own tables.  The
+parallel drawn with Gleason's theorem and with the matrix trace is withdrawn with it.
+\item \emph{The Hoffman-bound explanation of CSW advantages}, the ``auxiliary ray'' mechanism and
+the description of the Peres grid as disconnected (it is connected).
+\item \emph{``$|S_A|+|S_B|\ge|\mathcal B|$ in every case''} for bipartite perfect strategies
+(the $\Q(\sqrt{-7})$ row of version~9's own table violated it), and the
+claim that every Bell scenario obtainable from $\CK$ is obtainable more cheaply from the
+Eisenstein set, which rested on 200 heuristic trials.
+\item \emph{The tables of bipartite-strategy costs and Cabello--Severini--Winter quantities.}
+The bipartite costs came from a search that was not exhaustive.  Both tables are omitted from
+this version, which makes no claim about either.  Recomputed values (exact minimum costs for
+nine sets; independence number, Lov\'asz number and fractional packing number for nine sets and
+six grids) are in the repository as \texttt{results/bpqs\_exact\_v10.jsonl} and
+\texttt{results/csw\_v10.jsonl}.
+\item \emph{``The Peres and $\Z[\sqrt{-2}]$ islands are isomorphic.''}  True of the 33-ray minimum
+sets, false of the grids (Computed fact~\ref{fact:pools}).
+\item \emph{Counts.}  $\{0,\pm1,\pm i\}$ has 31 rays, 69 pairs, 7 triads, not 25/48/6.  The
+completed grids of $\sqrt3$ and $\sqrt5$ have 133 rays, not 145.  The Eisenstein grid is not
+closed under completion (165 rays after completion, not 57).  The $\Q(\sqrt{-7})$ grid has 522
+orthogonal pairs in total; version~9 said its 76 auxiliary rays ``add'' 522.  The integer grid
+has 6 minimum sets in one symmetry class, not 162 in six.
+\item \emph{The Hermitian cross-product formula} was printed with a spurious alternating sign;
+the third ray of an orthogonal pair $v,w$ is $[(v\times w)^{*}]$.
+\item \emph{``All coordinates are exact, with no floating-point approximation''} was not true of
+all the scripts cited.  In this version it is true of the grid counts, colorability decisions,
+minima and isomorphism tests; the rigidity ranks are numerical.
+\item \emph{Further items.}  The claim that enlarged Eisenstein grids keep minimum 33 (once
+the coordinate values $\pm2$ are admitted the grid contains $\CK$).  The use of ``contextual fraction'' for
+a ratio of bases, a term with an established different meaning.  The old certification script
+could print ``certified'' after finding a smaller counterexample.\item \emph{Smaller points.}  The 13-ray grid was called too small ``because the minimum known is
+31'': 31 is an upper bound, and the relevant fact is the lower bound 24.  Infinitesimal rigidity
+was called necessary for global rigidity; it is neither necessary nor sufficient.  The rigidity
+theorem of Trandafir and Cabello concerns realizations of the $\CK$ graph and does not imply that
+every 31-ray KS set is $\CK$.  The Kirchweger--Peitl--Szeider reference had the wrong venue,
+pages and an author's initial.
+\end{enumerate}
+
+\paragraph{No longer claimed (not re-verified).}
+The survey of imaginary quadratic fields of class number 2--4; the survey of 28 two-generator
+alphabets; the quartic alphabets; mixed alphabets with two independent irrationals; the
+trigonometric sweep; the icosahedral directions; the quaternionic and octonionic alphabets (for
+the latter the notions of ray and orthogonality were never defined); the comparison with the
+97-ray closure of Trandafir and Cabello; the $N(S)$ comparison with Cortez, Morales and Reyes;
+the ``graph universality'' of $\CK$ across group-orbit constructions; the ``30{,}000 random
+hypergraphs''; the identification of the coordinate field of the original 117-ray set of Kochen
+and Specker; the statement that the 43-ray and golden-ratio sets are new to the literature.

@@ -1,0 +1,176 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{fact}[theorem]{Computed fact}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\braket}[2]{\langle#1|#2\rangle}
+\newcommand{\CK}{\mathrm{CK}\text{-}31}
+
+% Numbers still being computed when the text was written are set here, in one place.
+\input{v10_numbers.tex}
+
+\title{The Algebraic Landscape of Kochen--Specker Sets\\in Dimension Three}
+\author{Michael Kernaghan}
+\date{Version 12 (25 November 2026)}
+
+\emergencystretch=3em
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The classic three-dimensional Kochen--Specker (KS) proofs take their ray coordinates from a small
+set of numbers, $\{0,\pm1,\pm\sqrt2\}$ for the 33 rays of Peres and $\{0,\pm1,\pm2\}$ for the 31
+rays of Conway and Kochen.  We treat those numbers, the \emph{coordinate values}, as a parameter:
+they determine a finite \emph{grid} of rays, and the grid is or is not KS-uncolorable.  We
+determine the uncolorable grids in three continuous families and one discrete one.
+(A)~Grids with two coordinate values, $\{0,\pm1,\pm x\}$ with $x\ne0$ complex: the grid is uncolorable only when $x$
+or $1/x$ is one of $\pm2,\pm\sqrt2,\pm\sqrt{-2}$ or $x$ is a primitive third or sixth root of
+unity, and no KS set on such a grid has fewer than the 31 rays of Conway
+and Kochen.  (B)~Real grids with three coordinate values, $\{0,\pm1,\pm x,\pm y\}$ normalized to
+$1<x<y$: the grid is uncolorable exactly when two coordinate values have ratio $2$ or $\sqrt2$,
+or at eight further points; again no KS set has fewer than 31 rays.  (C)~Conjugate-closed grids,
+with coordinate values $\{0,\pm1,\pm x,\pm x^{*}\}$, $x\ne0$: the grid is uncolorable exactly when $|x|^2=2$, or $|x|^2=\tfrac12$, or $x^{*}/x$ is a primitive
+third or sixth root of unity, or $x\in\{\pm2,\pm\tfrac12\}$.  The uncolorable grids are
+therefore not isolated.  On the circle $|x|^2=2$ a fixed list of 45 coordinate triples is uncolorable at
+every point and no shorter fixed list works at every point; it collapses to Peres's 33 rays at $x=\sqrt2$, and
+at $x=(1+\sqrt{-7})/2$ the grid contains a 43-ray KS set.  The circle $|x|^2=\tfrac12$ carries
+the 33-ray family of Gould and Aravind.  (D)~The grid of $0$ and the $n$th roots of unity is
+uncolorable if and only if $6\mid n$.  Minimum KS subsets are certified by exact computation
+for \ncertified\ named grids and completed grids.  The Lean proof assistant checks (D) for $n\ge3$, the
+uncolorability of the 45 coordinate triples at every point of the circle, and the minima 31, 33, 33,
+33, 43 and 47 of six grids.  An appendix lists the claims of earlier versions that are withdrawn.
+\end{abstract}
+
+\input{v12_s0_prolegomena.tex}
+\input{v12_s1_intro.tex}
+\input{v12_s2_two.tex}
+\input{v12_s3_three.tex}
+\input{v12_s4_conj.tex}
+\input{v12_s5_roots.tex}
+\input{v12_s6_pools.tex}
+\input{v12_s7_open.tex}
+
+\begin{thebibliography}{99}
+
+\bibitem{KochenSpecker1967}
+S.~Kochen and E.~P.~Specker, ``The problem of hidden variables in quantum mechanics,''
+\textit{J. Math. Mech.} \textbf{17}, 59--87 (1967).
+
+\bibitem{Budroni2022}
+C.~Budroni, A.~Cabello, O.~G\"uhne, M.~Kleinmann, and J.-\AA.~Larsson,
+``Kochen--Specker contextuality,'' \textit{Rev.\ Mod.\ Phys.} \textbf{94}, 045007 (2022).
+
+\bibitem{Peres1991}
+A.~Peres, ``Two simple proofs of the Kochen--Specker theorem,''
+\textit{J. Phys. A: Math. Gen.} \textbf{24}, L175--L178 (1991).
+
+\bibitem{Peres1993}
+A.~Peres, \textit{Quantum Theory: Concepts and Methods} (Kluwer Academic Publishers, 1993),
+Fig.~7.2 and Plate~II.
+
+\bibitem{Kernaghan1994}
+M.~Kernaghan, ``Bell--Kochen--Specker theorem for 20 vectors,''
+\textit{J. Phys. A: Math. Gen.} \textbf{27}, L829--L830 (1994).
+
+\bibitem{KernaghanPeres1995}
+M.~Kernaghan and A.~Peres, ``Kochen--Specker theorem for eight-dimensional space,''
+\textit{Phys. Lett. A} \textbf{198}, 1--5 (1995).
+
+\bibitem{Pavicic2019}
+M.~Pavicic, N.~D.~Megill, B.~C.~Waegell, and P.~K.~Aravind,
+``Automated generation of Kochen--Specker sets,'' \textit{Sci. Rep.} \textbf{9}, 6765 (2019).
+
+\bibitem{UijlenWesterbaan2016}
+S.~Uijlen and B.~Westerbaan, ``A Kochen--Specker system has at least 22 vectors,''
+\textit{New Generation Computing} \textbf{34}, 3--23 (2016).
+
+\bibitem{LiBrightGanesh2024}
+Z.~Li, C.~Bright, and V.~Ganesh,
+``A SAT solver + computer algebra attack on the minimum Kochen--Specker problem,''
+in \textit{Proc.\ 33rd Int.\ Joint Conf.\ on Artificial Intelligence (IJCAI-24)}, pp.~1898--1906.
+\textsc{doi}: 10.24963/ijcai.2024/210.
+
+\bibitem{KirchwegerPeitlSzeider2023}
+M.~Kirchweger, T.~Peitl, and S.~Szeider,
+``Co-certificate learning with SAT modulo symmetries,''
+in \textit{Proc.\ 32nd Int.\ Joint Conf.\ on Artificial Intelligence (IJCAI-23)}, pp.~1944--1953.
+\textsc{doi}: 10.24963/ijcai.2023/216.
+
+\bibitem{TrandafirCabello2025}
+S.~Trandafir and A.~Cabello,
+``Two fundamental solutions to the rigid Kochen--Specker set problem and the solution to the
+minimal Kochen--Specker set problem under one assumption,''
+\textit{Phys.\ Rev.\ A} \textbf{111}, 052204 (2025).  arXiv:2501.11640.
+
+\bibitem{Cabello2025simplest}
+A.~Cabello, ``Simplest Kochen--Specker set,''
+\textit{Phys.\ Rev.\ Lett.} \textbf{135}, 190203 (2025).  arXiv:2508.07335.
+
+\bibitem{GouldAravind2010}
+E.~Gould and P.~K.~Aravind,
+``Isomorphism between the Peres and Penrose proofs of the BKS theorem in three dimensions,''
+\textit{Found.\ Phys.} \textbf{40}, 1096--1101 (2010).
+
+\bibitem{FloresGordillo2026}
+M.~Flores Gordillo,
+``Exact rigidity certificates for Kochen--Specker sets, the graded flex dictionary, and the
+Peres--Penrose circle,'' preprint (2026).  Zenodo, doi:10.5281/zenodo.21488474.
+
+\bibitem{Frembs2026}
+M.~Frembs, ``A complete classification of the existence of finite-dimensional quantum solutions
+to inconsistent linear constraint systems,'' arXiv:2609.16490.
+
+\bibitem{CortezMoralesReyes2022}
+I.~Cortez, C.~Morales, and M.~Reyes,
+``Minimal ring extensions of the integers exhibiting Kochen--Specker contextuality,''
+arXiv:2211.13216.
+
+\bibitem{AudemardSimon2018}
+G.~Audemard and L.~Simon, ``On the Glucose SAT solver,''
+\textit{Int. J. Artif. Intell. Tools} \textbf{27}, 1840001 (2018).
+
+\bibitem{Cordella2004VF2}
+L.~P.~Cordella, P.~Foggia, C.~Sansone, and M.~Vento,
+``A (sub)graph isomorphism algorithm for matching large graphs,''
+\textit{IEEE Trans.\ Pattern Anal.\ Mach.\ Intell.} \textbf{26}, 1367 (2004).
+
+\bibitem{Schwartz2026}
+M.~D.~Schwartz, ``Vibe physics: the AI grad student,'' Anthropic Research (2026).
+
+\end{thebibliography}
+
+\appendix
+\input{v12_app_corrections.tex}
+\input{v12_app_repro.tex}
+
+\section{The 22 triads of the 45 coordinate triples}\label{app:triads}
+Numbers refer to Table~\ref{tab:words}.  These are the triads that hold at every point of the
+circle $|x|^2=2$; the 98 orthogonal pairs are printed by \texttt{ks\_modulus2\_circle.py}.
+
+\smallskip\noindent\raggedright
+\input{figures/modulus2_triads.tex}
+
+\end{document}

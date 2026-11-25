@@ -1,0 +1,202 @@
+\section{Introduction}\label{sec:intro}
+
+The Kochen--Specker (KS) theorem~\cite{KochenSpecker1967} shows that quantum observables cannot
+be assigned definite values independently of the measurement context (for a review see
+Ref.~\cite{Budroni2022}).  It is proved by exhibiting a finite set of rays in Hilbert space that
+admits no $\{0,1\}$-valued assignment compatible with orthogonality.  Dimension three is the
+smallest in which such sets exist.  (Smaller sets exist in higher dimensions, for example 20
+vectors in dimension four~\cite{Kernaghan1994} and 36 in dimension
+eight~\cite{KernaghanPeres1995}.)  In dimension three the smallest known set is the 31-ray
+configuration of Conway and Kochen ($\CK$), reported by Peres~\cite{Peres1993}; the best lower
+bound is 24, obtained for real vectors by Kirchweger, Peitl and
+Szeider~\cite{KirchwegerPeitlSzeider2023} and for real and complex vectors by Li, Bright and
+Ganesh~\cite{LiBrightGanesh2024}, improving the earlier 22 of Uijlen and
+Westerbaan~\cite{UijlenWesterbaan2016}.  Trandafir and Cabello~\cite{TrandafirCabello2025} proved
+that the orthogonality relations of $\CK$ have a unique realization up to unitary equivalence,
+and that no set of 30 or fewer rays arises from one specified construction starting from the
+Yu--Oh set; that 31 is the minimum without that assumption remains a conjecture.
+
+\paragraph{Results.}
+For a family of grids depending on parameters, the question of Section~\ref{sec:prolegomena} is
+which parameter values give an uncolorable grid and how small a KS set the grid then contains.  For three families we
+classify colorability completely and determine every minimum except at two classes of points of
+the third family.
+
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Grids with two coordinate values, $\{0,\pm1,\pm x\}$, $x\ne0$ complex}
+(Theorem~\ref{thm:twosymbol}).
+The grid is uncolorable only at isolated points: $x$ or $1/x$ one of $\pm2$, $\pm\sqrt2$,
+$\pm\sqrt{-2}$, or $x$ a primitive third or sixth root of unity.  No KS set on such a grid has
+fewer than 31 rays.
+\item \emph{Real grids with three coordinate values, $\{0,\pm1,\pm x,\pm y\}$}
+(Theorem~\ref{thm:threesymbol}).
+After normalization to $1<x<y$, the grid is uncolorable on six curves, where two coordinate
+values have ratio 2 or~$\sqrt2$, and at eight further points.  Again no KS set has fewer than
+31 rays.
+\item \emph{Conjugate-closed grids, with coordinate values $\{0,\pm1,\pm x,\pm x^{*}\}$, $x\ne0$ complex}
+(Theorem~\ref{thm:conj}, Fig.~\ref{fig:circle}).  The grid is uncolorable exactly on two
+circles, four lines through the origin with the origin removed, and four further points.  On
+the circle $|x|^2=2$ one fixed list of 45 coordinate triples is uncolorable at every point and no shorter
+fixed list is
+(Theorem~\ref{thm:circle}); the circle $|x|^2=\tfrac12$ carries the 33-ray family of Gould and
+Aravind.
+\end{enumerate}
+
+A fourth family has a discrete parameter: the grid of $0$ and the $n$th roots of unity is
+uncolorable exactly when $6\mid n$ (Theorem~\ref{thm:6n}).  Section~\ref{sec:catalogue} adds
+grids and completed grids that lie outside these families, each with exact counts and either a certified minimum or
+a stated upper bound.
+
+\paragraph{Standard of proof.}
+Each of the three continuous-parameter classifications reduces, by an argument given in the
+text, to finitely many cases that are decided in exact arithmetic by named scripts.  The
+roots-of-unity theorem has a structural proof for every~$n$, with one finite computation at
+$n=6$.  In addition the following are proved in the Lean
+proof assistant and checked by its kernel (Section~\ref{sec:methods}): Theorem~\ref{thm:6n} for
+$n\ge3$; the uncolorability of the 45 coordinate triples for every $x$ on the circle; and the minimum
+KS subsets of six grids (31, 33, 33, 33, 43 and 47 rays).
+
+\paragraph{Relation to earlier versions.}
+Versions 1--9 of this paper proposed a classification by ``cancellation mechanisms'' and
+described the alphabets with uncolorable pools (in the present terms, the coordinate values of
+uncolorable grids) as isolated ``islands''.  That
+proposal did not survive checking and was withdrawn in version~10;
+Appendix~\ref{sec:corrections} lists the withdrawn claims.  Version~11 restated the results
+that replaced it.  The present version adds the prolegomena and renames the objects as stated
+there; the conclusions of the theorems, the arguments of the proofs and the numbers are
+unchanged.  Since the uncolorable grids are not isolated,
+we do not use the word ``island''.
+
+\section{Definitions and methods}\label{sec:prelim}
+
+\begin{definition}
+A \emph{ray} in $\C^3$ is a one-dimensional subspace, written $[v]$ for a nonzero vector~$v$.
+Rays $[v],[w]$ are \emph{orthogonal} if $\braket vw=\sum_k v_k^{*}w_k=0$.  A \emph{triad} (or
+\emph{basis}) is a set of three mutually orthogonal rays.
+\end{definition}
+
+\begin{definition}
+A \emph{coloring} of a set $S$ of rays is a map $f:S\to\{0,1\}$ such that (a)~no two orthogonal
+rays of $S$ both receive~1, and (b)~every triad contained in $S$ has exactly one ray with value~1.
+$S$ is \emph{KS-uncolorable}, or a \emph{KS set}, if it has no coloring.  Its \emph{orthogonality
+graph} has the rays as vertices and the orthogonal pairs as edges; the triads are its triangles.
+Both the edges and the triangles enter the definition, and an edge lying in no triangle of $S$
+is still a constraint.  In the terms of Section~\ref{sec:rule}, a ray with $f=1$ is
+\emph{colored} and a ray with $f=0$ is \emph{uncolored}.
+\end{definition}
+
+A coloring of $S$ restricts to a coloring of any subset, because every orthogonal pair and every
+triad of the subset is one of~$S$:
+
+\begin{lemma}[Restriction]\label{lem:restrict}
+A set of rays that contains an uncolorable subset is uncolorable.
+\end{lemma}
+
+\begin{definition}
+Let $\mathcal A\subset\C$ be a finite set containing~0, the \emph{coordinate values}.  A
+\emph{coordinate triple} is a nonzero triple $v\in\mathcal A^3$, and the \emph{grid} of $\mathcal A$ is
+the set of rays
+\[
+S(\mathcal A)=\{\,[v]: v\in\mathcal A^3\setminus\{0\}\,\}
+\]
+(Section~\ref{sec:grid}).  A grid ``with $k$ coordinate values'' has $k$ nonzero ones, a value and
+its negative counted as one.  Where $\mathcal A$ depends on a parameter, a coordinate triple is an
+expression in the parameter, evaluated at each value of it; the lists of coordinate triples
+in Section~\ref{sec:conj} are lists of such expressions, and their colorability at a parameter
+value is that of the rays they name there.  The \emph{completed grid} $\bar S(\mathcal A)$ is the smallest set of rays containing
+$S(\mathcal A)$ and containing, with every orthogonal pair $[v],[w]$, the third ray of their
+triad, $[(v\times w)^{*}]$ (the ordinary cross product for real vectors).  In all cases reported
+here the completion was computed to closure and is finite; we do not know a general finiteness
+criterion.
+\end{definition}
+
+In a completed grid every orthogonal pair lies in exactly one triad, so the numbers of pairs $E$
+and triads $T$ satisfy $E=3T$.  This is a convenient check: the Eisenstein grid has
+$E=174$, $T=22$, so it is not closed, contrary to a statement in version~9.
+
+\paragraph{Three cautions on scope.}
+(1)~Uncolorability is a property of a grid, not of a ring or a field.  Every ring that appears in
+this paper contains $\Z$ and therefore contains the coordinates of $\CK$; the statement ``this
+field supports a KS set'' is true of all of them and distinguishes nothing.  (2)~The size of a
+generator is not an invariant of the grid: multiplying every coordinate triple by $x^{-1}$ shows
+$S(\{0,\pm1,\pm x\})=S(\{0,\pm1,\pm x^{-1}\})$, and $S$ is also unchanged by $x\mapsto-x$.
+(3)~A grid and its completed grid are different objects.  Their counts and minima need not
+agree; inclusion gives only one-way implications (if the grid is uncolorable so is its
+completed grid, and a KS subset of the grid bounds the minimum of the completed grid from
+above).  Every count below says which is meant.
+
+\subsection{Methods}\label{sec:methods}
+
+\paragraph{Exact arithmetic.}  Coordinates are elements of a number field $\Q[t]/(m(t))$ stored
+as rational coefficient vectors; rays are compared after division by the first nonzero
+coordinate; a pair is orthogonal when the Hermitian product is the zero element.  The
+cyclotomic grids use exponents modulo~$n$, and the proof of Theorem~\ref{thm:circle} uses
+integer polynomial identities.  No count in Sections~\ref{sec:real}--\ref{sec:catalogue} depends
+on a floating-point tolerance.  The only floating-point quantities in the paper are the flex
+counts of Section~\ref{sec:rigidity}; they are labelled as numerical.  Floating-point
+evaluation is used elsewhere only as a cross-check of exact computations.
+
+\paragraph{Colorability.}  Colorability of a finite set is decided by a SAT
+solver~\cite{AudemardSimon2018}: one variable per ray, a clause forbidding two 1s on each
+orthogonal pair, and a clause requiring at least one 1 on each triad.
+
+\paragraph{Certified minima.}  Let $P$ be an uncolorable grid or completed grid.  If $M\subseteq P$ is colorable
+then, by Lemma~\ref{lem:restrict}, every uncolorable subset of $P$ contains a ray outside~$M$.
+The certifier keeps a list of such sets $M$, each verified colorable by the SAT solver, and asks
+a second solver for a set $R$ of fewer than $u$ rays meeting the complement of every listed~$M$,
+where $u$ is the size of the best uncolorable subset found so far.  If $R$ is uncolorable, $u$
+decreases; if $R$ is colorable it is enlarged to a colorable set $M\supseteq R$ and $M$ joins the
+list.  When no such $R$ exists, no uncolorable subset has fewer than $u$ rays, and the minimum is
+exactly~$u$.  The answer is correct whenever the SAT solver is.  The list of sets $M$ is in principle a
+certificate that can be checked independently.  For six grids it is checked in Lean (below);
+for Theorem~\ref{thm:circle} it is archived; the other minima are reproducible by re-running
+the scripts.  Minima that the procedure did not finish within
+its time budget are reported as upper bounds.
+
+Two reductions speed up the runs for Theorems~\ref{thm:conj} and~\ref{thm:threesymbol}; both
+keep the answer exact.  First, if a ray of an uncolorable set lies in no triad of that set,
+deleting it leaves an uncolorable set (a coloring of the rest extends by giving the ray~0).  So a
+minimum set lies in the \emph{core} of~$P$, obtained by deleting rays that lie in no triad
+until none is left, and the search is run there.  Second, if
+$g$ is a permutation of the rays preserving orthogonality and $M$ is colorable, so is $g(M)$, so
+each colorable $M$ may be added to the list together with all its images under a group of such
+permutations (signed permutations of the coordinates, and complex conjugation where the
+coordinate values are closed under it; each is checked to preserve the graph before use).
+
+The same enumeration, continued after the first
+minimum set is found, lists \emph{all} minimum sets of~$P$.
+
+\paragraph{Proofs checked in Lean.}  Three files in the repository are checked by the kernel of
+Lean~4 (with the mathlib library) and use no axioms beyond the standard three.  Where a proof
+rests on a finite set of rays, their coordinates are exact elements of a ring written as
+integer tuples, orthogonality is recomputed inside Lean, and the certificates, which are
+computed outside Lean, are checked there and not trusted.
+\texttt{Cyclotomic6n.lean} proves Theorem~\ref{thm:6n} for $n\ge3$.
+\texttt{NamedSets.lean} proves that the 43-ray set, the 47-ray set and, for every $x$ with
+$|x|^2=2$, the 45 coordinate triples of Theorem~\ref{thm:circle} are uncolorable, each from a case-split
+refutation.  \texttt{Minimality.lean} proves minima.  Its certificate for a grid with minimum
+$u$ is the list of colorable sets $M$ described above, each with a coloring, together with a
+branching proof that no set of fewer than $u$ rays meets the complement of every~$M$: a node
+puts one ray in or out, and a leaf names complements that avoid the rays put in and are pairwise
+disjoint once the rays put out are removed, so that a set meeting all of them needs a separate
+ray for each.  A soundness theorem for this checker is proved once.  The result for each of six
+grids, those with coordinate values $\{0,\pm1,\pm2\}$, $\{0,\pm1,\pm\sqrt2\}$,
+$\{0,\pm1,\pm\sqrt{-2}\}$, $\{0,\pm1,\pm\omega,\pm\omega^2\}$ with $\omega=e^{2\pi i/3}$, $\{0,\pm1,\pm\alpha,\pm\alpha^{*}\}$ with
+$\alpha=(1+\sqrt{-7})/2$, and
+$\{0,\pm1,\pm\psi,\pm\psi^2\}$ with $\psi^3=\psi^2+1$, is a theorem with two halves: some $u$ of
+the grid's vectors form an uncolorable set, and every set of fewer than $u$ of them has a
+coloring.  Three limits should be stated.  First, in Lean each grid is an explicit list of
+vectors; that the list consists of all rays whose coordinates are coordinate values is not
+proved there.  Second, the Lean statements are about sets of vectors, not rays.  This loses nothing,
+by an argument that is not itself formalized: a coloring of rays gives a coloring of any choice
+of representative vectors and conversely, and each listed grid has one vector per ray (the
+export script checks this), so the minimum for vectors is the minimum for rays.  Third, these
+are minima within a grid; they
+say nothing about KS sets outside it.
+
+The procedure used in earlier versions (described there as ``OCUS'') was different and was not
+sound: when a candidate was colorable, it required the next candidate to contain a ray that
+completes a violated triad with \emph{two} rays of the current candidate, ignoring triads with
+two or three rays outside it.  That can exclude genuine uncolorable subsets, and it did: it
+reported 52 for the completed golden-ratio grid, which contains an uncolorable subset of~51.
+None of the minima in this version comes from that code.

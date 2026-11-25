@@ -1,0 +1,88 @@
+\section{Open questions}\label{sec:limitations}
+
+The questions fall into two kinds.  The first three are pending further resources: the method of
+Section~\ref{sec:methods} applies to them as it stands, and the runs either did not finish
+within the budgets we gave them or have not yet been attempted.  They need longer runs or faster
+solvers, not new ideas.  The remaining items are of other kinds: conceptual explanations we do
+not have, extensions we have not attempted, a literature comparison, and further formalization.
+
+\paragraph{Pending further resources.}
+\begin{enumerate}
+\item \emph{Two minima.}  Theorem~\ref{thm:conj} leaves the minimum undetermined at two
+classes of special points: it is 32 or 33 at $x=\zeta/\sqrt2$ ($\zeta=e^{i\pi/3}$),
+and at $x=1+i$ it lies between the general lower bound 24 and~45.  A set of fewer than 31 rays
+at $x=1+i$ is not excluded.
+\item \emph{Uncertified minima.}  The entries of Table~\ref{tab:catalogue} marked ``$\le$''.
+\item \emph{All minimum sets on the circle.}  We exhibit one minimum set of 45 coordinate triples; the others have
+not been enumerated.
+\end{enumerate}
+
+\paragraph{Open.}
+\begin{enumerate}[resume]
+\item \emph{The two circles.}  The family of 33-ray sets on $|x|^2=\tfrac12$ is that of Gould
+and Aravind (Section~\ref{sec:halfcircle}).  The minima at generic points, 33 on that circle and
+45 on $|x|^2=2$, are both results of the certifier.  We have no argument by hand for either, and
+no explanation of why the two circles differ.  (The class $\zeta/\sqrt2$ on the inner circle
+remains undetermined, item~1.)
+\item \emph{Three complex coordinate values.}  Theorem~\ref{thm:threesymbol} settles real
+$\{0,\pm1,\pm x,\pm y\}$.  For complex $x,y$ the relations are again finitely many, but the
+parameter space has four real dimensions and we have not attempted the enumeration.  Could a
+complex grid with three coordinate values contain a KS set of fewer than 31 rays?
+\item \emph{The second flex.}  Two infinitesimal flexes of the 45 coordinate triples were found numerically
+at both phases tested (Section~\ref{sec:rigidity}).  Is the second one a genuine deformation, leading off the
+family of Theorem~\ref{thm:circle}?
+\item \emph{Completion.}  Is there a finiteness criterion for completed grids?  Why does
+completion make the golden-ratio and $\sqrt[3]2$ grids uncolorable but not those of $\sqrt3$ and
+$\sqrt5$?
+\item \emph{The gap.}  This paper does not close the gap between the lower bound 24 and
+the 31 rays of Conway and Kochen.  Theorems~\ref{thm:twosymbol} and~\ref{thm:threesymbol} exclude a
+smaller set on a grid with two coordinate values or with three real ones, and nothing more; the other minima are certified within named finite grids and completed grids
+only.  Earlier
+versions suggested that the analysis of coordinate values could prune the hypergraph searches
+of~\cite{LiBrightGanesh2024,KirchwegerPeitlSzeider2023}; we see no basis for that, since a
+hypothetical smaller set need not have few coordinate values.
+\item \emph{Catalogue comparison.}  Whether the 43-, 45- and 47-ray sets appear in the automated
+catalogues of three-dimensional KS sets.  (This needs reading, not computation, and has not been
+done.)
+\item \emph{Formalization.}  The three continuous-parameter classifications
+(Theorems~\ref{thm:twosymbol}, \ref{thm:threesymbol} and~\ref{thm:conj}) are not formalized:
+Lean checks Theorem~\ref{thm:6n} for $n\ge3$ and the uncolorability and minimality statements
+listed in Section~\ref{sec:methods}, not the reductions to finitely many cases.  Nor does it check that each list of rays is the whole grid of its coordinate values, or
+part~(iii) of Theorem~\ref{thm:circle}.
+\end{enumerate}
+
+\section{Conclusion}\label{sec:conclusion}
+
+Reading the coordinates off Peres's two cubes suggests a one-parameter question: for which $x$
+is the grid with coordinate values $\{0,\pm1,\pm x\}$ uncolorable?  The answer is now complete
+(Theorem~\ref{thm:twosymbol}).  Up to the sign and inversion of $x$, which do not change the grid, it is the two classical cases
+$x=\sqrt2$ and $x=2$ and nothing else for real $x$; for complex $x$ it adds only $\sqrt{-2}$ and
+the primitive third and sixth roots of unity; and in no case is there a KS set of fewer than 31 rays.  One unit and one
+further number along each axis cannot improve on Conway and Kochen, and neither can two further
+real numbers (Theorem~\ref{thm:threesymbol}).  The more interesting
+structure appears when a coordinate value is added.  With the conjugate
+included, the uncolorable values of $x$ are no longer isolated: they are the two circles
+$|x|^2=2$ and $|x|^2=\tfrac12$, four lines through the origin (without the origin), and the points
+$\pm2,\pm\tfrac12$ (Theorem~\ref{thm:conj}).  On the circle $|x|^2=2$ twelve orthogonalities of the form $1+1-|x|^2=0$ make the difference; the Peres set
+and its imaginary twin are the two degenerate members, up to sign, of a 45-ray family; and the 43-ray set over
+$\Q(\sqrt{-7})$ sits at a point of the circle where one more relation holds.  For the
+roots-of-unity grids the answer is exact as well: uncolorable if and only if $6\mid n$, with
+the primes 2 and 3 doing different jobs.
+
+The earlier versions of this paper claimed more than this and were wrong in ways that matter.
+We have tried to make this version checkable instead: every number is produced by a named script
+in exact arithmetic or is labelled numerical, every minimum is either certified by a procedure
+whose soundness is argued in two paragraphs or reported as a bound, six of the minima and
+Theorem~\ref{thm:6n} for $n\ge3$ are checked by the Lean kernel, and the withdrawn claims are listed in
+Appendix~\ref{sec:corrections}.  Code, data and the scripts behind each table are listed in
+Appendix~\ref{app:repro}; Appendix~\ref{app:produced} says how the paper was produced, including
+the part played by language models.
+
+\subsection*{Acknowledgments}
+
+The author thanks Ad\'an Cabello for pointing out the connection between the Eisenstein grid
+and his 33-ray set; Manuel Flores Gordillo for finding the error in the rigidity computation of
+versions 1--7; Jorge Lucas Gonzalez for the supergolden construction and an exact verifier;
+Markus Frembs for the trace-zero relation and for engaging with the earlier classification; and
+Curtis Bright for a bibliographic correction.  The author accepts responsibility for the content,
+including the errors of the earlier versions.
