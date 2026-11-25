@@ -306,13 +306,13 @@ def render(rays, tree):
                 why = "chosen (case %s)" % label
             else:
                 others = [m for m in st["triad"] if m != r]
-                why = "its triad partners %s are unmarked" % words(others).replace(", ", " and ")
+                why = "its triad partners %s are uncolored" % words(others).replace(", ", " and ")
             rows.append("%d & $%s$ & %s & %s \\\\" % (counter[0], tex_word(rays[r]), why, words(st["unmarks"])))
             plain.append({"row": counter[0], "case": label, "ray": r, "how": st["how"],
                           "unmarks": st["unmarks"]})
         if "dead" in node:
             rows.append("\\multicolumn{4}{@{}p{\\linewidth}@{}}{\\emph{Contradiction%s:} the triad %s has no "
-                        "ray left to mark.} \\\\ \\addlinespace"
+                        "ray left to color.} \\\\ \\addlinespace"
                         % (" in case " + label if label else "", words(node["dead"])))
             return
         t, kids = node["branch"]["triad"], node["branch"]["children"]
@@ -320,7 +320,7 @@ def render(rays, tree):
         for n, c in enumerate(kids):
             names[c["choice"]] = (label + "." if label else "") + str(n + 1)
         rows.append("\\multicolumn{4}{@{}p{\\linewidth}@{}}{\\emph{Cases%s.} One ray of the triad %s must be "
-                    "marked: %s.} \\\\ \\addlinespace"
+                    "colored: %s.} \\\\ \\addlinespace"
                     % (" within " + label if label else "", words(t),
                        "; ".join("case %s is $%s$" % (names[c["choice"]], tex_word(rays[c["choice"]]))
                                  for c in kids)))
@@ -442,8 +442,8 @@ def main():
         "rows": plain, "tree": tree}, indent=1), encoding="utf-8")
     n_marked = sum(1 for r in plain)
     print("identities ok; ladder %d / %d / %d rays" % counts)
-    print("33 rays, 72 pairs, 16 triads, cannot be marked; every 32-ray subset can")
-    print("table: %d marked-ray rows, %d written cases, replayed and negative controls refused"
+    print("33 rays, 72 pairs, 16 triads, cannot be colored; every 32-ray subset can")
+    print("table: %d colored-ray rows, %d written cases, replayed and negative controls refused"
           % (n_marked, leaves))
     return 0
 

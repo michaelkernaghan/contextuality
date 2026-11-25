@@ -282,10 +282,10 @@ def fig7_ladder(data):
     n1, n2, n3 = data["ladder_counts"]
     half, gap = 1.7, 5.2
     x, y = 1.55, 2.3
-    rungs = [([(-1.0, "-1"), (0.0, "0"), (1.0, "1")], 1.0, "letters $0,\\pm1$", "%d rays" % n1),
-             (five(x, "x"), x, "letters $0,\\pm1,\\pm x$", "%d rays" % n2),
+    rungs = [([(-1.0, "-1"), (0.0, "0"), (1.0, "1")], 1.0, "coordinate values $0,\\pm1$", "%d rays" % n1),
+             (five(x, "x"), x, "coordinate values $0,\\pm1,\\pm x$", "%d rays" % n2),
              ([(-y, "-y"), (-x, "-x"), (-1.0, "-1"), (0.0, "0"), (1.0, "1"), (x, "x"), (y, "y")], y,
-              "letters $0,\\pm1,\\pm x,\\pm y$", "%d rays" % n3)]
+              "coordinate values $0,\\pm1,\\pm x,\\pm y$", "%d rays" % n3)]
     body = []
     for n, (ticks, maxval, l1, l2) in enumerate(rungs):
         ox = n * gap
@@ -295,7 +295,48 @@ def fig7_ladder(data):
     mc.standalone(body, FIG / "fig7_ladder.tex")
 
 
-NAMES = ["fig1_ray", "fig2_rule", "fig3_face", "fig4_slide", "fig5_forcing", "fig6_triptych", "fig7_ladder"]
+def fig8_map():
+    """The plane of x for the grid with coordinate values 0, +-1, +-x, +-x*. Black: cannot be
+    colored (two circles, four lines through the origin, the points +-2 and +-1/2), as in
+    Fig. 3 of the paper. Lettered points tie the map to the cubes of this note."""
+    r2, r7 = math.sqrt(2), math.sqrt(7)
+    body = ["\\begin{scope}[scale=1.6]",
+            "\\draw[->,gray] (-2.4,0) -- (2.5,0);",
+            "\\node[font=\\footnotesize,anchor=north west] at (-2.45,-1.75) {across: real part of $x$};",
+            "\\draw[->,gray] (0,-2.05) -- (0,2.2);",
+            "\\node[font=\\footnotesize,anchor=north west] at (-2.45,-1.97) {up: imaginary part of $x$};",
+            "\\foreach \\t in {30,60,120,150} \\draw[line width=0.9pt] (\\t:-1.9) -- (\\t:1.9);",
+            "\\draw[line width=0.9pt] (0,0) circle (%.4f);" % r2,
+            "\\draw[line width=0.9pt] (0,0) circle (%.4f);" % (1 / r2),
+            "\\foreach \\p in {-2,-0.5,0.5,2} \\fill (\\p,0) circle (0.05);",
+            "\\draw[fill=white,line width=0.5pt] (0,0) circle (0.06);"]
+    # (tag, x, y, filled, label offset, legend text)
+    pts = [("A", r2, 0.0, True, (0.14, 0.15), "$x=\\sqrt2$: fewest 33 (Peres)"),
+           ("B", 2.0, 0.0, True, (0.0, 0.2), "$x=2$: fewest 31 (Conway and Kochen)"),
+           ("C", math.sqrt(3), 0.0, False, (0.0, -0.2), "$x=\\sqrt3$: can be colored"),
+           ("D", 0.0, r2, True, (0.15, 0.16), "$x=\\sqrt{-2}$: fewest 33"),
+           ("E", 0.5, math.sqrt(3) / 2, True, (-0.17, 0.06), "$x=e^{i\\pi/3}$: fewest 33"),
+           ("F", 0.5, r7 / 2, True, (0.04, 0.2), "$x=(1+\\sqrt{-7})/2$: fewest 43"),
+           ("G", 1.0, 1.0, True, (0.17, 0.14), "$x=1+i$: between 24 and 45, not settled")]
+    for n, (tag, px, py, filled, (dx, dy), text) in enumerate(pts):
+        if filled:
+            body.append("\\fill (%.4f,%.4f) circle (0.055);" % (px, py))
+        else:
+            body.append("\\draw[fill=white,line width=0.6pt] (%.4f,%.4f) circle (0.055);" % (px, py))
+        if tag == "G":
+            body.append("\\draw[line width=0.5pt] (%.4f,%.4f) circle (0.1);" % (px, py))
+        body.append("\\node[font=\\footnotesize\\itshape,fill=white,inner sep=0.8pt] at (%.4f,%.4f) {%s};"
+                    % (px + dx, py + dy, tag))
+        body.append("\\node[right,font=\\footnotesize] at (2.85,%.4f) {\\textit{%s}\\quad %s};"
+                    % (1.5 - 0.36 * n, tag, text))
+    body.append("\\node[right,font=\\footnotesize,align=left] at (2.85,%.4f) {black: cannot be colored\\\\"
+                "white: can be colored};" % (1.5 - 0.36 * 7 - 0.25))
+    body.append("\\end{scope}")
+    mc.standalone(body, FIG / "fig8_map.tex")
+
+
+NAMES = ["fig1_ray", "fig2_rule", "fig3_face", "fig4_slide", "fig5_forcing", "fig6_triptych", "fig7_ladder",
+         "fig8_map"]
 
 
 def compile_all():
@@ -321,6 +362,7 @@ def main():
     fig5_forcing(data)
     fig6_triptych()
     fig7_ladder(data)
+    fig8_map()
     compile_all()
     return 0
 

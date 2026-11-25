@@ -56,27 +56,29 @@ Take three rays that are mutually orthogonal, such as the three axes.  We call s
 three a \emph{triad}.  The rule of the game is:
 
 \begin{quote}
-In every triad exactly one ray is \emph{marked}.  Two orthogonal rays are never both marked.
+In every triad exactly one ray is \emph{colored}.  Two orthogonal rays are never both colored.
 \end{quote}
 
-\fig{fig2_rule}{0.36\textwidth}{A triad: the three axes.  One ray is marked (filled point) and
+\fig{fig2_rule}{0.36\textwidth}{A triad: the three axes.  One ray is colored (filled point) and
 two are not (open points).  The point $(0,\bar1,0)$ names the same ray as $(0,1,0)$; a bar is a
 minus sign.}
 
-For a finite set of rays the rule is applied to the orthogonal pairs and the triads found
-within the set, and to no others.
+A ray that is not colored is called \emph{uncolored}.  To \emph{color a set} of rays is to
+decide, for every ray in it, whether it is colored or uncolored, in agreement with the rule.
+For a finite set the rule is applied to the orthogonal pairs and the triads found within the
+set, and to no others.
 
 The rule comes from a prediction of quantum mechanics.  For a particle of spin one, the squares of the spin along three
 mutually orthogonal directions can be measured together.  Each square is found to be 0 or 1 (in units of
 $\hbar^2$), and the three always add up to~2.  So in every triad of directions exactly one square is~0, and
-that is the direction we mark.  If the particle carried these values with it before the
+that is the direction we color.  If the particle carried these values with it before the
 measurement, and the value along a direction did not depend on which other two directions were
-measured with it, then every ray in space would be marked or unmarked once and for all, in
+measured with it, then every ray in space would be colored or uncolored once and for all, in
 agreement with the rule.
 
 Kochen and Specker showed in 1967 that this cannot be done.  One need not try every ray in
-space: there are finite sets of rays that cannot be marked in agreement with the rule.  Such a
-set is called a Kochen--Specker set, and the usual phrase is that it ``cannot be colored''.
+space: there are finite sets of rays that cannot be colored in agreement with the rule.  Such a
+set is called a Kochen--Specker set, or an uncolorable set.
 The first such set had 117 rays.  The smallest one known in three dimensions has 31.
 What such a set excludes should be stated exactly: values that are fixed beforehand \emph{and}
 do not depend on what else is measured.  A theory in which the value along a direction depends
@@ -93,21 +95,28 @@ and~$\pm2$.
 \fig{fig3_face}{0.6\textwidth}{One face of the cube, seen square-on: the face on which the third
 coordinate equals~$x$.  The grid lines sit at $0$, $\pm1$, $\pm x$.  Five of the 25 crossing
 points are named.  The points \textit{a}, \textit{d} and \textit{e} name rays that can also be
-written without the letter~$x$, because a common factor does not matter.}
+written without~$x$, because a common factor does not matter.}
 
 This is the observation on which everything else rests.  The two famous sets are built on
-\emph{the same grid}, except for the position of one pair of lines.  Write that position as a
-letter, $x$.  Then every point of the grid is a triple of the five symbols $0,\pm1,\pm x$.  We
-call the list $0,\pm1,\pm x$ an \emph{alphabet} and each triple a \emph{word}.  Counting
-opposite points once, the grid on the whole cube names 49 rays, and they are the same 49 words
-wherever the lines sit.  (The exceptions are a few values at which words coincide, such as
-$x=1$, where the inner lines fall on the rim.)
+\emph{the same grid}, except for the position of one pair of lines.  Write that position
+as~$x$.  The numbers $0,\pm1,\pm x$ at which the lines sit are the \emph{coordinate values} of
+the grid: every coordinate of every point on it is one of them.  A crossing point of the lines
+is a \emph{grid point}, and it is written as a triple such as $(x,1,\bar1)$.  Counting opposite
+points once, the grid on the whole cube names 49 rays, and they are written as the same 49
+triples wherever the lines sit.  (The exceptions are a few positions at which grid points
+coincide, such as $x=1$, where the inner lines fall on the rim.)
+
+The paper uses other names, chosen for its theorems.  There the list of coordinate values is an
+\emph{alphabet}, a single coordinate value is a \emph{letter} or \emph{symbol}, a grid point is
+a \emph{word}, and the grid is a \emph{pool}.  Since a value and its negative always occur
+together, the paper counts them as one: the grid above has a ``two-symbol alphabet'', $1$
+and~$x$.
 
 \section{Orthogonality depends on where the lines sit}
 
-The words do not change with $x$.  What changes is which rays are orthogonal.  Two rays with real
+The triples do not change with $x$.  What changes is which rays are orthogonal.  Two rays with real
 coordinates are orthogonal when the products of their coordinates add up to zero.  (With
-complex coordinates one factor of each product is conjugated.)  Take the two words $(x,1,1)$
+complex coordinates one factor of each product is conjugated.)  Take the two grid points $(x,1,1)$
 and $(x,\bar1,\bar1)$:
 \[
 (x,1,1)\cdot(x,\bar1,\bar1)=x^2-1-1=x^2-2 .
@@ -134,23 +143,23 @@ orthogonalities depend, and it invites us to slide that line and watch what happ
 
 Some pairs are orthogonal wherever the line sits, for instance the three axes.  Others, like
 the two above, switch on at one special value.  Since the rule of Section~2 bites only on
-orthogonal rays, the grid is harder to mark at the special values than elsewhere.
+orthogonal rays, the grid is harder to color at the special values than elsewhere.
 
-\section{Enough orthogonal pairs leave no way to mark}
+\section{Enough orthogonal pairs leave no way to color}
 
 At $x=\sqrt2$ the 49 rays have enough orthogonal pairs that the rule cannot be obeyed.  Peres's
-33 rays already suffice.  They are the 49 with two kinds of word left out: those like $(1,1,1)$
+33 rays already suffice.  They are the 49 with two kinds of grid point left out: those like $(1,1,1)$
 and those like $(1,x,x)$.  Among the 33 there are 72 orthogonal pairs and 16 triads.
 
-The argument uses the rule in two ways.  When a ray is marked, every ray orthogonal to it is
-unmarked.  When two rays of a triad are unmarked, the third is marked.  Here is the whole
+The argument uses the rule in two ways.  When a ray is colored, every ray orthogonal to it is
+uncolored.  When two rays of a triad are uncolored, the third is colored.  Here is the whole
 argument; in it $x$ stands for $\sqrt2$.
 
 {\small
 \begin{center}
 \begin{tabular}{@{}r@{\quad}l@{\quad}>{\raggedright\arraybackslash}p{4.9cm}@{\quad}>{\raggedright\arraybackslash}p{7.3cm}@{}}
 \toprule
- & Marked & Why & Rays newly unmarked by it \\
+ & Colored & Why & Rays it leaves uncolored \\
 \midrule
 \primitiveinput forcing_table.tex
 \bottomrule
@@ -158,48 +167,48 @@ argument; in it $x$ stands for $\sqrt2$.
 \end{center}
 }
 
-Read it as follows.  One of the three axes must be marked; say $(0,0,1)$.  That unmarks the
+Read it as follows.  One of the three axes must be colored; say $(0,0,1)$.  That leaves uncolored the
 eight rays whose third coordinate is~0 (Figure~\ref{fig5_forcing}a).  Two further choices are
-then made, and after each of them the rule forces more rays, until seven are marked.  At that
-point the triad $(1,\bar x,1)$, $(1,0,\bar1)$, $(1,x,1)$ has all three of its rays unmarked,
+then made, and after each of them the rule forces more rays, until seven are colored.  At that
+point the triad $(1,\bar x,1)$, $(1,0,\bar1)$, $(1,x,1)$ has all three of its rays uncolored,
 which the rule forbids (Figure~\ref{fig5_forcing}b).  The choices not followed in the table are
 mirror images of the ones that are: the 33 rays are unchanged when the coordinates are permuted
 or their signs reversed, and each such case is the written case with the coordinates rearranged
 as stated.
 
 \fig{fig5_forcing}{0.84\textwidth}{The 33 rays of Peres on the cube with lines at $0,\pm1,\pm\sqrt2$.
-Black: marked, numbered as in the table.  Grey: unmarked.  White: not yet decided.  In (b) the
-three ringed rays form a triad and all are unmarked.  A ray on an edge between two visible faces
+Black: colored, numbered as in the table.  Grey: uncolored.  White: not yet decided.  In (b) the
+three ringed rays form a triad and all are uncolored.  A ray on an edge between two visible faces
 appears twice.}
 
 The table was not written by hand.  A program found it, and a second, independent routine in
 the same program replays every row from the coordinates alone and checks that each rearrangement
 used really does map the 33 rays to themselves.  As a test of the checker, one entry of the
 table was altered, and separately one ray of the list was replaced; it refused both.  The same program confirms that all 33 rays are needed: delete any one, and the
-remaining 32 can be marked.
+remaining 32 can be colored.
 
 \section{The question and its answer}
 
-We now have a machine with one dial.  Turn the dial $x$ and the 49 words stay fixed while the
+We now have a machine with one dial.  Turn the dial $x$ and the 49 triples stay fixed while the
 orthogonalities come and go.  The question asks itself:
 
 \begin{quote}
-For which positions $x$ of the lines can the grid not be marked, and how few of its rays are
+For which positions $x$ of the lines can the grid not be colored, and how few of its rays are
 then needed?
 \end{quote}
 
 \fig{fig6_triptych}{0.84\textwidth}{The same grid at three positions.  Filled points: the 33 rays of
 Peres at $x=\sqrt2$ and the 31 rays of Conway and Kochen at $x=2$.  At $x=\sqrt3$ all 49 rays can
-be marked.}
+be colored.}
 
 The answer is a theorem of the paper.  Two remarks first: replacing $x$ by $-x$ gives the same
 grid, and so does replacing $x$ by $1/x$, since a common factor does not change a ray.  Apart
-from these relabelings, the grid cannot be marked at exactly two real positions,
+from these relabelings, the grid cannot be colored at exactly two real positions,
 \[
 x=\sqrt2 \qquad\text{and}\qquad x=2 ,
 \]
-the two that Peres drew.  At $\sqrt2$ the fewest rays that cannot be marked is 33; at $2$ it is
-31.  At every other real position, $\sqrt3$ for instance, all 49 rays can be marked.
+the two that Peres drew.  At $\sqrt2$ the fewest rays that cannot be colored is 33; at $2$ it is
+31.  At every other real position, $\sqrt3$ for instance, all 49 rays can be colored.
 
 The coordinates of a ray in Hilbert space may be complex numbers, and the dial may be turned to
 complex values, although the cube can then no longer be drawn.  This adds only $x=\sqrt{-2}$
@@ -213,17 +222,19 @@ The grid of Section~3 is one of a family, and the family has an order.
 \fig{fig7_ladder}{0.84\textwidth}{Three rungs.  One face of each grid is shown; the number of rays is
 for the whole cube.}
 
-On the bottom rung the only letters are $0$ and $\pm1$.  Each face carries three lines each way
-and the cube names 13 rays.  These can be marked, so the bottom rung holds no Kochen--Specker
-set.  On the second rung one letter is added.  That is the grid of this note: 49 rays, and by
-the theorem just quoted no Kochen--Specker set on it has fewer than 31.  On the third rung two
-real letters $x$ and $y$ are added, giving 145 rays.  The paper proves that the same holds
-there: the grid cannot be marked when two of the letters $1,x,y$ are in the ratio $2$ or
-$\sqrt2$ and at eight further points, and never with fewer than 31 rays.  (A grid whose letters
-are $0,\pm a,\pm b$ can always be rescaled so that one letter is~1.  So the first two rungs
-cover every grid with one or two letters, counting a letter and its negative as one and
-allowing complex values, and the third covers every grid with three real letters.  A grid that
-lacks some of the minus signs is part of one of these and needs no separate treatment.)
+Count the coordinate values of a grid leaving out zero and taking a value and its negative as
+one.  On the bottom rung there is one coordinate value,~$1$.  Each face carries three lines each
+way and the cube names 13 rays.  These can be colored, so the bottom rung holds no
+Kochen--Specker set.  On the second rung there are two coordinate values, $1$ and~$x$.  That is
+the grid of this note: 49 rays, and by the theorem just quoted no Kochen--Specker set on it has
+fewer than 31.  On the third rung there are three real coordinate values, $1$, $x$ and~$y$,
+giving 145 rays.  The paper proves that the same holds there: the grid cannot be colored when
+two of $1,x,y$ are in the ratio $2$ or $\sqrt2$ and at eight further points, and never with
+fewer than 31 rays.  (A grid whose coordinate values are $0,\pm a,\pm b$ can always be rescaled
+so that one of them is~1.  So the first two rungs cover every grid with one or two coordinate
+values, complex ones included, and the third covers every grid with three real coordinate
+values.  A grid that lacks some of the minus signs is part of one of these and needs no
+separate treatment.)
 
 \paragraph{The hope.}
 The pattern of the rungs was the reason for climbing them.  The best set known, 31 rays, stands
@@ -240,18 +251,47 @@ three dimensions.}  It cannot, for a simple reason: every finite set of rays lie
 grid, if enough lines are allowed, so ``lies on a grid'' excludes nothing until the number of
 lines is bounded.  What the rungs give is elimination.  A set of fewer than 31 rays, if there
 is one, is not on the first rung, not on the second with any real or complex $x$, and not on
-the third with real letters.  It must be sought on a grid outside these: one with more
-letters, or with complex letters on the third rung.  That is a disappointment measured against the hope.
+the third with real coordinate values.  It must be sought on a grid outside these: one with
+more coordinate values, or with complex ones on the third rung.  That is a disappointment measured against the hope.
 It is also progress of the eliminative kind: these families are crossed off.  The limit of that
 progress should be plain.  It does not shorten a search among sets with arbitrary coordinates,
-because a smaller set need not have few letters.
+because a smaller set need not have few coordinate values.
+
+\paragraph{A map of one complex rung.}
+A cube shows one grid.  To see many grids at once a different kind of picture is needed: a map
+on which \emph{each point is a whole grid}.  One family of complex grids on the third rung has
+been mapped in this way.  Take the coordinate values $0$, $\pm1$, $\pm x$ and $\pm x^{*}$,
+where $x^{*}$ is the complex conjugate of $x$.  Every complex number $x$ gives one such grid, so
+these grids are the points of a plane.  Figure~\ref{fig8_map} is that plane.  The paper proves
+that the grids that cannot be colored are exactly those drawn in black: two circles, four
+straight lines through the centre (the centre itself excepted), and four separate points.
+
+\fig{fig8_map}{0.9\textwidth}{The plane of $x$ for the grid with coordinate values
+$0,\pm1,\pm x,\pm x^{*}$.  Each point of the plane is one grid.  The circles are $|x|^2=2$ and
+$|x|^2=\tfrac12$; the lines make angles of $30^\circ$ and $60^\circ$ with the horizontal axis;
+the separate points are $\pm2$ and $\pm\tfrac12$.  \textit{A}, \textit{B} and \textit{C} are
+the three cubes of Figure~\ref{fig6_triptych}.}
+
+The map and the cubes fit together as follows.  Along the horizontal axis $x$ is real, so
+$x^{*}$ is the same number as $x$ and the grid is the 49-ray grid of this note.  The dial of
+Section~6 is this axis, and the three cubes of Figure~\ref{fig6_triptych} are the points
+\textit{A}, \textit{B} and~\textit{C}.  The black points inside the smaller circle on this axis,
+$1/\sqrt2$ and $\tfrac12$, are the grids of \textit{A} and \textit{B} over again, by the
+remark that $x$ and $1/x$ give the same grid when there are two coordinate values.  Up the
+vertical axis $x^{*}$ is $-x$, there are again only two coordinate values, and \textit{D} is
+the value $\sqrt{-2}$ of Section~6.
+
+Everywhere off the two axes $x$ and $x^{*}$ are different numbers.  The grid then has three
+coordinate values and in general 145 rays, and no cube can be drawn for it.  Two cautions
+apply there.  First, the map describes the grid that contains both $x$ and $x^{*}$.  The
+smaller grid with $x$ alone is a different thing: at \textit{G}, for instance, it can be
+colored.  Second, the two circles are not copies of one another off the axes.  At a typical
+point of the larger circle the fewest rays needed is 45, and at a typical point of the smaller
+it is 33.
 
 \paragraph{One place still open, and what closing it needs.}
-One family of complex grids on the third rung was examined, and one member of it is not
-settled.  Take the letters $0$, $\pm1$, $\pm x$ and
-$\pm x^{*}$, where $x^{*}$ is the complex conjugate of $x$.  The paper determines every $x$ for
-which this grid cannot be marked, and the fewest rays needed in all cases but two.  One of the
-two is $x=1+i$.  That grid has 127 rays, 477 orthogonal pairs and 63 triads.  It contains a
+The paper determines the fewest rays needed at every black point of the map except two, together with their mirror images in the
+axes.  One of the two is \textit{G}, $x=1+i$.  That grid has 127 rays, 477 orthogonal pairs and 63 triads.  It contains a
 Kochen--Specker set of 45 rays, and nothing excludes a smaller one except the general bound of
 24.  So the fewest rays needed there lies between 24 and 45, and a set below 31 is not ruled
 out.  (At the other point, $x=e^{i\pi/3}/\sqrt2$, the answer is 32 or 33, so nothing below 31
@@ -261,20 +301,20 @@ The paper lists this among the questions that need longer runs or faster solvers
 ideas.  The work is of three kinds.
 \begin{enumerate}
 \item \emph{Search downward.}  Start from all 127 rays and delete rays for as long as the rest
-still cannot be marked, many times over in different random orders.  This is cheap.  It either
+still cannot be colored, many times over in different random orders.  This is cheap.  It either
 turns up a set below 45 or makes 45 more credible.  The point $1+i$ lies on the circle
 $|x|^2=2$, where 45 is the answer at a typical point.  At one special point of that circle,
-$x=(1+\sqrt{-7})/2$, an extra relation among the letters lowers the answer to~43.  Whether the
+$x=(1+\sqrt{-7})/2$, an extra relation among the coordinate values lowers the answer to~43.  Whether the
 extra relations at $1+i$ do the same is not known; a larger number of orthogonal pairs does not
 by itself predict it.
 \item \emph{Prove a floor.}  To show that no set of fewer than $N$ rays will do, the program
-collects subsets of the 127 that \emph{can} be marked.  A set that cannot be marked must
+collects subsets of the 127 that \emph{can} be colored.  A set that cannot be colored must
 contain a ray outside each of them, and when no set of fewer than $N$ rays can do that, $N$ is
 a floor.  This is the method by which the paper's certified minima were obtained.  At $1+i$ a
 run aimed at the floor 31 reached its limit of eight hours without an answer.  What is needed is a
 longer run, a faster solver, or a better use of the symmetries of this grid to cut the number
 of subsets that must be collected.
-\item \emph{Check the result independently.}  The list of markable subsets is a certificate that
+\item \emph{Check the result independently.}  The list of colorable subsets is a certificate that
 a proof assistant can verify, as was done in Lean for six of the paper's grids, each given
 as an explicit list of vectors.
 \end{enumerate}
@@ -301,7 +341,7 @@ two-symbol, real three-symbol and conjugate-closed alphabets, the table that acc
 last of these (for the counts at $x=1+i$ and $(1+\sqrt{-7})/2$), and its first open question.
 
 The program \texttt{ks\_idea\_forcing.py} in the paper's repository checks, in exact arithmetic,
-the two inner products of Section~4, the counts 13, 49 and 145, that the 13 rays can be marked,
+the two inner products of Section~4, the counts 13, 49 and 145, that the 13 rays can be colored,
 the counts 33, 72 and 16, the table of Section~5, and the statements made about
 $x=\sqrt2$, $2$ and $\sqrt3$ for the 49 rays.  \texttt{make\_idea\_figures.py} draws the
 figures; Figure~\ref{fig5_forcing} is drawn from the program's output.
